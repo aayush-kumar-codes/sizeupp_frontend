@@ -1,5 +1,6 @@
 import { trashIcon } from "../assets/icons"
 import { dress, dress2 } from "../assets/images"
+import { useNavigate } from 'react-router-dom'
 
 const products = [
     {
@@ -38,10 +39,11 @@ const products = [
 ]
 
 export function ProductCart() {
+    const navigate = useNavigate()
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <h1 className="text-3xl font-bold tracking-tight text-c-gray-900 sm:text-4xl">
                     Shopping Cart
                 </h1>
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
@@ -49,7 +51,7 @@ export function ProductCart() {
                         <h2 id="cart-heading" className="sr-only">
                             Items in your shopping cart
                         </h2>
-                        <ul role="list" className="divide-y divide-gray-200">
+                        <ul role="list" className="divide-y divide-c-gray-200">
                             {products.map((product) => (
                                 <div key={product.id} className="">
                                     <li className="flex py-6 sm:py-6 ">
@@ -72,13 +74,13 @@ export function ProductCart() {
                                                         </h3>
                                                     </div>
                                                     <div className="mt-2 text-sm">
-                                                        <p className="text-sm text-gray-500 mb-2">{product.color}</p>
+                                                        <p className="text-sm text-c-gray-500 mb-2">{product.color}</p>
                                                         {product.sizes ? (
                                                             <ul className="colors -mr-3 flex flex-wrap">
                                                                 {product.sizes.map((size) => (
                                                                     <li
                                                                         key={size}
-                                                                        className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
+                                                                        className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
                                                                     >
                                                                         {size}
                                                                     </li>
@@ -87,10 +89,10 @@ export function ProductCart() {
                                                         ) : null}
                                                     </div>
                                                     <div className="mt-1 flex items-end">
-                                                        <p className="text-xs font-medium text-gray-500 line-through">
+                                                        <p className="text-xs font-medium text-c-gray-500 line-through">
                                                             {product.originalPrice}
                                                         </p>
-                                                        <p className="text-sm font-medium text-gray-900">
+                                                        <p className="text-sm font-medium text-c-gray-900">
                                                             &nbsp;&nbsp;{product.price}
                                                         </p>
                                                         &nbsp;&nbsp;
@@ -132,36 +134,43 @@ export function ProductCart() {
                     >
                         <h2
                             id="summary-heading"
-                            className=" border-b border-gray-200 px-4 py-3 text-lg font-medium text-gray-900 sm:p-4"
+                            className=" border-b border-c-gray-200 px-4 py-3 text-lg font-medium text-c-gray-900 sm:p-4"
                         >
                             Price Details
                         </h2>
                         <div>
                             <dl className=" space-y-1 px-2 py-4">
                                 <div className="flex items-center justify-between">
-                                    <dt className="text-sm text-gray-800">Price (3 item)</dt>
-                                    <dd className="text-sm font-medium text-gray-900">₹ 52,398</dd>
+                                    <dt className="text-sm text-c-gray-800">Price (3 item)</dt>
+                                    <dd className="text-sm font-medium text-c-gray-900">₹ 52,398</dd>
                                 </div>
                                 <div className="flex items-center justify-between pt-4">
-                                    <dt className="flex items-center text-sm text-gray-800">
+                                    <dt className="flex items-center text-sm text-c-gray-800">
                                         <span>Discount</span>
                                     </dt>
                                     <dd className="text-sm font-medium text-green-700">- ₹ 3,431</dd>
                                 </div>
                                 <div className="flex items-center justify-between py-4">
-                                    <dt className="flex text-sm text-gray-800">
+                                    <dt className="flex text-sm text-c-gray-800">
                                         <span>Delivery Charges</span>
                                     </dt>
                                     <dd className="text-sm font-medium text-green-700">Free</dd>
                                 </div>
                                 <div className="flex items-center justify-between border-y border-dashed py-4 ">
-                                    <dt className="text-base font-medium text-gray-900">Total Amount</dt>
-                                    <dd className="text-base font-medium text-gray-900">₹ 48,967</dd>
+                                    <dt className="text-base font-medium text-c-gray-900">Total Amount</dt>
+                                    <dd className="text-base font-medium text-c-gray-900">₹ 48,967</dd>
                                 </div>
                             </dl>
                             <div className="px-2 pb-4 font-medium text-green-700">
                                 You will save ₹ 3,431 on this order
                             </div>
+                            <button
+                                type="button"
+                                onClick={() => { navigate("/products/billing") }}
+                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                            >
+                                Buy Now
+                            </button>
                         </div>
                     </section>
                 </form>

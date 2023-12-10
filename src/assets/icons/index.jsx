@@ -8,6 +8,7 @@ import heartFillIcon from './heartfill.svg'
 import trashIcon from './trash.svg'
 import chevronDownIcon from './chevrondown.svg'
 import starIcon from './star.svg'
+import XIcon from './x.svg'
 
 export {
     searchIcon,
@@ -19,5 +20,6 @@ export {
     heartFillIcon,
     trashIcon,
     chevronDownIcon,
-    starIcon
+    starIcon,
+    XIcon
 }

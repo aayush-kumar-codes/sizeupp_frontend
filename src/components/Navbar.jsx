@@ -1,7 +1,7 @@
 import React from 'react'
 import { styles } from '../style'
 import { cartIcon, heartIcon } from '../assets/icons'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 const menuItems = [
     {
@@ -34,7 +34,7 @@ export function Navbar() {
                 {/* Search bar */}
                 <div className='hidden lg:block lg:w-1/4'>
                     <input
-                        className="w-full ring-1 ring-link rounded-3xl bg-gray-100 px-6 py-3 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                         type="text"
                         placeholder="Serach on Website"
                     />
@@ -44,14 +44,14 @@ export function Navbar() {
                 <div className='hidden lg:block'>
                     <ul className="inline-flex space-x-8">
                         <li >
-                            <img src={heartIcon} onClick={()=>{navigate("/products/favourite")}} alt="heartIcon" className='w-6 h-6 cursor-pointer' />
+                            <img src={heartIcon} onClick={() => { navigate("/products/favourite") }} alt="heartIcon" className='w-6 h-6 cursor-pointer' />
                         </li>
                         <li >
-                            <img onClick={()=>{navigate("/products/cart")}} src={cartIcon} alt="cartIcon" className='w-6 h-6 cursor-pointer' />
+                            <img onClick={() => { navigate("/products/cart") }} src={cartIcon} alt="cartIcon" className='w-6 h-6 cursor-pointer' />
                         </li>
                         {menuItems.map((item) => (
                             <li key={item.name} className='flex justify-center item-center'>
-                                <Link to={item.href} className="text-sm font-medium text-gray-900 hover:underline">
+                                <Link to={item.href} className="text-sm font-medium text-c-gray-900 hover:underline">
                                     {item.name}
                                 </Link>
                             </li>
@@ -66,7 +66,7 @@ export function Navbar() {
 
                 {isMenuOpen && (
                     <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden">
-                        <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div className="divide-y-2 divide-c-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="px-5 pb-6 pt-5">
                                 <div className="flex items-center justify-between">
                                     <div className="inline-flex items-center space-x-2">
@@ -90,7 +90,7 @@ export function Navbar() {
                                         <button
                                             type="button"
                                             onClick={toggleMenu}
-                                            className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            className="inline-flex items-center justify-center rounded-md p-2 text-c-gray-400 hover:bg-c-gray-100 hover:text-c-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                         >
                                             <span className="sr-only">Close menu</span>
                                             <button className="h-6 w-6" aria-hidden="true" >X</button>
@@ -103,9 +103,9 @@ export function Navbar() {
                                             <a
                                                 key={item.name}
                                                 href={item.href}
-                                                className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50"
+                                                className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-c-gray-50"
                                             >
-                                                <span className="ml-3 text-base font-medium text-gray-900">
+                                                <span className="ml-3 text-base font-medium text-c-gray-900">
                                                     {item.name}
                                                 </span>
                                             </a>

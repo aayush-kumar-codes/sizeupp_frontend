@@ -7,6 +7,7 @@ import Register from "./pages/Register"
 import { ProductCart } from "./pages/ProductCart"
 import Home from "./pages/Home"
 import { ProductFav } from "./pages/ProductFav"
+import { ProductBilling } from "./pages/ProductBilling"
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="overview" element={<ProductOverview />} />
             <Route path="cart" element={<ProductCart />} />
             <Route path="favourite" element={<ProductFav />} />
+            <Route path="billing" element={<ProductBilling />} />
           </Route>
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>

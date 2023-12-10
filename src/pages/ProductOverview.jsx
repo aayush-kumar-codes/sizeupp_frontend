@@ -12,7 +12,7 @@ const ProductOverview = () => {
           <li className="inline-flex items-center">
             <Link
               to="/products"
-              className="ml-1 inline-flex text-lg text-gray-800 hover:underline md:ml-2"
+              className="ml-1 inline-flex text-lg text-c-gray-800 hover:underline md:ml-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -26,7 +26,7 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
 
-              <a href="#" className="ml-1 text-lg text-gray-800 hover:underline md:ml-2">
+              <a href="#" className="ml-1 text-lg text-c-gray-800 hover:underline md:ml-2">
                 Woman
               </a>
             </div>
@@ -36,7 +36,7 @@ const ProductOverview = () => {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
-              <span className="ml-1 text-lg font-medium text-gray-800 hover:underline md:ml-2">
+              <span className="ml-1 text-lg font-medium text-c-gray-800 hover:underline md:ml-2">
                 Vark Embroidered Light Beige Kurta with Palazzos & Dupatta
               </span>
             </div>
@@ -58,7 +58,7 @@ const ProductOverview = () => {
           ))}
         </div>
         <div className="col-span-4 pt-8 lg:pt-0">
-          <div className="mb-7 border-b border-gray-300 pb-7">
+          <div className="mb-7 border-b border-c-gray-300 pb-7">
             <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
               Vark Embroidered Light Beige Kurta with Palazzos & Dupatta
             </h2>
@@ -69,12 +69,12 @@ const ProductOverview = () => {
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
                 ₹ 3,299.00
               </div>
-              <span className="font-segoe pl-2 text-sm text-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
+              <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
                 ₹ 5,999.00
               </span>
             </div>
           </div>
-          <div className="border-b border-gray-300 pb-3  ">
+          <div className="border-b border-c-gray-300 pb-3  ">
             <div className="mb-4">
               <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
                 size
@@ -84,7 +84,7 @@ const ProductOverview = () => {
                 {['S', 'M', 'L', 'XL'].map((size) => (
                   <li
                     key={size}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
+                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
                   >
                     {size}
                   </li>
@@ -99,7 +99,7 @@ const ProductOverview = () => {
                 {['bg-orange-400', 'bg-pink-400', 'bg-violet-600', 'bg-red-500'].map((color) => (
                   <li
                     key={color}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm"
+                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm"
                   >
                     <span className={`block h-full w-full rounded ${color}`} />
                   </li>
@@ -107,10 +107,10 @@ const ProductOverview = () => {
               </ul>
             </div>
           </div>
-          <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
-            <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-gray-300 md:h-12">
+          <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-c-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
+            <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-c-gray-300 md:h-12">
               <button
-                className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
+                className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
                 disabled
               >
                 +
@@ -118,7 +118,7 @@ const ProductOverview = () => {
               <span className="duration-250 text-heading flex h-full w-12  flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out  md:w-20 xl:w-24">
                 1
               </span>
-              <button className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12">
+              <button className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12">
                 -
               </button>
             </div>
@@ -153,7 +153,7 @@ const ProductOverview = () => {
             </ul>
           </div>
           <div className="shadow-sm ">
-            <header className="flex cursor-pointer items-center justify-between border-t border-gray-300 py-5 transition-colors md:py-6">
+            <header className="flex cursor-pointer items-center justify-between border-t border-c-gray-300 py-5 transition-colors md:py-6">
               <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg">
                 Product Details
               </h2>
@@ -163,7 +163,7 @@ const ProductOverview = () => {
               </div>
             </header>
             <div>
-              <div className="pb-6 text-sm leading-7 text-gray-600 md:pb-7">
+              <div className="pb-6 text-sm leading-7 text-c-gray-600 md:pb-7">
                 Our Customer Experience Team is available 7 days a week and we offer 2 ways to get
                 in contact.Email and Chat . We try to reply quickly, so you need not to wait too
                 long for a response!.
@@ -171,14 +171,14 @@ const ProductOverview = () => {
             </div>
           </div>
           <div className="">
-            <header className="flex cursor-pointer items-center justify-between border-t border-gray-300 py-5 transition-colors md:py-6">
+            <header className="flex cursor-pointer items-center justify-between border-t border-c-gray-300 py-5 transition-colors md:py-6">
               <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg">
                 Additional Information
               </h2>
             </header>
           </div>
           <div className="">
-            <header className="flex cursor-pointer items-center justify-between border-t border-gray-300 py-5 transition-colors md:py-6">
+            <header className="flex cursor-pointer items-center justify-between border-t border-c-gray-300 py-5 transition-colors md:py-6">
               <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg">
                 Customer Reviews
               </h2>

@@ -12,7 +12,7 @@ export default {
         'secondary' : 'var(--bg-secondary)',
         'accent' : 'var(--bg-accent)',
         'secondary-accent' : 'var(--bg-secondary-accent)',
-        'gray' : 'var(--color-gray)',
+        'c-gray' : 'var(--color-gray)',
       }
     },
   },

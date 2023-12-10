@@ -30,18 +30,18 @@ const Register = () => {
                             </svg>
                         </a>
 
-                        <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+                        <h1 className="mt-6 text-2xl font-bold text-c-gray-900 sm:text-3xl md:text-4xl">
                             Welcome to Sizeupp
                         </h1>
 
-                        <p className="mt-4 leading-relaxed text-gray-500">
+                        <p className="mt-4 leading-relaxed text-c-gray-500">
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
                             quibusdam aperiam voluptatum.
                         </p>
 
                         <form action="#" className="mt-8 grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-3">
-                                <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="FirstName" className="block text-sm font-medium text-c-gray-700">
                                     First Name
                                 </label>
 
@@ -50,12 +50,12 @@ const Register = () => {
                                     id="FirstName"
                                     placeholder="Enter First Name"
                                     name="first_name"
-                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-gray-100 px-6 py-3 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
 
                             <div className="col-span-6 sm:col-span-3">
-                                <label htmlFor="LastName" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="LastName" className="block text-sm font-medium text-c-gray-700">
                                     Last Name
                                 </label>
 
@@ -64,36 +64,36 @@ const Register = () => {
                                     id="LastName"
                                     placeholder="Your Last Name"
                                     name="last_name"
-                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-gray-100 px-6 py-3 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
 
                             <div className="col-span-6">
-                                <label htmlFor="Email" className="block text-sm font-medium text-gray-700"> Email </label>
+                                <label htmlFor="Email" className="block text-sm font-medium text-c-gray-700"> Email </label>
 
                                 <input
                                     type="email"
                                     placeholder="Enter your Email address"
                                     id="Email"
                                     name="email"
-                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-gray-100 px-6 py-3 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
 
                             <div className="col-span-6 sm:col-span-3">
-                                <label htmlFor="Password" className="block text-sm font-medium text-gray-700"> Password </label>
+                                <label htmlFor="Password" className="block text-sm font-medium text-c-gray-700"> Password </label>
 
                                 <input
                                     type="password"
                                     id="Password"
                                     placeholder="Enter your Password"
                                     name="password"
-                                    className="mt-1 w-full ring-1 ring-link rounded-xl bg-gray-100 px-6 py-3 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="mt-1 w-full ring-1 ring-link rounded-xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
 
                             <div className="col-span-6 sm:col-span-3">
-                                <label htmlFor="PasswordConfirmation" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="PasswordConfirmation" className="block text-sm font-medium text-c-gray-700">
                                     Password Confirmation
                                 </label>
 
@@ -102,7 +102,7 @@ const Register = () => {
                                     id="PasswordConfirmation"
                                     placeholder="Confirm your Password"
                                     name="password_confirmation"
-                                    className="mt-1 w-full ring-1 ring-link rounded-xl bg-gray-100 px-6 py-3 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="mt-1 w-full ring-1 ring-link rounded-xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
 
@@ -112,21 +112,21 @@ const Register = () => {
                                         type="checkbox"
                                         id="MarketingAccept"
                                         name="marketing_accept"
-                                        className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
+                                        className="h-5 w-5 rounded-md border-c-gray-200 bg-white shadow-sm"
                                     />
 
-                                    {/* <span className="text-sm text-gray-700">
+                                    {/* <span className="text-sm text-c-gray-700">
                                         I want to receive emails about events, product updates and company announcements.
                                     </span> */}
                                 </label>
                             </div>
 
                             <div className="col-span-6">
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-c-gray-500">
                                     By creating an account, you agree to our
-                                    <a href="#" className="text-gray-700 underline"> terms and conditions </a>
+                                    <a href="#" className="text-c-gray-700 underline"> terms and conditions </a>
                                     and
-                                    <a href="#" className="text-gray-700 underline">privacy policy</a>.
+                                    <a href="#" className="text-c-gray-700 underline">privacy policy</a>.
                                 </p>
                             </div>
 
@@ -137,9 +137,9 @@ const Register = () => {
                                     Create an account
                                 </button>
 
-                                <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                                <p className="mt-4 text-sm text-c-gray-500 sm:mt-0">
                                     Already have an account?
-                                    <a href="#" className="text-gray-700 underline">Log in</a>.
+                                    <a href="#" className="text-c-gray-700 underline">Log in</a>.
                                 </p>
                             </div>
                         </form>
