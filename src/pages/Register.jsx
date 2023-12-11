@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Navbar } from "../components/Navbar"
 
 const Register = () => {
@@ -142,7 +143,7 @@ const Register = () => {
 
                                 <p className="mt-4 text-sm text-c-gray-500 sm:mt-0">
                                     Already have an account?
-                                    <a href="#" className="text-c-gray-700 underline">Log in</a>.
+                                    <Link to="/login"  className="text-c-gray-700 underline">Log in</Link>.
                                 </p>
                             </div>
                         </form>

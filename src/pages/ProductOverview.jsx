@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { dress } from "../assets/images"
 import { styles } from "../style"
+import { GEGreen1, GEGreen2, GEGreen3, GEGreen4, GEGreen5 } from "../assets/images/men"
 
 const ProductOverview = () => {
   return (
@@ -47,30 +48,32 @@ const ProductOverview = () => {
 
       <div className="block grid-cols-9 items-start gap-x-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
         <div className="col-span-5 grid grid-cols-2 gap-2.5">
-          {Array.from({ length: 4 }, (_, i) => (
-            <div key={i} className="col-span-1 transition duration-150 ease-in hover:opacity-90">
-              <img
-                src={dress}
-                alt="dress"
-                className="w-full object-cover"
-              />
-            </div>
-          ))}
+          {[GEGreen1, GEGreen2, GEGreen3, GEGreen4].map((items, i) => {
+            return (
+              <div key={i} className="col-span-1 transition duration-150 ease-in hover:opacity-90">
+                <img
+                  src={items}
+                  alt="dress"
+                  className="w-full object-cover"
+                />
+              </div>
+            )
+          })}
         </div>
         <div className="col-span-4 pt-8 lg:pt-0">
           <div className="mb-7 border-b border-c-gray-300 pb-7">
             <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
-              Vark Embroidered Light Beige Kurta with Palazzos & Dupatta
+              Oxford Casual Shirts - Sage Green
             </h2>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              This kurta set from Vark is a delightful ensemble that exudes charm and grace. The kurta is adorned with small floral embroidery on a light beige base, giving it a lovely and feminine appeal. With a V neck and three-quarters sleeves, it strikes the perfect balance between style and comfort. The netted dupatta adds a touch of elegance, and the flared palazzo pants complete the look with panache.
+              Machine Wash. Tumble Dry. Do Not Bleach. Wash Dark Color Separately. Warm Iron. Dry In Shade Do Not Iron On Print
             </p>
             <div className="mt-5 flex items-center ">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                ₹ 3,299.00
+                ₹ 1,999.00
               </div>
               <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
-                ₹ 5,999.00
+                ₹ 2,999.00
               </span>
             </div>
           </div>

@@ -1,17 +1,59 @@
+import { useState } from "react";
 import { arrowRightIcon } from "../assets/icons";
-import { dress} from "../assets/images";
+import { dress } from "../assets/images";
 import { Navbar } from "../components/Navbar";
+import Error from "../components/Alerts/Error";
+import { Link } from "react-router-dom";
+import { GEGreen2 } from "../assets/images/men";
 
 export function Login() {
+
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+
+    const [altcls, setAltcls] = useState(false)
+
+    const [alert, setAlert] = useState({
+        alertmsg: "",
+        type: true
+    })
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = () => {
+        console.log(formData)
+        if (formData.email === "" || formData.password === "") {
+            setAltcls(true)
+            setAlert({
+                alertmsg: "Please fill all the fields",
+                type: false
+            })
+        }
+        else {
+            setAltcls(true)
+            setAlert({
+                alertmsg: "Login Successful",
+                type: true
+            })
+        }
+    }
     return (
         <section className="h-screen min-h-screen">
             <Navbar />
+            <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />
             <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
                 <div className="relative flex items-end px-4 pb-10 pt-60 sm:px-6 sm:pb-16 md:justify-center lg:px-8 lg:pb-24">
                     <div className="absolute inset-0">
                         <img
                             className="h-full w-full rounded-md object-cover object-top"
-                            src={dress}
+                            src={GEGreen2}
                             alt="dress"
                         />
                     </div>
@@ -99,13 +141,12 @@ export function Login() {
                         <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign in</h2>
                         <p className="mt-2 text-sm text-gray-600">
                             Don&apos;t have an account?{' '}
-                            <a
-                                href="#"
-                                title=""
+                            <Link
+                                to="/register"
                                 className="font-semibold text-black transition-all duration-200 hover:underline"
                             >
                                 Create a free account
-                            </a>
+                            </Link>
                         </p>
                         <form action="#" method="POST" className="mt-8">
                             <div className="space-y-5">
@@ -116,9 +157,11 @@ export function Login() {
                                     </label>
                                     <div className="mt-2">
                                         <input
+                                            name="email"
                                             className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                             type="email"
                                             placeholder="Email"
+                                            onChange={handleChange}
                                         ></input>
                                     </div>
                                 </div>
@@ -142,12 +185,15 @@ export function Login() {
                                             className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                             type="password"
                                             placeholder="Password"
+                                            name="password"
+                                            onChange={handleChange}
                                         ></input>
                                     </div>
                                 </div>
                                 <div>
                                     <button
                                         type="button"
+                                        onClick={handleSubmit}
                                         className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                     >
                                         Get started <img src={arrowRightIcon} alt="arrow right icon" className="w-6 ml-2" />

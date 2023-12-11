@@ -27,7 +27,7 @@ export function Navbar() {
             <div className="flex items-center justify-between py-4">
 
                 {/* brand title */}
-                <Link to="/" className='text-2xl tracking-widest uppercase font-semibold cursor-pointer'>
+                <Link to="/products" className='text-2xl tracking-widest uppercase font-semibold cursor-pointer'>
                     Sizeupp
                 </Link>
 

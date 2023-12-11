@@ -6,7 +6,8 @@ const Error = ({
     setDisplay = () => { }
 }) => {
     return (
-        <div className={`${display ? "absolute  z-50" : "hidden"} w-full max-w-4xl mx-auto top-10`}>
+
+        <div className={`${display ? "absolute  z-50" : "hidden"} w-full max-w-4xl mx-auto top-[12%] left-[45%] `}>
             <div role="alert" className="rounded border-s-4 w-fit  border-red-500 bg-red-50 py-4 px-8">
                 <div className="flex items-center gap-2 text-red-800">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -17,7 +18,7 @@ const Error = ({
                         />
                     </svg>
 
-                    <strong className="flex justify-between font-medium"> Something went wrong <img src={XIcon} onClick={()=>{setDisplay(false)}} alt="remove" className="w-6 ml-4 cursor-pointer" /> </strong>
+                    <strong className="flex justify-between font-medium"> Something went wrong <img src={XIcon} onClick={() => { setDisplay(false) }} alt="remove" className="w-6 ml-4 cursor-pointer" /> </strong>
                 </div>
 
                 <p className="mt-2 text-sm text-red-700">

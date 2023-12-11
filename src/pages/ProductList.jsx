@@ -31,7 +31,7 @@ const ProductList = () => {
     return (
         <div>
             {/* Nav menu- Breadcrumb */}
-            <ol className={`inline-flex items-center space-x-1 md:space-x-3 ${styles.padding}`}>
+            <ol className={`inline-flex items-center space-x-1 md:space-x-3 ${styles.paddingX} py-4`}>
                 <li className="inline-flex items-center">
 
                     <Link
@@ -52,7 +52,7 @@ const ProductList = () => {
                         </svg>
 
                         <a href="#" className="ml-1 text-lg text-c-gray-800 hover:underline md:ml-2">
-                            Woman
+                            Men
                         </a>
                     </div>
                 </li>
@@ -62,7 +62,7 @@ const ProductList = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                         <span className="ml-1 text-lg font-medium text-c-gray-800 hover:underline md:ml-2">
-                            Western Wear
+                            Oxford Casual Shirts
                         </span>
                     </div>
                 </li>

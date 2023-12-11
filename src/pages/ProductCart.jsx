@@ -1,40 +1,41 @@
 import { trashIcon } from "../assets/icons"
 import { dress, dress2 } from "../assets/images"
 import { useNavigate } from 'react-router-dom'
+import { GEGreen1, Maroon, White } from "../assets/images/men"
 
 const products = [
     {
         id: 1,
-        name: 'Vark Embroidered Light Beige Kurta with Palazzos & Dupatta',
+        name: 'Oxford Casual Shirts - Sage Green',
         href: '#',
-        price: '₹47,199',
-        originalPrice: '₹48,900',
+        price: '₹1,999',
+        originalPrice: '₹2,999',
         discount: '5% Off',
-        color: 'Light Beige',
+        color: 'Sage Green',
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: dress
+        imageSrc: GEGreen1
     },
     {
         id: 2,
-        name: 'Kurta with Palazzos & Dupatta',
+        name: 'Oxford Casual Shirts - White',
         href: '#',
         price: '₹1,549',
         originalPrice: '₹2,499',
-        discount: '38% off',
-        color: 'Beige',
+        discount: '8% off',
+        color: 'White',
         leadTime: '3-4 weeks',
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: dress2
+        imageSrc: White
     },
     {
         id: 3,
-        name: 'Vark Embroidered Light Beige Kurta with Palazzos & Dupatta',
+        name: 'Oxford Casual Shirts - Maroon',
         href: '#',
-        price: '₹2219 ',
-        originalPrice: '₹9999',
-        discount: '78% off',
+        price: '₹2219',
+        originalPrice: '₹2,999',
+        discount: '8% off',
         color: 'Light Beige',
-        imageSrc: dress
+        imageSrc: Maroon
     },
 ]
 

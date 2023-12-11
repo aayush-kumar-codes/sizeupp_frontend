@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
 import { chevronDownIcon, starIcon } from "../assets/icons"
-import { dress } from "../assets/images"
+import { dress, dress3 } from "../assets/images"
 import { styles } from "../style"
+import { GEGreen1 } from "../assets/images/men"
 
 export const ProductFav = () => {
     return (
@@ -42,11 +43,11 @@ export const ProductFav = () => {
                 <div className="mx-auto flex flex-wrap items-center lg:w-4/5">
                     <img
                         alt="dress"
-                        className="h-64 w-full rounded object-contain lg:h-96 lg:w-1/2"
-                        src={dress}
+                        className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
+                        src={GEGreen1}
                     />
                     <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
-                        <h2 className="my-4 text-3xl font-semibold text-black">Vark Embroidered Light Beige Kurta with Palazzos & Dupatta</h2>
+                        <h2 className="my-4 text-3xl font-semibold text-black">Oxford Casual Shirts - Sage Green</h2>
                         <div className="my-4 flex items-center">
                             <span className="flex items-center space-x-1">
                                 {[...Array(5)].map((_, i) => (
@@ -56,8 +57,7 @@ export const ProductFav = () => {
                             </span>
                         </div>
                         <p className="leading-relaxed">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur rem amet repudiandae
-                            neque adipisci eum enim, natus illo inventore totam?
+                            Machine Wash. Tumble Dry. Do Not Bleach. Wash Dark Color Separately. Warm Iron. Dry In Shade Do Not Iron On Print
                         </p>
                         <div className="mb-5 mt-6 flex items-center border-b-2 border-c-gray-100 pb-5">
                             <div className="flex items-center">
@@ -81,7 +81,7 @@ export const ProductFav = () => {
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
-                            <span className="title-font text-xl font-bold text-c-gray-900">₹2,999</span>
+                            <span className="title-font text-xl font-bold text-c-gray-900">₹1,999</span>
                             <button
                                 type="button"
                                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
