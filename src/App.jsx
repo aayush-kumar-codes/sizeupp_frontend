@@ -8,6 +8,7 @@ import { ProductCart } from "./pages/ProductCart"
 import Home from "./pages/Home"
 import { ProductFav } from "./pages/ProductFav"
 import { ProductBilling } from "./pages/ProductBilling"
+import { Login } from "./pages/Login"
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/products" element={<Layout />} >
             <Route index element={<ProductList />} />
             <Route path="overview" element={<ProductOverview />} />

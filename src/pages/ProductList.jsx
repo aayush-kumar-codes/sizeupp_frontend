@@ -78,7 +78,7 @@ const ProductList = () => {
                         return (
                             <div key={i} className="aspect-[3/4] relative">
                                 <div onClick={() => { addToFavorite(items.id); }} className={`w-1/12 cursor-pointer absolute top-4 right-4 `}><img src={items.isFavorite ? heartFillIcon : heartIcon} alt="heart" /></div>
-                                <img onClick={() => { navigate("overview") }} className="object-cover w-full h-full cursor-pointer" src={items.image} alt="dress" />
+                                <img onClick={() => { navigate("overview") }} className="object-cover w-full h-full rounded-lg cursor-pointer" src={items.image} alt="dress" />
                                 <div className={`${grid == 6 && "hidden"}`}>
                                     <div className='text-lg text-accent'>{items.name}</div>
                                     <div className='text-lg text-accent'>&#8377; {items.price}</div>

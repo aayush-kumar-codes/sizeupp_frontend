@@ -9,6 +9,7 @@ import trashIcon from './trash.svg'
 import chevronDownIcon from './chevrondown.svg'
 import starIcon from './star.svg'
 import XIcon from './x.svg'
+import arrowRightIcon from './arrowright.svg'
 
 export {
     searchIcon,
@@ -21,5 +22,6 @@ export {
     trashIcon,
     chevronDownIcon,
     starIcon,
+    arrowRightIcon,
     XIcon
 }
