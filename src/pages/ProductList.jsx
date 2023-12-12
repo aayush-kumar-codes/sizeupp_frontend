@@ -5,9 +5,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { heartFillIcon, heartIcon } from '../assets/icons'
 import { products } from '../constants/products'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
+import Carousel from '../components/Custom/Carousel'
 
 const ProductList = () => {
-    const [grid, setGrid] = React.useState(4)
+    const [grid, setGrid] = React.useState(3)
     const [mgrid, setMGrid] = React.useState(2)
     const [sgrid, setSGrid] = React.useState(2)
 
@@ -76,9 +77,8 @@ const ProductList = () => {
                 {grid ? <CustomGrid gridSize={grid}>
                     {Products.map((items, i) => {
                         return (
-                            <div key={i} className="aspect-[3/4] relative">
-                                <div onClick={() => { addToFavorite(items.id); }} className={`w-1/12 cursor-pointer absolute top-4 right-4 `}><img src={items.isFavorite ? heartFillIcon : heartIcon} alt="heart" /></div>
-                                <img onClick={() => { navigate("overview") }} className="object-cover w-full h-full rounded-lg cursor-pointer" src={items.image} alt="dress" />
+                            <div key={i} className="" >    
+                                <Carousel id={items.id} isFav={items.isFavorite} func={()=>addToFavorite(items.id)} slides={items.images} />
                                 <div className={`${grid == 6 && "hidden"}`}>
                                     <div className='text-lg text-accent'>{items.name}</div>
                                     <div className='text-lg text-accent'>&#8377; {items.price}</div>

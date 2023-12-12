@@ -1,10 +1,42 @@
 import { Link } from "react-router-dom"
 import { chevronDownIcon, starIcon } from "../assets/icons"
-import { dress, dress3 } from "../assets/images"
 import { styles } from "../style"
 import { GEGreen1 } from "../assets/images/men"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../context/AuthProvider"
 
 export const ProductFav = () => {
+    const [favData, setFavData] = useState([])
+    const {isAuth} = useContext(AuthContext);
+
+    useEffect(() => {
+        // const token = localStorage.getItem("token");
+        // if (token) {
+        //     fetch('https://stark-falls-25364.herokuapp.com/api/v1/favourite', {
+        //         method: 'GET',
+        //     }).then(res => res.json())
+        //         .then(data => {
+        //             console.log(data)
+        //             setFavData(data.data)
+        //         })
+        // }
+    }, [])
+
+    const handleRemove = async(id) => {
+        // const data = await fetch('',{
+        //     method : 'POST',
+        //     headers : {
+        //         'Content-Type' : 'application/json'
+        //     },
+        //     body : JSON.stringify({
+        //         id
+        //     })
+        // })
+        // const res = await data.json()
+        // console.log(res)
+    }
+
+
     return (
         <section className={`overflow-hidden ${styles.padding}`}>
             {/* Nav menu- Breadcrumb */}
@@ -36,7 +68,7 @@ export const ProductFav = () => {
 
             <div className={`${styles.paddingX}`}>
                 <h2 className={`my-4 text-4xl font-semibold`}>My Wishlist</h2>
-                <div className="mt-8 text-lg text-c-gray">Wishlist is not saved permanently yet. Please <Link to="/register" className="underline text-accent">Register</Link> or <Link to="/login" className="underline text-accent">Login</Link></div>
+                {!isAuth && <div className="mt-8 text-lg text-c-gray">Wishlist is not saved permanently yet. Please <Link to="/register" className="underline text-accent">Register</Link> or <Link to="/login" className="underline text-accent">Login</Link></div>}
             </div>
 
             <div className=" px-4 py-8">

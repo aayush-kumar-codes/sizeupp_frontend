@@ -1,16 +1,22 @@
 import { styles } from "../style"
 import { chevronDownIcon } from "../assets/icons"
 import { dress } from "../assets/images"
+import { Link } from "react-router-dom"
 const Megamenu = () => {
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-white shadow z-50`}>
             {/* layout prefixer */}
             <div className={`flex items-center gap-10 max-w-5xl mx-auto`}>
-
+                {/* All Products */}
+                <div className="group">
+                    <Link to="/products" className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
+                        All Products
+                    </Link>
+                </div>
                 {/* Online Only */}
                 <div className="group">
                     <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
-                        Online Only
+                        Sales
                         <img src={chevronDownIcon} alt="chvrondown" className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
@@ -45,7 +51,7 @@ const Megamenu = () => {
                 {/* Man */}
                 <div className="group">
                     <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
-                        Man
+                        Men
                         <img src={chevronDownIcon} alt="chvrondown" className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:flex flex-col absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
@@ -56,11 +62,10 @@ const Megamenu = () => {
                 {/* Kids */}
                 <div className="group">
                     <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
-                        Kids
+                        Asscessories
                         <img src={chevronDownIcon} alt="chvrondown" className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:flex flex-col absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-
                     </div>
                 </div>
 

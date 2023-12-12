@@ -1,0 +1,107 @@
+import React from 'react'
+import { chevronLeftIcon, chevronRightIcon, heartFillIcon, heartIcon } from '../../assets/icons'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
+const Carousel = ({
+  slides = [],
+  slideInterval = 1200,
+  func = () => { },
+  isFav
+}) => {
+
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+  const [autoSlide, setAutoSlide] = React.useState(false)
+
+
+  const [intervalId, setIntervalId] = React.useState(null)
+
+  const onMouseHover = () => {
+    console.log("Hovered")
+    setAutoSlide(true)
+    setIntervalId(setInterval(() => { setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1)) }, slideInterval))
+  }
+
+  const onMouseLeave = () => {
+    console.log("Left")
+    setCurrentSlide(0)
+    setAutoSlide(false)
+    clearInterval(intervalId)
+    setIntervalId(null)
+  }
+
+  const prev = async () => {
+    if (autoSlide) {
+      await onMouseLeave()
+    }
+    setCurrentSlide((s) => (s === 0 ? slides.length - 1 : s - 1))
+  }
+
+  const next = async () => {
+    if (autoSlide) {
+      await onMouseLeave()
+    }
+    setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1))
+  }
+
+  const navigate = useNavigate()
+  return (
+    <div className="overflow-hidden relative" onMouseEnter={onMouseHover} onMouseLeave={onMouseLeave}>
+      <div
+        className="flex transition-transform cursor-pointer ease-out duration-500 z-50 aspect-[3/4]"
+        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+
+      >
+
+        {slides.map((slide, i) => (
+          <img
+            key={i}
+            onClick={() => { navigate(`overview`) }}
+            className="object-cover w-full h-full cursor-pointer rounded-lg"
+            src={slide}
+            alt="dress"
+          />
+        ))
+        }
+      </div>
+      <div onClick={func} className={`w-1/12 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}><img src={isFav ? heartFillIcon : heartIcon} alt="heart" /></div>
+
+      <button
+        onClick={prev}
+        className="p-1 rounded-full shadow absolute ml-2 top-1/2 bg-white/80 text-gray-800 hover:bg-white"
+      >
+        <img src={chevronLeftIcon} alt="left chevron" className='w-4' />
+      </button>
+      <button
+        onClick={next}
+        className="p-1 rounded-full absolute mr-2 top-1/2 right-0 shadow bg-white/80 text-gray-800 hover:bg-white"
+      >
+        <img src={chevronRightIcon} alt={"right chevron"} className='w-4' />
+      </button>
+
+      <div className="absolute bottom-4 right-0 left-0">
+        <div className="flex items-center justify-center gap-2">
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              className={`
+              transition-all w-3 h-3 bg-white rounded-full
+              ${currentSlide === i ? "p-2" : "bg-opacity-50"}
+            `}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+Carousel.propTypes = {
+  slides: PropTypes.arrayOf(PropTypes.string).isRequired,
+  slideInterval: PropTypes.number,
+  id: PropTypes.number,
+  func: PropTypes.func,
+  isFav: PropTypes.bool
+}
+
+export default Carousel

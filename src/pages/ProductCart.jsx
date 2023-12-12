@@ -1,7 +1,7 @@
 import { trashIcon } from "../assets/icons"
-import { dress, dress2 } from "../assets/images"
 import { useNavigate } from 'react-router-dom'
-import { GEGreen1, Maroon, White } from "../assets/images/men"
+import { GEGreen1, Maroon1 as Maroon, White1 as White } from "../assets/images/men"
+import PropTypes from 'prop-types'
 
 const products = [
     {
@@ -151,12 +151,12 @@ export function ProductCart() {
                                     </dt>
                                     <dd className="text-sm font-medium text-green-700">- ₹ 3,431</dd>
                                 </div>
-                                <div className="flex items-center justify-between py-4">
+                                {/* <div className="flex items-center justify-between py-4">
                                     <dt className="flex text-sm text-c-gray-800">
                                         <span>Delivery Charges</span>
                                     </dt>
                                     <dd className="text-sm font-medium text-green-700">Free</dd>
-                                </div>
+                                </div> */}
                                 <div className="flex items-center justify-between border-y border-dashed py-4 ">
                                     <dt className="text-base font-medium text-c-gray-900">Total Amount</dt>
                                     <dd className="text-base font-medium text-c-gray-900">₹ 48,967</dd>
@@ -178,4 +178,8 @@ export function ProductCart() {
             </div>
         </div>
     )
+}
+
+ProductCart.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.object)
 }

@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { arrowRightIcon } from "../assets/icons";
-import { dress } from "../assets/images";
-import { Navbar } from "../components/Navbar";
 import Error from "../components/Alerts/Error";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GEGreen2 } from "../assets/images/men";
+import Success from "../components/Alerts/Success";
+import { AuthContext } from "../context/AuthProvider";
 
 export function Login() {
+
+    const { setIsAuth } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
         email: "",
@@ -17,8 +19,11 @@ export function Login() {
 
     const [alert, setAlert] = useState({
         alertmsg: "",
-        type: true
+        type: true,
+        onClose: () => { }
     })
+
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         setFormData({
@@ -27,7 +32,7 @@ export function Login() {
         })
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(formData)
         if (formData.email === "" || formData.password === "") {
             setAltcls(true)
@@ -37,17 +42,54 @@ export function Login() {
             })
         }
         else {
-            setAltcls(true)
-            setAlert({
-                alertmsg: "Login Successful",
-                type: true
+            const res = await fetch('https://traxzen.pythonanywhere.com/api/auth/signin', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
             })
+
+            const data = await res.json()
+            console.log(data)
+            if (data.token) {
+                localStorage.setItem("token", data.token)
+                setAltcls(true)
+                setAlert({
+                    alertmsg: data.message,
+                    type: true,
+                    onClose: () => { navigate('/products') }
+                })
+                setFormData({
+                    email: "",
+                    password: ""
+                })
+                setIsAuth(true)
+
+            }
+            else {
+                setAltcls(true)
+                setFormData({
+                    email: "",
+                    password: ""
+                })
+                setAlert({
+                    alertmsg: data.message,
+                    type: false
+                })
+            }
         }
     }
+
+    if (localStorage.getItem("token")) {
+        navigate("/products")
+        return
+    }
+    
     return (
         <section className="h-screen min-h-screen">
-            <Navbar />
-            <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />
+            {!alert.type && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
+            {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
             <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
                 <div className="relative flex items-end px-4 pb-10 pt-60 sm:px-6 sm:pb-16 md:justify-center lg:px-8 lg:pb-24">
                     <div className="absolute inset-0">

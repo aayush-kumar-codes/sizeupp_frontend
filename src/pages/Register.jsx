@@ -1,11 +1,140 @@
-import { Link } from "react-router-dom"
-import { Navbar } from "../components/Navbar"
+import { Link, useNavigate } from "react-router-dom"
+import Error from "../components/Alerts/Error"
+import Success from "../components/Alerts/Success"
+import { useContext, useState } from "react"
+import { AuthContext } from "../context/AuthProvider"
 
 const Register = () => {
+    const [form, setForm] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        phone: '',
+        newsletter: false
+    })
+
+    const { setIsAuth } = useContext(AuthContext)
+
+    const [altcls, setAltcls] = useState(false)
+
+    const [alert, setAlert] = useState({
+        alertmsg: "",
+        type: true
+    })
+
+    const navigate = useNavigate()
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            console.log(form)
+            if (form.first_name === '' || form.last_name === '' || form.email === '' || form.password === '' || form.password_confirmation === '' || form.phone === '') {
+                console.log("Please fill all the fields")
+                setAltcls(true)
+                setAlert({
+                    alertmsg: "Please fill all the fields",
+                    type: false
+                })
+                return
+            }
+
+            if (!form.email.includes('@') || !form.email.includes('.')) {
+                console.log("Invalid Email")
+                setAltcls(true)
+                setAlert({
+                    alertmsg: "Invalid Email",
+                    type: false
+                })
+                return
+            }
+
+
+            if (form.phone.length !== 10) {
+                console.log("Mobile number must be 10 digits long")
+                setAltcls(true)
+                setAlert({
+                    alertmsg: "Mobile number must be 10 digits long",
+                    type: false
+                })
+                return
+            }
+
+            if (form.password !== form.password_confirmation) {
+                console.log("Password and Confirm Password must be same")
+                setAltcls(true)
+                setAlert({
+                    alertmsg: "Password and Confirm Password must be same",
+                    type: false
+                })
+                return
+            }
+
+            if (form.password.length < 8) {
+                console.log("Password must be atleast 8 characters long")
+                setAltcls(true)
+                setAlert({
+                    alertmsg: "Password must be atleast 8 characters long",
+                    type: false
+                })
+                return
+            }
+
+            const res = await fetch('https://traxzen.pythonanywhere.com/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            })
+            const data = await res.json()
+            console.log(data)
+            if (data.token) {
+                localStorage.setItem("token", data.token)
+                setAltcls(true)
+                setAlert({
+                    alertmsg: data.message,
+                    type: true
+                })
+                setForm({
+                    email: "",
+                    password: ""
+                })
+                setIsAuth(true)
+                navigate("/products")
+            }
+            else {
+                setAltcls(true)
+                setForm({
+                    email: "",
+                    password: ""
+                })
+                setAlert({
+                    alertmsg: data.message,
+                    type: false
+                })
+            }
+        } catch (error) {
+            console.log("Error", error)
+        }
+
+    }
+
+    if (localStorage.getItem("token")) {
+        navigate("/products")
+        return
+    }
+
     return (
 
         <section className="bg-white">
-            <Navbar />
+            {alert.type === false && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />}
+            {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} />}
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
                 <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
                     <img
@@ -54,6 +183,7 @@ const Register = () => {
                                     id="FirstName"
                                     placeholder="Enter First Name"
                                     name="first_name"
+                                    onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
@@ -68,11 +198,12 @@ const Register = () => {
                                     id="LastName"
                                     placeholder="Your Last Name"
                                     name="last_name"
+                                    onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
 
-                            <div className="col-span-6">
+                            <div className="col-span-6 sm:col-span-3">
                                 <label htmlFor="Email" className="block text-sm font-medium text-c-gray-700"> Email </label>
 
                                 <input
@@ -80,6 +211,22 @@ const Register = () => {
                                     placeholder="Enter your Email address"
                                     id="Email"
                                     name="email"
+                                    onChange={handleChange}
+                                    className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                />
+
+                            </div>
+                            <div className="col-span-6 sm:col-span-3">
+                                <label htmlFor="LastName" className="block text-sm font-medium text-c-gray-700">
+                                    Mobile Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="Phone Number"
+                                    placeholder="Your Mobile Number"
+                                    name="phone"
+                                    onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
@@ -92,6 +239,7 @@ const Register = () => {
                                     id="Password"
                                     placeholder="Enter your Password"
                                     name="password"
+                                    onChange={handleChange}
                                     className="mt-1 w-full ring-1 ring-link rounded-xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
@@ -106,6 +254,7 @@ const Register = () => {
                                     id="PasswordConfirmation"
                                     placeholder="Confirm your Password"
                                     name="password_confirmation"
+                                    onChange={handleChange}
                                     className="mt-1 w-full ring-1 ring-link rounded-xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
                             </div>
@@ -115,13 +264,14 @@ const Register = () => {
                                     <input
                                         type="checkbox"
                                         id="MarketingAccept"
-                                        name="marketing_accept"
+                                        name="newsletter"
+                                        onChange={handleChange}
                                         className="h-5 w-5 rounded-md border-c-gray-200 bg-white shadow-sm"
                                     />
 
-                                    {/* <span className="text-sm text-c-gray-700">
+                                    <span className="text-sm text-c-gray-700">
                                         I want to receive emails about events, product updates and company announcements.
-                                    </span> */}
+                                    </span>
                                 </label>
                             </div>
 
@@ -136,6 +286,7 @@ const Register = () => {
 
                             <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                                 <button
+                                    onClick={handleSubmit}
                                     className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                                 >
                                     Create an account
@@ -143,7 +294,7 @@ const Register = () => {
 
                                 <p className="mt-4 text-sm text-c-gray-500 sm:mt-0">
                                     Already have an account?
-                                    <Link to="/login"  className="text-c-gray-700 underline">Log in</Link>.
+                                    <Link to="/login" className="text-c-gray-700 underline">Log in</Link>.
                                 </p>
                             </div>
                         </form>

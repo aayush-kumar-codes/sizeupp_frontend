@@ -9,6 +9,9 @@ import Home from "./pages/Home"
 import { ProductFav } from "./pages/ProductFav"
 import { ProductBilling } from "./pages/ProductBilling"
 import { Login } from "./pages/Login"
+import ProtectedRoute from "./utils/ProtectedRoute"
+import LayoutAuth from "./layout/LayoutAuth"
+import Notfound from "./pages/NotFound"
 
 const App = () => {
   return (
@@ -16,17 +19,24 @@ const App = () => {
       <BrowserRouter>
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<LayoutAuth />} >
+            <Route index element={<Home />} />
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+          </Route >
           <Route path="/products" element={<Layout />} >
             <Route index element={<ProductList />} />
             <Route path="overview" element={<ProductOverview />} />
             <Route path="cart" element={<ProductCart />} />
             <Route path="favourite" element={<ProductFav />} />
-            <Route path="billing" element={<ProductBilling />} />
+            <Route path="billing" element={
+              <ProtectedRoute>
+                <ProductBilling />
+              </ProtectedRoute>
+            } />
           </Route>
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<Notfound />} />
+
         </Routes>
       </BrowserRouter>
     </div>

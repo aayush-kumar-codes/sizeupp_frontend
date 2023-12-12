@@ -1,9 +1,10 @@
-import { GEGreen1,White,Wine, Maroon, Darknavy, Skyblue } from "../assets/images/men";
+import { 
+    GEGreen1 ,GEGreen2, GEGreen3, GEGreen4, GEGreen5,Wine1,Wine2,Wine3,Wine4,Wine5,Maroon1,Maroon2,Maroon3,Maroon4,Maroon5,Darknavy1,Darknavy2,Darknavy3,Darknavy4,Darknavy5,White1,White2,White3,White4,White5,Skyblue1,Skyblue2,Skyblue3,Skyblue4,Skyblue5 } from "../assets/images/men";
 
 export const products = [
     {
         id: 1,
-        image : GEGreen1,
+        images : [GEGreen1,GEGreen2,GEGreen3,GEGreen4,GEGreen5],
         name : "Oxford Casual Shirts - Sage Green",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -15,7 +16,7 @@ export const products = [
     },
     {
         id: 2,
-        image : White,
+        images: [White1,White2,White3,White4,White5],
         name : "Oxford Casual Shirts - White",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -27,7 +28,7 @@ export const products = [
     },
     {
         id: 3,
-        image : Darknavy,
+        images : [Darknavy1,Darknavy2,Darknavy3,Darknavy4,Darknavy5],
         name : "Oxford Casual Shirts - Dark Navy",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -39,7 +40,7 @@ export const products = [
     },
     {
         id: 4,
-        image : Skyblue,
+        images : [Skyblue1,Skyblue2,Skyblue3,Skyblue4,Skyblue5],
         name : "Oxford Casual Shirts - Sky Blue",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -51,7 +52,7 @@ export const products = [
     },
     {
         id: 5,
-        image : Maroon,
+        images : [Maroon1,Maroon2,Maroon3,Maroon4,Maroon5],
         name : "Oxford Casual Shirts - Maroon",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -63,7 +64,7 @@ export const products = [
     },
     {
         id: 6,
-        image : Wine,
+        images : [Wine1,Wine2,Wine3,Wine4,Wine5],
         name : "Oxford Casual Shirts - Wine",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -75,7 +76,7 @@ export const products = [
     },
     {
         id: 7,
-        image : GEGreen1,
+        images : [GEGreen1,GEGreen2,GEGreen3,GEGreen4,GEGreen5],
         name : "Oxford Casual Shirts - Sage Green",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -87,7 +88,7 @@ export const products = [
     },
     {
         id: 8,
-        image : White,
+        images: [White1,White2,White3,White4,White5],
         name : "Oxford Casual Shirts - White",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -99,7 +100,7 @@ export const products = [
     },
     {
         id: 9,
-        image : Darknavy,
+        images : [Darknavy1,Darknavy2,Darknavy3,Darknavy4,Darknavy5],
         name : "Oxford Casual Shirts - Dark Navy",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -111,7 +112,7 @@ export const products = [
     },
     {
         id: 10,
-        image : Skyblue,
+        images : [Skyblue1,Skyblue2,Skyblue3,Skyblue4,Skyblue5],
         name : "Oxford Casual Shirts - Sky Blue",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -123,7 +124,7 @@ export const products = [
     },
     {
         id: 11,
-        image : Maroon,
+        images : [Maroon1,Maroon2,Maroon3,Maroon4,Maroon5],
         name : "Oxford Casual Shirts - Maroon",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -135,7 +136,7 @@ export const products = [
     },
     {
         id: 12,
-        image : Wine,
+        images : [Wine1,Wine2,Wine3,Wine4,Wine5],
         name : "Oxford Casual Shirts - Wine",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,
@@ -144,5 +145,5 @@ export const products = [
         quantity : 1,
         description : "Machine Wash. Tumble Dry. Do Not Bleach. Wash Dark Color Separately. Warm Iron. Dry In Shade Do Not Iron On Print",	
         isFavorite: false, 
-    },
+    }
 ]

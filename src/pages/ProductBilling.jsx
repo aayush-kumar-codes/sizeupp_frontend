@@ -1,45 +1,130 @@
 
 import { Link } from 'react-router-dom'
 import { XIcon } from '../assets/icons'
-import { dress, dress2 } from '../assets/images'
 import { styles } from '../style'
+import { useState } from 'react'
+import { GEGreen1, Maroon1, Wine1 } from '../assets/images/men'
 
 const products = [
     {
         id: 1,
-        name: 'Vark Embroidered Light Beige Kurta with Palazzos & Dupatta',
+        name: 'Oxford Casual Shirts - Sage Green',
         href: '#',
-        price: '₹47,199',
-        originalPrice: '₹48,900',
+        price: '₹2,199',
+        originalPrice: '₹2,900',
         discount: '5% Off',
-        color: 'Light Beige',
+        color: 'Sage Green',
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: dress
+        imageSrc: GEGreen1
     },
     {
         id: 2,
-        name: 'Kurta with Palazzos & Dupatta',
+        name: 'Oxford Casual Shirts - Maroon',
         href: '#',
         price: '₹1,549',
         originalPrice: '₹2,499',
         discount: '38% off',
-        color: 'Beige',
+        color: 'Maroon',
         leadTime: '3-4 weeks',
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: dress2
+        imageSrc: Maroon1
     },
     {
         id: 3,
-        name: 'Vark Embroidered Light Beige Kurta with Palazzos & Dupatta',
+        name: 'Oxford Casual Shirts - Wine',
         href: '#',
-        price: '₹2219 ',
-        originalPrice: '₹9999',
+        price: '₹2,219 ',
+        originalPrice: '₹2999',
         discount: '78% off',
-        color: 'Light Beige',
-        imageSrc: dress
+        color: 'Wine',
+        imageSrc: Wine1
     },
 ]
+
 export function ProductBilling() {
+    const [cart, setCart] = useState([])
+
+    // const handleRemove = async(id) => {
+    //     const data = await fetch('',{
+    //         method : 'POST',
+    //         headers : {
+    //             'Content-Type' : 'application/json'
+    //         },
+    //         body : JSON.stringify({
+    //             id
+    //         })
+    //     })
+    //     const res = await data.json()	
+    //     console.log(res)
+    // }
+
+    const [form, setForm] = useState({
+        fullname: '',
+        email: '',
+        address: '',
+        coupon: '',
+        pincode: '',
+        city: '',
+        state: '',
+        cardno: "",
+        cvc: "",
+        expirationdate: ""
+    })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setForm({ ...form, [name]: value })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        console.log(form)
+        // const data = await fetch('',{
+        //     method : 'POST',
+        //     headers : {
+        //         'Content-Type' : 'application/json'
+        //     },
+        //     body : JSON.stringify({
+        //         form
+        //     })
+        // })
+        // const res = await data.json()	
+        // console.log(res)
+    }
+
+    const validateCoupon = async (e) => {
+        e.preventDefault()
+        console.log(form)
+        // const data = await fetch('',{
+        //     method : 'POST',
+        //     headers : {
+        //         'Content-Type' : 'application/json'
+        //     },
+        //     body : JSON.stringify({
+        //         form
+        //     })
+        // })
+        // const res = await data.json()
+        // console.log(res)
+    }
+
+    const handleApplyCoupon = async (e) => {
+        e.preventDefault()
+        console.log(form)
+        // validateCoupon()
+        // const data = await fetch('',{
+        //     method : 'POST',
+        //     headers : {
+        //         'Content-Type' : 'application/json'
+        //     },
+        //     body : JSON.stringify({
+        //         form
+        //     })
+        // })
+        // const res = await data.json()	
+        // console.log(res)
+    }
+
     return (
         <div className={`${styles.padding} mx-10 my-6`}>
             {/* Nav menu- Breadcrumb */}
@@ -82,7 +167,7 @@ export function ProductBilling() {
                                         <div className="flex flex-1 items-stretch">
                                             <div className="flex-shrink-0">
                                                 <img
-                                                    className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-contain"
+                                                    className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-cover"
                                                     src={product.imageSrc}
                                                     alt={product.imageSrc}
                                                 />
@@ -100,6 +185,7 @@ export function ProductBilling() {
                                         <div className="ml-auto flex flex-col items-end justify-between">
                                             <p className="text-right text-sm font-bold text-gray-900">{product.price}</p>
                                             <button
+                                                onClick={handleApplyCoupon}
                                                 type="button"
                                                 className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                                             >
@@ -148,58 +234,211 @@ export function ProductBilling() {
                         <div className="flow-root">
                             <div className="-my-6 divide-y divide-gray-200">
                                 <div className="py-6">
-                                    <h2 className="text-lg font-semibold">Contact Information</h2>
-
-                                    <form action="#" className="mt-6">
-                                        <div className="space-y-5">
-                                            <div className="grid w-full max-w-sm items-center gap-1.5">
-                                                <label
-                                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    htmlFor="name"
-                                                >
-                                                    Full Name
-                                                </label>
-                                                <input
-                                                    className="flex w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                    type="text"
-                                                    id="name"
-                                                    placeholder="Full Name"
-                                                />
-                                            </div>
-                                            <div className="grid w-full max-w-sm items-center gap-1.5">
-                                                <label
-                                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    htmlFor="email"
-                                                >
-                                                    Email
-                                                </label>
-                                                <input
-                                                    className="flex w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                    type="email"
-                                                    id="email"
-                                                    placeholder="Email"
-                                                />
-                                            </div>
+                                    <form>
+                                        <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
                                             <div>
+                                                <h3
+                                                    id="contact-info-heading"
+                                                    className="text-lg font-semibold text-gray-900"
+                                                >
+                                                    Contact information
+                                                </h3>
+
+                                                <div className="mt-4 w-full">
+                                                    <label
+                                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                        htmlFor="name"
+                                                    >
+                                                        Full Name
+                                                    </label>
+                                                    <input
+                                                        className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                        type="text"
+                                                        name="fullname"
+                                                        onChange={handleChange}
+                                                        placeholder="Enter your name"
+                                                        id="name"
+                                                    ></input>
+                                                </div>
+                                            </div>
+                                            <hr className="my-8" />
+                                            <div className="mt-10">
+                                                <h3 className="text-lg font-semibold text-gray-900">Payment details</h3>
+
+                                                <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
+                                                    <div className="col-span-3 sm:col-span-4">
+                                                        <label
+                                                            htmlFor="cardNum"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            Card number
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                                type="text"
+                                                                name="cardno"
+                                                                onChange={handleChange}
+                                                                placeholder="4242 4242 4242 4242"
+                                                                id="cardNum"
+                                                            ></input>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-span-2 sm:col-span-3">
+                                                        <label
+                                                            htmlFor="expiration-date"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            Expiration date (MM/YY)
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                type="date"
+                                                                name="expirationdate"
+                                                                onChange={handleChange}
+                                                                id="expirationdate"
+                                                                autoComplete="cc-exp"
+                                                                className="block h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label
+                                                            htmlFor="cvc"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            CVC
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                type="text"
+                                                                name="cvc"
+                                                                onChange={handleChange}
+                                                                id="cvc"
+                                                                autoComplete="csc"
+                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className="my-8" />
+                                            <div className="mt-10">
+                                                <h3 className="text-lg font-semibold text-gray-900">Shipping address</h3>
+
+                                                <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
+                                                    <div className="sm:col-span-3">
+                                                        <label
+                                                            htmlFor="address"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            Address
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                type="text"
+                                                                id="address"
+                                                                onChange={handleChange}
+                                                                name="address"
+                                                                autoComplete="street-address"
+                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label
+                                                            htmlFor="city"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            City
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                type="text"
+                                                                id="city"
+                                                                onChange={handleChange}
+                                                                name="city"
+                                                                autoComplete="address-level2"
+                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label
+                                                            htmlFor="state"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            State / Province
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                type="text"
+                                                                id="state"
+                                                                onChange={handleChange}
+                                                                name="state"
+                                                                autoComplete="address-level1"
+                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label
+                                                            htmlFor="pincode"
+                                                            className="block text-sm font-medium text-gray-700"
+                                                        >
+                                                            Postal code
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <input
+                                                                type="text"
+                                                                id="pincode"
+                                                                onChange={handleChange}
+                                                                name="pincode"
+                                                                autoComplete="pincode"
+                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className="my-8" />
+                                            <div className="mt-10">
+                                                <h3 className="text-lg font-semibold text-gray-900">Billing information</h3>
+
+                                                <div className="mt-6 flex items-center">
+                                                    <input
+                                                        id="same-as-shipping"
+                                                        name="same-as-shipping"
+                                                        type="checkbox"
+                                                        defaultChecked
+                                                        className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                                                    />
+                                                    <div className="ml-2">
+                                                        <label
+                                                            htmlFor="same-as-shipping"
+                                                            className="text-sm font-medium text-gray-900"
+                                                        >
+                                                            Same as shipping information
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-10 flex justify-end border-t border-gray-200 pt-6">
                                                 <button
                                                     type="button"
-                                                    className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    onClick={handleSubmit}
+                                                    className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
-                                                    Get Started
+                                                    Make payment
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
-                                </div>
-
-                                <div className="py-6">
-                                    <h2 className="text-lg font-semibold text-gray-500 cursor-pointer hover:underline">Shipping Information</h2>
-                                </div>
-                                <div className="py-6">
-                                    <h2 className="text-lg font-semibold text-gray-500 cursor-pointer hover:underline">Billing Information</h2>
-                                </div>
-                                <div className="py-6">
-                                    <h2 className="text-lg font-semibold text-gray-500 cursor-pointer hover:underline">Payment Method</h2>
                                 </div>
                             </div>
                         </div>

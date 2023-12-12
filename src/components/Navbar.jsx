@@ -1,14 +1,19 @@
-import React from 'react'
+import React, {  useContext } from 'react'
 import { styles } from '../style'
 import { cartIcon, heartIcon } from '../assets/icons'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/AuthProvider'
+
+const noAuthMenuItems = [
+    { name: "Sign in", href: "/login" },
+    { name: "Sign up", href: "/register" },
+]
+
 const menuItems = [
     {
-        name: 'Sign in',
-        href: '/register',
+        name: "Logout",
+        href: "/login"
     }
-
 ]
 
 export function Navbar() {
@@ -20,6 +25,20 @@ export function Navbar() {
 
     const navigate = useNavigate()
 
+    const { isAuth,setIsAuth } = useContext(AuthContext)
+    console.log(isAuth)
+
+    const handleLogout = (name,href) => {
+       console.log(name, href)
+       console.log("Logout")
+        if (name === 'Logout') {
+            console.log("Logout")
+            localStorage.removeItem('token');
+            setIsAuth(false);
+            navigate(href);
+        }
+    }
+
     return (
         // container
         <div className={`${styles.paddingX} inset-0 w-full bg-white sticky z-50`}>
@@ -27,7 +46,7 @@ export function Navbar() {
             <div className="flex items-center justify-between py-4">
 
                 {/* brand title */}
-                <Link to="/products" className='text-2xl tracking-widest uppercase font-semibold cursor-pointer'>
+                <Link to="/" className='text-2xl tracking-widest uppercase font-semibold cursor-pointer'>
                     Sizeupp
                 </Link>
 
@@ -49,11 +68,21 @@ export function Navbar() {
                         <li >
                             <img onClick={() => { navigate("/products/cart") }} src={cartIcon} alt="cartIcon" className='w-6 h-6 cursor-pointer' />
                         </li>
-                        {menuItems.map((item) => (
+                        {!isAuth && noAuthMenuItems.map((item) => (
                             <li key={item.name} className='flex justify-center item-center'>
                                 <Link to={item.href} className="text-sm font-medium text-c-gray-900 hover:underline">
                                     {item.name}
                                 </Link>
+                            </li>
+                        ))}
+
+                        {isAuth && menuItems.map((item) => (
+                            <li onClick={() => {
+                                handleLogout(item.name, item.href)
+                            }} key={item.name} className='flex justify-center cursor-pointer item-center'>
+                                <div className="text-sm font-medium text-c-gray-900 hover:underline">
+                                    {item.name}
+                                </div>
                             </li>
                         ))}
                     </ul>

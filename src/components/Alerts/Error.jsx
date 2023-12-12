@@ -1,9 +1,11 @@
 import { XIcon } from "../../assets/icons"
+import PropTypes from 'prop-types'
 
 const Error = ({
     error = "Network Error",
     display = false,
-    setDisplay = () => { }
+    setDisplay = () => { },
+    onClose = () => {}
 }) => {
     return (
 
@@ -18,7 +20,7 @@ const Error = ({
                         />
                     </svg>
 
-                    <strong className="flex justify-between font-medium"> Something went wrong <img src={XIcon} onClick={() => { setDisplay(false) }} alt="remove" className="w-6 ml-4 cursor-pointer" /> </strong>
+                    <strong className="flex justify-between font-medium"> Something went wrong <img src={XIcon} onClick={() => { setDisplay(false); onClose(); }} alt="remove" className="w-6 ml-4 cursor-pointer" /> </strong>
                 </div>
 
                 <p className="mt-2 text-sm text-red-700">
@@ -27,6 +29,13 @@ const Error = ({
             </div>
         </div>
     )
+}
+
+Error.propTypes = {
+    error: PropTypes.string,
+    display: PropTypes.bool,
+    setDisplay: PropTypes.func,
+    onClose: PropTypes.func
 }
 
 export default Error
