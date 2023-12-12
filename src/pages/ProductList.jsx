@@ -96,9 +96,8 @@ const ProductList = () => {
                 {mgrid ? <CustomGrid gridSize={mgrid}>
                     {Products.map((items, i) => {
                         return (
-                            <div key={i} className="aspect-[3/4] relative">
-                                <div onClick={() => { addToFavorite(items.id); }} className={`w-1/12 cursor-pointer absolute top-4 right-4 `}><img src={items.isFavorite ? heartFillIcon : heartIcon} alt="heart" /></div>
-                                <img onClick={() => { navigate("overview") }} className="object-cover w-full h-full cursor-pointer" src={items.image} alt="dress" />
+                            <div key={i} className="">
+                                <Carousel id={items.id} isFav={items.isFavorite} func={()=>addToFavorite(items.id)} slides={items.images} />
                                 <div className=''>
                                     <div className='text-lg font-medium text-c-gray-800'>{items.name}</div>
                                     <div className='text-sm text-c-gray-500'>{items.price}</div>
@@ -116,9 +115,8 @@ const ProductList = () => {
                 {sgrid ? <CustomGrid gridSize={sgrid}>
                     {Products.map((items, i) => {
                         return (
-                            <div key={i} className="aspect-[3/4] relative">
-                                <div onClick={() => { addToFavorite(items.id); }} className={`w-1/12 cursor-pointer absolute top-4 right-4 `}><img src={items.isFavorite ? heartFillIcon : heartIcon} alt="heart" /></div>
-                                <img onClick={() => { navigate("overview") }} className="object-cover w-full h-full cursor-pointer" src={items.image} alt="dress" />
+                            <div key={i} className="">
+                                <Carousel id={items.id} isFav={items.isFavorite} func={()=>addToFavorite(items.id)} slides={items.images} />
                                 <div className=''>
                                     <div className='text-lg font-medium text-c-gray-800'>{items.name}</div>
                                     <div className='text-sm text-c-gray-500'>{items.price}</div>

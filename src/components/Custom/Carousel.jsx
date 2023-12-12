@@ -64,7 +64,7 @@ const Carousel = ({
         ))
         }
       </div>
-      <div onClick={func} className={`w-1/12 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}><img src={isFav ? heartFillIcon : heartIcon} alt="heart" /></div>
+      <div onClick={func} className={`w-8 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}><img src={isFav ? heartFillIcon : heartIcon} alt="heart" /></div>
 
       <button
         onClick={prev}
