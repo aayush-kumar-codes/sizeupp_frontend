@@ -64,12 +64,16 @@ export function Navbar() {
                 <div className='hidden lg:block'>
                     <ul className="inline-flex space-x-8">
                         <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
-                            <HeartIcon className='w-6 h-6 stroke-2 ' />
-                            <span className='text-base font-medium hover:underline'>Wishlist</span>
+                            <Link to="/products/favourite" className='flex gap-1'>
+                                <HeartIcon className='w-6 h-6 stroke-2 ' />
+                                <span className='text-base font-medium hover:underline'>Wishlist</span>
+                            </Link>
                         </li>
-                        <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/cart") }} >
-                            <ShoppingCartIcon className='w-6 h-6 stroke-2' />
-                            <span className='text-base font-medium hover:underline'>Cart</span>
+                        <li >
+                            <Link to="/products/cart" className='flex gap-1'>
+                                <ShoppingCartIcon className='w-6 h-6 stroke-2' />
+                                <span className='text-base font-medium hover:underline'>Cart</span>
+                            </Link>
                         </li>
                         {!isAuth && noAuthMenuItems.map((item) => (
                             <li key={item.name} className='flex justify-center item-center'>
