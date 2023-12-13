@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { styles } from '../style'
-import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, ShoppingCartIcon,Bars3BottomLeftIcon,XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
 import { logo } from '../assets/banners'
@@ -97,7 +97,7 @@ export function Navbar() {
 
                 {/* Mobile/small-Tab Menu */}
                 <div className="lg:hidden">
-                    <button onClick={toggleMenu} className="h-6 w-6 cursor-pointer" >Menu</button>
+                    <Bars3BottomLeftIcon onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
                 </div>
 
                 {isMenuOpen && (
@@ -123,14 +123,10 @@ export function Navbar() {
                                         <span className="font-bold">Sizeupp</span>
                                     </div>
                                     <div className="-mr-2">
-                                        <button
-                                            type="button"
+                                        <XMarkIcon
                                             onClick={toggleMenu}
-                                            className="inline-flex items-center justify-center rounded-md p-2 text-c-gray-400 hover:bg-c-gray-100 hover:text-c-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                        >
-                                            <span className="sr-only">Close menu</span>
-                                            <button className="h-6 w-6" aria-hidden="true" >X</button>
-                                        </button>
+                                            className="cursor-pointer inline-flex w-6 stroke-2"
+                                        />
                                     </div>
                                 </div>
                                 <div className="mt-6">
