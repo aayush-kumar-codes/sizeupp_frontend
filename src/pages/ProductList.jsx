@@ -84,7 +84,7 @@ const ProductList = () => {
                         return (
                             <div key={i} className="" >
                                 <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
-                                <div className={`${grid == 6 && "hidden"} border-2 p-2 mt-1 rounded-lg`}>
+                                <div className={`${grid == 6 && "hidden"} border-2 border-black/30 p-2 mt-1 rounded-lg`}>
                                     <div className='text-lg text-accent'>{items.name}</div>
                                     <div className='text-lg text-accent'>&#8377; {items.price}</div>
                                     <button

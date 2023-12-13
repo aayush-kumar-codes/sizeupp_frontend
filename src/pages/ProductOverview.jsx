@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link,useNavigate } from "react-router-dom"
 import { dress } from "../assets/images"
 import { styles } from "../style"
 import React, { useState } from 'react';
@@ -24,7 +24,6 @@ const ProductImageView = () => {
   const handleImageClick = (index) => {
     setCurrentImageIndex(index);
   };
-
 
 
 
@@ -169,6 +168,9 @@ const ProductOverview = () => {
     }
   };
 
+  
+  const navigate = useNavigate()
+
   return (
     <div className={`${styles.padding}`}>
 
@@ -221,9 +223,9 @@ const ProductOverview = () => {
               Oxford Casual Shirts - Sage Green
             </h2>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              Dristi International
+              100% Cotton
             </p>
-            <p className="text-sm text-gray-800/80 font-semibold">In picture product size is 1 (128m)</p>
+            <p className="text-sm text-gray-800/80 font-semibold">In picture product size is 1 (128cm) in chest</p>
 
             <div className="mt-5 flex items-center ">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
@@ -288,6 +290,7 @@ const ProductOverview = () => {
             </div>
             <button
               type="button"
+              onClick={() => {navigate('/products/cart')}}
               className="h-11 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
               Add to cart
@@ -360,9 +363,7 @@ const ProductOverview = () => {
                 </div>
               }
             />
-
           </div>
-
         </div>
       </div>
       <ImageMagnifier />

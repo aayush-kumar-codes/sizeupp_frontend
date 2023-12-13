@@ -65,11 +65,11 @@ export function Navbar() {
                     <ul className="inline-flex space-x-8">
                         <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
                             <HeartIcon className='w-6 h-6 stroke-2 ' />
-                            <span className='text-base font-medium underline'>Wishlist</span>
+                            <span className='text-base font-medium hover:underline'>Wishlist</span>
                         </li>
                         <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/cart") }} >
                             <ShoppingCartIcon className='w-6 h-6 stroke-2' />
-                            <span className='text-base font-medium underline'>Cart</span>
+                            <span className='text-base font-medium hover:underline'>Cart</span>
                         </li>
                         {!isAuth && noAuthMenuItems.map((item) => (
                             <li key={item.name} className='flex justify-center item-center'>
