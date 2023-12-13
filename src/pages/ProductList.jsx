@@ -85,8 +85,8 @@ const ProductList = () => {
                             <div key={i} className="" >
                                 <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
                                 <div className={`${grid == 6 && "hidden"} border-2 border-black/30 p-2 mt-1 rounded-lg`}>
-                                    <div className='text-lg text-accent'>{items.name}</div>
-                                    <div className='text-lg text-accent'>&#8377; {items.price}</div>
+                                    <div className='text-lg font-semibold text-accent'>{items.name}</div>
+                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-base font-medium text-green-500">33%</p></div>
                                     <button
                                         type="button"
                                         className="rounded-md my-2 bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"

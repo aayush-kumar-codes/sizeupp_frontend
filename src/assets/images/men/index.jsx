@@ -28,6 +28,16 @@ import Skyblue2 from './10020154498_SKYBLUE_/10020154498_SKYBLUE_2.jpg'
 import Skyblue3 from './10020154498_SKYBLUE_/10020154498_SKYBLUE_3.jpg'
 import Skyblue4 from './10020154498_SKYBLUE_/10020154498_SKYBLUE_4.jpg'
 import Skyblue5 from './10020154498_SKYBLUE_/10020154498_SKYBLUE_5.jpg'
+import DarkNavys1 from './10020156830_DarkNavy_/10020156830_DarkNavy_1.jpg'
+import DarkNavys2 from './10020156830_DarkNavy_/10020156830_DarkNavy_2.jpg'
+import DarkNavys3 from './10020156830_DarkNavy_/10020156830_DarkNavy_3.jpg'
+import DarkNavys4 from './10020156830_DarkNavy_/10020156830_DarkNavy_4.jpg'
+import DarkNavys5 from './10020156830_DarkNavy_/10020156830_DarkNavy_5.jpg'
+import Navy1 from './10020155511_NAVY_/10020155511_NAVY_1.jpg'
+import Navy2 from './10020155511_NAVY_/10020155511_NAVY_2.jpg'
+import Navy3 from './10020155511_NAVY_/10020155511_NAVY_3.jpg'
+import Navy4 from './10020155511_NAVY_/10020155511_NAVY_4.jpg'
+import Navy5 from './10020155511_NAVY_/10020155511_NAVY_5.jpg'
 
 export {
     GEGreen1,
@@ -59,6 +69,15 @@ export {
     Skyblue2,
     Skyblue3,
     Skyblue4,
-    Skyblue5
-    
+    Skyblue5,
+    DarkNavys1,
+    DarkNavys2,
+    DarkNavys3,
+    DarkNavys4,
+    DarkNavys5,
+    Navy1,
+    Navy2,
+    Navy3,
+    Navy4,
+    Navy5
 }
