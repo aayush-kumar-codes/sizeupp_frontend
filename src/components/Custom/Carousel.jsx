@@ -1,7 +1,8 @@
 import React from 'react'
-import { chevronLeftIcon, chevronRightIcon, heartFillIcon, heartIcon } from '../../assets/icons'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { HeartIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { HeartIcon as HeartFill } from '@heroicons/react/20/solid'
 
 const Carousel = ({
   slides = [],
@@ -17,6 +18,9 @@ const Carousel = ({
   const [intervalId, setIntervalId] = React.useState(null)
 
   const onMouseHover = () => {
+    if (intervalId) {
+      onMouseLeave()
+    }
     console.log("Hovered")
     setAutoSlide(true)
     setIntervalId(setInterval(() => { setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1)) }, slideInterval))
@@ -30,16 +34,16 @@ const Carousel = ({
     setIntervalId(null)
   }
 
-  const prev = async () => {
+  const prev = () => {
     if (autoSlide) {
-      await onMouseLeave()
+      onMouseLeave()
     }
     setCurrentSlide((s) => (s === 0 ? slides.length - 1 : s - 1))
   }
 
-  const next = async () => {
+  const next = () => {
     if (autoSlide) {
-      await onMouseLeave()
+      onMouseLeave()
     }
     setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1))
   }
@@ -64,19 +68,19 @@ const Carousel = ({
         ))
         }
       </div>
-      <div onClick={func} className={`w-8 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}><img src={isFav ? heartFillIcon : heartIcon} alt="heart" /></div>
+      <div onClick={func} className={`w-8 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}>{isFav ? <HeartFill /> : <HeartIcon />}</div>
 
       <button
         onClick={prev}
         className="p-1 rounded-full shadow absolute ml-2 top-1/2 bg-white/80 text-gray-800 hover:bg-white"
       >
-        <img src={chevronLeftIcon} alt="left chevron" className='w-4' />
+        <ChevronLeftIcon className='w-4' />
       </button>
       <button
         onClick={next}
         className="p-1 rounded-full absolute mr-2 top-1/2 right-0 shadow bg-white/80 text-gray-800 hover:bg-white"
       >
-        <img src={chevronRightIcon} alt={"right chevron"} className='w-4' />
+        <ChevronRightIcon className='w-4' />
       </button>
 
       <div className="absolute bottom-4 right-0 left-0">

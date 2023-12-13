@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
-import { arrowRightIcon } from "../assets/icons";
+import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import Error from "../components/Alerts/Error";
 import { Link, useNavigate } from "react-router-dom";
-import { GEGreen2 } from "../assets/images/men";
 import Success from "../components/Alerts/Success";
 import { AuthContext } from "../context/AuthProvider";
 
 export function Login() {
 
     const { setIsAuth } = useContext(AuthContext)
+    const [loading, setloading] = useState(false)
 
     const [formData, setFormData] = useState({
         email: "",
@@ -33,6 +33,7 @@ export function Login() {
     }
 
     const handleSubmit = async () => {
+        setloading(true)
         console.log(formData)
         if (formData.email === "" || formData.password === "") {
             setAltcls(true)
@@ -40,6 +41,7 @@ export function Login() {
                 alertmsg: "Please fill all the fields",
                 type: false
             })
+            setloading(false)
         }
         else {
             const res = await fetch('https://traxzen.pythonanywhere.com/api/auth/signin', {
@@ -65,7 +67,7 @@ export function Login() {
                     password: ""
                 })
                 setIsAuth(true)
-
+                setloading(false)
             }
             else {
                 setAltcls(true)
@@ -77,6 +79,7 @@ export function Login() {
                     alertmsg: data.message,
                     type: false
                 })
+                setloading(false)
             }
         }
     }
@@ -85,9 +88,9 @@ export function Login() {
         navigate("/products")
         return
     }
-    
+
     return (
-        <section className="h-screen min-h-screen">
+        <section className="">
             {!alert.type && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
             {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
             <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
@@ -95,7 +98,7 @@ export function Login() {
                     <div className="absolute inset-0">
                         <img
                             className="h-full w-full rounded-md object-cover object-top"
-                            src={GEGreen2}
+                            src={"https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"}
                             alt="dress"
                         />
                     </div>
@@ -236,9 +239,17 @@ export function Login() {
                                     <button
                                         type="button"
                                         onClick={handleSubmit}
+                                        disabled={loading ? true : false}
                                         className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                     >
-                                        Get started <img src={arrowRightIcon} alt="arrow right icon" className="w-6 ml-2" />
+                                        Get started {
+                                            loading ?
+                                                <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg> :
+                                                <ArrowLongRightIcon className="w-6 ml-2" />
+                                        }
                                     </button>
                                 </div>
                             </div>
@@ -260,22 +271,7 @@ export function Login() {
                                 </span>
                                 Sign in with Google
                             </button>
-                            <button
-                                type="button"
-                                className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
-                            >
-                                <span className="mr-2 inline-block">
-                                    <svg
-                                        className="h-6 w-6 text-[#2563EB]"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path>
-                                    </svg>
-                                </span>
-                                Sign in with Facebook
-                            </button>
+
                         </div>
                     </div>
                 </div>

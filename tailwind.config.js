@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    stroke: {
+      'current': 'currentColor',
+    },
     extend: {
       colors: {
         'link' : 'var(--color-link)',

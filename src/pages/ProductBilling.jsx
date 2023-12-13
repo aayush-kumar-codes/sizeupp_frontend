@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom'
-import { XIcon } from '../assets/icons'
+import {XMarkIcon} from '@heroicons/react/24/outline'
 import { styles } from '../style'
 import { useState } from 'react'
 import { GEGreen1, Maroon1, Wine1 } from '../assets/images/men'
@@ -190,7 +190,7 @@ export function ProductBilling() {
                                                 className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                                             >
                                                 <span className="sr-only">Remove</span>
-                                                <img src={XIcon} className='w-5' alt="remove" />
+                                                <XMarkIcon className='w-5' />
                                             </button>
                                         </div>
                                     </li>

@@ -1,7 +1,8 @@
-import { trashIcon } from "../assets/icons"
+import { TrashIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1 as Maroon, White1 as White } from "../assets/images/men"
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 
 const products = [
     {
@@ -40,6 +41,17 @@ const products = [
 ]
 
 export function ProductCart() {
+    const [count, setCount] = useState(1);
+
+  const increment = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+
+  const decrement = () => {
+    if (count > 1) {
+      setCount((prevCount) => prevCount - 1);
+    }
+  };
     const navigate = useNavigate()
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
@@ -105,21 +117,21 @@ export function ProductCart() {
                                     </li>
                                     <div className="mb-2 flex">
                                         <div className="min-w-24 flex">
-                                            <button type="button" className="h-7 w-7">
+                                            <button onClick={decrement} type="button" className="h-7 w-7">
                                                 -
                                             </button>
                                             <input
                                                 type="text"
                                                 className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                defaultValue={1}
+                                                value={count}
                                             />
-                                            <button type="button" className="flex h-7 w-7 items-center justify-center">
+                                            <button onClick={increment} type="button" className="flex h-7 w-7 items-center justify-center">
                                                 +
                                             </button>
                                         </div>
                                         <div className="ml-6 flex text-sm">
                                             <button type="button" className="flex items-center space-x-1 px-2 py-1 pl-0">
-                                                <img src={trashIcon} alt="trash Icon" className="w-6" />
+                                                <TrashIcon className='w-6' />
                                                 <span className="text-xs font-medium text-red-500">Remove</span>
                                             </button>
                                         </div>
@@ -143,13 +155,13 @@ export function ProductCart() {
                             <dl className=" space-y-1 px-2 py-4">
                                 <div className="flex items-center justify-between">
                                     <dt className="text-sm text-c-gray-800">Price (3 item)</dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ 52,398</dd>
+                                    <dd className="text-sm font-medium text-c-gray-900">₹ 5,398</dd>
                                 </div>
                                 <div className="flex items-center justify-between pt-4">
                                     <dt className="flex items-center text-sm text-c-gray-800">
                                         <span>Discount</span>
                                     </dt>
-                                    <dd className="text-sm font-medium text-green-700">- ₹ 3,431</dd>
+                                    <dd className="text-sm font-medium text-green-700">- ₹ 431</dd>
                                 </div>
                                 {/* <div className="flex items-center justify-between py-4">
                                     <dt className="flex text-sm text-c-gray-800">
@@ -159,11 +171,11 @@ export function ProductCart() {
                                 </div> */}
                                 <div className="flex items-center justify-between border-y border-dashed py-4 ">
                                     <dt className="text-base font-medium text-c-gray-900">Total Amount</dt>
-                                    <dd className="text-base font-medium text-c-gray-900">₹ 48,967</dd>
+                                    <dd className="text-base font-medium text-c-gray-900">₹ 4,967</dd>
                                 </div>
                             </dl>
                             <div className="px-2 pb-4 font-medium text-green-700">
-                                You will save ₹ 3,431 on this order
+                                You will save ₹ 431 on this order
                             </div>
                             <button
                                 type="button"

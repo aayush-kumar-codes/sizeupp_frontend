@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { chevronDownIcon, starIcon } from "../assets/icons"
+import { ChevronDownIcon, StarIcon } from "@heroicons/react/24/outline"
 import { styles } from "../style"
 import { GEGreen1 } from "../assets/images/men"
 import { useContext, useEffect, useState } from "react"
@@ -83,7 +83,7 @@ export const ProductFav = () => {
                         <div className="my-4 flex items-center">
                             <span className="flex items-center space-x-1">
                                 {[...Array(5)].map((_, i) => (
-                                    <img src={starIcon} alt="star" key={i} className="w-6 text-yellow-500" />
+                                    <StarIcon key={i} className="w-6 text-yellow-500" />
                                 ))}
                                 <span className="ml-3 inline-block text-xs font-semibold">4 Reviews</span>
                             </span>
@@ -107,7 +107,7 @@ export const ProductFav = () => {
                                         <option>XXL</option>
                                     </select>
                                     <span className="pointer-events-none absolute right-0 top-0 flex h-full w-10 items-center justify-center text-center text-c-gray-600">
-                                        <img src={chevronDownIcon} alt="chevronDownIcon" className="w-4 h-4" />
+                                        <ChevronDownIcon className="w-4" />
                                     </span>
                                 </div>
                             </div>

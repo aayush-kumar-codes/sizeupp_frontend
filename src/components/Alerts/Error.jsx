@@ -1,4 +1,4 @@
-import { XIcon } from "../../assets/icons"
+import { XMarkIcon } from "@heroicons/react/24/outline"
 import PropTypes from 'prop-types'
 
 const Error = ({
@@ -20,7 +20,7 @@ const Error = ({
                         />
                     </svg>
 
-                    <strong className="flex justify-between font-medium"> Something went wrong <img src={XIcon} onClick={() => { setDisplay(false); onClose(); }} alt="remove" className="w-6 ml-4 cursor-pointer" /> </strong>
+                    <strong className="flex justify-between font-medium"> Something went wrong <XMarkIcon onClick={() => { setDisplay(false); onClose(); }} className="w-6 ml-4 cursor-pointer" /> </strong>
                 </div>
 
                 <p className="mt-2 text-sm text-red-700">

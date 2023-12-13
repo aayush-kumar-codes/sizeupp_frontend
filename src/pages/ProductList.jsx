@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Filter from '../components/ProductList/Filter'
 import { styles } from '../style'
 import { Link, useNavigate } from 'react-router-dom'
-import { heartFillIcon, heartIcon } from '../assets/icons'
 import { products } from '../constants/products'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
+import SideNav from '../components/SideNav'
 
 const ProductList = () => {
-    const [grid, setGrid] = React.useState(3)
-    const [mgrid, setMGrid] = React.useState(2)
-    const [sgrid, setSGrid] = React.useState(2)
+    const [grid, setGrid] = useState(3)
+    const [mgrid, setMGrid] = useState(2)
+    const [sgrid, setSGrid] = useState(2)
 
-    const [Products, setProducts] = React.useState(products)
+    const [Products, setProducts] = useState(products)
+
+    const [filterActive, setFilterActive] = useState(false)
 
     const navigate = useNavigate()
 
@@ -29,9 +31,12 @@ const ProductList = () => {
     useEffect(() => {
         console.log("Refresh Grid", grid)
     }, [grid])
+
+    console.log(filterActive)
     return (
-        <div>
+        <div className={``}>
             {/* Nav menu- Breadcrumb */}
+
             <ol className={`inline-flex items-center space-x-1 md:space-x-3 ${styles.paddingX} py-4`}>
                 <li className="inline-flex items-center">
 
@@ -70,18 +75,24 @@ const ProductList = () => {
             </ol>
 
             {/* Filter navbar */}
-            <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} />
-
+            <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />
+            <SideNav display={filterActive} setDisplay={setFilterActive} />
             {/* Large Desktop */}
             <div className='hidden xl:block'>
                 {grid ? <CustomGrid gridSize={grid}>
                     {Products.map((items, i) => {
                         return (
-                            <div key={i} className="" >    
-                                <Carousel id={items.id} isFav={items.isFavorite} func={()=>addToFavorite(items.id)} slides={items.images} />
-                                <div className={`${grid == 6 && "hidden"}`}>
+                            <div key={i} className="" >
+                                <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
+                                <div className={`${grid == 6 && "hidden"} border-2 p-2 mt-1 rounded-lg`}>
                                     <div className='text-lg text-accent'>{items.name}</div>
                                     <div className='text-lg text-accent'>&#8377; {items.price}</div>
+                                    <button
+                                        type="button"
+                                        className="rounded-md my-2 bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                    >
+                                        Add to Cart
+                                    </button>
                                 </div>
                             </div>
                         )
@@ -97,7 +108,7 @@ const ProductList = () => {
                     {Products.map((items, i) => {
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={items.isFavorite} func={()=>addToFavorite(items.id)} slides={items.images} />
+                                <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
                                 <div className=''>
                                     <div className='text-lg font-medium text-c-gray-800'>{items.name}</div>
                                     <div className='text-sm text-c-gray-500'>{items.price}</div>
@@ -116,7 +127,7 @@ const ProductList = () => {
                     {Products.map((items, i) => {
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={items.isFavorite} func={()=>addToFavorite(items.id)} slides={items.images} />
+                                <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
                                 <div className=''>
                                     <div className='text-lg font-medium text-c-gray-800'>{items.name}</div>
                                     <div className='text-sm text-c-gray-500'>{items.price}</div>

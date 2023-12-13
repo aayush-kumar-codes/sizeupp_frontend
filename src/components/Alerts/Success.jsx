@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { XIcon } from "../../assets/icons"
+import { XMarkIcon } from "@heroicons/react/24/outline"
 
 const Success = ({
     message = "Changes saved",
@@ -36,8 +36,7 @@ const Success = ({
 
                     <button className="text-gray-500 transition hover:text-gray-600">
                         <span className="sr-only">Dismiss popup</span>
-
-                        <img src={XIcon} onClick={() => { setDisplay(false); onClose(); }} alt="remove" className="w-6 ml-4 cursor-pointer" />
+                        <XMarkIcon onClick={() => { setDisplay(false); onClose(); }} className="w-6" />
                     </button>
                 </div>
             </div>

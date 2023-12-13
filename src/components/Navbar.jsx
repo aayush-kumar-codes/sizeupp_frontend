@@ -1,8 +1,9 @@
-import React, {  useContext } from 'react'
+import React, { useContext } from 'react'
 import { styles } from '../style'
-import { cartIcon, heartIcon } from '../assets/icons'
+import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
+import { logo } from '../assets/banners'
 
 const noAuthMenuItems = [
     { name: "Sign in", href: "/login" },
@@ -25,12 +26,12 @@ export function Navbar() {
 
     const navigate = useNavigate()
 
-    const { isAuth,setIsAuth } = useContext(AuthContext)
+    const { isAuth, setIsAuth } = useContext(AuthContext)
     console.log(isAuth)
 
-    const handleLogout = (name,href) => {
-       console.log(name, href)
-       console.log("Logout")
+    const handleLogout = (name, href) => {
+        console.log(name, href)
+        console.log("Logout")
         if (name === 'Logout') {
             console.log("Logout")
             localStorage.removeItem('token');
@@ -41,19 +42,19 @@ export function Navbar() {
 
     return (
         // container
-        <div className={`${styles.paddingX} inset-0 w-full bg-white sticky z-50`}>
+        <div className={`${styles.paddingX} inset-0 w-full bg-white sticky z-50 `}>
             {/* layout prefixer */}
             <div className="flex items-center justify-between py-4">
 
                 {/* brand title */}
                 <Link to="/" className='text-2xl tracking-widest uppercase font-semibold cursor-pointer'>
-                    Sizeupp
+                    <img src={logo} alt="logo" className='w-20 h-20 object-contain' />
                 </Link>
 
                 {/* Search bar */}
                 <div className='hidden lg:block lg:w-1/4'>
                     <input
-                        className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                         type="text"
                         placeholder="Serach on Website"
                     />
@@ -62,15 +63,17 @@ export function Navbar() {
                 {/* Menu */}
                 <div className='hidden lg:block'>
                     <ul className="inline-flex space-x-8">
-                        <li >
-                            <img src={heartIcon} onClick={() => { navigate("/products/favourite") }} alt="heartIcon" className='w-6 h-6 cursor-pointer' />
+                        <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
+                            <HeartIcon className='w-6 h-6 stroke-2 ' />
+                            <span className='text-base font-medium underline'>Wishlist</span>
                         </li>
-                        <li >
-                            <img onClick={() => { navigate("/products/cart") }} src={cartIcon} alt="cartIcon" className='w-6 h-6 cursor-pointer' />
+                        <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/cart") }} >
+                            <ShoppingCartIcon className='w-6 h-6 stroke-2' />
+                            <span className='text-base font-medium underline'>Cart</span>
                         </li>
                         {!isAuth && noAuthMenuItems.map((item) => (
                             <li key={item.name} className='flex justify-center item-center'>
-                                <Link to={item.href} className="text-sm font-medium text-c-gray-900 hover:underline">
+                                <Link to={item.href} className="text-base  font-medium text-c-gray-900 hover:underline">
                                     {item.name}
                                 </Link>
                             </li>
@@ -80,7 +83,7 @@ export function Navbar() {
                             <li onClick={() => {
                                 handleLogout(item.name, item.href)
                             }} key={item.name} className='flex justify-center cursor-pointer item-center'>
-                                <div className="text-sm font-medium text-c-gray-900 hover:underline">
+                                <div className="text-base font-medium text-c-gray-900 hover:underline">
                                     {item.name}
                                 </div>
                             </li>
@@ -129,15 +132,15 @@ export function Navbar() {
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
                                         {menuItems.map((item) => (
-                                            <a
+                                            <Link
                                                 key={item.name}
-                                                href={item.href}
+                                                to={item.href}
                                                 className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-c-gray-50"
                                             >
                                                 <span className="ml-3 text-base font-medium text-c-gray-900">
                                                     {item.name}
                                                 </span>
-                                            </a>
+                                            </Link>
                                         ))}
                                     </nav>
                                 </div>
