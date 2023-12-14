@@ -53,7 +53,7 @@ const Filter = ({
                         <div className="hover:underline uppercase ">Sort</div>
                         <ArrowsUpDownIcon className='w-6 h-6 ml-2' />
                     </div>
-                    <div className="hidden z-50 group-hover:flex flex-col absolute right-8 px-6 py-6 w-1/6 bg-secondary rounded-md  drop-shadow-md">
+                    <div className="hidden z-50 group-hover:flex flex-col absolute right-8 px-6 py-6 w-fit bg-secondary rounded-md  drop-shadow-md">
                         <h2 className="text-lg font-semibold mb-2">Sort by : </h2>
 
                         <div className="hover:bg-slate-800/10 rounded-lg p-2 flex items-center justify-between gap-2 my-2">
