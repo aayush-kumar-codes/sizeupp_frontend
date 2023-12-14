@@ -71,12 +71,14 @@ const Carousel = ({
       <div onClick={func} className={`w-8 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}>{isFav ? <HeartFill /> : <HeartIcon />}</div>
 
       <button
+        type='button'
         onClick={prev}
         className="p-1 rounded-full shadow absolute ml-2 top-1/2 bg-white/80 text-gray-800 hover:bg-white"
       >
         <ChevronLeftIcon className='w-4' />
       </button>
       <button
+        type='button'
         onClick={next}
         className="p-1 rounded-full absolute mr-2 top-1/2 right-0 shadow bg-white/80 text-gray-800 hover:bg-white"
       >

@@ -32,9 +32,10 @@ const Filter = ({
             {/* Grid layout */}
             <div className="flex items-center w-1/2 mx-2">
                 <AdjustmentsHorizontalIcon className='w-6 h-6 mr-2' />
-                <input type="range" className="hidden xl:block w-1/2 h-1 accent-accent mr-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />
-                <input type="range" className="hidden xl:hidden md:block w-1/2 h-1 accent-accent mr-2" min={2} max={4} onChange={(e) => { setMGrid(e.target.value) }} defaultValue={mgrid} step={2} />
-                <input type="range" className="block md:hidden w-full h-1 accent-accent mr-2" min={1} max={3} onChange={(e) => { setSGrid(e.target.value) }} defaultValue={sgrid} step={1} />
+                <label htmlFor="grid" className="my-1">Grid</label>
+                <input id='grid' type="range" className="hidden xl:block w-1/2 h-1 accent-accent mr-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />
+                <input id='grid' type="range" className="hidden xl:hidden md:block w-1/2 h-1 accent-accent mr-2" min={2} max={4} onChange={(e) => { setMGrid(e.target.value) }} defaultValue={mgrid} step={2} />
+                <input id='grid' type="range" className="block md:hidden w-full h-1 accent-accent mr-2" min={1} max={3} onChange={(e) => { setSGrid(e.target.value) }} defaultValue={sgrid} step={1} />
             </div>
 
             <Error display={error} setDisplay={setError} error="Network Error" />
