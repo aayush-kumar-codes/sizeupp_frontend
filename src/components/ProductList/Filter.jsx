@@ -28,7 +28,7 @@ const Filter = ({
 
     return (
         // Filter navbar
-        <div className={`${styles.paddingX} flex justify-between items-center mt-4`}>
+        <div className={`${styles.paddingX} flex justify-between items-center text-base mt-4`}>
             {/* Grid layout */}
             <div className="group flex items-center w-1/2 mx-2">
                 <AdjustmentsHorizontalIcon className='w-6 h-6 mr-2' />
@@ -54,22 +54,22 @@ const Filter = ({
                         <ArrowsUpDownIcon className='w-6 h-6 ml-2' />
                     </div>
                     <div className="hidden z-50 group-hover:flex flex-col absolute right-8 px-6 py-6 w-fit bg-secondary rounded-md  drop-shadow-md">
-                        <h2 className="text-lg font-semibold mb-2">Sort by : </h2>
+                        <h2 className="text-base font-semibold mb-2">Sort by : </h2>
 
-                        <div className="hover:bg-slate-800/10 rounded-lg p-2 flex items-center justify-between gap-2 my-2">
-                            <label htmlFor="pricelth" className="cursor-pointer text-lg">Price: Low to High</label>
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="pricelth" className="cursor-pointer text-base">Price: Low to High</label>
                             <input type="radio" name="sort" id="pricelth" className="cursor-pointer  w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg p-2 flex items-center justify-between gap-2 my-2">
-                            <label htmlFor="pricehtl" className="cursor-pointer text-lg">Price: High to Low</label>
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="pricehtl" className="cursor-pointer text-base">Price: High to Low</label>
                             <input type="radio" name="sort" id="pricehtl" className="cursor-pointer  w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg p-2 flex items-center justify-between gap-2 my-2">
-                            <label htmlFor="pricena" className="cursor-pointer text-lg">New Arrivals</label>
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="pricena" className="cursor-pointer text-base">New Arrivals</label>
                             <input type="radio" name="sort" id="pricena" className="cursor-pointer w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg p-2 flex items-center justify-between gap-2 my-2">
-                            <label htmlFor="pricedhtl" className="cursor-pointer text-lg">Discount: High to Low</label>
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="pricedhtl" className="cursor-pointer text-base">Discount: High to Low</label>
                             <input type="radio" name="sort" id="pricedhtl" className="cursor-pointer  w-4 h-4 text-orange-500" />
                         </div>
 
