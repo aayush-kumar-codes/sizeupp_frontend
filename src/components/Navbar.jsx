@@ -4,20 +4,33 @@ import { HeartIcon, ShoppingCartIcon,Bars3BottomLeftIcon,XMarkIcon } from '@hero
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
 import { logo } from '../assets/banners'
+import { func } from 'prop-types'
 
-const noAuthMenuItems = [
-    { name: "Sign in", href: "/login" },
-    { name: "Sign up", href: "/register" },
-]
 
-const menuItems = [
-    {
-        name: "Logout",
-        href: "/login"
-    }
-]
 
 export function Navbar() {
+    const noAuthMenuItems = [
+        { name: "Sign in", href: "/login" },
+        { name: "Sign up", href: "/register" },
+    ]
+    
+    const menuItems = [
+        {
+            name: "Logout",
+            href: "/login",
+            func : (name,href) => {
+                handleLogout(name,href)
+            }
+        },
+        {
+            name: "Profile",
+            href: "/profile",
+            func : () => {
+                console.log("Profile")
+            }
+        }
+    ]
+
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
     const toggleMenu = () => {
@@ -85,11 +98,11 @@ export function Navbar() {
 
                         {isAuth && menuItems.map((item) => (
                             <li onClick={() => {
-                                handleLogout(item.name, item.href)
+                                item.name == 'Logout' && item.func(item.name, item.href)
                             }} key={item.name} className='flex justify-center cursor-pointer item-center'>
-                                <div className="text-base font-medium text-c-gray-900 hover:underline">
+                                <Link to={item.name == 'Logout' ? '' : item.href} className="text-base font-medium text-c-gray-900 hover:underline">
                                     {item.name}
-                                </div>
+                                </Link>
                             </li>
                         ))}
                     </ul>

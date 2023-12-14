@@ -12,6 +12,9 @@ import { Login } from "./pages/Login"
 import ProtectedRoute from "./utils/ProtectedRoute"
 import LayoutAuth from "./layout/LayoutAuth"
 import Notfound from "./pages/NotFound"
+import Profileview from "./pages/ProfileView"
+import Account from "./pages/Account"
+import UnderConstruction from "./pages/UnderConstruction"
 
 const App = () => {
   return (
@@ -20,9 +23,12 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<LayoutAuth />} >
-            <Route index element={<Home />} />
+            <Route index element={<UnderConstruction />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
+            <Route path="profile" element={<Profileview />} >
+              <Route index element={<Account />} />
+            </Route>
           </Route >
           <Route path="/products" element={<Layout />} >
             <Route index element={<ProductList />} />
@@ -34,6 +40,7 @@ const App = () => {
                 <ProductBilling />
               </ProtectedRoute>
             } />
+            
           </Route>
           <Route path="*" element={<Notfound />} />
 

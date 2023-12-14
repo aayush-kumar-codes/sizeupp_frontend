@@ -1,8 +1,8 @@
 
-import { Link } from 'react-router-dom'
-import {XMarkIcon} from '@heroicons/react/24/outline'
+import { Link, useNavigate } from 'react-router-dom'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import { styles } from '../style'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GEGreen1, Maroon1, Wine1 } from '../assets/images/men'
 
 const products = [
@@ -43,6 +43,7 @@ const products = [
 
 export function ProductBilling() {
     const [cart, setCart] = useState([])
+    const navigate = useNavigate()
 
     // const handleRemove = async(id) => {
     //     const data = await fetch('',{
@@ -79,6 +80,7 @@ export function ProductBilling() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(form)
+        navigate('/profile')
         // const data = await fetch('',{
         //     method : 'POST',
         //     headers : {
@@ -124,6 +126,11 @@ export function ProductBilling() {
         // const res = await data.json()	
         // console.log(res)
     }
+
+    useEffect(() => {
+        // 👇️ scroll to top on page load
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     return (
         <div className={`${styles.padding} mx-10 my-6`}>
@@ -339,6 +346,7 @@ export function ProductBilling() {
                                                             <input
                                                                 type="text"
                                                                 id="address"
+                                                                placeholder='Enter Address'
                                                                 onChange={handleChange}
                                                                 name="address"
                                                                 autoComplete="street-address"
@@ -358,6 +366,7 @@ export function ProductBilling() {
                                                             <input
                                                                 type="text"
                                                                 id="city"
+                                                                placeholder='Enter city'
                                                                 onChange={handleChange}
                                                                 name="city"
                                                                 autoComplete="address-level2"
@@ -377,6 +386,7 @@ export function ProductBilling() {
                                                             <input
                                                                 type="text"
                                                                 id="state"
+                                                                placeholder='Enter state'
                                                                 onChange={handleChange}
                                                                 name="state"
                                                                 autoComplete="address-level1"
@@ -396,6 +406,7 @@ export function ProductBilling() {
                                                             <input
                                                                 type="text"
                                                                 id="pincode"
+                                                                placeholder='Enter pincode'
                                                                 onChange={handleChange}
                                                                 name="pincode"
                                                                 autoComplete="pincode"

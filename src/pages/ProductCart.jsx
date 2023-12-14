@@ -2,7 +2,7 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1 as Maroon, White1 as White } from "../assets/images/men"
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const products = [
     {
@@ -53,6 +53,11 @@ export function ProductCart() {
     }
   };
     const navigate = useNavigate()
+
+    useEffect(() => {
+        // 👇️ scroll to top on page load
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      }, []);
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">

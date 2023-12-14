@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { GEGreen1, GEGreen2, GEGreen3, GEGreen4, GEGreen5 } from "../assets/images/men"
 import { chevronDownIcon } from "../assets/icons";
 import ReactImageMagnify from 'react-image-magnify';
-import ImageMagnifier from "./ImageMagnifier";
+
 
 
 const ProductImageView = () => {
@@ -26,6 +26,30 @@ const ProductImageView = () => {
   };
 
 
+  const handleMouseMove = (e) => {
+    const img = document.getElementById("magnify-img");
+    const preview = document.querySelector(".zoom-preview2");
+    
+    // calculating the ratio
+    const x = preview.offsetWidth / 100;
+    const y = preview.offsetHeight / 100;
+
+    preview.style.backgroundImage = `url(${arrayImages[currentImageIndex]})`;
+    preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
+
+    const posX = e.nativeEvent.offsetX;
+    const posY = e.nativeEvent.offsetY;
+
+    preview.style.backgroundPosition = `-${posX * x}px -${posY * y}px`;
+
+  };
+
+  const handleMouseOut = () => {
+    const preview = document.querySelector(".zoom-preview2");
+    preview.style.backgroundImage = "none";
+
+  };
+
 
   return (
     <>
@@ -33,9 +57,9 @@ const ProductImageView = () => {
 
         <div className="mb-6 items-center justify-center overflow-hidden md:mb-8 lg:mb-0 xl:flex">
           <div className="w-full xl:flex xl:flex-row-reverse">
-            <div className="relative mb-2.5 w-full shrink-0 overflow-hidden rounded-md border md:mb-3 xl:w-[480px] 2xl:w-[600px]">
-              <div className="relative flex items-center justify-center">
-                <ReactImageMagnify
+            <div className="relative  mb-2.5 w-full shrink-0 overflow-hidden rounded-md border md:mb-3 xl:w-[480px] 2xl:w-[600px]">
+              <div className="flex justify-center mx-auto items-center ">
+                {/* <ReactImageMagnify
                   {...{
                     smallImage: {
                       alt: `Product gallery ${currentImageIndex + 1}`,
@@ -49,16 +73,19 @@ const ProductImageView = () => {
                     },
                     isHintEnabled: true
                   }}
-                />
-                {/* 
+                /> */}
+                
                  <img
                   alt={`Product gallery ${currentImageIndex + 1}`}
                   src={arrayImages[currentImageIndex]}
+                  id="magnify-img"
                   width="650"
                   height="590"
-                  className="rounded-lg object-cover md:h-[300px] md:w-full lg:h-full"
+                  className="rounded-lg object-cover md:h-[550px] md:w-full lg:h-full cursor-crosshair"
+                  onMouseMove={handleMouseMove}
+                  onMouseOut={handleMouseOut}
                 />
-                 */}
+                
               </div>
 
               <div className="absolute top-2/4 z-10 flex w-full items-center justify-between">
@@ -73,7 +100,7 @@ const ProductImageView = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="bg-white rounded-full p-1 mx-2 cursor-pointer"
+                  className="bg-white rounded-full p-1 mx-2 cursor-pointer shadow-lg"
                 >
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
@@ -88,7 +115,7 @@ const ProductImageView = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="bg-white rounded-full p-1 mx-2 cursor-pointer"
+                  className="bg-white rounded-full p-1 mx-2 cursor-pointer shadow-lg"
                 >
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -119,6 +146,8 @@ const ProductImageView = () => {
 
           </div>
         </div>
+        <div className="zoom-preview2 rounded-lg absolute top-[20rem] right-[14rem] h-[30rem] w-[30rem] z-50">  </div>
+
       </div>
     </>
   )
@@ -364,9 +393,9 @@ const ProductOverview = () => {
               }
             />
           </div>
+          
         </div>
       </div>
-      <ImageMagnifier />
     </div>
   )
 }

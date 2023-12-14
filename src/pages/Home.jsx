@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import banner1 from '../assets/banners/banner1.jpg'
@@ -88,7 +88,7 @@ export const Banner = () => {
             {/*  */}
             <section
               style={{
-                backgroundImage: `url(${banner1})`,
+                backgroundImage: `url(${banner3})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -103,15 +103,14 @@ export const Banner = () => {
                 className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8"
               >
                 <div className="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
-                  <h1 className="text-3xl font-extrabold sm:text-5xl">
-                    Let us find your
+                <h1 className="text-3xl font-extrabold sm:text-5xl">
+                    Embrace Your Size,
 
-                    <strong className="block font-extrabold text-orange-700"> Forever Home. </strong>
+                    <strong className="block font-extrabold text-orange-700"> Express Your Style: </strong>
                   </h1>
 
                   <p className="mt-4 max-w-lg sm:text-xl/relaxed">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus
-                    numquam ea!
+                    Where Fashion Meets Comfort for Every Body!
                   </p>
 
                   <div className="mt-8 flex flex-wrap gap-4 text-center">
@@ -154,7 +153,7 @@ export const Banner = () => {
 
             <section
               style={{
-                backgroundImage: `url(${banner3})`,
+                backgroundImage: `url(${banner1})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -170,14 +169,13 @@ export const Banner = () => {
               >
                 <div className="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
                   <h1 className="text-3xl font-extrabold sm:text-5xl">
-                    Let us find your
+                    Embrace Your Size,
 
-                    <strong className="block font-extrabold text-orange-700"> Forever Home. </strong>
+                    <strong className="block font-extrabold text-orange-700"> Express Your Style: </strong>
                   </h1>
 
                   <p className="mt-4 max-w-lg sm:text-xl/relaxed">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus
-                    numquam ea!
+                    Where Fashion Meets Comfort for Every Body!
                   </p>
 
                   <div className="mt-8 flex flex-wrap gap-4 text-center">
@@ -202,6 +200,10 @@ export const Banner = () => {
 
 
 const Home = () => {
+  useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
   return (
     <>
       <Megamenu />

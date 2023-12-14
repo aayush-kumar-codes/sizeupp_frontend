@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthProvider";
 
 export function Login() {
 
-    const { setIsAuth } = useContext(AuthContext)
+    const { isAuth,setIsAuth } = useContext(AuthContext)
     const [loading, setloading] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -86,6 +86,11 @@ export function Login() {
 
     if (localStorage.getItem("token")) {
         navigate("/products")
+        return
+    }
+
+    if(isAuth){
+        navigate(-1)
         return
     }
 
