@@ -42,7 +42,7 @@ const Megamenu = () => {
                 {/* Woman */}
                 <div className="group">
                     <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
-                        Woman
+                        Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">

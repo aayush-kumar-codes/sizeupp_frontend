@@ -36,7 +36,7 @@ const ProductList = () => {
         // 👇️ scroll to top on page load
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
       }, []);
-      
+
     return (
         <div className={``}>
             {/* Nav menu- Breadcrumb */}
@@ -116,7 +116,7 @@ const ProductList = () => {
                             //     </div>
                             // </div>
 
-                            <div key={i} className="shadow-xl rounded-lg">
+                            <div key={i} className="rounded-lg">
                                 <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
                                 <div className={`${grid == 6 && "hidden"} border-2 mt-1 border-black/30 p-2 rounded-lg`}>
                                     <div className='text-lg font-semibold text-accent'>{items.name}</div>
