@@ -45,7 +45,7 @@ const SideNav = (
 ) => {
     return (
         <div className={`${display ? "fixed inset-0 z-50 bg-gray-800/20 w-auto h-screen" : "hidden"}`}>
-            <div className=" bg-white px-10 w-1/5 py-10 h-screen overflow-y-auto">
+            <div className=" bg-white px-10 lg:w-1/3 xl:w-1/5 py-10 h-screen overflow-y-auto">
                 <h2 className='text-2xl font-semibold flex justify-between items-center'>Filter your Feed <XMarkIcon className='w-6 stroke-2 cursor-pointer' onClick={() => setDisplay(false)} /></h2>
                 <div className="w-full">
                     {filters.map((filter) => (

@@ -81,7 +81,7 @@ const ProductImageView = () => {
                   id="magnify-img"
                   width="650"
                   height="590"
-                  className="rounded-lg object-cover md:h-[550px] md:w-full lg:h-full cursor-crosshair"
+                  className="rounded-lg object-cover md:h-[550px] md:w-full lg:h-full cursor-pointer md:cursor-crosshair"
                   onMouseMove={handleMouseMove}
                   onMouseOut={handleMouseOut}
                 />
@@ -146,7 +146,7 @@ const ProductImageView = () => {
 
           </div>
         </div>
-        <div className="zoom-preview2 rounded-lg absolute top-[20rem] right-[14rem] h-[30rem] w-[30rem] z-50">  </div>
+        <div className="hidden md:block zoom-preview2 rounded-lg absolute top-[20rem] right-[2rem] xl:right-[9rem] h-[30rem] w-[30rem] z-40">  </div>
 
       </div>
     </>

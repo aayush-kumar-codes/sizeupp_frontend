@@ -6,8 +6,6 @@ import { AuthContext } from '../context/AuthProvider'
 import { logo } from '../assets/banners'
 import { func } from 'prop-types'
 
-
-
 export function Navbar() {
     const noAuthMenuItems = [
         { name: "Sign in", href: "/login" },
@@ -28,6 +26,15 @@ export function Navbar() {
             func : () => {
                 console.log("Profile")
             }
+        }
+    ]
+
+    const mobileMenuItems = [
+        {
+            dropdown : true,
+            name : 'Men',
+            category : [
+                ""
         }
     ]
 
@@ -144,7 +151,7 @@ export function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        {menuItems.map((item) => (
+                                        {mobileMenuItems.map((item) => (
                                             <Link
                                                 key={item.name}
                                                 to={item.href}
