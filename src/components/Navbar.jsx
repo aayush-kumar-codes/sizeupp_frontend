@@ -1,29 +1,30 @@
 import React, { useContext } from 'react'
 import { styles } from '../style'
-import { HeartIcon, ShoppingCartIcon,Bars3BottomLeftIcon,XMarkIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
 import { logo } from '../assets/banners'
 import { func } from 'prop-types'
+import AccordionItem from './Custom/AccordionItem'
 
 export function Navbar() {
     const noAuthMenuItems = [
         { name: "Sign in", href: "/login" },
         { name: "Sign up", href: "/register" },
     ]
-    
+
     const menuItems = [
         {
             name: "Logout",
             href: "/login",
-            func : (name,href) => {
-                handleLogout(name,href)
+            func: (name, href) => {
+                handleLogout(name, href)
             }
         },
         {
             name: "Profile",
             href: "/profile",
-            func : () => {
+            func: () => {
                 console.log("Profile")
             }
         }
@@ -31,12 +32,170 @@ export function Navbar() {
 
     const mobileMenuItems = [
         {
-            dropdown : true,
-            name : 'Men',
-            category : [
-                ""
+            dropdown: true,
+            name: 'Men',
+            category: [
+                {
+                    dropdown: true,
+                    name: 'Casual Topwear',
+                    category: [
+                        {
+                            name: 'Casual Shirts',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Core Tee',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Formal Shirts',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Kurta',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Polo Tshirts',
+                            href: '/products'
+                        }
+                    ]
+                },
+                {
+                    dropdown: true,
+                    name: 'Casual Bottomwear',
+                    category: [
+                        {
+                            name: 'Chino',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Denim',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Joggers',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Pyjama',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Track Pants',
+                            href: '/products'
+                        }
+                    ]
+                },
+                {
+                    dropdown: true,
+                    name: 'Ethnic Wear',
+                    category: [
+                        {
+                            name: 'Kurta',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Waist Coat',
+                            href: '/products'
+                        }
+                    ]
+                },
+                {
+                    name: 'Evening Wear',
+                    href: '/products'
+                },
+                {
+                    name: 'Formal Wear',
+                    href: '/products'
+                },
+                {
+                    name: 'Winter Wear',
+                    href: '/products'
+                }
             ],
-            href : "/products"
+        },
+        {
+            dropdown: true,
+            name: 'Women',
+            category: [
+                {
+                    dropdown: true,
+                    name: 'Casual Topwear',
+                    category: [
+                        {
+                            name: 'Co Ord Set',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Core Tee',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Dress',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Kurta',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Kurta and Pants',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Shirts',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Sweat Shirts',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Top',
+                            href: '/products'
+                        },
+                        {
+                            name: 'T Shirts',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Tunic',
+                            href: '/products'
+                        }
+                    ]
+                },
+                {
+                    name: 'Casual Bottomwear',
+                    dropdown: true,
+                    category: [
+                        {
+                            name: 'Jeggings',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Leggings',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Pants',
+                            href: '/products'
+                        },
+                        {
+                            name: 'Trousers',
+                            href: '/products'
+                        }
+                    ]
+                },
+                {
+                    name: 'Festive Wear',
+                    href: '/products'
+                },
+                {
+                    name: 'Winter Wear',
+                    href: '/products'
+                }
+            ]
         }
     ]
 
@@ -153,17 +312,62 @@ export function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        {mobileMenuItems.map((item) => (
-                                            <Link
-                                                key={item.name}
-                                                to={item.href}
-                                                className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-c-gray-50"
-                                            >
-                                                <span className="ml-3 text-base font-medium text-c-gray-900">
-                                                    {item.name}
-                                                </span>
-                                            </Link>
-                                        ))}
+                                        {mobileMenuItems.map((item) => {
+                                            return (
+                                                <>
+                                                    {item.dropdown ?
+                                                        <AccordionItem
+                                                            key={item.name}
+                                                            title={item.name}
+                                                            content={
+                                                                item.category.map((subitem) => {
+                                                                    return (
+                                                                        subitem.dropdown ?
+                                                                            <AccordionItem
+                                                                                key={subitem.name}
+                                                                                title={subitem.name}
+                                                                                content={
+                                                                                    subitem.category.map((subsubitem) => {
+                                                                                        return (
+                                                                                            <Link
+                                                                                                key={subsubitem.name}
+                                                                                                to={subsubitem.href}
+                                                                                                onClick={toggleMenu}
+                                                                                                className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                                                                                            >
+                                                                                                {subsubitem.name}
+                                                                                            </Link>
+                                                                                        )
+                                                                                    })
+                                                                                }
+                                                                            />
+                                                                            :
+                                                                            <Link
+                                                                                key={subitem.name}
+                                                                                to={subitem.href}
+                                                                                onClick={toggleMenu}
+                                                                                className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                                                                            >
+                                                                                {subitem.name}
+                                                                            </Link>
+                                                                    )
+                                                                })
+                                                            }
+                                                        />
+                                                        :
+                                                        <Link
+                                                            key={item.name}
+                                                            to={item.href}
+                                                            onClick={toggleMenu}
+                                                            className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                                                        >
+                                                            {item.name}
+                                                        </Link>
+                                                    }
+                                                </>
+                                            )
+                                        })}
+
                                     </nav>
                                 </div>
                                 <button
