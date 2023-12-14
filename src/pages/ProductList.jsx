@@ -10,7 +10,7 @@ import SideNav from '../components/SideNav'
 const ProductList = () => {
     const [grid, setGrid] = useState(3)
     const [mgrid, setMGrid] = useState(2)
-    const [sgrid, setSGrid] = useState(2)
+    const [sgrid, setSGrid] = useState(1)
 
     const [Products, setProducts] = useState(products)
 
@@ -146,7 +146,7 @@ const ProductList = () => {
                                 <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
                                 <div className={` border-2 border-black/30 p-2 mt-1 rounded-lg`}>
                                     <div className='text-lg font-semibold text-accent'>{items.name}</div>
-                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-base font-medium text-green-500">33%</p></div>
+                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-base font-medium text-[#af0000]">33%</p></div>
                                     <button
                                         type="button"
                                         onClick={() => { navigate(`/products/cart`) }}
@@ -170,9 +170,9 @@ const ProductList = () => {
                         return (
                             <div key={i} className="">
                                 <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
-                                <div className={` border-2 border-black/30 p-2 mt-1 rounded-lg`}>
+                                <div className={`${sgrid == 3 && 'hidden'} border-2 border-black/30 p-2 mt-1 rounded-lg`}>
                                     <div className='text-lg font-semibold text-accent'>{items.name}</div>
-                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-base font-medium text-green-500">33%</p></div>
+                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-base font-medium text-[#af0000]">33%</p></div>
                                     <button
                                         type="button"
                                         onClick={() => { navigate(`/products/cart`) }}
