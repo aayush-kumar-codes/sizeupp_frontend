@@ -11,13 +11,13 @@ const Megamenu = () => {
             <div className={`flex items-center gap-10 max-w-5xl mx-auto`}>
                 {/* All Products */}
                 <div className="group">
-                    <Link to="/products" className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
+                    <Link to="/products" className='text-md font-bold tracking-wide cursor-pointer flex items-center justify-center'>
                         All Products
                     </Link>
                 </div>
                 {/* Online Only */}
                 <div className="group">
-                    <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
+                    <p className='text-md font-bold tracking-wide cursor-pointer flex items-center justify-center'>
                         Sales
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
@@ -41,7 +41,7 @@ const Megamenu = () => {
 
                 {/* Woman */}
                 <div className="group">
-                    <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
+                    <p className='text-md font-bold tracking-wide cursor-pointer flex items-center justify-center'>
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
@@ -67,7 +67,7 @@ const Megamenu = () => {
                             </ul>
                         </div>
                         <div className="col-span-1 ">
-                            <h2 className="text-lg font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
+                            <h2 className="text-md font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
                             <ul className="grid grid-flow-row gap-4">
                                 {['Jeggigns', 'Leggings', 'Pants', 'Trousers'].map((items, i) => {
                                     return (
@@ -96,7 +96,7 @@ const Megamenu = () => {
 
                 {/* Man */}
                 <div className="group">
-                    <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
+                    <p className='text-md font-bold tracking-wide cursor-pointer flex items-center justify-center'>
                         Men
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
@@ -151,7 +151,7 @@ const Megamenu = () => {
 
                 {/* Kids */}
                 <div className="group">
-                    <p className='text-lg tracking-wide cursor-pointer flex items-center justify-center'>
+                    <p className='text-md font-bold tracking-wide cursor-pointer flex items-center justify-center'>
                         Accessories
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>

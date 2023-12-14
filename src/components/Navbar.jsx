@@ -225,55 +225,58 @@ export function Navbar() {
         // container
         <div className={`${styles.paddingX} inset-0 w-full bg-white sticky z-50 `}>
             {/* layout prefixer */}
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between py-3">
 
                 {/* brand title */}
                 <Link to="/" className='text-2xl tracking-widest uppercase font-semibold cursor-pointer'>
                     <img src={logo} alt="logo" className='w-20 h-20 object-contain' />
                 </Link>
 
-                {/* Search bar */}
-                <div className='hidden lg:block lg:w-1/4'>
-                    <input
-                        className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                        type="text"
-                        placeholder="Serach on Website"
-                    />
-                </div>
+                <div className="flex items-center gap-4 w-1/2">
+                    {/* Search bar */}
+                    <div className='hidden lg:block lg:w-1/3'>
+                        <input
+                            className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                            type="text"
+                            placeholder="Serach on Website"
+                        />
+                    </div>
 
-                {/* Menu */}
-                <div className='hidden lg:block'>
-                    <ul className="inline-flex space-x-8">
-                        <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
-                            <Link to="/products/favourite" className='flex gap-1'>
-                                <HeartIcon className='w-6 h-6 stroke-2 ' />
-                                <span className='text-base font-medium hover:underline'>Wishlist</span>
-                            </Link>
-                        </li>
-                        <li >
-                            <Link to="/products/cart" className='flex gap-1'>
-                                <ShoppingCartIcon className='w-6 h-6 stroke-2' />
-                                <span className='text-base font-medium hover:underline'>Cart</span>
-                            </Link>
-                        </li>
-                        {!isAuth && noAuthMenuItems.map((item) => (
-                            <li key={item.name} className='flex justify-center item-center'>
-                                <Link to={item.href} className="text-base  font-medium text-c-gray-900 hover:underline">
-                                    {item.name}
+                    {/* Menu */}
+                    <div className='hidden lg:block'>
+                        <ul className="inline-flex space-x-8">
+                            <li className='flex gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
+                                <Link to="/products/favourite" className='flex gap-1'>
+                                    <HeartIcon className='w-6 h-6 stroke-2 ' />
+                                    <span className='text-base font-medium hover:underline'>Wishlist</span>
                                 </Link>
                             </li>
-                        ))}
-
-                        {isAuth && menuItems.map((item) => (
-                            <li onClick={() => {
-                                item.name == 'Logout' && item.func(item.name, item.href)
-                            }} key={item.name} className='flex justify-center cursor-pointer item-center'>
-                                <Link to={item.name == 'Logout' ? '' : item.href} className="text-base font-medium text-c-gray-900 hover:underline">
-                                    {item.name}
+                            <li >
+                                <Link to="/products/cart" className='flex gap-1'>
+                                    <ShoppingCartIcon className='w-6 h-6 stroke-2' />
+                                    <span className='text-base font-medium hover:underline'>Cart</span>
                                 </Link>
                             </li>
-                        ))}
-                    </ul>
+                            {!isAuth && noAuthMenuItems.map((item) => (
+                                <li key={item.name} className='flex justify-center item-center'>
+                                    <Link to={item.href} className="text-base  font-medium text-c-gray-900 hover:underline">
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            ))}
+
+                            {isAuth && menuItems.map((item) => (
+                                <li onClick={() => {
+                                    item.name == 'Logout' && item.func(item.name, item.href)
+                                }} key={item.name} className='flex justify-center cursor-pointer item-center'>
+                                    <Link to={item.name == 'Logout' ? '' : item.href} className="text-base font-medium text-c-gray-900 hover:underline">
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
                 </div>
 
                 {/* Mobile/small-Tab Menu */}
