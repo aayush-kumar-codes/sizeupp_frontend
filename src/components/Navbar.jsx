@@ -35,6 +35,8 @@ export function Navbar() {
             name : 'Men',
             category : [
                 ""
+            ],
+            href : "/products"
         }
     ]
 
