@@ -1,141 +1,118 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import FooterListTitle from "./FooterListTitle";
-import { faGithub, faInstagram, faLinkedin, faYoutube } from "../../assets/icons";
+
 
 
 const Footer = () => {
-  const [emailInfo, setEmailInfo] = useState("");
-  const [subscription, setSubscription] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
-
-  const emailValidation = () => {
-    return String(emailInfo)
-      .toLocaleLowerCase()
-      .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
-  };
-
-  const handleSubscription = () => {
-    if (emailInfo === "") {
-      setErrMsg("Please provide an Email !");
-    } else if (!emailValidation(emailInfo)) {
-      setErrMsg("Please give a valid Email!");
-    } else {
-      setSubscription(true);
-      setErrMsg("");
-      setEmailInfo("");
-    }
-  };
+  
   return (
-    <div className="w-full bg-[#F5F5F3] py-20">
-      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-1  xl:grid-cols-6 px-4 gap-10">
-        <div className="col-span-2 px-8">
-          <FooterListTitle title=" More about Sizeupp Shop" />
-          <div className="flex flex-col gap-6">
-            <p className="text-base w-full xl:w-[80%]">
-            Embrace Your Size, Express Your Style: <br/>Where Fashion Meets Comfort for Every Body!
-            </p>
-            <ul className="flex items-center gap-2">
-              <a
-                href="https://www.youtube.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <img src={faYoutube} alt="faYoutube Icon"  />
-                </li>
-              </a>
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <img src={faGithub} alt="faGithub Icon" className="w-full" />
-                </li>
-              </a>
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <img src={faInstagram} alt={"faInstagram Icon"} />
-                </li>
-              </a>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <img src={faLinkedin} alt="falinkedin Icon" />
-                </li>
-              </a>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <FooterListTitle title="Shop" />
-          <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Men
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Women
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Accessories
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              New Arrivals
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Seasonal Sale
-            </li>
-          </ul>
-        </div>
-        <div>
-          <FooterListTitle title="Your account" />
-          <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Profile
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Orders
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Addresses
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Account Details
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Payment Options
-            </li>
-          </ul>
-        </div>
-        
-        <div>
-          <FooterListTitle title="Navigate" />
-          <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Sign up
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Sign in
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Cart
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Wishlist
-            </li>
-           
-          </ul>
-        </div>
+    <>
+    <footer className="text-gray-600 body-font bg-gray-100">
+  <div className=" px-8 py-24 mx-10 flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+    <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
+      <a href="" className="flex text-lg font-bold items-center md:justify-start justify-center text-gray-900">
+       
+        <span className="ml-3 text-xl text-orange-400">SizeUpp</span>
+      </a>
+      <p className="mt-2 text-sm text-gray-500">Air plant banjo lyft occupy retro adaptogen indego</p>
+    </div>
+    <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
+      <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Shop</h2>
+        <nav className="list-none mb-10">
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Men</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Women</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Accessories</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">New Arrivals</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Seasonal Sale</a>
+          </li>      
+        </nav>
+      </div>
+      <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">My Account</h2>
+        <nav className="list-none mb-10">
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Profile</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Orders</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Addresses</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Account Details</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Payment Options</a>
+          </li>      
+        </nav>
+      </div>
+      <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Policies</h2>
+        <nav className="list-none mb-10">
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Terms & Condition</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Return Policies</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Payment Policies</a>
+          </li>
+          <li className="p-1">
+            <a href="" className="text-gray-600 hover:text-gray-800">Offer Conditions</a>
+          </li>
+        </nav>
+      </div>
+      <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Socials</h2>
+        <nav className="list-none mb-10">
+        <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
+        <a href="" className="text-gray-500">
+          <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+          </svg>
+        </a>
+        <a href="" className="ml-3 text-gray-500">
+          <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+          </svg>
+        </a>
+        <a href="" className="ml-3 text-gray-500">
+          <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+          </svg>
+        </a>
+        <a href="" className="ml-3 text-gray-500">
+          <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" className="w-5 h-5" viewBox="0 0 24 24">
+            <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+        </nav>
       </div>
     </div>
+  </div>
+  <div className="">
+    <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+      <p className="text-gray-500 text-sm text-center sm:text-left">© 2023 Sizeupp 
+      </p>
+     
+    </div>
+  </div>
+</footer>
+    </>
   );
 };
 

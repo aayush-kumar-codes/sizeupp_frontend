@@ -4,10 +4,11 @@ import Error from "../components/Alerts/Error";
 import { Link, useNavigate } from "react-router-dom";
 import Success from "../components/Alerts/Success";
 import { AuthContext } from "../context/AuthProvider";
+import { useFetch } from "../hooks/useFetch";
 
 export function Login() {
 
-    const { isAuth,setIsAuth } = useContext(AuthContext)
+    const { isAuth, setIsVerified, setIsAuth } = useContext(AuthContext)
     const [loading, setloading] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -32,8 +33,11 @@ export function Login() {
         })
     }
 
+    const { isLoading, apiData, serverError, fetchData } = useFetch()
+
     const handleSubmit = async () => {
         setloading(true)
+
         console.log(formData)
         if (formData.email === "" || formData.password === "") {
             setAltcls(true)
@@ -44,52 +48,61 @@ export function Login() {
             setloading(false)
         }
         else {
-            const res = await fetch('https://traxzen.pythonanywhere.com/api/auth/signin', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
 
-            const data = await res.json()
-            console.log(data)
-            if (data.token) {
-                localStorage.setItem("token", data.token)
-                setAltcls(true)
-                setAlert({
-                    alertmsg: data.message,
-                    type: true,
-                    onClose: () => { navigate('/products') }
-                })
-                setFormData({
-                    email: "",
-                    password: ""
-                })
-                setIsAuth(true)
-                setloading(false)
-            }
-            else {
-                setAltcls(true)
-                setFormData({
-                    email: "",
-                    password: ""
-                })
-                setAlert({
-                    alertmsg: data.message,
-                    type: false
-                })
-                setloading(false)
-            }
+            fetchData({
+                method: 'POST',
+                path: 'api/auth/signin',
+                body: formData
+            })
+            console.log(isLoading, serverError, apiData)
+            // const res = await fetch('http://103.160.144.37:8080/api/auth/signin', {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify(formData)
+            // })
+
+            // const data = await res.json()
+            // console.log(data)
+            // if (data.token) {
+            //     localStorage.setItem("token", data.token)
+            //     localStorage.setItem("user_verified", JSON.stringify(data.user_verified))
+            //     setAltcls(true)
+            //     setAlert({
+            //         alertmsg: data.message,
+            //         type: true,
+            //         onClose: () => { navigate('/products') }
+            //     })
+            //     setFormData({
+            //         email: "",
+            //         password: ""
+            //     })
+            //     setIsAuth(true)
+            //     setIsVerified(data.user_verified)
+            //     setloading(false)
+            // }
+            // else {
+            //     setAltcls(true)
+            //     setFormData({
+            //         email: "",
+            //         password: ""
+            //     })
+            //     setAlert({
+            //         alertmsg: data.message,
+            //         type: false
+            //     })
+            //     setloading(false)
+            // }
         }
     }
 
     if (localStorage.getItem("token")) {
-        navigate("/products")
+        navigate(-2)
         return
     }
 
-    if(isAuth){
+    if (isAuth) {
         navigate(-1)
         return
     }

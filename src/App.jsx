@@ -15,6 +15,8 @@ import Notfound from "./pages/NotFound"
 import Profileview from "./pages/ProfileView"
 import Account from "./pages/Account"
 import UnderConstruction from "./pages/UnderConstruction"
+import Otp from "./pages/OTP"
+import ProfileProtect from "./utils/ProfileProtect"
 
 const App = () => {
   return (
@@ -26,7 +28,8 @@ const App = () => {
             <Route index element={<UnderConstruction />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            <Route path="profile" element={<Profileview />} >
+            <Route path="otp" element={<Otp />} />
+            <Route path="profile" element={<ProfileProtect><Profileview /></ProfileProtect>} >
               <Route index element={<Account />} />
             </Route>
           </Route >

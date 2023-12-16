@@ -13,8 +13,9 @@ const products = [
         originalPrice: '₹2,999',
         discount: '5% Off',
         color: 'Sage Green',
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: GEGreen1
+        sizes: ['1', '2', '3', '4', '5', '6', '7'],
+        imageSrc: GEGreen1,
+        activeSize: 0
     },
     {
         id: 2,
@@ -25,8 +26,9 @@ const products = [
         discount: '8% off',
         color: 'White',
         leadTime: '3-4 weeks',
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: White
+        sizes: ['1', '2', '3', '4', '5', '6'],
+        imageSrc: White,
+        activeSize: 1
     },
     {
         id: 3,
@@ -43,21 +45,21 @@ const products = [
 export function ProductCart() {
     const [count, setCount] = useState(1);
 
-  const increment = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
+    const increment = () => {
+        setCount((prevCount) => prevCount + 1);
+    };
 
-  const decrement = () => {
-    if (count > 1) {
-      setCount((prevCount) => prevCount - 1);
-    }
-  };
+    const decrement = () => {
+        if (count > 1) {
+            setCount((prevCount) => prevCount - 1);
+        }
+    };
     const navigate = useNavigate()
 
     useEffect(() => {
         // 👇️ scroll to top on page load
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-      }, []);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
@@ -70,7 +72,7 @@ export function ProductCart() {
                             Items in your shopping cart
                         </h2>
                         <ul role="list" className="divide-y divide-c-gray-200">
-                            {products.map((product) => (
+                            {products.map((product, i) => (
                                 <div key={product.id} className="">
                                     <li className="flex py-6 sm:py-6 ">
                                         <div className="flex-shrink-0">
@@ -82,11 +84,11 @@ export function ProductCart() {
                                         </div>
 
                                         <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                                            <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                                                <div>
-                                                    <div className="flex justify-between">
+                                            <div className="relative pr-9 sm:grid sm:grid-cols-1 sm:gap-x-6 sm:pr-0">
+                                                <div className=''>
+                                                    <div className="flex justify-between ">
                                                         <h3 className="text-lg">
-                                                            <a href={product.href} className=" text-black">
+                                                            <a href={product.href} className="text-black">
                                                                 {product.name}
                                                             </a>
                                                         </h3>
@@ -95,10 +97,10 @@ export function ProductCart() {
                                                         <p className="text-sm text-c-gray-500 mb-2">{product.color}</p>
                                                         {product.sizes ? (
                                                             <ul className="colors -mr-3 flex flex-wrap">
-                                                                {product.sizes.map((size) => (
+                                                                {product.sizes.map((size, i) => (
                                                                     <li
                                                                         key={size}
-                                                                        className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
+                                                                        className={`text-heading ${product.activeSize == i && 'border-black'} mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm`}
                                                                     >
                                                                         {size}
                                                                     </li>
@@ -115,6 +117,9 @@ export function ProductCart() {
                                                         </p>
                                                         &nbsp;&nbsp;
                                                         <p className="text-sm font-medium text-green-500">{product.discount}</p>
+                                                    </div>
+                                                    <div className={`${i == 2 ?  'text-red-600':'text-green-600'} font-normal text-base py-2`}>
+                                                        {i == 2 ? "Out of Stock" : "In Stock"}
                                                     </div>
                                                 </div>
                                             </div>

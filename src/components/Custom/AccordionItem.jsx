@@ -8,7 +8,7 @@ const AccordionItem = ({ title, content }) => {
     };
 
     return (
-        <div className="shadow-sm">
+        <div className="">
             <header
                 className={`flex cursor-pointer items-center justify-between border-t border-c-gray-300 py-5 transition-colors md:py-6 ${isOpen ? 'open' : ''}`}
                 onClick={toggleAccordion}
