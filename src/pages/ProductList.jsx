@@ -78,9 +78,12 @@ const ProductList = () => {
                 </li>
             </ol>
 
+            <h2 className={`${styles.paddingX} text-lg font-normal text-gray-800/80`}>Showing 23 related results</h2>
+
             {/* Filter navbar */}
             <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />
             <SideNav display={filterActive} setDisplay={setFilterActive} />
+            
             {/* Large Desktop */}
             <div className='hidden xl:block'>
                 {grid ? <CustomGrid gridSize={grid}>
