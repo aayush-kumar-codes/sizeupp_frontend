@@ -1,15 +1,50 @@
-import { Link,useNavigate } from "react-router-dom"
-import { dress } from "../assets/images"
+import { Link, useNavigate } from "react-router-dom"
 import { styles } from "../style"
-import React, { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GEGreen1, GEGreen2, GEGreen3, GEGreen4, GEGreen5 } from "../assets/images/men"
 import { chevronDownIcon } from "../assets/icons";
-import ReactImageMagnify from 'react-image-magnify';
+import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
+import ReactDOM from 'react-dom';
+import Slider from "react-slick";
 
+export const Modal = ({ children, onClose }) => {
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
+  useEffect(() => {
+    const handleEscapeKey = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [onClose]);
+  return ReactDOM.createPortal(
+    <div className="fixed top-0 overflow-hidden left-0 w-screen h-screen flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
+      <div className="bg-white p-8 rounded-md max-w-screen-lg w-full h-full overflow-auto">
+        {children}
+        <button className="absolute top-4 right-4 text-gray-700" onClick={onClose}>
+          Close
+        </button>
+      </div>
+    </div>,
+    document.getElementById('modal-root')
+  );
+};
+
+// ------------------------ Image View Component ------------------------
 const ProductImageView = () => {
   const arrayImages = [GEGreen1, GEGreen2, GEGreen3, GEGreen4, GEGreen5];
+  const [isZoomPreviewVisible, setZoomPreviewVisible] = useState(false);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -29,10 +64,11 @@ const ProductImageView = () => {
   const handleMouseMove = (e) => {
     const img = document.getElementById("magnify-img");
     const preview = document.querySelector(".zoom-preview2");
-    
+    setZoomPreviewVisible(true); // Show the zoom preview
+
     // calculating the ratio
-    const x = preview.offsetWidth / 100;
-    const y = preview.offsetHeight / 100;
+    const x = preview.offsetWidth / 180;
+    const y = preview.offsetHeight / 180;
 
     preview.style.backgroundImage = `url(${arrayImages[currentImageIndex]})`;
     preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
@@ -47,35 +83,87 @@ const ProductImageView = () => {
   const handleMouseOut = () => {
     const preview = document.querySelector(".zoom-preview2");
     preview.style.backgroundImage = "none";
+    setZoomPreviewVisible(false); // Hide the zoom preview
 
   };
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const CustomPrevArrow = (props) => (
+
+
+    <div
+      className={props.className}
+      style={{}}
+      onClick={props.onClick}
+    >
+      <ChevronLeftIcon className="w-12 h-12 text-black bg-gray-200/70 p-2 rounded-full" />
+    </div>
+  );
+
+  const CustomNextArrow = (props) => (
+
+    <div
+      className={props.className}
+      style={{}}
+      onClick={props.onClick}
+    >
+      <ChevronRightIcon className="w-12 h-12 -mx-8 text-black bg-gray-200/70 p-2 rounded-full" />
+    </div>
+  );
+
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    slidesToShow: 1,
+    speed: 500,
+    slidesToScroll: 1,
+    arrows: true,
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
+
+    responsive: [
+      {
+        breakpoint: 576,
+        settings: {
+          dots: true,
+          appendDots: (dots) => (
+            <div
+              style={{
+                position: "absolute",
+                top: "80%",
+                left: "0%",
+                transform: "translateY(-50%)",
+              }}
+            >
+              <ul style={{ margin: "0px" }}> {dots} </ul>
+            </div>
+          ),
+
+        },
+      },
+    ],
+  };
 
   return (
     <>
       <div className="">
-
         <div className="mb-6 items-center justify-center overflow-hidden md:mb-8 lg:mb-0 xl:flex">
           <div className="w-full xl:flex xl:flex-row-reverse">
             <div className="relative  mb-2.5 w-full shrink-0 overflow-hidden rounded-md border md:mb-3 xl:w-[480px] 2xl:w-[600px]">
               <div className="flex justify-center mx-auto items-center ">
-                {/* <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      alt: `Product gallery ${currentImageIndex + 1}`,
-                      isFluidWidth: true,
-                      src: arrayImages[currentImageIndex],
-                    },
-                    largeImage: {
-                      src: arrayImages[currentImageIndex],
-                      width: 1200, // Set your desired width
-                      height: 1800, // Set your desired height
-                    },
-                    isHintEnabled: true
-                  }}
-                /> */}
-                
-                 <img
+                {/* Image Current */}
+                <img
                   alt={`Product gallery ${currentImageIndex + 1}`}
                   src={arrayImages[currentImageIndex]}
                   id="magnify-img"
@@ -85,10 +173,11 @@ const ProductImageView = () => {
                   onMouseMove={handleMouseMove}
                   onMouseOut={handleMouseOut}
                 />
-                
               </div>
 
+              {/* Controls */}
               <div className="absolute top-2/4 z-10 flex w-full items-center justify-between">
+                {/* Prev Icon */}
                 <svg
                   onClick={handlePrevImage}
                   xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +193,8 @@ const ProductImageView = () => {
                 >
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
+
+                {/* Next Icon */}
                 <svg
                   onClick={handleNextImage}
                   xmlns="http://www.w3.org/2000/svg"
@@ -121,6 +212,8 @@ const ProductImageView = () => {
                 </svg>
               </div>
             </div>
+
+            {/*  Image Thumbnails */}
             <div className="flex gap-2 xl:flex-col m-2 justify-center">
               {arrayImages.map((items, i) => {
                 return (
@@ -146,12 +239,39 @@ const ProductImageView = () => {
 
           </div>
         </div>
-        <div className="hidden md:block zoom-preview2 rounded-lg absolute top-[20rem] right-[2rem] xl:right-[9rem] h-[30rem] w-[30rem] z-40">  </div>
 
+        {/* Modal */}
+        <div className="w-100 ">
+          <div className="flex mx-auto w-64 justify-center items-center">
+            <button className="py-2 px-3 rounded-md bg-black flex justify-between items-center text-white hover:scale-105" onClick={handleOpenModal}><ArrowsPointingOutIcon className="w-4 mr-2" /> See Full View</button>
+            {isModalOpen && (
+              <Modal onClose={handleCloseModal}>
+                {/* Content of the modal goes here */}
+                <div className="">
+                  <Slider {...settings}>
+                    {arrayImages.map((image, index) => (
+                      <div key={index} >
+                        <img src={image} alt={`Image ${index + 1}`} className="w-2/3 mx-auto " />
+                      </div>
+                    ))}
+                  </Slider>
+                </div>
+              </Modal>
+            )}
+          </div>
+          <div id="modal-root" className="absolute z-50"></div>
+
+        </div>
+        {/*  Zoom Preview */}
+        {isZoomPreviewVisible && (
+          <div className="zoom-preview2 overflow-hidden absolute top-[50%] right-28 h-[30rem] w-[30rem] z-50"></div>
+        )}
       </div>
     </>
   )
 }
+
+// ------------------------ Accordion Component (Helper) ------------------------
 const AccordionItem = ({ title, content }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -184,6 +304,8 @@ const AccordionItem = ({ title, content }) => {
   );
 };
 
+
+// ------------------------ Main Component ------------------------
 const ProductOverview = () => {
   const [count, setCount] = useState(1);
 
@@ -196,8 +318,28 @@ const ProductOverview = () => {
       setCount((prevCount) => prevCount - 1);
     }
   };
+  const [isShareMenuOpen, setIsShareMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  
+  // Close the menu when clicking outside
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsShareMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleButtonClick = () => {
+    setIsShareMenuOpen((prev) => !prev);
+  };
+
   const navigate = useNavigate()
 
   return (
@@ -209,7 +351,7 @@ const ProductOverview = () => {
           <li className="inline-flex items-center">
             <Link
               to="/products"
-              className="ml-1 inline-flex text-lg text-c-gray-800 hover:underline md:ml-2"
+              className="ml-1 inline-flex text-base text-c-gray-800 hover:underline md:ml-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -223,7 +365,7 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
 
-              <a href="#" className="ml-1 text-lg text-c-gray-800 hover:underline md:ml-2">
+              <a href="#" className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
                 Men
               </a>
             </div>
@@ -233,7 +375,7 @@ const ProductOverview = () => {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
-              <span className="ml-1 text-lg font-medium text-c-gray-800 hover:underline md:ml-2">
+              <span className="ml-1 text-base font-medium text-c-gray-800 hover:underline md:ml-2">
                 Oxford Casual Shirts - Sage Green
               </span>
             </div>
@@ -242,21 +384,79 @@ const ProductOverview = () => {
       </div>
 
       <div className="block grid-cols-9 items-start gap-x-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
+        {/* Image Overview */}
         <div className="col-span-5 grid grid-cols-1  gap-2">
           <ProductImageView />
-
         </div>
+
+        {/* Information Overview */}
         <div className="col-span-4 pt-8 lg:pt-0">
-          <div className="mb-7 border-b border-c-gray-300 pb-7">
-            <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
-              Oxford Casual Shirts - Sage Green
-            </h2>
+          <div className="mb-7 border-b border-c-gray-300 pb-2">
+            <div className="flex justify-between items-center ">
+              <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl xl:text-2xl">
+                Oxford Casual Shirts - Sage Green
+              </h2>
+              <div className="flex items-center gap-3">
+                <button className="hover:scale-110">
+                  <HeartIcon className="h-8 w-8" />
+                </button>
+                <div className="relative inline-block text-left">
+                  <button
+                    className="hover:scale-110 focus:outline-none"
+                    onClick={handleButtonClick}
+                  >
+                    <ShareIcon className="h-7 w-7" />
+                  </button>
+
+                  {isShareMenuOpen && (
+                    <div
+                      ref={menuRef}
+                      className="absolute right-1 z-10 mt-2 w-36 py-2 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      role="menu"
+                      aria-orientation="vertical"
+                      aria-labelledby="menu-button"
+                      tabIndex="-1"
+                    >
+                      <div className="py-1" role="none">
+                        <ul className="list-none">
+                          <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                              Email
+                            </Link>
+                          </li>
+                          <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                              Facebook
+                            </Link>
+                          </li>
+                          <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                              Instagram
+                            </Link>
+                          </li>
+                          <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                              Whatsapp
+                            </Link>
+                          </li>
+                          <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                              Copy Link
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
               100% Cotton
             </p>
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is 1 (128cm) in chest</p>
 
-            <div className="mt-5 flex items-center ">
+            <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
                 ₹ 1,999.00
               </div>
@@ -264,7 +464,12 @@ const ProductOverview = () => {
                 ₹ 2,999.00
               </span>
             </div>
+
+            <div className="text-green-600 font-normal text-lg py-2">
+              In Stock
+            </div>
           </div>
+
           <div className="border-b border-c-gray-300 pb-3  ">
             <div className="mb-4">
               <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
@@ -302,32 +507,32 @@ const ProductOverview = () => {
 
             <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-c-gray-300 md:h-12">
               <button
-                className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
-                onClick={increment}
+                className="text-xl hover:bg-gray-200/30 flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
+                onClick={decrement}
               >
-                +
+                -
               </button>
               <span className="duration-250 text-heading flex h-full w-12 flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out md:w-20 xl:w-24">
                 {count}
               </span>
               <button
-                className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
-                onClick={decrement}
+                className="text-xl hover:bg-gray-200/30 flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
+                onClick={increment}
               >
-                -
+                +
               </button>
             </div>
             <button
               type="button"
-              onClick={() => {navigate('/products/cart')}}
+              onClick={() => { navigate('/products/cart') }}
               className="h-11 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
               Add to cart
             </button>
           </div>
-          <div className="py-6 ">
+          <div className="py-6 border-b-gray-500">
             <label htmlFor="pincode" className="block text-lg font-medium text-gray-800/80">
-            Enter the pincode of your area to check product availability and delivery options
+              Enter the pincode of your area to check product availability and delivery options
             </label>
 
             <input
@@ -336,7 +541,7 @@ const ProductOverview = () => {
               placeholder="Enter PinCode"
               name="pincode"
               onChange={() => { }}
-              className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-2/3 ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             />
             <button
               type="button"
@@ -346,8 +551,6 @@ const ProductOverview = () => {
               Apply
             </button>
           </div>
-
-
           <div>
             <AccordionItem
               title="Product Details"
@@ -393,7 +596,7 @@ const ProductOverview = () => {
               }
             />
           </div>
-          
+
         </div>
       </div>
     </div>

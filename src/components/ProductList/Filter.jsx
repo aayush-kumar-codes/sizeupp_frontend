@@ -1,9 +1,7 @@
-import { useState } from "react"
-import { filterIcon, sortIcon } from "../../assets/icons"
+
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/20/solid"
 import { FunnelIcon, ArrowsUpDownIcon } from "@heroicons/react/24/outline"
 import { styles } from "../../style"
-import Error from "../Alerts/Error"
 import PropTypes from 'prop-types'
 
 const Filter = ({
@@ -15,8 +13,6 @@ const Filter = ({
     setSGrid,
     setFilterActive
 }) => {
-    const [error, setError] = useState(false)
-
     const enums = [2, 3, 4, 6]
 
     const handleSliderForLargeScreen = (e) => {
@@ -28,19 +24,18 @@ const Filter = ({
 
     return (
         // Filter navbar
-        <div className={`${styles.paddingX} flex justify-between items-center text-base mt-4`}>
+        <div className={`${styles.paddingX} flex justify-end items-center text-base mt-4`}>
             {/* Grid layout */}
-            <div className="group flex items-center w-1/2 mx-2">
+            <div className="group flex items-center w-1/4 mx-2">
                 <AdjustmentsHorizontalIcon className='w-6 h-6 mr-2' />
                 <label htmlFor="grid" className="my-1 uppercase hidden md:block group-hover:underline">Grid</label>
-                <input id='grid' type="range" className="hidden xl:block w-1/2 h-1 accent-accent ml-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />
-                <input id='grid' type="range" className="hidden xl:hidden md:block w-1/2 h-1 accent-accent ml-2" min={2} max={4} onChange={(e) => { setMGrid(e.target.value) }} defaultValue={mgrid} step={2} />
-                <input id='grid' type="range" className="block md:hidden w-full h-1 accent-accent ml-2" min={1} max={3} onChange={(e) => { setSGrid(e.target.value) }} defaultValue={sgrid} step={1} />
+                <input id='grid' type="range" className="hidden xl:block w-full h-1 accent-accent ml-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />
+                <input id='mgrid' type="range" className="hidden xl:hidden md:block w-full h-1 accent-accent ml-2" min={2} max={4} onChange={(e) => { setMGrid(e.target.value) }} defaultValue={mgrid} step={2} />
+                <input id='sgrid' type="range" className="block md:hidden w-full h-1 accent-accent ml-2" min={1} max={3} onChange={(e) => { setSGrid(e.target.value) }} defaultValue={sgrid} step={1} />
             </div>
 
-            <Error display={error} setDisplay={setError} error="Network Error" />
-
             <div className="flex items-center">
+
                 {/* filter */}
                 <div onClick={() => { setFilterActive(true) }} className="flex mx-4 cursor-pointer">
                     <div className="hover:underline uppercase ">Filter</div>

@@ -85,7 +85,7 @@ const Register = () => {
                 return
             }
 
-            const res = await fetch('https://traxzen.pythonanywhere.com/api/auth/signup', {
+            const res = await fetch('http://103.160.144.37:8080/api/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

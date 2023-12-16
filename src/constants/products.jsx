@@ -5,7 +5,7 @@ import {
 export const products = [
     {
         id: 1,
-        images: [Maroon1, Maroon2, Maroon3, Maroon4, Maroon5],
+        images: ["http://103.160.144.37:8080/media/Products/Grey%20Solid%20Joggers/10021060931_GREY_1_C9oBpVb.jpg", Maroon2, Maroon3, Maroon4, Maroon5],
         name: "Oxford Casual Shirts - Maroon",
         tags: ["Mens Wovens", "Casualwear", "Full Sleeves"],
         price: 1999,

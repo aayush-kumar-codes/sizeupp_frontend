@@ -13,6 +13,30 @@ const Profileview = () => {
       setDropdownVisible(!dropdownVisible);
     };
 
+    const [formdata,setformdata] = useState({
+      'address_line_1' :'Plot 1 sv road naryan mandir Nashik ',
+      'address_line_2':'Plot 32 MK road naryan mandir Nashik',
+      'city': 'Nashik',
+      'state':'Maharashtra',
+      'postal_code':'422001'
+
+    })
+
+    const handleSubmit = async() =>{
+      console.log(localStorage.token)
+      const res = await fetch('http://103.160.144.37:8080/api/address',{
+        method:'POST',
+        headers:{
+          'Authorization':`token ${localStorage.getItem('token')}`,
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(formdata)
+      })
+
+      const data = await res.json()
+      console.log(data)
+    }
+
   return (
       <>
       <main className="h-screen flex justify-between flex-col">
@@ -106,7 +130,8 @@ const Profileview = () => {
                         } transition ease-in-out duration-300`}
                     >
                         <a
-                        href="profile-information.html"
+                        onClick={handleSubmit}
+                        href="javascript:void(0)"
                         className="active:blue-900 text-gray-500 duration-100 hover:text-blue-800"
                         >
                         Profile information
@@ -262,7 +287,7 @@ const Profileview = () => {
           </div>
 
           <div className="flex gap-3">
-            <button className="rounded-lg bg-amber-400 py-2 px-3 cursor-pointer hover:scale-105">
+            <button  className="rounded-lg bg-amber-400 py-2 px-3 cursor-pointer hover:scale-105">
               Profile settings
             </button>
           </div>

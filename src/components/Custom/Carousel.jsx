@@ -70,7 +70,7 @@ const Carousel = ({
       </div>
       <div onClick={func} className={`w-8 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}>{isFav ? <HeartFill /> : <HeartIcon />}</div>
 
-      <button
+      {/* <button
         type='button'
         onClick={prev}
         className="p-1 rounded-full shadow absolute ml-2 top-1/2 bg-white/80 text-gray-800 hover:bg-white"
@@ -83,7 +83,7 @@ const Carousel = ({
         className="p-1 rounded-full absolute mr-2 top-1/2 right-0 shadow bg-white/80 text-gray-800 hover:bg-white"
       >
         <ChevronRightIcon className='w-4' />
-      </button>
+      </button> */}
 
       <div className="absolute bottom-4 right-0 left-0">
         <div className="flex items-center justify-center gap-2">
@@ -91,7 +91,7 @@ const Carousel = ({
             <div
               key={i}
               className={`
-              transition-all w-3 h-3 bg-white rounded-full
+              transition-all w-2 h-2 md:w-3 md:h-3 bg-white rounded-full
               ${currentSlide === i ? "p-2" : "bg-opacity-50"}
             `}
             />
