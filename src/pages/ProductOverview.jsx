@@ -525,14 +525,14 @@ const ProductOverview = () => {
             <button
               type="button"
               onClick={() => { navigate('/products/cart') }}
-              className="h-11 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
               Add to cart
             </button>
           </div>
           <div className="py-6 border-b-gray-500">
             <label htmlFor="pincode" className="block text-lg font-medium text-gray-800/80">
-              Enter the pincode of your area to check product availability and delivery options
+              Delivery & Services :
             </label>
 
             <input
@@ -546,7 +546,7 @@ const ProductOverview = () => {
             <button
               type="button"
               onClick={() => { }}
-              className="inline-flex w-1/2 my-4 items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+              className="inline-flex w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm font-semibold leading-7 text-white hover:bg-black/80"
             >
               Apply
             </button>

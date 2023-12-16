@@ -50,7 +50,10 @@ const Filter = ({
                     </div>
                     <div className="hidden z-50 group-hover:flex flex-col absolute right-8 px-6 py-6 w-fit bg-secondary rounded-md  drop-shadow-md">
                         <h2 className="text-base font-semibold mb-2">Sort by : </h2>
-
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="popular" className="cursor-pointer text-base">Popularity: High to Low</label>
+                            <input type="radio" name="sort" id="popular" className="cursor-pointer  w-4 h-4" />
+                        </div>
                         <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="pricelth" className="cursor-pointer text-base">Price: Low to High</label>
                             <input type="radio" name="sort" id="pricelth" className="cursor-pointer  w-4 h-4" />

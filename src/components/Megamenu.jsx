@@ -117,7 +117,7 @@ const Megamenu = () => {
                         </div>
                         <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
-                                {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear'].map((items, i) => {
+                                {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
                                     return (
                                         <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
                                             {items}
@@ -130,8 +130,8 @@ const Megamenu = () => {
                     </div>
                 </div>
 
-                {/* Kids */}
-                <div className="group">
+                {/* Festive Offers */}
+                {/* <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Accessories
@@ -142,7 +142,8 @@ const Megamenu = () => {
 
                         <div className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">Boxer</div>
                     </div>
-                </div>
+                </div> */}
+
                 {/* Sales */}
                 <div className="group">
 

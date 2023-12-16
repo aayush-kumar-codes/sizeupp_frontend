@@ -1,4 +1,4 @@
-import React, { useContext,useState,useEffect,useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { styles } from '../style'
 import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,7 +12,7 @@ import { UserIcon } from "@heroicons/react/24/outline";
 
 export function Navbar() {
     const noAuthMenuItems = [
-        { name: "Login in", href: "/login" },
+        { name: "Sign in", href: "/login" },
         { name: "Sign up", href: "/register" },
     ]
 
@@ -232,20 +232,20 @@ export function Navbar() {
 
     const handleClickOutside = (event) => {
         if (profileRef.current && !profileRef.current.contains(event.target)) {
-          // Clicked outside the account icon, close the menu
-          setIsProfileOpen(false);
+            // Clicked outside the account icon, close the menu
+            setIsProfileOpen(false);
         }
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         // Attach the event listener when the component mounts
         document.addEventListener('mousedown', handleClickOutside);
-    
+
         // Detach the event listener when the component unmounts
         return () => {
-          document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
-      }, []);
+    }, []);
     return (
         // container
         <div className={`${styles.paddingX} inset-0 w-full bg-white sticky z-50 `}>
@@ -268,7 +268,7 @@ export function Navbar() {
                     </div>
 
                     {/* Menu */}
-                    
+
                     <div className='hidden lg:block'>
                         <ul className="inline-flex space-x-10">
                             <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
@@ -285,44 +285,49 @@ export function Navbar() {
                             </li>
                             <li >
                                 <div className='flex flex-col items-center cursor-pointer' ref={profileRef}>
-                                        <UserIcon className="h-6 w-6 stroke-2 hover:scale-110" onClick={toggleProfile} />
+                                    <UserIcon className="h-6 w-6 stroke-2 hover:scale-110" onClick={toggleProfile} />
                                     <span className='text-xs font-medium '>Account</span>
                                     {isProfileOpen && (
                                         <div className="absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                             <div className="py-1" role="none">
-                                            {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                Profile
-                                                </Link>
-                                            </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                Track order
-                                                </Link>
-                                            </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                Settings
-                                                </Link>
-                                            </li>
-                                            {!isAuth && noAuthMenuItems.map((item) => (
+                                                {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        Profile
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        My Offers
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        Track order
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        Settings
+                                                    </Link>
+                                                </li>
+                                                {!isAuth && noAuthMenuItems.map((item) => (
                                                     <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
                                                         <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
                                                             {item.name}
                                                         </Link>
                                                     </li>
                                                 ))}
-                                            {isAuth && menuItems.map((item) => (
-                                                <li onClick={() => {
-                                                    item.name == 'Logout' && item.func(item.name, item.href)
-                                                }} key={item.name} className='flex justify-center cursor-pointer item-center'>
-                                                    <Link to={item.name == 'Logout' ? '' : item.href} className="text-base font-medium text-c-gray-900 hover:underline">
-                                                        {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                            
+                                                {isAuth && menuItems.map((item) => (
+                                                    <li onClick={() => {
+                                                        item.name == 'Logout' && item.func(item.name, item.href)
+                                                    }} key={item.name} className='flex justify-center cursor-pointer item-center'>
+                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-base font-medium text-c-gray-900 hover:underline">
+                                                            {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+
                                             </div>
                                         </div>
 
@@ -330,9 +335,9 @@ export function Navbar() {
                                 </div>
                             </li>
 
-                            
 
-                            
+
+
                         </ul>
                     </div>
 
@@ -349,7 +354,7 @@ export function Navbar() {
                             <div className="px-5 pb-6 pt-5">
                                 <div className="flex items-center justify-between">
                                     <div className="inline-flex items-center space-x-2">
-                                        
+
                                         <span className="font-bold">Sizeupp</span>
                                     </div>
                                     <div className="-mr-2">
