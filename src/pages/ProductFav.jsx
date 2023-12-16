@@ -1,4 +1,4 @@
-import { Link,useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ChevronDownIcon, StarIcon } from "@heroicons/react/24/outline"
 import { styles } from "../style"
 import { GEGreen1 } from "../assets/images/men"
@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthProvider"
 
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])
-    const {isAuth} = useContext(AuthContext);
+    const { isAuth } = useContext(AuthContext);
 
     useEffect(() => {
         // const token = localStorage.getItem("token");
@@ -22,7 +22,7 @@ export const ProductFav = () => {
         // }
     }, [])
 
-    const handleRemove = async(id) => {
+    const handleRemove = async (id) => {
         // const data = await fetch('',{
         //     method : 'POST',
         //     headers : {
@@ -39,8 +39,8 @@ export const ProductFav = () => {
     const navigate = useNavigate()
     useEffect(() => {
         // 👇️ scroll to top on page load
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-      }, []);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     return (
         <section className={`overflow-hidden ${styles.padding}`}>
@@ -84,6 +84,9 @@ export const ProductFav = () => {
                         src={GEGreen1}
                     />
                     <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
+                        <div className="text-orange-600 font-normal text-lg">
+                            Only 4 left in stock -Order soon
+                        </div>
                         <h2 className="my-4 text-3xl font-semibold text-black">Oxford Casual Shirts - Sage Green</h2>
                         <div className="my-4 flex items-center">
                             <span className="flex items-center space-x-1">
@@ -107,9 +110,9 @@ export const ProductFav = () => {
                                 <span className="mr-3 text-sm font-semibold">Size</span>
                                 <div className="relative">
                                     <select className="appearance-none rounded border border-c-gray-300 py-2 pl-3 pr-10 text-sm focus:border-black focus:outline-none focus:ring-2 focus:ring-black">
-                                        <option>SM</option>
-                                        <option>XL</option>
-                                        <option>XXL</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
                                     </select>
                                     <span className="pointer-events-none absolute right-0 top-0 flex h-full w-10 items-center justify-center text-center text-c-gray-600">
                                         <ChevronDownIcon className="w-4" />
