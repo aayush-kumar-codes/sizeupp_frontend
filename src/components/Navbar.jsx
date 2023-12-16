@@ -321,7 +321,7 @@ export function Navbar() {
                                                 {isAuth && menuItems.map((item) => (
                                                     <li onClick={() => {
                                                         item.name == 'Logout' && item.func(item.name, item.href)
-                                                    }} key={item.name} className='flex justify-center cursor-pointer item-center'>
+                                                    }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
                                                         <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-2 text-sm">
                                                             {item.name}
                                                         </Link>
