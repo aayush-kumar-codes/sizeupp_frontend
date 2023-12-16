@@ -291,7 +291,7 @@ export function Navbar() {
                                         <div className="group-hover:flex hidden absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                             <div className="py-1" role="none">
                                                 {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
                                                     <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
                                                         Profile
                                                     </Link>
@@ -322,7 +322,7 @@ export function Navbar() {
                                                     <li onClick={() => {
                                                         item.name == 'Logout' && item.func(item.name, item.href)
                                                     }} key={item.name} className='flex justify-center cursor-pointer item-center'>
-                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-base font-medium text-c-gray-900 hover:underline">
+                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-2 text-sm">
                                                             {item.name}
                                                         </Link>
                                                     </li>
