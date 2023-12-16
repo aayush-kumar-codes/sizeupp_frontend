@@ -284,11 +284,11 @@ export function Navbar() {
                                 </Link>
                             </li>
                             <li >
-                                <div className='flex flex-col items-center cursor-pointer' ref={profileRef}>
+                                <div className='group flex flex-col items-center cursor-pointer' ref={profileRef}>
                                     <UserIcon className="h-6 w-6 stroke-2 hover:scale-110" onClick={toggleProfile} />
                                     <span className='text-xs font-medium '>Account</span>
-                                    {isProfileOpen && (
-                                        <div className="absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                    
+                                        <div className="group-hover:flex hidden absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                             <div className="py-1" role="none">
                                                 {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                                                 <li className='hover:bg-gray-200/30 pl-2'>
@@ -331,7 +331,6 @@ export function Navbar() {
                                             </div>
                                         </div>
 
-                                    )}
                                 </div>
                             </li>
 
