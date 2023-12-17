@@ -7,6 +7,8 @@ import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRi
 
 import ReactDOM from 'react-dom';
 import Slider from "react-slick";
+import { EnvelopeIcon } from "@heroicons/react/20/solid";
+import { LinkIcon } from "@heroicons/react/20/solid";
 
 export const Modal = ({ children, onClose }) => {
   const handleOverlayClick = (e) => {
@@ -340,7 +342,20 @@ const ProductOverview = () => {
     setIsShareMenuOpen((prev) => !prev);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [iconColors, setIconColors] = useState({
+    email: '#212121',
+    facebook: '#212121',
+    instagram: '#212121',
+    whatsapp: '#212121',
+    twitter: '#212121',
+    copyLink: '#212121', // Change this color as needed
+  });
+
+  const handleIconHover = (iconName, color) => {
+    setIconColors((prevColors) => ({ ...prevColors, [iconName]: color }));
+  };
 
   return (
     <div className={`${styles.padding}`}>
@@ -402,7 +417,7 @@ const ProductOverview = () => {
                 </button>
                 <div className="relative inline-block text-left">
                   <button
-                    className="hover:scale-110 focus:outline-none"
+                    className="hover:scale-110 ease-in duration-200 focus:outline-none"
                     onClick={handleButtonClick}
                   >
                     <ShareIcon className="h-7 w-7" />
@@ -418,34 +433,89 @@ const ProductOverview = () => {
                       tabIndex="-1"
                     >
                       <div className="py-1" role="none">
-                        <ul className="list-none">
+                          <ul className="list-none">
+                            <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="mailto:someone@example.com" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            onMouseEnter={() => handleIconHover('email', 'gray')}
+                            onMouseLeave={() => handleIconHover('email', '#212121')}
+                            >
+                              <EnvelopeIcon className="h-6 w-6 text-gray-700" style={{ fill: iconColors.email }}  />
+                              <span className="px-2 text-xs">
+                                Email
+                              </span>
+                              </Link>
+                            </li>
+                            <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="https://facebook.com/" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                              onMouseEnter={() => handleIconHover('facebook', 'darkblue')}
+                              onMouseLeave={() => handleIconHover('facebook', '#212121')}
+                            >
+                              <svg fill={iconColors.facebook} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                              </svg>
+                              <span className="px-2 text-xs">
+                                Facebook
+                              </span>
+                                
+                              </Link>
+                            </li>
+                            <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="https://instagram.com/" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            onMouseEnter={() => handleIconHover('instagram', '#E91E63')}
+                              onMouseLeave={() => handleIconHover('instagram', '#212121')}
+                            >
+                              <svg fill="white" stroke={iconColors.instagram} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                              </svg>  
+                              <span className="px-2 text-xs">
+                                  Instagram
+                              </span>
+                              
+                              </Link>
+                            </li>
+                            <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="https://wa.link/5kvgga" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            onMouseEnter={() => handleIconHover('whatsapp', 'green')}
+                            onMouseLeave={() => handleIconHover('whatsapp', '#212121')}
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill={iconColors.whatsapp} className="bi bi-whatsapp" viewBox="0 0 16 16">
+                                <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                              </svg>
+                              <span className="px-2 text-xs">
+                                Whatsapp
+                              </span>
+                              
+                              </Link>
+                            </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                              Email
-                            </Link>
-                          </li>
-                          <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                              Facebook
-                            </Link>
-                          </li>
-                          <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                              Instagram
-                            </Link>
-                          </li>
-                          <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                              Whatsapp
-                            </Link>
-                          </li>
-                          <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                              Copy Link
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
+                            <Link to="*" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            onMouseEnter={() => handleIconHover('twitter', '#03A9F4')}
+                              onMouseLeave={() => handleIconHover('twitter', '#212121')}
+                            >
+                                <svg fill={iconColors.twitter} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                                </svg>
+                              <span className="px-2 text-xs">
+                                Twitter
+                              </span>
+                              
+                              </Link>
+                            </li>
+                            <li className="hover:bg-gray-200/30 pl-2">
+                            <Link to="" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            onMouseEnter={() => handleIconHover('copyLink', 'black')}
+                            onMouseLeave={() => handleIconHover('copyLink', '#212121')}
+                            >
+                                  <LinkIcon className="h-6 w-6 text-gray-500" style={{ fill: iconColors.copyLink }} />
+                                  <span className="px-2 text-xs">
+                                  Copy Link
+                                  </span>
+                                  
+                                </Link>
+                            </li>
+                          </ul>
+                        </div>
                     </div>
                   )}
                 </div>
@@ -457,7 +527,7 @@ const ProductOverview = () => {
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is 1 (128cm) in chest</p>
 
             <div className="mt-5 flex items-center pb-2">
-              <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
+              <div className="text-heading pr-2 text-base font-bold md:pr-0 xl:text-2xl md:text-xl lg:pr-2 2xl:pr-0 ">
                 ₹ 1,999.00
               </div>
               <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
