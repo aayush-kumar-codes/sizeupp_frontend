@@ -7,14 +7,22 @@ import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
 import SideNav from '../components/SideNav'
 
-const ProductList = () => {
-    const [grid, setGrid] = useState(3)
-    const [mgrid, setMGrid] = useState(2)
-    const [sgrid, setSGrid] = useState(1)
+import PropTypes from 'prop-types'
+
+const ProductList = ({
+    grid,
+    setGrid,
+    mgrid,
+    setMGrid,
+    sgrid,
+    setSGrid,
+    filterActive,
+    setFilterActive
+}) => {
+    
 
     const [Products, setProducts] = useState(products)
 
-    const [filterActive, setFilterActive] = useState(false)
 
     const navigate = useNavigate()
 
@@ -41,47 +49,9 @@ const ProductList = () => {
         <div className={``}>
             {/* Nav menu- Breadcrumb */}
 
-            <ol className={`inline-flex items-center space-x-1 md:space-x-3 ${styles.paddingX} py-4`}>
-                <li className="inline-flex items-center">
-
-                    <Link
-                        to="/products"
-                        className="ml-1 inline-flex text-md p-2 text-c-gray-800 hover:font-bold md:ml-2"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                        </svg>
-
-                        Products
-                    </Link>
-                </li>
-                <li>
-                    <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                        </svg>
-
-                        <a href="#" className="ml-1 text-md p-2 text-c-gray-800 hover:font-bold md:ml-2">
-                            Men
-                        </a>
-                    </div>
-                </li>
-                <li aria-current="page">
-                    <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                        </svg>
-                        <span className="ml-1 text-md p-2 font-medium text-c-gray-800 hover:font-bold md:ml-2">
-                            Oxford Casual Shirts
-                        </span>
-                    </div>
-                </li>
-            </ol>
-
-            <h2 className={`${styles.paddingX} text-lg font-normal text-gray-800/80`}>Showing 23 related results</h2>
-
+            
             {/* Filter navbar */}
-            <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />
+            {/* <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} /> */}
             <SideNav display={filterActive} setDisplay={setFilterActive} />
             
             {/* Large Desktop */}
@@ -121,7 +91,7 @@ const ProductList = () => {
 
                             <div key={i} className="border-2 mt-1 border-black/30 rounded-xl">
                                 <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
-                                <div className={`${grid == 6 && "hidden"} p-2 `}>
+                                <div className={`${grid == 5 && "hidden"} p-2 `}>
                                     <p className='text-lg font-normal text-accent'>{items.name}</p>
                                     <div className=' flex flex-wrap justify-between items-center'>
                                         <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-base font-medium text-[#af0000]">33%</p></div>
@@ -198,6 +168,10 @@ const ProductList = () => {
             </div>
         </div>
     )
+}
+
+ProductList.PropTypes = {
+    
 }
 
 export default ProductList

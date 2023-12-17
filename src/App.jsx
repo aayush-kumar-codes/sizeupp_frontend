@@ -17,6 +17,8 @@ import Account from "./pages/Account"
 import UnderConstruction from "./pages/UnderConstruction"
 import Otp from "./pages/OTP"
 import ProfileProtect from "./utils/ProfileProtect"
+import ProductLayout2 from "./pages/ProductLayout2"
+
 
 const App = () => {
   return (
@@ -34,7 +36,7 @@ const App = () => {
             </Route>
           </Route >
           <Route path="/products" element={<Layout />} >
-            <Route index element={<ProductList />} />
+            <Route index element={<ProductLayout2 />} />
             <Route path="overview" element={<ProductOverview />} />
             <Route path="cart" element={<ProductCart />} />
             <Route path="favourite" element={<ProductFav />} />

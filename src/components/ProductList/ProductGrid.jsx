@@ -36,8 +36,8 @@ export const CustomGrid = ({
                 )
             }
             {
-                gridSize == 6 && (
-                    <div className={`grid grid-cols-6 gap-10 ${styles.padding}`}>
+                gridSize == 5 && (
+                    <div className={`grid grid-cols-5 gap-10 ${styles.padding}`}>
                         {children}
                     </div>
                 )
