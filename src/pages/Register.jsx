@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
 import Error from "../components/Alerts/Error"
 import Success from "../components/Alerts/Success"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
+import Swal from 'sweetalert2';
 
 const Register = () => {
     const [form, setForm] = useState({
@@ -15,7 +16,7 @@ const Register = () => {
         newsletter: false
     })
 
-    const { setIsAuth,setIsVerfied } = useContext(AuthContext)
+    const { setIsAuth, setIsVerfied } = useContext(AuthContext)
 
     const [altcls, setAltcls] = useState(false)
 
@@ -30,107 +31,123 @@ const Register = () => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
+
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log(form)
             if (form.first_name === '' || form.last_name === '' || form.email === '' || form.password === '' || form.password_confirmation === '' || form.phone === '') {
-                console.log("Please fill all the fields")
-                setAltcls(true)
-                setAlert({
-                    alertmsg: "Please fill all the fields",
-                    type: false
-                })
-                return
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill all the fields',
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                return;
             }
 
             if (!form.email.includes('@') || !form.email.includes('.')) {
-                console.log("Invalid Email")
-                setAltcls(true)
-                setAlert({
-                    alertmsg: "Invalid Email",
-                    type: false
-                })
-                return
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Email',
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                return;
             }
 
-
             if (form.phone.length !== 10) {
-                console.log("Mobile number must be 10 digits long")
-                setAltcls(true)
-                setAlert({
-                    alertmsg: "Mobile number must be 10 digits long",
-                    type: false
-                })
-                return
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Mobile number must be 10 digits long',
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                return;
             }
 
             if (form.password !== form.password_confirmation) {
-                console.log("Password and Confirm Password must be same")
-                setAltcls(true)
-                setAlert({
-                    alertmsg: "Password and Confirm Password must be same",
-                    type: false
-                })
-                return
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Password and Confirm Password must be same',
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                return;
             }
 
             if (form.password.length < 8) {
-                console.log("Password must be atleast 8 characters long")
-                setAltcls(true)
-                setAlert({
-                    alertmsg: "Password must be atleast 8 characters long",
-                    type: false
-                })
-                return
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Password must be atleast 8 characters long',
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                return;
             }
 
-            const res = await fetch(import.meta.env.VITE_SERVER_URL+'/api/auth/signup', {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(form)
-            })
-            const data = await res.json()
-            console.log(data)
-            if (data.token) {
-                localStorage.setItem("token", data.token)
-                localStorage.setItem("user_verified", data.user_verified)
-                setAltcls(true)
-                setAlert({
-                    alertmsg: data.message,
-                    type: true
-                })
-                setForm({
-                    email: "",
-                    password: ""
-                })
-                setIsAuth(true)
-                setIsVerfied(data.user_verified)
-                navigate("/products")
+            });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
             }
-            else {
-                setAltcls(true)
+
+            const data = await res.json();
+
+            if (data.token) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user_verified", data.user_verified);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: data.message,
+                    onClose: () => { navigate('/products') }
+                });
                 setForm({
                     email: "",
                     password: ""
-                })
-                setAlert({
-                    alertmsg: data.message,
-                    type: false
-                })
+                });
+                setIsAuth(true);
+                setIsVerfied(data.user_verified);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                setForm({
+                    email: "",
+                    password: ""
+                });
             }
         } catch (error) {
-            console.log("Error", error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                showConfirmButton: false,
+                timer: 1200
+            });
         }
+    };
 
-    }
 
-    if (localStorage.getItem("token")) {
-        navigate("/products")
-        return
-    }
+    useEffect(() => {
+        // 👇️ scroll to top on page load
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     return (
 

@@ -47,14 +47,24 @@ export function ProductCart() {
     const [count, setCount] = useState(1);
     const [cart, setCart] = useState([])
 
-    const increment = () => {
-        setCount((prevCount) => prevCount + 1);
+    const updateCart = (id, sqpActive, count) => {
+        let newCart = cart
+        console.log(newCart.products[id]);
+        let item = {...newCart.products[id]}
+        console.log(item);  
+        item.qty = count;
+        item.cart.size_quantity_price = sqpActive
+        newCart.products[id] = item
+        setCart(newCart)
+        console.log(cart);
+    }
+
+    const increment = (index,size) => {
+        updateCart(index, size, cart.products[index].qty + 1)
     };
 
-    const decrement = () => {
-        if (count > 1) {
-            setCount((prevCount) => prevCount - 1);
-        }
+    const decrement = (index,size) => {
+        updateCart(index, size, cart[index].count - 1)
     };
     const navigate = useNavigate()
 
@@ -95,7 +105,7 @@ export function ProductCart() {
         }
     }
 
-    const handleAddToCart = async (sqpActive, count) => {
+    const handleAddToCart = async (id,sqpActive, count) => {
         try {
             console.log(sqpActive, count);
             if (!localStorage.token) {
@@ -203,9 +213,10 @@ export function ProductCart() {
                                                             <p className="text-sm text-c-gray-500 mb-2">{product.color}</p>
                                                             {info.product?.sqp ? (
                                                                 <ul className="colors -mr-3 flex flex-wrap">
-                                                                    {info.product.sqp.map((size, i) => (
+                                                                    {info.product.sqp.map((size, index) => (
                                                                         <li
                                                                             key={size.id}
+                                                                            onClick={() => { updateCart(i, size.id, info.quantity) }}
                                                                             className={`text-heading ${info.size_quantity_price == size?.id && 'border-black'} mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-8 md:w-8 md:text-sm`}
                                                                         >
                                                                             {size.size}
@@ -233,15 +244,16 @@ export function ProductCart() {
                                         </li>
                                         <div className="mb-2 flex">
                                             <div className="min-w-24 flex">
-                                                <button onClick={decrement} type="button" className="h-7 w-7">
+                                                <button onClick={()=>decrement(i,info.size_quantity_price)} type="button" className="h-7 w-7">
                                                     -
                                                 </button>
                                                 <input
                                                     type="text"
                                                     className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                    value={info?.quantity}
+                                                    defaultValue={product.qty}
                                                 />
-                                                <button onClick={increment} type="button" className="flex h-7 w-7 items-center justify-center">
+                                                {product.qty}
+                                                <button onClick={()=>increment(i,info.size_quantity_price)} type="button" className="flex h-7 w-7 items-center justify-center">
                                                     +
                                                 </button>
                                             </div>

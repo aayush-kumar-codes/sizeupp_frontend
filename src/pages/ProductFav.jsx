@@ -113,7 +113,18 @@ export const ProductFav = () => {
     }, []);
 
     useEffect(() => {
-        fetchData()
+        if (localStorage.token) {
+            fetchData()
+        }
+        else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please login to view your wishlist.',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
     }, [])
 
     return (

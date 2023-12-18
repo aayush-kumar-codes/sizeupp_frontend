@@ -26,7 +26,7 @@ const Filter = ({
         // Filter navbar
         <div className={`w-full flex md:justify-end justify-center items-center text-base mt-4`}>
             {/* Grid layout */}
-            <div className="group flex items-center  mx-2">
+            <div className="group flex items-center mx-2">
                 <AdjustmentsHorizontalIcon className='w-6 h-6 mr-2' />
                 <label htmlFor="grid" className="my-1 uppercase hidden md:block group-hover:underline">Grid</label>
                 <input id='grid' type="range" className="hidden xl:block w-full h-1 accent-accent ml-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />

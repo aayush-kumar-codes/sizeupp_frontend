@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import Error from "../components/Alerts/Error";
 import { Link, useNavigate } from "react-router-dom";
 import Success from "../components/Alerts/Success";
 import { AuthContext } from "../context/AuthProvider";
+import Swal from "sweetalert2";
 
 export function Login() {
 
@@ -32,63 +33,83 @@ export function Login() {
         })
     }
 
-
     const handleSubmit = async () => {
-        setloading(true)
+        setloading(true);
 
-        console.log(formData)
         if (formData.email === "" || formData.password === "") {
-            setAltcls(true)
-            setAlert({
-                alertmsg: "Please fill all the fields",
-                type: false
-            })
-            setloading(false)
-        }
-        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill all the fields',
+                showConfirmButton: false,
+                timer: 1200
+            });
+            setloading(false);
+        } else {
+            try {
+                const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/auth/signin', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/auth/signin', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-            const data = await res.json()
-            console.log(data)
-            if (data.token) {
-                localStorage.setItem("token", data.token)
-                localStorage.setItem("user_verified", JSON.stringify(data.user_verified))
-                setAltcls(true)
-                setAlert({
-                    alertmsg: data.message,
-                    type: true,
-                    onClose: () => { navigate('/products') }
-                })
-                setFormData({
-                    email: "",
-                    password: ""
-                })
-                setIsAuth(true)
-                setIsVerified(data.user_verified)
-                setloading(false)
+                const data = await res.json();
+
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("user_verified", JSON.stringify(data.user_verified));
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                    navigate("/products");
+                    setFormData({
+                        email: "",
+                        password: ""
+                    });
+                    setIsAuth(true);
+                    setIsVerified(data.user_verified);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                    setFormData({
+                        email: "",
+                        password: ""
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+            } finally {
+                setloading(false);
             }
-            else {
-                setAltcls(true)
-                setFormData({
-                    email: "",
-                    password: ""
-                })
-                setAlert({
-                    alertmsg: data.message,
-                    type: false
-                })
-                setloading(false)
-            }
         }
-    }
+    };
 
+
+    useEffect(() => {
+        // 👇️ scroll to top on page load
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
 
     return (

@@ -246,7 +246,7 @@ const ProductImageView = ({
         </div>
 
         {/* Modal */}
-        <div className="w-100 ">
+        <div className="w-full h-screen">
           <div className="flex mx-auto w-64 justify-center items-center">
             <button className="py-2 px-3 rounded-md bg-black flex justify-between items-center text-white hover:scale-105" onClick={handleOpenModal}><ArrowsPointingOutIcon className="w-4 mr-2" /> See Full View</button>
             {isModalOpen && (
@@ -452,32 +452,6 @@ const ProductOverview = () => {
   const handlePincodeChange = (e) => {
     if (e.target.value.length === 6) {
       setPincode(e.target.value)
-    }
-  }
-
-  const handlePincCode = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/pincode/${demo.product?.pincode}`, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json()
-      console.log(data);
-    } catch (error) {
-      console.error('Fetch error:', error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'Fetch error: ' + error,
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
     }
   }
 

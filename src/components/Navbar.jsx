@@ -1,11 +1,11 @@
-import React, {  useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { styles } from '../style'
 import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from './Custom/AccordionItem'
 import { UserIcon } from "@heroicons/react/24/outline";
-
+import Swal from 'sweetalert2'
 
 
 export function Navbar() {
@@ -208,17 +208,6 @@ export function Navbar() {
 
     const navigate = useNavigate()
 
-
-    const handleLogout = (name, href) => {
-        console.log(name, href)
-        console.log("Logout")
-        if (name === 'Logout') {
-            console.log("Logout")
-            localStorage.removeItem('token');
-            navigate(href);
-        }
-    }
-
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const toggleProfile = () => {
         setIsProfileOpen(!isProfileOpen);
@@ -241,18 +230,63 @@ export function Navbar() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+
+    // fetch from server
+    const handleLogout = async () => {
+        try {
+            if (!localStorage.token) {
+                return Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You are not logged in!',
+                    footer: '<a href="/login">Login</a>'
+                })
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.token}`
+                }
+            })
+
+            if (!res.ok) {
+                throw new Error('HTTP Error! status: ' + res.status)
+            }
+            const data = await res.json()
+            console.log(data)
+            Swal.fire({
+                icon: 'success',
+                title: 'Logged out successfully!',
+                showConfirmButton: false,
+                timer: 1200
+            })
+            localStorage.removeItem('token')
+            navigate('/')
+        } catch (error) {
+            console.log('Fetch Error :', error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: '<a href="/login">Login</a>'
+            })
+        }
+    }
+
     return (
         // container
-        <div className={`${styles.paddingX} inset-0 w-full bg-white sticky z-50 `}>
+        <div className={`${styles.paddingX} inset-0 bg-white w-full sticky z-50 `}>
             {/* layout prefixer */}
-            <div className="flex items-center justify-between  ">
+            <div className="flex  items-center justify-between">
 
                 {/* brand title */}
                 <Link to="/" className='cursor-pointer'>
                     <img src={logo} alt="logo" className='w-24 h-24 object-contain' />
                 </Link>
 
-                <div className="flex items-center gap-4 w-2/5">
+                <div className="flex items-center  gap-4 w-2/5">
                     {/* Search bar */}
                     <div className='hidden lg:block lg:w-2/3 mx-3'>
                         <input
@@ -283,8 +317,8 @@ export function Navbar() {
                                     <UserIcon className="h-6 w-6 stroke-2 hover:scale-110" onClick={toggleProfile} />
                                     <span className='text-xs font-medium '>Account</span>
 
-                                    {isProfileOpen && <div className="absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                        <div className="py-1" role="none">
+                                    {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                        <ul className="py-1" role="none">
                                             {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                                             <li className='hover:bg-gray-200/30 pl-2 '>
                                                 <Link to="/profile" className="text-gray-700 block px-4 py-2 text-sm">
@@ -323,7 +357,7 @@ export function Navbar() {
                                                 </li>
                                             ))}
 
-                                        </div>
+                                        </ul>
                                     </div>}
 
                                 </div>

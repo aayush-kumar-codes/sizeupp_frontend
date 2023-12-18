@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import Swal from 'sweetalert2'
 import { Outlet } from 'react-router-dom';
 
 const Profileview = () => {
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
   const navigate = useNavigate()
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -57,15 +54,14 @@ const Profileview = () => {
       if (!localStorage.token) {
         return navigate('/login')
       }
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add-to-cart/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add-to-cart/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
           'Authorization': `token ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          sqp_id: sqpActive,
-          qty: count
+          
         })
       })
       if (!res.ok) {
@@ -343,13 +339,6 @@ const Profileview = () => {
 
           <Outlet />
         </section>
-
-
-
-
-
-
-
       </main>
     </>
   )
