@@ -252,7 +252,6 @@ export function ProductCart() {
                                                     className="mx-1 h-7 w-9 rounded-md border text-center"
                                                     defaultValue={product.qty}
                                                 />
-                                                {product.qty}
                                                 <button onClick={()=>increment(i,info.size_quantity_price)} type="button" className="flex h-7 w-7 items-center justify-center">
                                                     +
                                                 </button>
