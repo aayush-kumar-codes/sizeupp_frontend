@@ -19,6 +19,8 @@ import Otp from "./pages/OTP"
 import ProfileProtect from "./utils/ProfileProtect"
 import ResetPassword from "./pages/ResetPassword"
 import Forgot from "./pages/Forgot"
+import ProductLayout2 from "./pages/ProductLayout2"
+
 
 const App = () => {
   return (

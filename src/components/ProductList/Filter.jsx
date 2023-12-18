@@ -24,9 +24,9 @@ const Filter = ({
 
     return (
         // Filter navbar
-        <div className={`${styles.paddingX} flex justify-end items-center text-base mt-4`}>
+        <div className={`w-full flex md:justify-end justify-center items-center text-base mt-4`}>
             {/* Grid layout */}
-            <div className="group flex items-center w-1/4 mx-2">
+            <div className="group flex items-center  mx-2">
                 <AdjustmentsHorizontalIcon className='w-6 h-6 mr-2' />
                 <label htmlFor="grid" className="my-1 uppercase hidden md:block group-hover:underline">Grid</label>
                 <input id='grid' type="range" className="hidden xl:block w-full h-1 accent-accent ml-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />
@@ -36,17 +36,13 @@ const Filter = ({
 
             <div className="flex items-center">
 
-                {/* filter */}
-                <div onClick={() => { setFilterActive(true) }} className="flex mx-4 cursor-pointer">
-                    <div className="hover:underline uppercase ">Filter</div>
-                    <FunnelIcon className='w-6 h-6 ml-2' />
-                </div>
+               
 
                 {/* Sort */}
                 <div className="group">
-                    <div className="flex mx-4 cursor-pointer">
-                        <div className="hover:underline uppercase ">Sort</div>
-                        <ArrowsUpDownIcon className='w-6 h-6 ml-2' />
+                    <div className="flex items-center mx-4 cursor-pointer">
+                        <div className="hover:underline ">Sort</div>
+                        <ArrowsUpDownIcon className='w-5 h-5 m-1' />
                     </div>
                     <div className="hidden z-50 group-hover:flex flex-col absolute right-8 px-6 py-6 w-fit bg-secondary rounded-md  drop-shadow-md">
                         <h2 className="text-base font-semibold mb-2">Sort by : </h2>
@@ -72,6 +68,12 @@ const Filter = ({
                         </div>
 
                     </div>
+                </div>
+
+                 {/* filter */}
+                 <div onClick={() => { setFilterActive(true) }} className="lg:hidden flex mx-4 items-center cursor-pointer">
+                    <div className="hover:underline ">Filter</div>
+                    <FunnelIcon className='w-5 h-5 m-1' />
                 </div>
             </div>
         </div>

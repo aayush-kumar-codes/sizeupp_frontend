@@ -10,7 +10,7 @@ import { UserIcon } from "@heroicons/react/24/outline";
 
 export function Navbar() {
     const noAuthMenuItems = [
-        { name: "Sign in", href: "/login" },
+        { name: "Log in", href: "/login" },
         { name: "Sign up", href: "/register" },
     ]
 
@@ -267,14 +267,14 @@ export function Navbar() {
                     <div className='hidden lg:block'>
                         <ul className="inline-flex space-x-10">
                             <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
-                                <Link to="/products/favourite" className='flex flex-col items-center '>
-                                    <HeartIcon className='w-6 h-6 stroke-2 hover:scale-110' />
+                                <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
+                                    <HeartIcon className='w-6 h-6 stroke-2' />
                                     <span className='text-xs font-medium '>Wishlist</span>
                                 </Link>
                             </li>
                             <li >
-                                <Link to="/products/cart" className='flex flex-col items-center '>
-                                    <ShoppingCartIcon className='w-6 h-6 stroke-2 hover:scale-110' />
+                                <Link to="/products/cart" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
+                                    <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
                                     <span className='text-xs font-medium '>Cart</span>
                                 </Link>
                             </li>
