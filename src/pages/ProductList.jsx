@@ -7,7 +7,6 @@ import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
 import SideNav from '../components/SideNav'
 import Swal from 'sweetalert2'
-
 import PropTypes from 'prop-types'
 
 const ProductList = ({
@@ -20,11 +19,10 @@ const ProductList = ({
     filterActive,
     setFilterActive
 }) => {
-    
+
 
     const [Products, setProducts] = useState(products)
     const [demo, setdemo] = useState([])
-    const [filterActive, setFilterActive] = useState(false)
 
     const navigate = useNavigate()
 
@@ -245,7 +243,7 @@ const ProductList = ({
         <div className={``}>
             {/* Nav menu- Breadcrumb */}
 
-            
+
             {/* Filter navbar */}
             {/* <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} /> */}
             <SideNav display={filterActive} setDisplay={setFilterActive} />
@@ -390,8 +388,15 @@ const ProductList = ({
     )
 }
 
-ProductList.PropTypes = {
-    
+ProductList.propTypes = {
+    grid: PropTypes.number,
+    setGrid: PropTypes.func,
+    mgrid: PropTypes.number,
+    setMGrid: PropTypes.func,
+    sgrid: PropTypes.number,
+    setSGrid: PropTypes.func,
+    filterActive: PropTypes.bool,
+    setFilterActive: PropTypes.func
 }
 
 export default ProductList
