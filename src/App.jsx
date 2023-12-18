@@ -17,6 +17,8 @@ import Account from "./pages/Account"
 import UnderConstruction from "./pages/UnderConstruction"
 import Otp from "./pages/OTP"
 import ProfileProtect from "./utils/ProfileProtect"
+import ResetPassword from "./pages/ResetPassword"
+import Forgot from "./pages/Forgot"
 
 const App = () => {
   return (
@@ -29,13 +31,15 @@ const App = () => {
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="otp" element={<Otp />} />
+            <Route path="forgot" element={<Forgot />} />
+            <Route path="reset" element={<ResetPassword />} />
             <Route path="profile" element={<ProfileProtect><Profileview /></ProfileProtect>} >
               <Route index element={<Account />} />
             </Route>
           </Route >
           <Route path="/products" element={<Layout />} >
             <Route index element={<ProductList />} />
-            <Route path="overview" element={<ProductOverview />} />
+            <Route path=":id" element={<ProductOverview />} />
             <Route path="cart" element={<ProductCart />} />
             <Route path="favourite" element={<ProductFav />} />
             <Route path="billing" element={

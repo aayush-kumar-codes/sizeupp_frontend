@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { styles } from "../style"
 import { useState, useEffect, useRef } from 'react';
-import { GEGreen1, GEGreen2, GEGreen3, GEGreen4, GEGreen5 } from "../assets/images/men"
 import { chevronDownIcon } from "../assets/icons";
 import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-
+import Swal from 'sweetalert2';
 import ReactDOM from 'react-dom';
 import Slider from "react-slick";
 
@@ -42,8 +41,10 @@ export const Modal = ({ children, onClose }) => {
 };
 
 // ------------------------ Image View Component ------------------------
-const ProductImageView = () => {
-  const arrayImages = [GEGreen1, GEGreen2, GEGreen3, GEGreen4, GEGreen5];
+const ProductImageView = ({
+  arrayImages = []
+}) => {
+
   const [isZoomPreviewVisible, setZoomPreviewVisible] = useState(false);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -67,14 +68,16 @@ const ProductImageView = () => {
     setZoomPreviewVisible(true); // Show the zoom preview
 
     // calculating the ratio
-    const x = preview.offsetWidth / 180;
-    const y = preview.offsetHeight / 180;
+    const x = preview?.offsetWidth / 180;
+    const y = preview?.offsetHeight / 180;
 
-    preview.style.backgroundImage = `url(${arrayImages[currentImageIndex]})`;
-    preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
+    if (preview && preview.style) {
+      preview.style.backgroundImage = `url(${arrayImages[currentImageIndex]})`;
+      preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
+    }
 
-    const posX = e.nativeEvent.offsetX;
-    const posY = e.nativeEvent.offsetY;
+    const posX = e.nativeEvent?.offsetX;
+    const posY = e.nativeEvent?.offsetY;
 
     preview.style.backgroundPosition = `-${posX * x}px -${posY * y}px`;
 
@@ -159,7 +162,7 @@ const ProductImageView = () => {
     <>
       <div className="">
         <div className="mb-6 items-center justify-center overflow-hidden md:mb-8 lg:mb-0 xl:flex">
-          <div className="w-full xl:flex xl:flex-row-reverse">
+          <div className="w-full xl:flex justify-end xl:flex-row-reverse">
             <div className="relative  mb-2.5 w-full shrink-0 overflow-hidden rounded-md border md:mb-3 xl:w-[480px] 2xl:w-[600px]">
               <div className="flex justify-center mx-auto items-center ">
                 {/* Image Current */}
@@ -189,7 +192,7 @@ const ProductImageView = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="bg-white rounded-full p-1 mx-2 cursor-pointer shadow-lg"
+                  className=" p-1 mx-2 cursor-pointer"
                 >
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
@@ -206,7 +209,7 @@ const ProductImageView = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="bg-white rounded-full p-1 mx-2 cursor-pointer shadow-lg"
+                  className=" p-1 mx-2 cursor-pointer"
                 >
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -309,6 +312,8 @@ const AccordionItem = ({ title, content }) => {
 const ProductOverview = () => {
   const [count, setCount] = useState(1);
 
+  const { id } = useParams()
+
   const increment = () => {
     setCount((prevCount) => prevCount + 1);
   };
@@ -340,7 +345,305 @@ const ProductOverview = () => {
     setIsShareMenuOpen((prev) => !prev);
   };
 
+  const [demo, setdemo] = useState([])
+  const [images, setImages] = useState([])
   const navigate = useNavigate()
+
+  //fetch data from server
+  const [pincode, setPincode] = useState('')
+  const [sqpActive, setSQPActive] = useState('')
+
+  const fetchDataAuth = () => {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `token ${localStorage.getItem('token')}`
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        setdemo(data);
+        let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
+        data.product?.images.forEach(img => {
+          imgs.push(`${import.meta.env.VITE_SERVER_URL}/${img.img}`);
+        });
+        setImages(imgs);
+        setSQPActive(data.sqp_active?.id)
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href>Why do I have this issue?</a>'
+        });
+
+
+      });
+  }
+
+  const fetchData = () => {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        setdemo(data);
+        let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
+        data.product?.images.forEach(img => {
+          imgs.push(`${import.meta.env.VITE_SERVER_URL}/${img.img}`);
+        });
+        setImages(imgs);
+        setSQPActive(data.sqp_active?.id)
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href>Why do I have this issue?</a>'
+        });
+      });
+  }
+
+  useEffect(() => {
+    if (localStorage.token) {
+      fetchDataAuth()
+    } else {
+      fetchData()
+    }
+
+  }, []);
+
+
+  const handlePincodeChange = (e) => {
+    if (e.target.value.length === 6) {
+      setPincode(e.target.value)
+    }
+  }
+
+  const handlePincCode = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/pincode/${demo.product?.pincode}`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json()
+      console.log(data);
+    } catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  const handleAddToCart = async () => {
+    try {
+      console.log(sqpActive, count);
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      console.log(localStorage.token);
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add-to-cart/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          sqp_id: sqpActive,
+          selected_color: 'black',
+          qty: count
+        })
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      if (data.Message == 'Already In Cart') {
+
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `token ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({
+            sqp_id: sqpActive,
+            selected_color: 'black',
+            qty: count
+          })
+        })
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const datas = await res.json()
+        console.log(datas);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Product Updated in Cart',
+          icon: 'success',
+        })
+      }
+      console.log(data);
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Product Updated in Cart',
+        icon: 'success',
+      })
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  const handleAddWishlist = async () => {
+    try {
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add_wishlist/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          product_id: demo.product?.id,
+        })
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      fetchDataAuth()
+      Swal.fire({
+        title: 'Success!',
+        text: 'Product Added to Wishlist',
+        icon: 'success',
+      })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  const handleRemoveWishlist = async () => {
+    try {
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/remove_wishlist/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `token ${localStorage.getItem('token')}`
+        }
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      fetchDataAuth()
+      Swal.fire({
+        title: 'Success!',
+        text: 'Product Removed from Wishlist',
+        icon: 'success',
+      })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  const handleApplyPincode = async () => {
+    try {
+        if (!localStorage.token) {
+            return navigate('/login')
+        }
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `token ${localStorage.getItem('token')}`
+            },
+            body : JSON.stringify({
+                pincode : pincode
+            })
+        })
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json()
+        console.log(data);
+        Swal.fire({
+            title: 'Success!',
+            text: 'Pincode Added',
+            icon: 'success',
+        })
+    }
+    catch (error) {
+        console.error('Fetch error:', error);
+        Swal.fire({
+            title: 'Error!',
+            text: 'Fetch error: ' + error,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+}
+
+
 
   return (
     <div className={`${styles.padding}`}>
@@ -376,7 +679,7 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
               <span className="ml-1 text-base font-medium text-c-gray-800 hover:underline md:ml-2">
-                Oxford Casual Shirts - Sage Green
+                {demo.product?.name}
               </span>
             </div>
           </li>
@@ -386,7 +689,7 @@ const ProductOverview = () => {
       <div className="block grid-cols-9 items-start gap-x-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
         {/* Image Overview */}
         <div className="col-span-5 grid grid-cols-1  gap-2">
-          <ProductImageView />
+          <ProductImageView arrayImages={images} />
         </div>
 
         {/* Information Overview */}
@@ -394,11 +697,11 @@ const ProductOverview = () => {
           <div className="mb-7 border-b border-c-gray-300 pb-2">
             <div className="flex justify-between items-center ">
               <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl xl:text-2xl">
-                Oxford Casual Shirts - Sage Green
+                {demo.product?.name}
               </h2>
               <div className="flex items-center gap-3">
                 <button className="hover:scale-110">
-                  <HeartIcon className="h-8 w-8" />
+                  {demo.wishlist ? <HeartIcon onClick={() => { handleRemoveWishlist() }} className="h-8 fill-current w-8" /> : <HeartIcon onClick={() => handleAddWishlist()} className="h-8 w-8" />}
                 </button>
                 <div className="relative inline-block text-left">
                   <button
@@ -452,16 +755,16 @@ const ProductOverview = () => {
               </div>
             </div>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              100% Cotton
+              {demo.product?.description}
             </p>
-            <p className="text-sm text-gray-800/80 font-semibold">In picture product size is 1 (128cm) in chest</p>
+            <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
 
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                ₹ 1,999.00
+                ₹ {demo.product?.price}
               </div>
               <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
-                ₹ 2,999.00
+                ₹ {demo.product?.discounted_price}
               </span>
             </div>
 
@@ -477,12 +780,13 @@ const ProductOverview = () => {
               </h3>
 
               <ul className="colors -mr-3 flex flex-wrap">
-                {['1', '2', '3', '4', '5', '6', '7'].map((size) => (
+                {demo.product?.sqp.map((sizes) => (
                   <li
-                    key={size}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
+                    key={sizes.id}
+                    onClick={() => { setSQPActive(sizes.id) }}
+                    className={`text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out ${sqpActive == sizes.id && 'border-black'} hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm `}
                   >
-                    {size}
+                    {sizes.size}
                   </li>
                 ))}
               </ul>
@@ -524,7 +828,7 @@ const ProductOverview = () => {
             </div>
             <button
               type="button"
-              onClick={() => { navigate('/products/cart') }}
+              onClick={() => { handleAddToCart() }}
               className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
               Add to cart
@@ -540,12 +844,13 @@ const ProductOverview = () => {
               id="pincode"
               placeholder="Enter PinCode"
               name="pincode"
-              onChange={() => { }}
+              defaultValue={pincode}
+              onChange={(e) => { handlePincodeChange(e) }}
               className="flex w-2/3 ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             />
             <button
               type="button"
-              onClick={() => { }}
+              onClick={() => { handleApplyPincode() }}
               className="inline-flex w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm font-semibold leading-7 text-white hover:bg-black/80"
             >
               Apply
@@ -591,7 +896,7 @@ const ProductOverview = () => {
               title="Additional Information"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
-                  Machine Wash. Tumble Dry. Do Not Bleach. Wash Dark Color Separately. Warm Iron. Dry In Shade Do Not Iron On Print.
+                  {demo.product?.care_instructions}
                 </div>
               }
             />

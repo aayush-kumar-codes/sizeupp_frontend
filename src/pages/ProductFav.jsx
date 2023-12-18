@@ -4,36 +4,106 @@ import { styles } from "../style"
 import { GEGreen1 } from "../assets/images/men"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
+import Swal from "sweetalert2"
 
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])
+
     const { isAuth } = useContext(AuthContext);
 
-    useEffect(() => {
-        // const token = localStorage.getItem("token");
-        // if (token) {
-        //     fetch('https://stark-falls-25364.herokuapp.com/api/v1/favourite', {
-        //         method: 'GET',
-        //     }).then(res => res.json())
-        //         .then(data => {
-        //             console.log(data)
-        //             setFavData(data.data)
-        //         })
-        // }
-    }, [])
+    // fetch data from server
+    const fetchData = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/wishlist', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setFavData(data.wishlist)
 
-    const handleRemove = async (id) => {
-        // const data = await fetch('',{
-        //     method : 'POST',
-        //     headers : {
-        //         'Content-Type' : 'application/json'
-        //     },
-        //     body : JSON.stringify({
-        //         id
-        //     })
-        // })
-        // const res = await data.json()
-        // console.log(res)
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    const handleRemoveWishlist = async (id) => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/remove_wishlist/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            if (data.wishlist) {
+                setFavData(data.wishlist)
+            }
+
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+
+    const handleAddWishlist = async (id) => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add_wishlist/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    product_id: id,
+                })
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     }
 
     const navigate = useNavigate()
@@ -41,6 +111,10 @@ export const ProductFav = () => {
         // 👇️ scroll to top on page load
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     return (
         <section className={`overflow-hidden ${styles.padding}`}>
@@ -76,62 +150,72 @@ export const ProductFav = () => {
                 {!isAuth && <div className="mt-8 text-lg text-c-gray">Wishlist is not saved permanently yet. Please <Link to="/register" className="underline text-accent">Register</Link> or <Link to="/login" className="underline text-accent">Login</Link></div>}
             </div>
 
-            <div className=" px-4 py-8">
-                <div className="mx-auto flex flex-wrap items-center lg:w-4/5">
-                    <img
-                        alt="dress"
-                        className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
-                        src={GEGreen1}
-                    />
-                    <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
-                        <div className="text-orange-600 font-normal text-lg">
-                            Only 4 left in stock -Order soon
-                        </div>
-                        <h2 className="my-4 text-3xl font-semibold text-black">Oxford Casual Shirts - Sage Green</h2>
-                        <div className="my-4 flex items-center">
-                            <span className="flex items-center space-x-1">
-                                {[...Array(5)].map((_, i) => (
-                                    <StarIcon key={i} className="w-6 text-yellow-500" />
-                                ))}
-                                <span className="ml-3 inline-block text-xs font-semibold">4 Reviews</span>
-                            </span>
-                        </div>
-                        <p className="leading-relaxed">
-                            Machine Wash. Tumble Dry. Do Not Bleach. Wash Dark Color Separately. Warm Iron. Dry In Shade Do Not Iron On Print
-                        </p>
-                        <div className="mb-5 mt-6 flex items-center border-b-2 border-c-gray-100 pb-5">
-                            <div className="flex items-center">
-                                <span className="mr-3 text-sm font-semibold">Color</span>
-                                <button className="h-6 w-6 rounded-full border-2 border-c-gray-300 focus:outline-none"></button>
-                                <button className="ml-1 h-6 w-6 rounded-full border-2 border-c-gray-300 bg-c-gray-700 focus:outline-none"></button>
-                                <button className="ml-1 h-6 w-6 rounded-full border-2 border-c-gray-300 bg-green-200 focus:outline-none"></button>
-                            </div>
-                            <div className="ml-auto flex items-center">
-                                <span className="mr-3 text-sm font-semibold">Size</span>
-                                <div className="relative">
-                                    <select className="appearance-none rounded border border-c-gray-300 py-2 pl-3 pr-10 text-sm focus:border-black focus:outline-none focus:ring-2 focus:ring-black">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                    <span className="pointer-events-none absolute right-0 top-0 flex h-full w-10 items-center justify-center text-center text-c-gray-600">
-                                        <ChevronDownIcon className="w-4" />
-                                    </span>
+            <div className="px-4 py-8">
+                {
+                    favData.length > 0 ?
+                        favData.map((item, index) => {
+                            return (
+                                <div key={index} className="mx-auto flex flex-wrap items-center lg:w-4/5">
+                                    <img
+                                        alt="dress"
+                                        className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
+                                        src={import.meta.env.VITE_SERVER_URL + item.img}
+                                    />
+                                    <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
+                                        <div className="text-orange-600 font-normal text-lg">
+                                            Only 4 left in stock -Order soon
+                                        </div>
+                                        <h2 className="my-4 text-3xl font-semibold text-black">{item.name}</h2>
+                                        <div className="my-4 flex items-center">
+                                            <span className="flex items-center space-x-1">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <StarIcon key={i} className="w-6 text-yellow-500" />
+                                                ))}
+                                                <span className="ml-3 inline-block text-xs font-semibold">4 Reviews</span>
+                                            </span>
+                                        </div>
+                                        <p className="leading-relaxed">
+                                            {item.care_instructions}
+                                        </p>
+                                        <div className="mt-2 text-sm">
+                                            <p className="text-sm text-c-gray-500 mb-2">{item?.color}</p>
+                                            {item?.sqp ? (
+                                                <ul className="colors -mr-3 flex flex-wrap">
+                                                    {item.sqp.map((size, i) => (
+                                                        <li
+                                                            key={size.id}
+                                                            className={`text-heading ${item.size_quantity_price == size?.id && 'border-black'} mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-8 md:w-8 md:text-sm`}
+                                                        >
+                                                            {size.size}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            ) : null}
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.price}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => navigate("/products/cart")}
+                                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            >
+                                                Add to Cart
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => { handleRemoveWishlist(item.id) }}
+                                                className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <span className="title-font text-xl font-bold text-c-gray-900">₹1,999</span>
-                            <button
-                                type="button"
-                                onClick={() => navigate("/products/cart")}
-                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                            >
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                            )
+                        })
+                        :
+                        <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Please add few products to wishlist.</div>
+                }
             </div>
         </section>
     )

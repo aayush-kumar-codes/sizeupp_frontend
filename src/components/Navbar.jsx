@@ -1,10 +1,8 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, {  useState, useEffect, useRef } from 'react'
 import { styles } from '../style'
 import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../context/AuthProvider'
 import { logo } from '../assets/banners'
-import { func } from 'prop-types'
 import AccordionItem from './Custom/AccordionItem'
 import { UserIcon } from "@heroicons/react/24/outline";
 
@@ -210,8 +208,6 @@ export function Navbar() {
 
     const navigate = useNavigate()
 
-    const { isAuth, setIsAuth } = useContext(AuthContext)
-    console.log(isAuth)
 
     const handleLogout = (name, href) => {
         console.log(name, href)
@@ -219,7 +215,6 @@ export function Navbar() {
         if (name === 'Logout') {
             console.log("Logout")
             localStorage.removeItem('token');
-            setIsAuth(false);
             navigate(href);
         }
     }
@@ -284,52 +279,52 @@ export function Navbar() {
                                 </Link>
                             </li>
                             <li >
-                                <div className='group flex flex-col items-center cursor-pointer' ref={profileRef}>
+                                <div className='flex flex-col items-center cursor-pointer' ref={profileRef}>
                                     <UserIcon className="h-6 w-6 stroke-2 hover:scale-110" onClick={toggleProfile} />
                                     <span className='text-xs font-medium '>Account</span>
-                                    
-                                        <div className="group-hover:flex hidden absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                            <div className="py-1" role="none">
-                                                {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                                                <li className='hover:bg-gray-200/30 pl-2 '>
-                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                        Profile
-                                                    </Link>
-                                                </li>
-                                                <li className='hover:bg-gray-200/30 pl-2'>
-                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                        My Offers
-                                                    </Link>
-                                                </li>
-                                                <li className='hover:bg-gray-200/30 pl-2'>
-                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                        Track order
-                                                    </Link>
-                                                </li>
-                                                <li className='hover:bg-gray-200/30 pl-2'>
-                                                    <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
-                                                        Settings
-                                                    </Link>
-                                                </li>
-                                                {!isAuth && noAuthMenuItems.map((item) => (
-                                                    <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
-                                                        <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
-                                                            {item.name}
-                                                        </Link>
-                                                    </li>
-                                                ))}
-                                                {isAuth && menuItems.map((item) => (
-                                                    <li onClick={() => {
-                                                        item.name == 'Logout' && item.func(item.name, item.href)
-                                                    }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
-                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-2 text-sm">
-                                                            {item.name}
-                                                        </Link>
-                                                    </li>
-                                                ))}
 
-                                            </div>
+                                    {isProfileOpen && <div className="absolute right-6 top-16 z-10 mt-2 w-36 py-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                        <div className="py-1" role="none">
+                                            {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+                                            <li className='hover:bg-gray-200/30 pl-2 '>
+                                                <Link to="/profile" className="text-gray-700 block px-4 py-2 text-sm">
+                                                    Profile
+                                                </Link>
+                                            </li>
+                                            <li className='hover:bg-gray-200/30 pl-2'>
+                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                    My Offers
+                                                </Link>
+                                            </li>
+                                            <li className='hover:bg-gray-200/30 pl-2'>
+                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                    Track order
+                                                </Link>
+                                            </li>
+                                            <li className='hover:bg-gray-200/30 pl-2'>
+                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                    Settings
+                                                </Link>
+                                            </li>
+                                            {!localStorage.token && noAuthMenuItems.map((item) => (
+                                                <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
+                                                        {item.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                            {localStorage.token && menuItems.map((item) => (
+                                                <li onClick={() => {
+                                                    item.name == 'Logout' && item.func(item.name, item.href)
+                                                }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-2 text-sm">
+                                                        {item.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
+
                                         </div>
+                                    </div>}
 
                                 </div>
                             </li>

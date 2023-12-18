@@ -1,12 +1,10 @@
-import  { useContext } from 'react'
-import { AuthContext } from '../context/AuthProvider';
+
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ProfileProtect = ({children}) => {
-    const {isVerified} = useContext(AuthContext);
-    console.log(isVerified) 
-    if(!isVerified){
+    console.log(localStorage.user_verified) 
+    if(!localStorage.user_verified){
         return <Navigate to="/otp" replace />
     }
     return children

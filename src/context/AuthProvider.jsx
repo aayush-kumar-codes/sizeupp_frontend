@@ -6,11 +6,11 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
     const [isAuth, setIsAuth] = useState(localStorage.getItem("token") ? true : false);
-    const [isVerified, setIsVerified] = useState(localStorage.getItem("isverified") ? true : false);
+    const [isVerified, setIsVerified] = useState(localStorage.getItem("user_verified") ? localStorage.isverified : false);
     useEffect(() => {
         // effect
         const token = localStorage.getItem("token");
-        const verified = localStorage.getItem("isverified");
+        const verified = localStorage.getItem("user_verified");
         if (token) {
             setIsAuth(true);
             setIsVerified(verified);
@@ -19,19 +19,24 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (localStorage.token) {
-            console.log(import.meta.env.VITE_SERVER_URL , localStorage.token)
+            console.log(import.meta.env.VITE_SERVER_URL , localStorage.token,localStorage.isverified)
             
         }
-        fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/all-products`, {
-            method: 'GET',
-            headers: {
-                // 'Authorization': `token ${localStorage.token}`,
-                'Content-type': 'aplication/json'
-            }
-        }).then((res) => res.json().then((data) => {
-            console.log(data)
-        }))
     }, [])
+
+    useEffect(()=>{
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
+            method : 'GET',
+            headers : {
+                'Content-type' : 'application/json'
+            },
+        }).then(res=>res.json().then(data=>{
+            console.log(data)
+            localStorage.setItem("cat_list", JSON.stringify(data))
+        }
+        ))
+
+    },[])
 
     return (
         <AuthContext.Provider

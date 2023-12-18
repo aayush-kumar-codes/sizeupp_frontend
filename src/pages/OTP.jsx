@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 const Otp = () => {
     const navigate = useNavigate()
     useEffect(() => {
-        fetch("http://103.160.144.37:8080/api/auth/otp", {
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
             method: 'GET',
             headers: {
                 'Authorization': `token ${localStorage.token}`,
@@ -14,6 +14,7 @@ const Otp = () => {
             }
         }).then(res => res.json().then((data) => {
             console.log(data)
+            localStorage.setItem("user_verified", data.user_verified)
         }))
     }, [])
 
@@ -29,23 +30,23 @@ const Otp = () => {
             ...otp,
             [e.target.name]: e.target.value
         })
-        
+
     }
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(otp)
-        const res = await fetch("http://103.160.144.37:8080/api/auth/otp",{
+        const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
             method: 'POST',
-            headers :  {
+            headers: {
                 'Authorization': `token ${localStorage.token}`,
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({otp})
+            body: JSON.stringify({ otp })
         })
 
         const data = await res.json()
-        if(data.message){
+        if (data.message) {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
@@ -53,23 +54,22 @@ const Otp = () => {
                 confirmButtonText: 'Cool'
             })
         }
-        if(data.user_verified){
-            localStorage.setItem("isverified",true)
+        if (data.user_verified) {
+            localStorage.setItem("user_verified", true)
         }
-        console.log(data)   
+        console.log(data)
     }
 
-    useEffect(()=>{
-        if(localStorage.isverified){
-            navigate("/")
-        }
-    },[])
+
+    if (localStorage.getItem("user_verified")) {
+        navigate("/profile")
+    }
 
     return (
         <>
             <Error />
             <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-200/40 py-12">
-                
+
                 <div className="relative mx-auto w-full max-w-lg rounded-2xl bg-white px-6 pt-10 pb-9 shadow-xl">
                     <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
                         <div className="flex flex-col items-center justify-center space-y-2 text-center">

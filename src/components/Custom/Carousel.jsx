@@ -5,10 +5,12 @@ import { HeartIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/2
 import { HeartIcon as HeartFill } from '@heroicons/react/20/solid'
 
 const Carousel = ({
+  id,
   slides = [],
   slideInterval = 1200,
-  func = () => { },
-  isFav
+  isFav,
+  handleAddWishlist = () => { },
+  handleRemoveWishlist = () => { }
 }) => {
 
   const [currentSlide, setCurrentSlide] = React.useState(0)
@@ -60,7 +62,7 @@ const Carousel = ({
         {slides.map((slide, i) => (
           <img
             key={i}
-            onClick={() => { navigate(`overview`) }}
+            onClick={() => { navigate(`${id}`) }}
             className="object-cover w-full h-full cursor-pointer rounded-lg"
             src={slide}
             alt="dress"
@@ -68,7 +70,10 @@ const Carousel = ({
         ))
         }
       </div>
-      <div onClick={func} className={`w-8 z-20 cursor-pointer absolute top-4 right-4 bg-white rounded-full p-1`}>{isFav ? <HeartFill /> : <HeartIcon />}</div>
+      <div className={`w-8 z-20 absolute top-4 right-4 bg-white rounded-full p-1`}>
+        {isFav ? <HeartFill className='cursor-pointer' onClick={() => handleRemoveWishlist(id)} />
+          : <HeartIcon className='cursor-pointer' onClick={() => handleAddWishlist(id)} />}
+      </div>
 
       {/* <button
         type='button'
@@ -105,9 +110,11 @@ const Carousel = ({
 Carousel.propTypes = {
   slides: PropTypes.arrayOf(PropTypes.string).isRequired,
   slideInterval: PropTypes.number,
-  id: PropTypes.number,
+  id: PropTypes.string,
   func: PropTypes.func,
-  isFav: PropTypes.bool
+  isFav: PropTypes.bool,
+  handleAddWishlist: PropTypes.func,
+  handleRemoveWishlist: PropTypes.func
 }
 
 export default Carousel

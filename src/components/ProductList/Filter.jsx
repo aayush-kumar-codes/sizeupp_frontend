@@ -13,7 +13,7 @@ const Filter = ({
     setSGrid,
     setFilterActive
 }) => {
-    const enums = [2, 3, 4, 6]
+    const enums = [2, 3, 4, 5]
 
     const handleSliderForLargeScreen = (e) => {
         const index = parseInt(e.target.value, 10)

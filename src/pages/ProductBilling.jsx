@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { styles } from '../style'
 import { useEffect, useState } from 'react'
 import { GEGreen1, Maroon1, Wine1 } from '../assets/images/men'
+import Swal from 'sweetalert2'
 
 const products = [
     {
@@ -110,21 +111,37 @@ export function ProductBilling() {
         // console.log(res)
     }
 
-    const handleApplyCoupon = async (e) => {
-        e.preventDefault()
-        console.log(form)
-        // validateCoupon()
-        // const data = await fetch('',{
-        //     method : 'POST',
-        //     headers : {
-        //         'Content-Type' : 'application/json'
-        //     },
-        //     body : JSON.stringify({
-        //         form
-        //     })
-        // })
-        // const res = await data.json()	
-        // console.log(res)
+    const handleApplyCoupon = async () => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                },
+                body : JSON.stringify({
+                    code : 'H1234'
+                })
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setCart(data)
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     }
 
     useEffect(() => {
@@ -192,7 +209,7 @@ export function ProductBilling() {
                                         <div className="ml-auto flex flex-col items-end justify-between">
                                             <p className="text-right text-sm font-bold text-gray-900">{product.price}</p>
                                             <button
-                                                onClick={handleApplyCoupon}
+                                                onClick={()=>{}}
                                                 type="button"
                                                 className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                                             >
@@ -217,6 +234,7 @@ export function ProductBilling() {
                                 <div className="mt-4 sm:mt-0 md:mt-4 lg:mt-0">
                                     <button
                                         type="button"
+                                        onClick={handleApplyCoupon}
                                         className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                     >
                                         Apply Coupon

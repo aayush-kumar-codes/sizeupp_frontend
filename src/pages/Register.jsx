@@ -15,7 +15,7 @@ const Register = () => {
         newsletter: false
     })
 
-    const { setIsAuth } = useContext(AuthContext)
+    const { setIsAuth,setIsVerfied } = useContext(AuthContext)
 
     const [altcls, setAltcls] = useState(false)
 
@@ -85,7 +85,7 @@ const Register = () => {
                 return
             }
 
-            const res = await fetch('http://103.160.144.37:8080/api/auth/signup', {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL+'/api/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,6 +96,7 @@ const Register = () => {
             console.log(data)
             if (data.token) {
                 localStorage.setItem("token", data.token)
+                localStorage.setItem("user_verified", data.user_verified)
                 setAltcls(true)
                 setAlert({
                     alertmsg: data.message,
@@ -106,6 +107,7 @@ const Register = () => {
                     password: ""
                 })
                 setIsAuth(true)
+                setIsVerfied(data.user_verified)
                 navigate("/products")
             }
             else {
