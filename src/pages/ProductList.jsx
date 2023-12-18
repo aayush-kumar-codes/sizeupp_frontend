@@ -184,7 +184,7 @@ const ProductList = ({
             }
             const data = await res.json()
             console.log(data);
-            //   fetchDataAuth()
+            fetchProductsAuth()
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Added to Wishlist',
@@ -219,7 +219,7 @@ const ProductList = ({
             }
             const data = await res.json()
             console.log(data);
-            //   fetchDataAuth()
+            fetchProductsAuth()
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Removed from Wishlist',
@@ -251,7 +251,7 @@ const ProductList = ({
             {/* Large Desktop */}
             <div className='hidden xl:block'>
                 {grid ? <CustomGrid gridSize={grid}>
-                    {demo ? demo.map((items, i) => {
+                    {demo.length > 0 ? demo.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -292,11 +292,14 @@ const ProductList = ({
                             // </div>
 
                             <div key={i} className="border-2 mt-1 border-black/30 rounded-xl">
-                                <Carousel id={items.id} isFav={items.isFavorite} func={() => addToFavorite(items.id)} slides={items.images} />
-                                <div className={`${grid == 6 && "hidden"} p-2 `}>
+                                <Carousel id={items.id} isFav={items.wishlist} slides={imgs} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
+                                <div className={`${grid == 5 && "hidden"} p-2 `}>
                                     <p className='text-lg font-normal text-accent'>{items.name}</p>
                                     <div className=' flex flex-wrap justify-between items-center'>
-                                        <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">{items.discount_percentage}%</p></div>
+                                        <div className='text-lg text-accent flex items-center gap-2'>
+                                            <p>&#8377; {items.price}</p>
+                                            <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p>
+                                            <p className="text-base font-medium text-[#af0000]">{items.discount_percentage}%</p></div>
                                         <button
                                             type="button"
                                             onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
@@ -309,6 +312,7 @@ const ProductList = ({
                             </div>
                         )
                     }) : <div>Loading ....</div>}
+
                 </CustomGrid>
                     : <div>Loading ....</div>
                 }

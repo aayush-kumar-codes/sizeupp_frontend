@@ -89,10 +89,6 @@ export function Login() {
         }
     }
 
-    if (isAuth) {
-        navigate(-2)
-        return
-    }
 
 
     return (
