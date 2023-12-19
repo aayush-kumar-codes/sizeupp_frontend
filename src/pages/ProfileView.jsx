@@ -105,9 +105,9 @@ const Profileview = () => {
     };
   }, []);
 
-  // if(localStorage.user_verified ? false : true){
-  //   return navigate('/otp')
-  // }
+  if(localStorage.user_verified ? false : true){
+    return navigate('/otp')
+  }
 
   return (
     <>
