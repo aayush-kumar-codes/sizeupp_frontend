@@ -807,7 +807,8 @@ const ProductOverview = () => {
               </div>
             </div>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              {demo.product?.description}
+              
+              <div dangerouslySetInnerHTML={{ __html: demo.product?.description }} />
             </p>
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
 

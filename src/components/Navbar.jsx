@@ -272,11 +272,11 @@ export function Navbar() {
         // container
         <div className={`${styles.paddingX} inset-0 bg-white w-full sticky z-50 `}>
             {/* layout prefixer */}
-            <div className="flex  items-center justify-between">
+            <div className="flex  items-center justify-between py-3">
 
                 {/* brand title */}
                 <Link to="/" className='cursor-pointer'>
-                    <img src={logo} alt="logo" className='w-24 h-24 object-contain' />
+                    <img src={logo} alt="logo" className='w-24 object-contain' />
                 </Link>
 
                 <div className="flex items-center  gap-4 w-2/5">
