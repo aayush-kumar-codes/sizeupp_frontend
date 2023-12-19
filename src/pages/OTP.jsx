@@ -5,6 +5,20 @@ import { useNavigate } from "react-router-dom"
 
 const Otp = () => {
     const navigate = useNavigate()
+
+    const fetchData = async() => {
+        const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
+            method : 'GET',
+            headers: {
+                'Authorization': `token ${localStorage.token}`,
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await res.json()
+        console.log(data)
+        localStorage.setItem("user_verified", data.user_verified)
+    }
+
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
             method: 'GET',
@@ -60,8 +74,9 @@ const Otp = () => {
         console.log(data)
     }
 
-    if(localStorage.getItem("user_verified") == false || localStorage.getItem("user_verified") === 'undefined'){
-        navigate("/login")
+    console.log(!localStorage.token || localStorage.token === 'undefined')
+    if(!localStorage.token || localStorage.token === 'undefined'){
+        return navigate("/login")
     }
 
     return (

@@ -111,6 +111,8 @@ const Register = () => {
                     icon: 'success',
                     title: 'Success',
                     text: data.message,
+                    showConfirmButton: false,
+                    timer: 1200
                 });
                 navigate('/profile');
                 setForm({

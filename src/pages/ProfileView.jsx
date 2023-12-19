@@ -105,7 +105,7 @@ const Profileview = () => {
     };
   }, []);
 
-  console.log(localStorage.getItem("user_verified") == false || localStorage.getItem("user_verified") === 'undefined')
+  console.log(localStorage.getItem("user_verified") == 'false' || localStorage.getItem("user_verified") === 'undefined')
 
 
   return (
