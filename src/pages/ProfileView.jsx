@@ -105,6 +105,10 @@ const Profileview = () => {
     };
   }, []);
 
+  // if(localStorage.user_verified ? false : true){
+  //   return navigate('/otp')
+  // }
+
   return (
     <>
       <main className=" flex justify-between flex-col">

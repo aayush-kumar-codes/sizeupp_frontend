@@ -21,13 +21,6 @@ export function Navbar() {
             func: (name, href) => {
                 handleLogout(name, href)
             }
-        },
-        {
-            name: "Profile",
-            href: "/profile",
-            func: () => {
-                console.log("Profile")
-            }
         }
     ]
 
@@ -262,7 +255,7 @@ export function Navbar() {
                 showConfirmButton: false,
                 timer: 1200
             })
-            localStorage.removeItem('token')
+            localStorage.clear()
             navigate('/')
         } catch (error) {
             console.log('Fetch Error :', error)

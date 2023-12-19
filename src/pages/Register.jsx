@@ -112,7 +112,7 @@ const Register = () => {
                     title: 'Success',
                     text: data.message,
                 });
-                navigate('/products');
+                navigate('/profile');
                 setForm({
                     email: "",
                     password: ""
