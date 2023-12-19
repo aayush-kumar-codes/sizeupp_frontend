@@ -111,8 +111,8 @@ const Register = () => {
                     icon: 'success',
                     title: 'Success',
                     text: data.message,
-                    onClose: () => { navigate('/products') }
                 });
+                navigate('/products');
                 setForm({
                     email: "",
                     password: ""
