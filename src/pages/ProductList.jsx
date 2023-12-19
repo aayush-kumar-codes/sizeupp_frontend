@@ -6,6 +6,7 @@ import Carousel from '../components/Custom/Carousel'
 import SideNav from '../components/SideNav'
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types'
+import SkeletonGrid from '../components/Skeleton/SkeletonGrid'
 
 const ProductList = ({
     grid,
@@ -309,7 +310,9 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    }) : <div>Loading ....</div>}
+                    }) : <div>Loading ....
+                    <SkeletonGrid/>
+                    </div>}
 
                 </CustomGrid>
                     : <div>Loading ....</div>
