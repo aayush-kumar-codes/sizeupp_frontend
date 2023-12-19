@@ -39,7 +39,7 @@ const App = () => {
             <Route path="forgot" element={<Forgot />} />
             <Route path="reset" element={<ResetPassword />} />
             
-            <Route path="profile" element={<ProfileProtect><Profileview /></ProfileProtect>} >
+            <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />
               <Route path="my-orders" element={<OrderHistory />} />
               <Route path="track-order" element={<TrackOrder />} />

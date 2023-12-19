@@ -74,10 +74,6 @@ const Otp = () => {
         console.log(data)
     }
 
-    console.log(!localStorage.token || localStorage.token === 'undefined')
-    if(!localStorage.token || localStorage.token === 'undefined'){
-        return navigate("/login")
-    }
 
     return (
         <>
