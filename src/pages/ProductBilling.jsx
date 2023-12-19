@@ -46,31 +46,81 @@ export function ProductBilling() {
     const [cart, setCart] = useState([])
     const navigate = useNavigate()
 
-    // const handleRemove = async(id) => {
-    //     const data = await fetch('',{
-    //         method : 'POST',
-    //         headers : {
-    //             'Content-Type' : 'application/json'
-    //         },
-    //         body : JSON.stringify({
-    //             id
-    //         })
-    //     })
-    //     const res = await data.json()	
-    //     console.log(res)
-    // }
+    const fetchCart = async () => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setCart(data)
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    useEffect(() => {
+        fetchCart()
+    }, [])
+
+    const handleRemoveCart = async (id) => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/delete_cart/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            fetchCart()
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
 
     const [form, setForm] = useState({
-        fullname: '',
-        email: '',
         address: '',
+        grand_total: 0,
+        sub_total: 0,
+        sub_sub_total: 0,
         coupon: '',
-        pincode: '',
-        city: '',
-        state: '',
-        cardno: "",
-        cvc: "",
-        expirationdate: ""
+        discount: 0,
+        discount_amount: 0,
+        tax: 0,
+        payment_type: 'COD',
+        deliverycharges: 0
     })
 
     const handleChange = (e) => {
@@ -78,37 +128,45 @@ export function ProductBilling() {
         setForm({ ...form, [name]: value })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        console.log(form)
-        navigate('/profile')
-        // const data = await fetch('',{
-        //     method : 'POST',
-        //     headers : {
-        //         'Content-Type' : 'application/json'
-        //     },
-        //     body : JSON.stringify({
-        //         form
-        //     })
-        // })
-        // const res = await data.json()	
-        // console.log(res)
+    const handlePaymentType = (e) => {
+        
     }
 
-    const validateCoupon = async (e) => {
-        e.preventDefault()
-        console.log(form)
-        // const data = await fetch('',{
-        //     method : 'POST',
-        //     headers : {
-        //         'Content-Type' : 'application/json'
-        //     },
-        //     body : JSON.stringify({
-        //         form
-        //     })
-        // })
-        // const res = await data.json()
-        // console.log(res)
+    const handleSubmit = async () => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/create-order`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(form)
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            Swal.fire({
+                title: 'Success!',
+                text: 'Order placed successfully',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            navigate('/products')
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     }
 
     const handleApplyCoupon = async () => {
@@ -122,8 +180,8 @@ export function ProductBilling() {
                     'Content-type': 'application/json',
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
-                body : JSON.stringify({
-                    code : 'H1234'
+                body: JSON.stringify({
+                    code: 'H1234'
                 })
             })
             if (!res.ok) {
@@ -183,42 +241,55 @@ export function ProductBilling() {
                     <div className="bg-gray-200 px-5 py-6 md:px-8">
                         <div className="flow-root">
                             <ul className="-my-7 divide-y divide-gray-200">
-                                {products.map((product) => (
-                                    <li
-                                        key={product.id}
-                                        className="flex items-stretch justify-between space-x-5 py-7"
-                                    >
-                                        <div className="flex flex-1 items-stretch">
-                                            <div className="flex-shrink-0">
-                                                <img
-                                                    className="h-20 w-20 rounded-lg border border-gray-200 bg-white object-cover"
-                                                    src={product.imageSrc}
-                                                    alt={product.imageSrc}
-                                                />
-                                            </div>
-                                            <div className="ml-5 flex flex-col justify-between">
-                                                <div className="flex-1">
-                                                    <p className="text-sm font-bold">{product.name}</p>
-                                                    <p className="mt-1.5 text-sm font-medium text-gray-500">
-                                                        {product.color}
-                                                    </p>
+                                {cart.products?.length > 0 ? cart.products.map((product, index) => {
+                                    console.log(product)
+                                    let productDetail = product.cart?.product
+                                    return (
+                                        <li
+                                            key={product.id}
+                                            className="flex items-stretch justify-between space-x-5 py-7"
+                                        >
+                                            <div className="flex flex-1 items-stretch">
+                                                <div className="flex-shrink-0">
+                                                    <img
+                                                        className="h-28 w-28 rounded-lg border border-gray-200 bg-white object-cover"
+                                                        src={`${import.meta.env.VITE_SERVER_URL}${productDetail.img}`}
+                                                        alt={"dress thumnail"}
+                                                    />
                                                 </div>
-                                                <p className="mt-4 text-xs font-medium ">x 1</p>
+                                                <div className="ml-5 flex flex-col justify-between">
+                                                    <div className="flex-1">
+                                                        <p className="text-sm font-bold">{productDetail.name}</p>
+                                                        <p className="mt-1.5 text-sm font-medium text-gray-500">
+                                                            {productDetail.sqp?.length > 0 ? productDetail.sqp.map((sqp,index) => {
+                                                                if(product.cart?.size_quantity_price !== sqp.id){
+                                                                    return
+                                                                }
+                                                                return(
+                                                                    <span key={index} className="mr-2">Size: {sqp.size}</span>
+                                                                )
+                                                            }): ''}
+                                                        </p>
+                                                    </div>
+                                                    <p className="mt-4 text-sm font-medium ">x {product.qty}</p>
+                                                </div>
+                                               
                                             </div>
-                                        </div>
-                                        <div className="ml-auto flex flex-col items-end justify-between">
-                                            <p className="text-right text-sm font-bold text-gray-900">{product.price}</p>
-                                            <button
-                                                onClick={()=>{}}
-                                                type="button"
-                                                className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                            >
-                                                <span className="sr-only">Remove</span>
-                                                <XMarkIcon className='w-5' />
-                                            </button>
-                                        </div>
-                                    </li>
-                                ))}
+                                            
+                                            <div className="ml-auto flex flex-col items-center justify-between">
+                                                <p className="text-right text-sm font-bold text-gray-900">₹ {product.cart?.total_price}</p>
+                                                <button
+                                                    onClick={() => { handleRemoveCart(productDetail.id) }}
+                                                    type="button"
+                                                    className="-m-2 inline-flex items-center rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                                                >
+                                                    <span className="text-xs text-red-500">Remove</span>
+                                                    <XMarkIcon className='w-4 text-red-500' />
+                                                </button>
+                                            </div>
+                                        </li>
+                                    )
+                                }) : <div className="text-center text-lg font-semibold">No products found</div>}
                             </ul>
                         </div>
                         <hr className="mt-6 border-gray-200" />
@@ -244,12 +315,12 @@ export function ProductBilling() {
                         </form>
                         <ul className="mt-6 space-y-3">
                             <li className="flex items-center justify-between text-gray-600">
-                                <p className="text-sm font-medium">Sub total</p>
-                                <p className="text-sm font-medium">₹14,399</p>
+                                <p className="text-sm font-semibold">Sub total</p>
+                                <p className="text-sm font-medium">₹ {cart.sub_total}</p>
                             </li>
                             <li className="flex items-center justify-between text-gray-900">
-                                <p className="text-sm font-medium ">Total</p>
-                                <p className="text-sm font-bold ">₹14,399</p>
+                                <p className="text-sm font-semibold ">Total</p>
+                                <p className={`font-bold ${cart.coupon == 'active' ? 'text-orange-500 text-lg' : 'text-sm'}`}>₹ {cart.coupon == 'active' ? cart.sub_sub_total : cart.total_price}</p>
                             </li>
                         </ul>
                     </div>
@@ -261,7 +332,7 @@ export function ProductBilling() {
                                 <div className="py-6">
                                     <form>
                                         <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
-                                            <div>
+                                            {/* <div>
                                                 <h3
                                                     id="contact-info-heading"
                                                     className="text-lg font-semibold text-gray-900"
@@ -285,66 +356,41 @@ export function ProductBilling() {
                                                         id="name"
                                                     ></input>
                                                 </div>
-                                            </div>
-                                            <hr className="my-8" />
+                                            </div> */}
+                                            {/* <hr className="my-8" /> */}
                                             <div className="mt-10">
-                                                <h3 className="text-lg font-semibold text-gray-900">Payment details</h3>
+                                                <h3 className="text-lg font-semibold text-gray-900">Payment Method</h3>
 
-                                                <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
-                                                    <div className="col-span-3 sm:col-span-4">
+                                                <div className="mt-6 flex gap-2 items-center">
+                                                    <input
+                                                        id="payment-type"
+                                                        name="payment-type"
+                                                        type="radio"
+                                                        defaultChecked
+                                                        className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                                                    />
+                                                    <div className="mr-4">
                                                         <label
-                                                            htmlFor="cardNum"
-                                                            className="block text-sm font-medium text-gray-700"
+                                                            htmlFor="payment-type"
+                                                            className="text-sm font-semibold text-gray-900"
                                                         >
-                                                            Card number
+                                                            Cash on delivery
                                                         </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                                type="text"
-                                                                name="cardno"
-                                                                onChange={handleChange}
-                                                                placeholder="4242 4242 4242 4242"
-                                                                id="cardNum"
-                                                            ></input>
-                                                        </div>
                                                     </div>
-                                                    <div className="col-span-2 sm:col-span-3">
+                                                    <input
+                                                        id="payment-type"
+                                                        name="payment-type"
+                                                        type="radio"
+                                                        defaultChecked
+                                                        className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                                                    />
+                                                    <div className="mr-2">
                                                         <label
-                                                            htmlFor="expiration-date"
-                                                            className="block text-sm font-medium text-gray-700"
+                                                            htmlFor="payment-type"
+                                                            className="text-sm font-semibold text-gray-900"
                                                         >
-                                                            Expiration date (MM/YY)
+                                                            Credit Card
                                                         </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                type="date"
-                                                                name="expirationdate"
-                                                                onChange={handleChange}
-                                                                id="expirationdate"
-                                                                autoComplete="cc-exp"
-                                                                className="block h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <label
-                                                            htmlFor="cvc"
-                                                            className="block text-sm font-medium text-gray-700"
-                                                        >
-                                                            CVC
-                                                        </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                type="text"
-                                                                name="cvc"
-                                                                onChange={handleChange}
-                                                                id="cvc"
-                                                                autoComplete="csc"
-                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            />
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

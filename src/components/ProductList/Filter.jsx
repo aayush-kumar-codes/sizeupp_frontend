@@ -31,7 +31,7 @@ const Filter = ({
                 <label htmlFor="grid" className="my-1 uppercase hidden md:block group-hover:underline">Grid</label>
                 <input id='grid' type="range" className="hidden xl:block w-full h-1 accent-accent ml-2" min={0} max={enums.length - 1} value={enums.indexOf(grid)} onChange={handleSliderForLargeScreen} step={1} />
                 <input id='mgrid' type="range" className="hidden xl:hidden md:block w-full h-1 accent-accent ml-2" min={2} max={4} onChange={(e) => { setMGrid(e.target.value) }} defaultValue={mgrid} step={2} />
-                <input id='sgrid' type="range" className="block md:hidden w-full h-1 accent-accent ml-2" min={1} max={3} onChange={(e) => { setSGrid(e.target.value) }} defaultValue={sgrid} step={1} />
+                <input id='sgrid' type="range" className="block md:hidden w-full h-1 accent-accent ml-2" min={1} max={2} onChange={(e) => { setSGrid(e.target.value) }} defaultValue={sgrid} step={1} />
             </div>
 
             <div className="flex items-center">

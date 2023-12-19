@@ -105,13 +105,13 @@ export function ProductCart() {
         }
     }
 
-    const handleAddToCart = async (id,sqpActive, count) => {
+    const handleUpdateCart = async (id,sqpActive, count) => {
         try {
             console.log(sqpActive, count);
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add-to-cart/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

@@ -10,7 +10,7 @@ const ProductLayout2 = () => {
     const [mgrid, setMGrid] = useState(2)
     const [sgrid, setSGrid] = useState(1)
     const [filterActive, setFilterActive] = useState(false)
-
+    const [results,setResults] = useState([])
     
   return (
       <>
@@ -57,7 +57,7 @@ const ProductLayout2 = () => {
                 </li>
             </ol>
 
-            <h2 className={` text-lg font-normal text-gray-800/80 mx-2`}>Showing 23 related results</h2>
+            <h2 className={` text-lg font-normal text-gray-800/80 mx-2`}>Showing {results} related results</h2>
       </div>
       <div className="mt-6 flex items-center pt-2 md:mt-0 md:space-x-4 md:pt-0">
           {/* Filter navbar */}
@@ -188,8 +188,8 @@ const ProductLayout2 = () => {
           </ul>
         </div>
       </div>
-    <div className=" w-full rounded-lg  px-2 lg:col-span-10 lg:h-full">
-        <ProductList grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />                      
+    <div className=" w-full rounded-lg border-2 border-dashed px-2 lg:col-span-10 lg:h-full">
+        <ProductList setResults={setResults} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />                      
       </div>
     </div>
   </div>

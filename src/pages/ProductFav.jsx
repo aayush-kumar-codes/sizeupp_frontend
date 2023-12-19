@@ -166,16 +166,16 @@ export const ProductFav = () => {
                     favData.length > 0 ?
                         favData.map((item, index) => {
                             return (
-                                <div key={index} className="mx-auto flex flex-wrap items-center lg:w-4/5">
+                                <div key={index} className="mx-auto my-2 flex flex-wrap items-center lg:w-4/5">
                                     <img
                                         alt="dress"
                                         className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
                                         src={import.meta.env.VITE_SERVER_URL + item.img}
                                     />
                                     <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
-                                        <div className="text-orange-600 font-normal text-lg">
+                                        {/* <div className="text-orange-600 font-normal text-lg">
                                             Only 4 left in stock -Order soon
-                                        </div>
+                                        </div> */}
                                         <h2 className="my-4 text-3xl font-semibold text-black">{item.name}</h2>
                                         <div className="my-4 flex items-center">
                                             <span className="flex items-center space-x-1">
@@ -188,7 +188,7 @@ export const ProductFav = () => {
                                         <p className="leading-relaxed">
                                             {item.care_instructions}
                                         </p>
-                                        <div className="mt-2 text-sm">
+                                        {/* <div className="mt-2 text-sm">
                                             <p className="text-sm text-c-gray-500 mb-2">{item?.color}</p>
                                             {item?.sqp ? (
                                                 <ul className="colors -mr-3 flex flex-wrap">
@@ -202,23 +202,25 @@ export const ProductFav = () => {
                                                     ))}
                                                 </ul>
                                             ) : null}
-                                        </div>
-                                        <div className="flex items-center justify-between">
+                                        </div> */}
+                                        <div className="flex mt-4 items-center justify-between">
                                             <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.price}</span>
-                                            <button
-                                                type="button"
-                                                onClick={() => navigate("/products/cart")}
-                                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                            >
-                                                Add to Cart
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => { handleRemoveWishlist(item.id) }}
-                                                className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                            >
-                                                Remove
-                                            </button>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => navigate("/products/" + item.id)}
+                                                    className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                >
+                                                    View More
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { handleRemoveWishlist(item.id) }}
+                                                    className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                >
+                                                    Remove
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

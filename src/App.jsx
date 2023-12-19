@@ -12,14 +12,19 @@ import { Login } from "./pages/Login"
 import ProtectedRoute from "./utils/ProtectedRoute"
 import LayoutAuth from "./layout/LayoutAuth"
 import Notfound from "./pages/NotFound"
-import Profileview from "./pages/ProfileView"
-import Account from "./pages/Account"
 import UnderConstruction from "./pages/UnderConstruction"
 import Otp from "./pages/OTP"
 import ProfileProtect from "./utils/ProfileProtect"
 import ResetPassword from "./pages/ResetPassword"
 import Forgot from "./pages/Forgot"
 import ProductLayout2 from "./pages/ProductLayout2"
+import OrderHistory from "./pages/Account/OrderHistory"
+import TrackOrder from "./pages/Account/TrackOrder"
+import Invoice from "./pages/Account/Invoice"
+import OrderDetail from "./pages/Account/OrderDetail"
+import Profileview from "./pages/Profileview"
+import Account from "./pages/Account/Account"
+import PaymentMethod from "./pages/Account/PaymentMethod"
 
 
 const App = () => {
@@ -35,6 +40,14 @@ const App = () => {
             <Route path="otp" element={<Otp />} />
             <Route path="forgot" element={<Forgot />} />
             <Route path="reset" element={<ResetPassword />} />
+            <Route path="profile" element={<Profileview />} >
+              <Route index element={<Account />} />
+              <Route path="my-orders" element={<OrderHistory/>} />
+              <Route path="track-order" element={<TrackOrder/>} />
+              <Route path="invoice" element={<Invoice/>} />
+              <Route path="order-details" element={<OrderDetail/>} />
+              <Route path="payment-methods" element={<PaymentMethod />} />
+            </Route>
             <Route path="profile" element={<ProfileProtect><Profileview /></ProfileProtect>} >
               <Route index element={<Account />} />
             </Route>

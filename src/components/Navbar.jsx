@@ -292,7 +292,7 @@ export function Navbar() {
                         <input
                             className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                             type="text"
-                            placeholder="Serach on Website"
+                            placeholder="Search on Website"
                         />
                     </div>
 

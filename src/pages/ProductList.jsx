@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import Filter from '../components/ProductList/Filter'
-import { styles } from '../style'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 import { products } from '../constants/products'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
@@ -11,11 +9,9 @@ import PropTypes from 'prop-types'
 
 const ProductList = ({
     grid,
-    setGrid,
+    setResults,
     mgrid,
-    setMGrid,
     sgrid,
-    setSGrid,
     filterActive,
     setFilterActive
 }) => {
@@ -53,6 +49,7 @@ const ProductList = ({
                 console.log(data);
                 // setProducts(data);
                 setdemo(data);
+                setResults(data.length)
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -76,6 +73,7 @@ const ProductList = ({
                 console.log(data);
                 // setProducts(data);
                 setdemo(data);
+                setResults(data.length)
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -291,19 +289,19 @@ const ProductList = ({
                             //     </div>
                             // </div>
 
-                            <div key={i} className="border-2 mt-1 border-black/30 rounded-xl">
+                            <div key={i} className="mt-1 rounded-xl">
                                 <Carousel id={items.id} isFav={items.wishlist} slides={imgs} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
                                 <div className={`${grid == 5 && "hidden"} p-2 `}>
                                     <p className='text-lg font-normal text-accent'>{items.name}</p>
                                     <div className=' flex flex-wrap justify-between items-center'>
-                                        <div className='text-lg text-accent flex items-center gap-2'>
-                                            <p>&#8377; {items.price}</p>
-                                            <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p>
+                                        <div className='text-base text-accent flex items-center gap-2'>
+                                            <p>&#8377; {items.discounted_price}</p>
+                                            <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.price}</p>
                                             <p className="text-base font-medium text-[#af0000]">{items.discount_percentage}%</p></div>
                                         <button
                                             type="button"
                                             onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
-                                            className="rounded-md my-2 bg-black px-2 py-2 text-sm font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                         >
                                             Add to Cart
                                         </button>
@@ -333,7 +331,7 @@ const ProductList = ({
                         return (
                             <div key={i} className="">
                                 <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
-                                <div className={` border-2 border-black/30 p-2 mt-1 rounded-lg`}>
+                                <div className={` p-2 mt-1 rounded-lg`}>
                                     <div className='text-lg font-semibold text-accent'>{items.name}</div>
                                     <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">
                                         {items.discount_percentage}%</p></div>
@@ -356,7 +354,7 @@ const ProductList = ({
             {/* Small Desktop */}
             <div className='block md:hidden'>
                 {sgrid ? <CustomGrid gridSize={sgrid}>
-                    {demo && demo.map((items, i) => {
+                    {demo.length > 0 ? demo.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -364,13 +362,16 @@ const ProductList = ({
                         })
 
                         console.log(imgs)
+
+                        console.log(imgs)
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={items.whishlist} func={() => addToFavorite(items.id)} slides={items.images} />
-                                <div className={`${sgrid == 3 && 'hidden'} border-2 border-black/30 p-2 mt-1 rounded-lg`}>
+                                <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
+                                <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
                                     <p className='text-base font-semibold text-accent'>{items.name}</p>
                                     <div className='flex flex-wrap justify-between items-center'>
-                                        <div className='text-base text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; 2999</p> <p className="text-sm font-medium text-[#af0000]">33%</p></div>
+                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">
+                                        {items.discount_percentage}%</p></div>
                                         <button
                                             type="button"
                                             onClick={() => { navigate(`/products/cart`) }}
@@ -382,7 +383,7 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    })}
+                    }) : <div>Loading ....</div>}
                 </CustomGrid>
 
                     : <div>Loading ....</div>
