@@ -19,8 +19,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (localStorage.token) {
-            console.log(import.meta.env.VITE_SERVER_URL , localStorage.token,localStorage.isverified)
-            
+            console.log(import.meta.env.VITE_SERVER_URL , localStorage.token,isVerified)
         }
     }, [])
 

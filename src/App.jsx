@@ -38,7 +38,8 @@ const App = () => {
             <Route path="otp" element={<Otp />} />
             <Route path="forgot" element={<Forgot />} />
             <Route path="reset" element={<ResetPassword />} />
-            <Route path="profile" element={<ProfileProtect ><Profileview /></ProfileProtect>} >
+            
+            <Route path="profile" element={<ProfileProtect><Profileview /></ProfileProtect>} >
               <Route index element={<Account />} />
               <Route path="my-orders" element={<OrderHistory />} />
               <Route path="track-order" element={<TrackOrder />} />

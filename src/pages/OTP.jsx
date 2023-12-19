@@ -60,9 +60,8 @@ const Otp = () => {
         console.log(data)
     }
 
-
-    if (localStorage.getItem("user_verified")) {
-        navigate("/profile")
+    if(localStorage.getItem("user_verified") == false || localStorage.getItem("user_verified") === 'undefined'){
+        navigate("/login")
     }
 
     return (
