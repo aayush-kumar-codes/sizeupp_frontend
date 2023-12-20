@@ -70,7 +70,7 @@ const Carousel = ({
         ))
         }
       </div>
-      <div className={`w-8 z-20 absolute top-4 right-4 bg-white rounded-full p-1`}>
+      <div className={`w-8 z-20 absolute bottom-4 right-4 bg-white rounded-full p-1`}>
         {isFav ? <HeartFill className='cursor-pointer' onClick={() => handleRemoveWishlist(id)} />
           : <HeartIcon className='cursor-pointer' onClick={() => handleAddWishlist(id)} />}
       </div>

@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { styles } from "../style"
 import { useState, useEffect, useRef } from 'react';
 import { chevronDownIcon } from "../assets/icons";
-import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon,XMarkIcon,TruckIcon,CheckIcon,StarIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2';
 import ReactDOM from 'react-dom';
 import Slider from "react-slick";
@@ -32,11 +32,11 @@ export const Modal = ({ children, onClose }) => {
     };
   }, [onClose]);
   return ReactDOM.createPortal(
-    <div className="fixed top-0 overflow-hidden left-0 w-screen h-screen flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
-      <div className="bg-white p-8 rounded-md max-w-screen-lg w-full h-full overflow-auto">
+    <div className="fixed overflow-hidden top-0 left-0 w-screen h-full flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
+      <div className=" p-8 rounded-md max-w-screen-lg w-full h-auto overflow-auto">
         {children}
-        <button className="absolute top-4 right-4 text-gray-700" onClick={onClose}>
-          Close
+        <button className="absolute top-4 right-6 text-gray-100" onClick={onClose}>
+        <XMarkIcon className="h-8 w-8 text-gray-100" />
         </button>
       </div>
     </div>,
@@ -136,8 +136,7 @@ const ProductImageView = ({
     speed: 500,
     slidesToScroll: 1,
     arrows: true,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
+    
 
     responsive: [
       {
@@ -259,7 +258,7 @@ const ProductImageView = ({
                   <Slider {...settings}>
                     {arrayImages.map((image, index) => (
                       <div key={index} >
-                        <img src={image} alt={`Image ${index + 1}`} className="w-2/3 mx-auto " />
+                        <img src={image} alt={`Image ${index + 1}`} className=" mx-auto " />
                       </div>
                     ))}
                   </Slider>
@@ -309,6 +308,91 @@ const AccordionItem = ({ title, content }) => {
         <div className="pb-6 text-sm leading-7 text-c-gray-600 md:pb-7">{content}</div>
       </div>
     </div>
+  );
+};
+const PincodeForm = () => {
+  const [pincode, setPincode] = useState('');
+  const [isDeliveryValid, setIsDeliveryValid] = useState(false);
+
+  const pincodeData = {
+    // Sample pincode data in JSON format
+    '12345': true,
+    '67890': false,
+    '400612': true,
+    '421201': true,
+    '400084': true,
+    '400002': true,
+    '401107':true,
+  };
+
+  const handlePincodeChange = (event) => {
+    setPincode(event.target.value);
+  };
+
+  const handleCheckClick = (event) => {
+    event.preventDefault();
+
+    const isValid = pincodeData[pincode];
+
+    if (isValid) {
+      setIsDeliveryValid(true);
+    } else {
+      alert('Not available');
+    }
+
+  };
+
+  const handleChangeClick = () => {
+    // Reset the pincode and delivery status when changing
+    setPincode('');
+    setIsDeliveryValid(false);
+  };
+
+  return (
+    <>
+      <form autoComplete="off" className="flex">
+        <input
+          type="text"
+          placeholder="Enter pincode"
+          onChange={handlePincodeChange}
+          value={pincode}
+          className="pincode-code flex w-2/3 ring-1 ring-link rounded-md mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1"
+          name="pincode"
+          disabled={isDeliveryValid}
+        />
+        
+        <input
+          type="button"
+          className="cursor-pointer relative right-14 pt-2 -mx-2 text-orange-500 hover:font-bold"
+          value={isDeliveryValid ? 'Change' : 'Check'}
+          onClick={isDeliveryValid ? handleChangeClick : handleCheckClick}
+        />
+        {isDeliveryValid && (
+        <div className="ok relative right-7 top-10 transform -translate-y-1/2">
+          <CheckIcon className="h-6 w-6 relative text-white rounded-full bg-green-600 p-1" />
+        </div>
+      )}
+      </form>
+     {isDeliveryValid ? (
+        <div className="w-full m-3">
+          <ul className="flex flex-col gap-3 font-bold">
+            <li>
+              <h4>Get it by Thu, Dec 21</h4>
+            </li>
+            <li>
+              <h4>Pay on delivery available</h4>
+            </li>
+            <li>
+              <h4>Easy 14 days return &amp; exchange available</h4>
+              <span></span>
+            </li>
+          </ul>
+        </div>
+      ) : (
+        <p className="text-xs text-gray-700 pt-2">Please enter PIN code to check delivery time &amp; Pay on Delivery Availability</p>
+      )}
+    
+    </>
   );
 };
 
@@ -641,6 +725,7 @@ const ProductOverview = () => {
     }
   }
 
+  const current = new Date();
 
 
   return (
@@ -808,7 +893,8 @@ const ProductOverview = () => {
               </div>
             </div>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              {demo.product?.description}
+              
+              <div dangerouslySetInnerHTML={{ __html: demo.product?.description }} />
             </p>
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
 
@@ -886,30 +972,17 @@ const ProductOverview = () => {
               onClick={() => { handleAddToCart() }}
               className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
-              Add to cart
+              Buy Now
             </button>
           </div>
           <div className="py-6 border-b-gray-500">
-            <label htmlFor="pincode" className="block text-lg font-medium text-gray-800/80">
-              Delivery & Services :
+          <label htmlFor="pincode" className="flex items-center text-lg font-medium  uppercase ">
+              <span className="font-bold ">Delivery & Services </span>
+              <TruckIcon className="h-7 w-7 text-gray-800/80 ml-1" />
             </label>
 
-            <input
-              type="text"
-              id="pincode"
-              placeholder="Enter PinCode"
-              name="pincode"
-              defaultValue={pincode}
-              onChange={(e) => { handlePincodeChange(e) }}
-              className="flex w-2/3 ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-            />
-            <button
-              type="button"
-              onClick={() => { handleApplyPincode() }}
-              className="inline-flex w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm font-semibold leading-7 text-white hover:bg-black/80"
-            >
-              Apply
-            </button>
+            
+            <PincodeForm />
           </div>
           <div>
             <AccordionItem
@@ -951,9 +1024,33 @@ const ProductOverview = () => {
               title="Additional Information"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
-                  {demo.product?.care_instructions}
+                  
+                  <div dangerouslySetInnerHTML={{ __html: demo.product?.care_instructions }} />
+
                 </div>
               }
+            />
+            <AccordionItem
+            title="Customer Reviews"
+              content={
+                <div className="flex flex-col gap-3">
+                  <div className="user-review-userReviewWrapper ">
+                    <div className="flex gap-2">
+                      <div className="flex items-center justify-center">
+                        <div className="flex items-center p-1 rounded bg-orange-400">
+                            <span className="text-base">4</span>
+                        <span>
+                           <StarIcon className="h-4 w-4 " />  
+                        </span>
+                        </div>
+                      </div>
+                      <div className="px-3">The product sheds color dye right after first use. It is advisable to wash it alone. The product is thinner but it's worth it if you're paying anything between 300 - 350. Also buy one size more than what is mentioned.</div>
+                      </div>
+                      <div className="px-3">Rajesh  | {`${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`}</div>
+                      </div>
+                    </div>
+
+            }
             />
           </div>
 

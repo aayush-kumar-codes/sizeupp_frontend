@@ -1,16 +1,12 @@
 import { XMarkIcon } from '@heroicons/react/24/outline'
 const filters = [
     {
-        id: 'color',
-        name: 'Color',
-        options: [
-            { value: 'white', label: 'White' },
-            { value: 'beige', label: 'Beige' },
-            { value: 'blue', label: 'Blue' },
-            { value: 'brown', label: 'Brown' },
-            { value: 'green', label: 'Green' },
-            { value: 'purple', label: 'Purple' },
-        ],
+        id: 'gender',
+        name:'Gender',
+        options:[
+            { value: 'men', label: 'Men' },
+            { value: 'women', label: 'Women' },
+            ],
     },
     {
         id: 'category',
@@ -27,14 +23,27 @@ const filters = [
         id: 'sizes',
         name: 'Sizes',
         options: [
-            { value: 'xs', label: 'XS' },
-            { value: 's', label: 'S' },
-            { value: 'm', label: 'M' },
-            { value: 'l', label: 'L' },
-            { value: 'xl', label: 'XL' },
-            { value: '2xl', label: '2XL' },
+            { value: '1', label: '1' },
+            { value: '2', label: '2' },
+            { value: '3', label: '3' },
+            { value: '4', label: '4' },
+            { value: '5', label: '5' },
+            { value: '6', label: '6' },
         ],
     },
+    {
+        id: 'color',
+        name: 'Color',
+        options: [
+            { value: 'white', label: 'White' },
+            { value: 'beige', label: 'Beige' },
+            { value: 'blue', label: 'Blue' },
+            { value: 'brown', label: 'Brown' },
+            { value: 'green', label: 'Green' },
+            { value: 'purple', label: 'Purple' },
+        ],
+    },
+    
 ]
 
 const SideNav = (
