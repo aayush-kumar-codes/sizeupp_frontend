@@ -370,6 +370,7 @@ const ProductOverview = () => {
 
   //fetch data from server
   const [pincode, setPincode] = useState('')
+
   const [sqpActive, setSQPActive] = useState('')
 
   const fetchDataAuth = (id) => {
