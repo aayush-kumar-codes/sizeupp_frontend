@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { styles } from "../style"
 import { useState, useEffect, useRef } from 'react';
 import { chevronDownIcon } from "../assets/icons";
-import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon,XMarkIcon,TruckIcon,CheckIcon,StarIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon, StarIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2';
 import ReactDOM from 'react-dom';
 import Slider from "react-slick";
@@ -36,7 +36,7 @@ export const Modal = ({ children, onClose }) => {
       <div className=" p-8 rounded-md max-w-screen-lg w-full h-auto overflow-auto">
         {children}
         <button className="absolute top-4 right-6 text-gray-100" onClick={onClose}>
-        <XMarkIcon className="h-8 w-8 text-gray-100" />
+          <XMarkIcon className="h-8 w-8 text-gray-100" />
         </button>
       </div>
     </div>,
@@ -136,7 +136,7 @@ const ProductImageView = ({
     speed: 500,
     slidesToScroll: 1,
     arrows: true,
-    
+
 
     responsive: [
       {
@@ -322,7 +322,7 @@ const PincodeForm = () => {
     '421201': true,
     '400084': true,
     '400002': true,
-    '401107':true,
+    '401107': true,
   };
 
   const handlePincodeChange = (event) => {
@@ -360,7 +360,7 @@ const PincodeForm = () => {
           name="pincode"
           disabled={isDeliveryValid}
         />
-        
+
         <input
           type="button"
           className="cursor-pointer relative right-14 pt-2 -mx-2 text-orange-500 hover:font-bold"
@@ -368,12 +368,12 @@ const PincodeForm = () => {
           onClick={isDeliveryValid ? handleChangeClick : handleCheckClick}
         />
         {isDeliveryValid && (
-        <div className="ok relative right-7 top-10 transform -translate-y-1/2">
-          <CheckIcon className="h-6 w-6 relative text-white rounded-full bg-green-600 p-1" />
-        </div>
-      )}
+          <div className="ok relative right-7 top-10 transform -translate-y-1/2">
+            <CheckIcon className="h-6 w-6 relative text-white rounded-full bg-green-600 p-1" />
+          </div>
+        )}
       </form>
-     {isDeliveryValid ? (
+      {isDeliveryValid ? (
         <div className="w-full m-3">
           <ul className="flex flex-col gap-3 font-bold">
             <li>
@@ -391,7 +391,7 @@ const PincodeForm = () => {
       ) : (
         <p className="text-xs text-gray-700 pt-2">Please enter PIN code to check delivery time &amp; Pay on Delivery Availability</p>
       )}
-    
+
     </>
   );
 };
@@ -893,7 +893,7 @@ const ProductOverview = () => {
               </div>
             </div>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              
+
               <div dangerouslySetInnerHTML={{ __html: demo.product?.description }} />
             </p>
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
@@ -975,15 +975,13 @@ const ProductOverview = () => {
               Buy Now
             </button>
           </div>
-          <div className="py-6 border-b-gray-500">
-          <label htmlFor="pincode" className="flex items-center text-lg font-medium  uppercase ">
+          {/* <div className="py-6 border-b-gray-500">
+            <label htmlFor="pincode" className="flex items-center text-lg font-medium  uppercase ">
               <span className="font-bold ">Delivery & Services </span>
               <TruckIcon className="h-7 w-7 text-gray-800/80 ml-1" />
             </label>
-
-            
             <PincodeForm />
-          </div>
+          </div> */}
           <div>
             <AccordionItem
               title="Product Details"
@@ -1024,33 +1022,33 @@ const ProductOverview = () => {
               title="Additional Information"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
-                  
+
                   <div dangerouslySetInnerHTML={{ __html: demo.product?.care_instructions }} />
 
                 </div>
               }
             />
             <AccordionItem
-            title="Customer Reviews"
+              title="Customer Reviews"
               content={
                 <div className="flex flex-col gap-3">
                   <div className="user-review-userReviewWrapper ">
                     <div className="flex gap-2">
                       <div className="flex items-center justify-center">
                         <div className="flex items-center p-1 rounded bg-orange-400">
-                            <span className="text-base">4</span>
-                        <span>
-                           <StarIcon className="h-4 w-4 " />  
-                        </span>
+                          <span className="text-base">4</span>
+                          <span>
+                            <StarIcon className="h-4 w-4 " />
+                          </span>
                         </div>
                       </div>
                       <div className="px-3">The product sheds color dye right after first use. It is advisable to wash it alone. The product is thinner but it's worth it if you're paying anything between 300 - 350. Also buy one size more than what is mentioned.</div>
-                      </div>
-                      <div className="px-3">Rajesh  | {`${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`}</div>
-                      </div>
                     </div>
+                    <div className="px-3">Rajesh  | {`${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`}</div>
+                  </div>
+                </div>
 
-            }
+              }
             />
           </div>
 
@@ -1058,7 +1056,7 @@ const ProductOverview = () => {
 
         {/* Related Products */}
         <div className="col-span-9">
-          <ReviewProduct id={id}  />
+          <ReviewProduct id={id} />
           <h2 className={`text-2xl font-semibold ${styles.paddingX}`}>You may also like :</h2>
           <RelatedProducts fetchData={fetchData} fetchDataAuth={fetchDataAuth} relatedProducts={relatedProducts} />
         </div>

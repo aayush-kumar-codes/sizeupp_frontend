@@ -4,7 +4,24 @@ import { dress } from "../assets/images"
 import { Link } from "react-router-dom"
 import { GEGreen2, GEGreen5, Maroon1 } from "../assets/images/men"
 import { WWhite1 } from "../assets/images/women"
+import { useEffect, useState } from "react"
 const Megamenu = () => {
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        }).then(res => res.json().then(data => {
+            console.log(JSON.stringify(data))
+            setData(data.detail_category)
+            localStorage.setItem("cat_list", JSON.stringify(data))
+        }
+        ))
+    }, [])
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-white shadow z-40 `}>
             {/* layout prefixer */}
@@ -16,7 +33,7 @@ const Megamenu = () => {
                         All Products
                     </Link>
                 </div>
-                
+
 
                 {/* Woman */}
                 <div className="group">
@@ -73,6 +90,28 @@ const Megamenu = () => {
                         </div>
                     </div>
                 </div>
+
+{/* 
+                {data.length > 0 && data.map((item, index) => (
+                    <div key={index} className="group">
+                        <div >
+                            <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                                {item.subcategory.category.name}
+                                <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                            </p>
+                            <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                                <div className="col-span-1">
+                                    <p className="text-base font-semibold">{item.name}</p>
+                                    <p className="text-sm text-gray-500">New products</p>
+                                    <img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                                    <button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                                    <p className="text-sm text-gray-500 mt-4">@Terms and conditions apply.</p>
+                                </div>
+                             
+                            </div>
+                        </div>
+                    </div>
+                ))} */}
 
                 {/* Man */}
                 <div className="group">
@@ -147,26 +186,26 @@ const Megamenu = () => {
                 {/* Sales */}
                 <div className="group">
 
-                <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                    Sales
-                    <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                </p>
-                <div className="hidden group-hover:grid grid-cols-4 absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                    <div className="col-span-1">
-                        <p className="text-base font-semibold">Online Only</p>
-                        <p className="text-sm text-gray-500">Shop online only products</p>
-                        < img src={GEGreen5} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                        < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Online Only</button>
-                        < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
-                    </div>
-                    <div>
-                        <ul>
-                            <li>
+                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        Sales
+                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                    </p>
+                    <div className="hidden group-hover:grid grid-cols-4 absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                        <div className="col-span-1">
+                            <p className="text-base font-semibold">Online Only</p>
+                            <p className="text-sm text-gray-500">Shop online only products</p>
+                            < img src={GEGreen5} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Online Only</button>
+                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>
 
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>

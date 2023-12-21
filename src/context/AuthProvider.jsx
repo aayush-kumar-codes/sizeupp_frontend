@@ -24,16 +24,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     useEffect(()=>{
-        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
-            method : 'GET',
-            headers : {
-                'Content-type' : 'application/json'
-            },
-        }).then(res=>res.json().then(data=>{
-            console.log(data)
-            localStorage.setItem("cat_list", JSON.stringify(data))
-        }
-        ))
+        
 
     },[])
 

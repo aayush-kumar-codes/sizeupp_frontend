@@ -14,6 +14,7 @@ export const ProductFav = () => {
     // fetch data from server
     const fetchData = async () => {
         try {
+            setFavData([])
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/wishlist', {
                 method: 'GET',
                 headers: {
@@ -165,6 +166,9 @@ export const ProductFav = () => {
                 {
                     favData.length > 0 ?
                         favData.map((item, index) => {
+                            if(item.id == favData[index-1]?.id) {
+                                return null
+                            } 
                             return (
                                 <div key={index} className="mx-auto my-2 flex flex-wrap items-center lg:w-4/5">
                                     <img

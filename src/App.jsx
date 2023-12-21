@@ -23,6 +23,7 @@ import OrderDetail from "./pages/Account/OrderDetail"
 import Account from "./pages/Account/Account"
 import PaymentMethod from "./pages/Account/PaymentMethod"
 import Profileview from "./pages/ProfileView"
+import HomeK from "./pages/HomeK"
 
 
 const App = () => {
@@ -32,7 +33,7 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<LayoutAuth />} >
-            <Route index element={<UnderConstruction />} />
+            <Route index element={<HomeK />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="otp" element={<Otp />} />

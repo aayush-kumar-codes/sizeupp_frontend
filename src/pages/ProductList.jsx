@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { products } from '../constants/products'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
@@ -7,6 +7,7 @@ import SideNav from '../components/SideNav'
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types'
 import SkeletonGrid from '../components/Skeleton/SkeletonGrid'
+import ProductSkullCard from '../components/Skeleton/ProductList/ProductCard'
 
 const ProductList = ({
     grid,
@@ -257,7 +258,6 @@ const ProductList = ({
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
 
-                        console.log(imgs)
 
                         return (
                             // <div key={i} className="group relative" >
@@ -293,7 +293,7 @@ const ProductList = ({
                             <div key={i} className="mt-1 rounded-xl">
                                 <Carousel id={items.id} isFav={items.wishlist} slides={imgs} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
                                 <div className={`${grid == 5 && "hidden"} p-2 `}>
-                                    <p className='text-lg font-normal text-accent'>{items.name}</p>
+                                    <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
                                     <div className=' flex flex-wrap justify-between items-center'>
                                         <div className='text-base text-accent flex items-center gap-2'>
                                             <p>&#8377; {items.discounted_price}</p>
@@ -310,9 +310,13 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    }) : <div>Loading ....
-                    <SkeletonGrid/>
-                    </div>}
+                    }) : <>
+                       {
+                        Array(10).fill().map((_, i) => (
+                            <ProductSkullCard key={i} />
+                        ))
+                       }
+                    </>}
 
                 </CustomGrid>
                     : <div>Loading ....</div>
@@ -329,19 +333,21 @@ const ProductList = ({
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
 
-                        console.log(imgs)
 
                         return (
                             <div key={i} className="">
                                 <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
                                 <div className={` p-2 mt-1 rounded-lg`}>
-                                    <div className='text-lg font-semibold text-accent'>{items.name}</div>
-                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">
-                                        {items.discount_percentage}%</p></div>
+                                    <div className='truncate text-base text-accent'>{items.name}</div>
+                                    <div className='text-sm text-accent flex items-center gap-2'><p>&#8377; {items.price}</p>
+                                        <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p>
+                                        <p className="text-sm font-medium text-[#af0000]">
+                                            {items.discount_percentage}%</p>
+                                    </div>
                                     <button
                                         type="button"
                                         onClick={() => { navigate(`/products/cart`) }}
-                                        className="rounded-md my-2 bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                        className="rounded-md my-2 bg-black px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                     >
                                         Add to Cart
                                     </button>
@@ -364,17 +370,14 @@ const ProductList = ({
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
 
-                        console.log(imgs)
-
-                        console.log(imgs)
                         return (
                             <div key={i} className="">
                                 <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
                                 <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
-                                    <p className='text-base font-semibold text-accent'>{items.name}</p>
+                                    <p className='truncate text-base text-accent'>{items.name}</p>
                                     <div className='flex flex-wrap justify-between items-center'>
-                                    <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">
-                                        {items.discount_percentage}%</p></div>
+                                        <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">
+                                            {items.discount_percentage}%</p></div>
                                         <button
                                             type="button"
                                             onClick={() => { navigate(`/products/cart`) }}
