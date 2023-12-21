@@ -138,7 +138,7 @@ export function ProductBilling() {
                 mrp_price: cart.mrp_price,
                 discount_on_price: cart.discout_on_price,
                 tax: 0,
-                payment_type: 'PPD'
+                payment_type: 'COD'
             })
             const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/order", {
                 method: 'POST',
