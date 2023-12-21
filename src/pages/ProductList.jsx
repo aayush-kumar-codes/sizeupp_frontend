@@ -1,12 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { products } from '../constants/products'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
 import SideNav from '../components/SideNav'
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types'
-import SkeletonGrid from '../components/Skeleton/SkeletonGrid'
 import ProductSkullCard from '../components/Skeleton/ProductList/ProductCard'
 import { AuthContext } from '../context/AuthProvider'
 
@@ -19,141 +17,9 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-
-    const [Products, setProducts] = useState(products)
-    const [demo, setdemo] = useState([])
-
-    const { isFilterActive, setIsFilterActive, search,isFuncCall } = useContext(AuthContext)
+    const { fetchProducts,fetchProductsAuth,productsbc,setproductcount,product} = useContext(AuthContext)
 
     const navigate = useNavigate()
-
-    const addToFavorite = (id) => {
-        Products.map((items) => {
-            if (items.id === id) {
-                items.isFavorite = !items.isFavorite
-            }
-        }
-        )
-        setProducts([...Products])
-    }
-
-
-    const fetchFilterProducts = async () => {
-        try {
-            setdemo([])
-            setResults(0)
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json' // corrected typo here
-                },
-                body: JSON.stringify({
-                    search: search
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            } else {
-                const data = await response.json();
-                console.log(data);
-                // setProducts(data);
-                setdemo(data);
-                setResults(data.length)
-            }
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-    };
-
-    const fetchFilterAuthProducts = async () => {
-        try {
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json', // corrected typo here,
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    search: search
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            } else {
-                const data = await response.json();
-                console.log(data);
-                // setProducts(data);
-                setdemo(data);
-                setResults(data.length)
-            }
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-    };
-
-    const fetchProducts = async () => {
-        try {
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json' // corrected typo here
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            } else {
-                const data = await response.json();
-                console.log(data);
-                // setProducts(data);
-                setdemo(data);
-                setResults(data.length)
-            }
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-    };
-
-    const fetchProductsAuth = async () => {
-        try {
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json', // corrected typo here,
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            } else {
-                const data = await response.json();
-                console.log(data);
-                // setProducts(data);
-                setdemo(data);
-                setResults(data.length)
-            }
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-    };
-
-    const handleSubmitFilter = () => {
-        
-        if(localStorage.token && isFilterActive){
-            fetchFilterAuthProducts()
-        }else{
-            fetchFilterProducts()
-        }
-    }
-
-    useEffect(()=>{
-        if(isFuncCall){
-            handleSubmitFilter()
-        }
-    },[isFuncCall])
 
     useEffect(() => {
         if (localStorage.token) {
@@ -328,7 +194,7 @@ const ProductList = ({
             {/* Large Desktop */}
             <div className='hidden xl:block'>
                 {grid ? <CustomGrid gridSize={grid}>
-                    {demo.length > 0 ? demo.map((items, i) => {
+                    {productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -404,7 +270,7 @@ const ProductList = ({
             {/* Medium Desktop */}
             <div className='hidden xl:hidden md:block'>
                 {mgrid ? <CustomGrid gridSize={mgrid}>
-                    {demo.length > 0 && demo.map((items, i) => {
+                    {productsbc.length > 0 && productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -414,7 +280,7 @@ const ProductList = ({
 
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
+                                <Carousel id={items.id} isFav={false} func={() => {}} slides={imgs} />
                                 <div className={` p-2 mt-1 rounded-lg`}>
                                     <div className='truncate text-base text-accent'>{items.name}</div>
 
@@ -444,7 +310,7 @@ const ProductList = ({
             {/* Small Desktop */}
             <div className='block md:hidden'>
                 {sgrid ? <CustomGrid gridSize={sgrid}>
-                    {demo.length > 0 ? demo.map((items, i) => {
+                    {productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -453,7 +319,7 @@ const ProductList = ({
 
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
+                                <Carousel id={items.id} isFav={false} func={() => {}} slides={imgs} />
                                 <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
                                     <p className='truncate text-base text-accent'>{items.name}</p>
                                     <div className='flex flex-wrap justify-between items-center'>

@@ -158,7 +158,7 @@ export function ProductBilling() {
                     mrp_price: cart.mrp_price,
                     discount_on_price: cart.discout_on_price,
                     tax: 0,
-                    payment_type: 'PPD'
+                    payment_type: 'COD'
                 })
             })
 
@@ -189,6 +189,7 @@ export function ProductBilling() {
 
     useEffect(() => {
         fetchCart()
+        fetchUserProfile()
     }, [])
 
     const [form, setForm] = useState({

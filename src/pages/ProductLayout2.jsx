@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { useState,  useContext } from 'react'
+import {  Link } from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
-import { styles } from '../style'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
 
@@ -10,8 +9,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const {isFilterActive,setIsFilterActive} = useContext(AuthContext)
-  const [results, setResults] = useState([])
+  const {isFilterActive,setIsFilterActive,handlefetchFilterProducts,handlefetchProducts,productcount} = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
 
   const [filterData, setFilterData] = useState({
@@ -30,9 +28,9 @@ const ProductLayout2 = () => {
     }));
 
     if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
-      setIsFilterActive(true)
+      handlefetchFilterProducts()
     } else {
-      setIsFilterActive(false)
+      handlefetchProducts()
     }
     console.log(filterData)
   };
@@ -129,7 +127,7 @@ const ProductLayout2 = () => {
                 </li>
               </ol>
 
-              <h2 className={` text-lg font-normal text-gray-800/80 mx-2`}>Showing {results} related results</h2>
+              <h2 className={` text-lg font-normal text-gray-800/80 mx-2`}>Showing {productcount} related results</h2>
             </div>
             <div className="mt-6 flex items-center pt-2 md:mt-0 md:space-x-4 md:pt-0">
               {/* Filter navbar */}
@@ -171,7 +169,7 @@ const ProductLayout2 = () => {
 
             </div>
             <div className=" w-full rounded-lg  px-2 lg:col-span-10 lg:h-full">
-              <ProductList  setResults={setResults} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid}  filterActive={filterActive} setFilterActive={setFilterActive} />
+              <ProductList  setResults={()=>{console.log("faker v_172.PL2")}} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid}  filterActive={filterActive} setFilterActive={setFilterActive} />
             </div>
           </div>
         </div>

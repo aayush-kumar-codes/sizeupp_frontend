@@ -196,7 +196,7 @@ export function Navbar() {
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     const [isInputFocused, setIsInputFocused] = useState(false);
-    const {isFilterActive,setIsFilterActive,search,setSearch,isFuncCall,setIsFuncCall} = useContext(AuthContext)
+    const {isFilterActive,setIsFilterActive,search,setSearch,isFuncCall,setIsFuncCall,handlefetchProducts,handlefetchFilterProducts} = useContext(AuthContext)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -292,7 +292,7 @@ export function Navbar() {
                                     className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 pl-10 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                     type="text"
                                     defaultValue={search}
-                                    onChange={(e) => {setSearch(e.target.value); setIsFilterActive(true);}}
+                                    onChange={(e) => {setSearch(e.target.value);console.log(search) }}
                                     placeholder="Search on Website"
                                     onFocus={() => setIsInputFocused(true)}
                                     onBlur={() => setIsInputFocused(false)}
@@ -306,12 +306,13 @@ export function Navbar() {
                                 </div>
                             </div>
 
-                            <div className={`relative right-14 top-0 ${isInputFocused ? 'visible' : 'hidden'}`}>
-                                <button onClick={()=>{setIsFuncCall(true)}} className="text-xs m-2 bg-orange-500 p-2 rounded-xl">
+                            <div onClick={()=>{handlefetchFilterProducts();}}  className={`relative right-14 top-0 ${isInputFocused ? 'visible' : 'hidden'}`}>
+                                <button className="text-xs m-2 bg-orange-500 p-2 rounded-xl">
                                     <MagnifyingGlassIcon class="h-6 w-6 text-white" />
 
                                 </button>
                             </div>
+                            <button onClick={handlefetchFilterProducts}> Submit</button>
                         </div>
                     </div>
 
