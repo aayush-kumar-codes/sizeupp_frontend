@@ -6,7 +6,11 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
     const [isAuth, setIsAuth] = useState(localStorage.getItem("token") ? true : false);
+    const [isFilterActive,setIsFilterActive] = useState(false);
     const [isVerified, setIsVerified] = useState(localStorage.getItem("user_verified") ? localStorage.isverified : false);
+    const [search, setSearch] = useState("");
+    const [isFuncCall,setIsFuncCall] = useState(false);
+
     useEffect(() => {
         // effect
         const token = localStorage.getItem("token");
@@ -34,7 +38,13 @@ const AuthProvider = ({ children }) => {
                 isAuth,
                 setIsAuth,
                 isVerified,
-                setIsVerified
+                setIsVerified,
+                isFilterActive,
+                setIsFilterActive,
+                search,
+                setSearch,
+                isFuncCall,
+                setIsFuncCall
             }}
         >
             {children}

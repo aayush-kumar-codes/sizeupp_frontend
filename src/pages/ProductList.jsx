@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { products } from '../constants/products'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import PropTypes from 'prop-types'
 import SkeletonGrid from '../components/Skeleton/SkeletonGrid'
 import ProductSkullCard from '../components/Skeleton/ProductList/ProductCard'
+import { AuthContext } from '../context/AuthProvider'
 
 const ProductList = ({
     grid,
@@ -15,12 +16,14 @@ const ProductList = ({
     mgrid,
     sgrid,
     filterActive,
-    setFilterActive
+    setFilterActive,
 }) => {
 
 
     const [Products, setProducts] = useState(products)
     const [demo, setdemo] = useState([])
+
+    const { isFilterActive, setIsFilterActive, search,isFuncCall } = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -34,6 +37,61 @@ const ProductList = ({
         setProducts([...Products])
     }
 
+
+    const fetchFilterProducts = async () => {
+        try {
+            setdemo([])
+            setResults(0)
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json' // corrected typo here
+                },
+                body: JSON.stringify({
+                    search: search
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                const data = await response.json();
+                console.log(data);
+                // setProducts(data);
+                setdemo(data);
+                setResults(data.length)
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
+
+    const fetchFilterAuthProducts = async () => {
+        try {
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json', // corrected typo here,
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    search: search
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                const data = await response.json();
+                console.log(data);
+                // setProducts(data);
+                setdemo(data);
+                setResults(data.length)
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
 
     const fetchProducts = async () => {
         try {
@@ -82,11 +140,30 @@ const ProductList = ({
         }
     };
 
+    const handleSubmitFilter = () => {
+        
+        if(localStorage.token && isFilterActive){
+            fetchFilterAuthProducts()
+        }else{
+            fetchFilterProducts()
+        }
+    }
+
+    useEffect(()=>{
+        if(isFuncCall){
+            handleSubmitFilter()
+        }
+    },[isFuncCall])
+
     useEffect(() => {
         if (localStorage.token) {
+
             fetchProductsAuth();
+
         } else {
+
             fetchProducts();
+
         }
     }, []);
 

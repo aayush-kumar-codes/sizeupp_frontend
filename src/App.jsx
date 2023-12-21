@@ -28,7 +28,7 @@ import HomeK from "./pages/HomeK"
 
 const App = () => {
   return (
-    <div className={``}>
+    <div className={` `}>
       <BrowserRouter>
 
         <Routes>

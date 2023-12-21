@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { styles } from '../style'
 import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from './Custom/AccordionItem'
-import { UserIcon } from "@heroicons/react/24/outline";
+import { UserIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2'
+import { AuthContext } from '../context/AuthProvider'
 
 
 export function Navbar() {
@@ -194,6 +195,8 @@ export function Navbar() {
     ]
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+    const [isInputFocused, setIsInputFocused] = useState(false);
+    const {isFilterActive,setIsFilterActive,search,setSearch,isFuncCall,setIsFuncCall} = useContext(AuthContext)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -282,11 +285,34 @@ export function Navbar() {
                 <div className="flex items-center  gap-4 w-2/5">
                     {/* Search bar */}
                     <div className='hidden lg:block lg:w-2/3 mx-3'>
-                        <input
-                            className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                            type="text"
-                            placeholder="Search on Website"
-                        />
+
+                        <div className='flex w-full items-center'>
+                            <div className='relative w-full'>
+                                <input
+                                    className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 pl-10 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    type="text"
+                                    defaultValue={search}
+                                    onChange={(e) => {setSearch(e.target.value); setIsFilterActive(true);}}
+                                    placeholder="Search on Website"
+                                    onFocus={() => setIsInputFocused(true)}
+                                    onBlur={() => setIsInputFocused(false)}
+
+                                />
+                                <div
+                                    className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ${isInputFocused ? 'hidden' : 'flex'
+                                        }`}
+                                >
+                                    <MagnifyingGlassIcon className="h-4 w-4 text-gray-500" />
+                                </div>
+                            </div>
+
+                            <div className={`relative right-14 top-0 ${isInputFocused ? 'visible' : 'hidden'}`}>
+                                <button onClick={()=>{setIsFuncCall(true)}} className="text-xs m-2 bg-orange-500 p-2 rounded-xl">
+                                    <MagnifyingGlassIcon class="h-6 w-6 text-white" />
+
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Menu */}
