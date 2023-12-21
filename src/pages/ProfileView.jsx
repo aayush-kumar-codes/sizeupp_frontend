@@ -295,7 +295,7 @@ const Profileview = () => {
               <div className="flex w-full">
                 <div className="flex flex-col ">
                   <Link
-                    to="/favourite"
+                    to="/products/favourite"
                     className="flex items-center gap-2 font-medium active:text-violet-900"
                   >
                     <svg

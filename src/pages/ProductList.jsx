@@ -298,7 +298,8 @@ const ProductList = ({
                                         <div className='text-base text-accent flex items-center gap-2'>
                                             <p>&#8377; {items.discounted_price}</p>
                                             <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.price}</p>
-                                            <p className="text-base font-medium text-[#af0000]">{items.discount_percentage}%</p></div>
+                                            <p className="text-base font-medium text-[#af0000]">{items.discount_percentage}%</p>
+                                        </div>
                                         <button
                                             type="button"
                                             onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
@@ -311,11 +312,11 @@ const ProductList = ({
                             </div>
                         )
                     }) : <>
-                       {
-                        Array(10).fill().map((_, i) => (
-                            <ProductSkullCard key={i} />
-                        ))
-                       }
+                        {
+                            Array(10).fill().map((_, i) => (
+                                <ProductSkullCard key={i} />
+                            ))
+                        }
                     </>}
 
                 </CustomGrid>
@@ -339,18 +340,21 @@ const ProductList = ({
                                 <Carousel id={items.id} isFav={false} func={() => addToFavorite(items.id)} slides={imgs} />
                                 <div className={` p-2 mt-1 rounded-lg`}>
                                     <div className='truncate text-base text-accent'>{items.name}</div>
-                                    <div className='text-sm text-accent flex items-center gap-2'><p>&#8377; {items.price}</p>
-                                        <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p>
-                                        <p className="text-sm font-medium text-[#af0000]">
-                                            {items.discount_percentage}%</p>
+
+                                    <div className=' flex flex-wrap justify-between items-center'>
+                                        <div className='text-sm text-accent flex items-center gap-2'><p>&#8377; {items.discounted_price}</p>
+                                            <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.price}</p>
+                                            <p className="text-sm font-medium text-[#af0000]">
+                                                {items.discount_percentage}%</p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => { navigate(`/products/cart`) }}
+                                            className="rounded-md my-2 bg-black px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                        >
+                                            Add to Cart
+                                        </button>
                                     </div>
-                                    <button
-                                        type="button"
-                                        onClick={() => { navigate(`/products/cart`) }}
-                                        className="rounded-md my-2 bg-black px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                    >
-                                        Add to Cart
-                                    </button>
                                 </div>
                             </div>
                         )
