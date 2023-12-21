@@ -21,9 +21,10 @@ import TrackOrder from "./pages/Account/TrackOrder"
 import Invoice from "./pages/Account/Invoice"
 import OrderDetail from "./pages/Account/OrderDetail"
 import Account from "./pages/Account/Account"
-import PaymentMethod from "./pages/Account/PaymentMethod"
 import Profileview from "./pages/ProfileView"
 import HomeK from "./pages/HomeK"
+import Contact from "./pages/Account/Contact"
+import ManageAccount from "./pages/Account/ManageAccount"
 
 
 const App = () => {
@@ -46,7 +47,9 @@ const App = () => {
               <Route path="track-order" element={<TrackOrder />} />
               <Route path="invoice" element={<Invoice />} />
               <Route path="order-details" element={<OrderDetail />} />
-              <Route path="payment-methods" element={<PaymentMethod />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="account-settings" element={<ManageAccount />} />
+
             </Route>
           </Route >
           <Route path="/products" element={<Layout />} >

@@ -292,7 +292,7 @@ const AccordionItem = ({ title, content }) => {
         className={`flex cursor-pointer items-center justify-between border-t border-c-gray-300 py-5 transition-colors md:py-6 ${isOpen ? 'open' : ''}`}
         onClick={toggleAccordion}
       >
-        <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg ">
+        <h2 className="text-heading pr-2 text-xl font-semibold leading-relaxed md:text-base ">
           {title}
         </h2>
         <div className="relative flex h-4 w-4 flex-shrink-0 items-center justify-center">
@@ -779,9 +779,9 @@ const ProductOverview = () => {
         <div className="col-span-4 pt-8 lg:pt-0">
           <div className="mb-7 border-b border-c-gray-300 pb-2">
             <div className="flex justify-between items-center ">
-              <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl xl:text-2xl">
+              <p className=" mb-3.5 font-bold " style={{fontSize:'1.3rem'}}>
                 {demo.product?.name}
-              </h2>
+              </p>
               <div className="flex items-center gap-3">
                 <button className="hover:scale-110">
                   {demo.wishlist ? <HeartIcon onClick={() => { handleRemoveWishlist() }} className="h-8 fill-current text-orange-500 w-8" /> : <HeartIcon onClick={() => handleAddWishlist()} className="h-8 w-8" />}
@@ -1004,7 +1004,7 @@ const ProductOverview = () => {
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Material</h3>
-                      <p className="text-lg">100% Cotton</p>
+                      <p className="text-xs">100% Cotton</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Design/Surface</h3>
