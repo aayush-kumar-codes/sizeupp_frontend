@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { Outlet, Link } from 'react-router-dom';
 import { TruckIcon } from "@heroicons/react/24/outline";
+import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon } from "@heroicons/react/24/outline";
+import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
+
 
 
 
@@ -111,45 +115,13 @@ const Profileview = () => {
   return (
     <>
       <main className=" flex justify-between flex-col">
-        <div>
-
-
-
-          <nav className="mx-auto w-full mt-4 max-w-[1200px] px-5">
-            <ul className="flex items-center">
-              <li className="cursor-pointer">
-                <a href="index.html">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"
-                    />
-                    <path
-                      d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <span className="mx-2 text-gray-500">&gt;</span>
-              </li>
-
-              <li className="text-gray-500">Account</li>
-            </ul>
-
-          </nav>
-
-        </div>
+        
 
         <section
           className=" w-full flex-grow border-b py-5 lg:flex lg:flex-row lg:py-10"
         >
 
-          <section className="hidden w-[300px] flex-shrink-0 px-12 lg:block rounded-lg border">
+          <section className="hidden w-[300px] min-h-[700px]  flex-shrink-0 px-12 lg:block rounded-lg border">
             <Link to="/profile">
               <div className="border-b py-5">
                 <div className="flex items-center">
@@ -169,59 +141,58 @@ const Profileview = () => {
 
             </Link>
 
-            <div className="flex border-b p-4">
+            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
               <div className="w-full">
                 <div className="flex w-full">
                   <div className="flex flex-col gap-2">
-                    <button
-                      className="flex items-center gap-2 font-medium"
-                      onClick={toggleDropdown}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="h-5 w-5"
+                    <Link to="account-settings">
+                      <button
+                        className="flex items-center gap-2 font-medium"
+                        
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-                        />
-                      </svg>
-                      Manage account
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="h-5 w-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+                          />
+                        </svg>
+                        Account Settings
+                      </button>
+                    
+                    </Link>
 
 
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              className={`drop-down flex flex-col px-6 gap-2 ${dropdownVisible ? 'visible' : 'hidden'
-                } transition ease-in-out duration-300`}
-            >
-              <Link to="javascript:void(0)"
-                className="active:blue-900 text-gray-500 duration-100 hover:text-blue-800"
-              >
-                Profile information
-              </Link>
-              <Link to="manage-address.html"
-                className="text-gray-500 duration-100 hover:text-blue-800"
-              >
-                Manage Addresses
-              </Link>
-              <Link to="change-password.html"
-                className="text-gray-500 duration-100 hover:text-blue-800"
-              >
-                Change password
-              </Link>
-            </div>
-            <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+            
+            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                    <div className="flex w-full">
+                      <div className="flex flex-col ">
+                        <Link
+                          to="/"
+                          className="flex items-center gap-2 font-medium active:text-violet-900"
+                        >
+                         <BuildingOffice2Icon className="h-6 w-6 " />
+
+                          Manage Address
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
-                <div className="flex flex-col x">
+                <div className="flex flex-col ">
 
                   <Link
                     to="/profile/my-orders"
@@ -248,7 +219,8 @@ const Profileview = () => {
                 </div>
               </div>
             </div>
-            <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+
+            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
 
@@ -263,65 +235,40 @@ const Profileview = () => {
                 </div>
               </div>
             </div>
-            <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+
+            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
                   <Link
-                    to="payment-methods.html"
+                    to="contact"
                     className="flex items-center gap-2 font-medium active:text-violet-900"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="h-5 w-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
-                      />
-                    </svg>
+                   <PhoneIcon className="h-6 w-6 " />
 
-                    Payment Methods
+                    Contact Us
                   </Link>
                 </div>
               </div>
             </div>
 
-            <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+            {/* <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
                   <Link
-                    to="/products/favourite"
+                    to="/"
                     className="flex items-center gap-2 font-medium active:text-violet-900"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="h-5 w-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                      />
-                    </svg>
+                    <ArrowsRightLeftIcon className="h-6 w-6 " />
 
-                    My Wishlist
+                    Return and Replace
                   </Link>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="flex py-5">
+            <div className="flex py-12  ">
               <div className="flex w-full">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 border p-3 rounded-lg px-4 hover:bg-gray-200 hover:scale-x-105">
                   <Link
                     to="/"
                     className="flex items-center gap-2 font-medium active:text-violet-900"
@@ -380,7 +327,7 @@ const Profileview = () => {
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   className="bi bi-list" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd"
+                  <path fillRule="evenodd"
                     d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                 </svg>
               </button>
@@ -391,59 +338,53 @@ const Profileview = () => {
                 <div ref={sidebarRef}
                   className="fixed transform shadow-md left-0 top-0 h-full w-64 bg-white  border p-4 z-50 pt-24 translate-x-0 ease-in">
                   {/* Add your sidebar content here */}
-                  <div className="flex border-b p-4">
-                    <div className="w-full">
-                      <div className="flex w-full">
-                        <div className="flex flex-col gap-2">
-                          <button
-                            className="flex items-center gap-2 font-medium"
-                            onClick={toggleDropdown}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-5 w-5"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-                              />
-                            </svg>
-                            Manage account
-                          </button>
+                  
+                   <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                    <div className="flex w-full">
+                      <div className="flex flex-col ">
 
+                        <Link
+                          to="account-settings"
+                          className="flex items-center gap-2 font-medium active:text-violet-900 "
+                        >
+                          <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-5 w-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+                                />
+                              </svg>
 
-                        </div>
+                          Account Settings
+                        </Link>
                       </div>
                     </div>
                   </div>
-                  <div
-                    className={`drop-down flex flex-col px-6 gap-2 ${dropdownVisible ? 'visible' : 'hidden'
-                      } transition ease-in-out duration-300`}
-                  >
-                    <Link to="javascript:void(0)"
-                      className="active:blue-900 text-gray-500 duration-100 hover:text-blue-800"
-                    >
-                      Profile information
-                    </Link>
-                    <Link to="manage-address.html"
-                      className="text-gray-500 duration-100 hover:text-blue-800"
-                    >
-                      Manage Addresses
-                    </Link>
-                    <Link to="change-password.html"
-                      className="text-gray-500 duration-100 hover:text-blue-800"
-                    >
-                      Change password
-                    </Link>
-                  </div>
-                  <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
-                      <div className="flex flex-col x">
+                      <div className="flex flex-col ">
+                        <Link
+                          to="/"
+                          className="flex items-center gap-2 font-medium active:text-violet-900"
+                        >
+                         <BuildingOffice2Icon className="h-6 w-6 " />
+
+                          Manage Address
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                    <div className="flex w-full">
+                      <div className="flex flex-col ">
 
                         <Link
                           to="/profile/my-orders"
@@ -470,7 +411,7 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
@@ -485,63 +426,36 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
-                          to="payment-methods.html"
+                          to="contact"
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-5 w-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
-                            />
-                          </svg>
+                          <PhoneIcon className="h-6 w-6 " />
 
-                          Payment Methods
+                          Contact Us
                         </Link>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex border-b p-4 rounded-lg hover:bg-blue-300">
+                  {/* <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
-                          to="/favourite"
+                          to="/"
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-5 w-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                            />
-                          </svg>
-
-                          My Wishlist
+                         <ArrowsRightLeftIcon className="h-6 w-6 " />
+                          Return and Replace
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="flex py-5">
+                  <div className="flex py-12">
                     <div className="flex w-full">
                       <div className="flex flex-col gap-2">
                         <Link
@@ -573,8 +487,10 @@ const Profileview = () => {
               )}
             </div>
           </div>
+          <div className="w-full bg-gray-50/40">
 
           <Outlet />
+          </div>
         </section>
       </main>
     </>
