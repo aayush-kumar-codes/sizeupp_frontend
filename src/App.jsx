@@ -25,6 +25,7 @@ import Profileview from "./pages/ProfileView"
 import HomeK from "./pages/HomeK"
 import Contact from "./pages/Account/Contact"
 import ManageAccount from "./pages/Account/ManageAccount"
+import ManageAddress from "./pages/Account/ManageAddress"
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="order-details" element={<OrderDetail />} />
               <Route path="contact" element={<Contact />} />
               <Route path="account-settings" element={<ManageAccount />} />
+              <Route path="manage-address" element={<ManageAddress />} />
 
             </Route>
           </Route >

@@ -273,7 +273,7 @@ export function Navbar() {
 
     return (
         // container
-        <div className={`${styles.paddingX} inset-0 bg-white w-full sticky z-50 `}>
+        <div className={`${styles.paddingX} inset-0 bg-white w-full sticky z-50 border border-gray-100`}>
             {/* layout prefixer */}
             <div className="flex  items-center justify-between py-3">
 
@@ -286,7 +286,7 @@ export function Navbar() {
                     {/* Search bar */}
                     <div className='hidden lg:block lg:w-2/3 mx-3'>
 
-                        <div className='flex w-full items-center'>
+                        {/* <div className='flex w-full items-center'>
                             <div className='relative w-full'>
                                 <input
                                     className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 pl-10 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -308,12 +308,18 @@ export function Navbar() {
 
                             <div onClick={()=>{handlefetchFilterProducts();}}  className={`relative right-14 top-0 ${isInputFocused ? 'visible' : 'hidden'}`}>
                                 <button className="text-xs m-2 bg-orange-500 p-2 rounded-xl">
-                                    <MagnifyingGlassIcon class="h-6 w-6 text-white" />
+                                    <MagnifyingGlassIcon className="h-6 w-6 text-white" />
 
                                 </button>
                             </div>
                             <button onClick={handlefetchFilterProducts}> Submit</button>
-                        </div>
+                        </div> */}
+                        <form className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
+                            <input type="text" placeholder="Search anything" className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search"/>
+                                <button className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white font-medium tracking-wide border-transparent  h-[38px] -mr-3" >
+                                <MagnifyingGlassIcon className="h-4 w-4 text-white "/>
+                            </button>
+                        </form>
                     </div>
 
                     {/* Menu */}
@@ -333,9 +339,12 @@ export function Navbar() {
                                 </Link>
                             </li>
                             <li >
-                                <div className='flex flex-col items-center cursor-pointer' ref={profileRef}>
-                                    <UserIcon className="h-6 w-6 stroke-2 hover:scale-110" onClick={toggleProfile} />
-                                    <span className='text-xs font-medium '>Account</span>
+                                <div className=' cursor-pointer' ref={profileRef}>
+                                    <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
+                                        <UserIcon className="h-6 w-6 stroke-2 "  />
+                                        <span className='text-xs font-medium'>Account</span>
+
+                                    </button>
 
                                     {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                         <ul className="py-1" role="none">
