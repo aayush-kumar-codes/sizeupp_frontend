@@ -4,7 +4,7 @@ import Products from '../components/HomeK/Products'
 import DiscountAd from '../components/HomeK/DiscountAd'
 import ShopCategoryWise from '../components/HomeK/ShopCategoryWise'
 import Newsletter from '../components/HomeK/Newsletter'
-import Megamenu from '../components/Megamenu'
+
 import ShopNow from '../components/HomeK/ShopNow'
 
 
@@ -18,6 +18,221 @@ import { UserIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 
+
+import { ChevronDownIcon } from "@heroicons/react/24/outline"
+import { dress } from "../assets/images"
+
+import { GEGreen2, GEGreen5, Maroon1 } from "../assets/images/men"
+import { WWhite1 } from "../assets/images/women"
+
+
+const Megamenu = () => {
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        }).then(res => res.json().then(data => {
+            // console.log(JSON.stringify(data))
+            // console.log(data.category_details[0].name)
+            setData(data.detail_category)
+            localStorage.setItem("cat_list", JSON.stringify(data))
+        }
+        ))
+    }, [])
+    return (
+        <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-inherit z-40 `}>
+            {/* layout prefixer */}
+            <div className={`flex items-center gap-10 justify-end mx-auto max-w-xl`}>
+                {/* All Products */}
+                <div className="group">
+
+                    <Link to="/products" className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        All Products
+                    </Link>
+                </div>
+
+
+                {/* Woman */}
+                <div className="group">
+
+                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        Women
+                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                    </p>
+                    <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                        <div className="col-span-1">
+                            <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
+                            <p className="text-sm text-gray-500">New products</p>
+                            < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                        </div>
+                        <div className="col-span-1 ">
+                            <h2 className="text-base font-semibold mb-2">Casual-Wear Topwear</h2>
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Co-ord-Set', 'Core-Tee', 'Dress', 'Kurta', 'Kurta-and-Pants', 'Shirts', 'Sweat-Shirts', 'Top', 'T-Shirts', 'Tunic'].map((items, i) => {
+                                    return (
+                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                        <div className="col-span-1 ">
+                            <h2 className="text-md font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Jeggigns', 'Leggings', 'Pants', 'Trousers'].map((items, i) => {
+                                    return (
+                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                        <div className="col-span-1 ">
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
+                                    return (
+                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+{/* 
+                {data.length > 0 && data.map((item, index) => (
+                    <div key={index} className="group">
+                        <div >
+                            <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                                {item.subcategory.category.name}
+                                <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                            </p>
+                            <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                                <div className="col-span-1">
+                                    <p className="text-base font-semibold">{item.name}</p>
+                                    <p className="text-sm text-gray-500">New products</p>
+                                    <img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                                    <button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                                    <p className="text-sm text-gray-500 mt-4">@Terms and conditions apply.</p>
+                                </div>
+                             
+                            </div>
+                        </div>
+                    </div>
+                ))} */}
+
+                {/* Man */}
+                <div className="group">
+
+                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        Men
+                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                    </p>
+                    <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                        <div className="col-span-1">
+                            <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
+                            <p className="text-sm text-gray-500">New products</p>
+                            < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                        </div>
+                        <div className="col-span-1 ">
+                            <h2 className="text-base font-semibold mb-2">Casual Topwear</h2>
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Casual-Shirts', 'Core-Tee', 'Formal-Shirts', 'Kurta', 'Polo-Tshirts', 'T-Shirts'].map((items, i) => {
+                                    return (
+                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                        <div className="col-span-1 ">
+                            <h2 className="text-base font-semibold mb-2">Casual Bottomwear</h2>
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Chino', 'Denim', 'Joggers', 'Pyjama', 'Track-Pants'].map((items, i) => {
+                                    return (
+                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                        <div className="col-span-1 ">
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
+                                    return (
+                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Festive Offers */}
+                {/* <div className="group">
+
+                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        Accessories
+                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                    </p>
+                    <div className="hidden group-hover:flex flex-col absolute px-6 py-6 w-1/6 bg-secondary rounded-md  drop-shadow-md">
+                        <h2 className="text-base font-semibold mb-2">Casual Bottomwear</h2>
+
+                        <div className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">Boxer</div>
+                    </div>
+                </div> */}
+
+                {/* Sales */}
+                <div className="group">
+
+                    <p className='text-md  font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        Sales
+                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                    </p>
+                    <div className="hidden group-hover:grid grid-cols-4 absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                        <div className="col-span-1">
+                            <p className="text-base font-semibold">Online Only</p>
+                            <p className="text-sm text-gray-500">Shop online only products</p>
+                            < img src={GEGreen5} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Online Only</button>
+                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+};
 
 function Navbar() {
     const noAuthMenuItems = [
@@ -36,6 +251,20 @@ function Navbar() {
     ]
 
     const mobileMenuItems = [
+        {
+            dropdown: true,
+            name: 'Account',
+            category: [
+                {
+                    name: 'Profile',
+                    href:'/profile',
+                },
+                {
+                    name: 'My Orders',
+                    href: '/profile/my-orders'
+                },
+            ]
+        },
         {
             dropdown: true,
             name: 'Men',
@@ -301,55 +530,18 @@ function Navbar() {
 
                 {/* brand title */}
                 <Link to="/" className='cursor-pointer'>
-                    <img src={logo} alt="logo" className='w-24 object-contain' />
+                    <img src={logo} alt="logo" className='w-32 object-contain' />
                 </Link>
                 
-                <div className="flex items-center  gap-4 w-2/5">
+                        <Megamenu/>
+                <div className="flex items-center  gap-4 w-1/5">
                     {/* Search bar */}
-                    <div className='hidden lg:block w-2/5 mx-3'>
-
-                        {/* <div className='flex w-full items-center'>
-                            <div className='relative w-full'>
-                                <input
-                                    className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 pl-10 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                    type="text"
-                                    defaultValue={search}
-                                    onChange={(e) => {setSearch(e.target.value);console.log(search) }}
-                                    placeholder="Search on Website"
-                                    onFocus={() => setIsInputFocused(true)}
-                                    onBlur={() => setIsInputFocused(false)}
-
-                                />
-                                <div
-                                    className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ${isInputFocused ? 'hidden' : 'flex'
-                                        }`}
-                                >
-                                    <MagnifyingGlassIcon className="h-4 w-4 text-gray-500" />
-                                </div>
-                            </div>
-
-                            <div onClick={()=>{handlefetchFilterProducts();}}  className={`relative right-14 top-0 ${isInputFocused ? 'visible' : 'hidden'}`}>
-                                <button className="text-xs m-2 bg-orange-500 p-2 rounded-xl">
-                                    <MagnifyingGlassIcon className="h-6 w-6 text-white" />
-
-                                </button>
-                            </div>
-                            <button onClick={handlefetchFilterProducts}> Submit</button>
-                        </div> */}
-                        <form className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
-                            <input type="text" placeholder="Search anything" className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search"/>
-                                <button type="button" onClick={()=>{handlefetchFilterProducts()}} className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white font-medium tracking-wide border-transparent  h-[38px] -mr-3" >
-                                <MagnifyingGlassIcon className="h-4 w-4 text-white "/>
-                            </button>
-                        </form>
-                    </div>
+                    
                     {/* Menu */}
 
                     <div className='hidden lg:block '>
                         <ul className="inline-flex space-x-10">
-                    <Link to="/products" className=' text-sm font-normal tracking-wide cursor-pointer flex items-center justify-center '>
-                        All Products
-                    </Link>
+                   
                             <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
                                 <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
                                     <HeartIcon className='w-6 h-6 stroke-2' />
@@ -436,7 +628,9 @@ function Navbar() {
                                 <div className="flex items-center justify-between">
                                     <div className="inline-flex items-center space-x-2">
 
-                                        <span className="font-bold">Sizeupp</span>
+                                    <Link to="/" className="">
+                                            <img src={logo} className="w-32" />
+                                        </Link>
                                     </div>
                                     <div className="-mr-2">
                                         <XMarkIcon
@@ -508,12 +702,33 @@ function Navbar() {
 
                                     </nav>
                                 </div>
-                                <button
-                                    type="button"
-                                    className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                >
-                                    Button text
-                                </button>
+                                
+                                {!localStorage.token && noAuthMenuItems.map((item) => (
+                                                <div key={item.name} className=''>
+                                        <Link to={item.href} className="">
+                                                    <button
+                                                        type="button"
+                                                        className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    >
+                                                        {item.name}
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                            {localStorage.token && menuItems.map((item) => (
+                                                <div onClick={() => {
+                                                    item.name == 'Logout' && item.func(item.name, item.href)
+                                                }} key={item.name} className=''>
+                                                    <Link to={item.name == 'Logout' ? '' : item.href} className="">
+                                                    <button
+                                                        type="button"
+                                                        className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    >
+                                                        {item.name}
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                            ))}
                             </div>
                         </div>
                     </div>

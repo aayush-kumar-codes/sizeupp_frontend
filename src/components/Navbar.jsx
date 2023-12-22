@@ -28,6 +28,20 @@ export function Navbar() {
     const mobileMenuItems = [
         {
             dropdown: true,
+            name: 'Account',
+            category: [
+                {
+                    name: 'Profile',
+                    href:'/profile',
+                },
+                {
+                    name: 'My Orders',
+                    href: '/profile/my-orders'
+                },
+            ]
+        },  
+        {
+            dropdown: true,
             name: 'Men',
             category: [
                 {
@@ -334,7 +348,13 @@ export function Navbar() {
                             </li>
                             <li >
                                 <Link to="/products/cart" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
-                                    <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
+                                    <div className="relative">
+                                    <div className=" absolute -top-2 left-3">
+                                            <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white text-xs">3</p>
+                                        </div>
+                                        <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
+
+                                    </div>
                                     <span className='text-xs font-medium '>Cart</span>
                                 </Link>
                             </li>
@@ -412,7 +432,9 @@ export function Navbar() {
                                 <div className="flex items-center justify-between">
                                     <div className="inline-flex items-center space-x-2">
 
-                                        <span className="font-bold">Sizeupp</span>
+                                        <Link to="/" className="">
+                                            <img src={logo} className="w-32" />
+                                        </Link>
                                     </div>
                                     <div className="-mr-2">
                                         <XMarkIcon
@@ -426,6 +448,7 @@ export function Navbar() {
                                         {mobileMenuItems.map((item) => {
                                             return (
                                                 <>
+                                                    
                                                     {item.dropdown ?
                                                         <AccordionItem
                                                             key={item.name}
@@ -484,12 +507,32 @@ export function Navbar() {
 
                                     </nav>
                                 </div>
-                                <button
-                                    type="button"
-                                    className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                >
-                                    Button text
-                                </button>
+                                {!localStorage.token && noAuthMenuItems.map((item) => (
+                                                <div key={item.name} className=''>
+                                        <Link to={item.href} className="">
+                                                    <button
+                                                        type="button"
+                                                        className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    >
+                                                        {item.name}
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                            {localStorage.token && menuItems.map((item) => (
+                                                <div onClick={() => {
+                                                    item.name == 'Logout' && item.func(item.name, item.href)
+                                                }} key={item.name} className=''>
+                                                    <Link to={item.name == 'Logout' ? '' : item.href} className="">
+                                                    <button
+                                                        type="button"
+                                                        className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    >
+                                                        {item.name}
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                            ))}
                             </div>
                         </div>
                     </div>
