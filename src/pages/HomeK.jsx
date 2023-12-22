@@ -303,10 +303,10 @@ function Navbar() {
                 <Link to="/" className='cursor-pointer'>
                     <img src={logo} alt="logo" className='w-24 object-contain' />
                 </Link>
-
+                
                 <div className="flex items-center  gap-4 w-2/5">
                     {/* Search bar */}
-                    <div className='hidden lg:block lg:w-2/3 mx-3'>
+                    <div className='hidden lg:block w-2/5 mx-3'>
 
                         {/* <div className='flex w-full items-center'>
                             <div className='relative w-full'>
@@ -343,11 +343,13 @@ function Navbar() {
                             </button>
                         </form>
                     </div>
-
                     {/* Menu */}
 
-                    <div className='hidden lg:block'>
+                    <div className='hidden lg:block '>
                         <ul className="inline-flex space-x-10">
+                    <Link to="/products" className=' text-sm font-normal tracking-wide cursor-pointer flex items-center justify-center '>
+                        All Products
+                    </Link>
                             <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
                                 <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
                                     <HeartIcon className='w-6 h-6 stroke-2' />
@@ -520,6 +522,8 @@ function Navbar() {
         </div>
     )
 }
+
+
 const HomeK = () => {
     return (
         <>
