@@ -1,122 +1,75 @@
 import React,{useState} from 'react'
 
-const ManageAddress = () => {
-
-    const [openModaladdress, SetOpenModalAddress] = useState(false);
-    const [addressData, SetAddressData] = useState({
-        firstName:'Kushal',
-      lastName:'King',
-      email:'example@gmail.com',
-        address1: '',
-      address2:'',
-      mobile:6726382392,
-    })
-
+const NewAddress = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [formData, setFormData] = useState({
+      firstName: '',
+      lastName: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      pinCode: '',
+      mobile: '',
+    });
+    const [addresses, setAddresses] = useState([]);
+  
     const OpenForm = () => {
-        SetOpenModalAddress(true);
-    }
+      setIsOpen(true);
+    };
+  
+    const CloseForm = () => {
+      setIsOpen(false);
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+  
+      setAddresses([...addresses, formData]);
+    
+  
+      // Add your logic to handle the form data, for example, send it to an API or update state.
+      console.log('Form data submitted:', formData);
+  
+      // Reset form data
+      setFormData({
+        firstName: '',
+        lastName: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        pinCode: '',
+        mobile: '',
+      });
+  
+      // Close the modal
+      CloseForm();
+    };
 
-    const handleModalClose = () => {
-        SetOpenModalAddress(false);
-      };
 
-      const handleSaveAddress = () => {
-        // Perform any validation or processing logic here before updating the addressData
-        // For simplicity, let's assume the data is valid and directly update addressData
-        SetAddressData((prevData) => ({
-          ...prevData,
-          address1: addressData.address1,
-          address2: addressData.address2,
-        }));
-    
-        // Close the modal after saving
-        SetOpenModalAddress(false);
-      };
-    
-      const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        SetAddressData((prevData) => {
-          const updatedData = [...prevData];
-          updatedData[index] = {
-            ...updatedData[index],
-            [name]: value,
-          };
-          return updatedData;
-        });
-      };
-    
-    
-    
-
-  return (
-      <>
-          <div className="w-full">
-              <div className="px-10 flex justify-between items-center border-b">
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    };
+  
+    return (
+        <div>
+            <div className="px-10 flex justify-between items-center border-b">
                 <h2 className="text-2xl font-semibold pb-4">Saved address</h2>
-                  <button onClick={OpenForm} className="p-2 bg-gray-900 text-white rounded px-3 hover:scale-105">
-                      Add new address
-                  </button>
-                  {
-                      openModaladdress && (
-                          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-                              <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
-                              <div className="relative w-96 max-w-xl p-6 my-8 mx-auto bg-white rounded-md shadow-lg">
-                                  {/* Modal Form */}
-                                  {addressData.map((address, index) => (
-                                      <>
-                                      
-                                        <form>
-                                        <div className="mb-4">
-                                            <label className="block text-gray-700 text-sm font-bold mb-2">
-                                            Address Line 1
-                                            </label>
-                                            <input
-                                            type="text"
-                                            name="address1"
-                                            value={addressData.address1}
-                                            onChange={(e) => handleInputChange(e, index)}
-                                            className="w-full border border-gray-300 p-2"
-                                            />
-                                        </div>
-                                        <div className="mb-4">
-                                            <label className="block text-gray-700 text-sm font-bold mb-2">
-                                            Address Line 2
-                                            </label>
-                                            <input
-                                            type="text"
-                                            name="address2"
-                                            value={addressData.address2}
-                                            onChange={(e) => handleInputChange(e, index)}
-                                            className="w-full border border-gray-300 p-2"
-                                            />
-                                        </div>
-                                        
-                                        <button
-                                            type="button"
-                                            onClick={() => handleSaveAddress(index)}
-                                            className="px-4 py-2 bg-green-500 text-white rounded-md"
-                                        >
-                                            Save
-                                        </button>
-                                        </form>
-                                      </>
-                                  ))}
-                            
-                              <button
-                                    onClick={handleModalClose}
-                                    className="mt-2 rounded-lg p-2 text-white bg-blue-500 hover:underline focus:outline-none"
-                                >
-                                    close
-                                </button>
-                                  </div>
-                              </div>
-                      )
-                  }
-              </div>
-              
-                    <div  className="flex flex-col lg:flex-row w-100 lg:10/12 justify-evenly items-center">
+                    <button
+                    onClick={OpenForm}
+                    className="p-2 bg-gray-900 text-white rounded px-3 hover:scale-105"
+                    >
+                    Add new address
+                    </button>
+            
+            </div>
+            {/* current address */}
+            <div  className="flex flex-col lg:flex-row w-100 lg:10/12 justify-evenly items-center">
                         <div className="text-xl font-bold">
-                            Address 1
+                            Current Address 1
                         </div>
                         <div className='lg:w-2/5 w-100 h-auto rounded-lg bg-white border my-6 p-5'>
                             <p className='text-md font-bold'>Pratik Dhumal</p>
@@ -142,44 +95,166 @@ const ManageAddress = () => {
                             </div>
                         </div>
                         
-                    </div>
-                  
-              
-              
-                  
-                <div className="flex flex-col mx-6 lg:flex-row w-full lg:w-10/12 justify-evenly items-center">
-                      <div className="text-xl font-bold">Address 2</div>
-                        <div className="lg:w-2/5 w-full h-auto rounded-lg bg-white border my-6 p-5">
-                        <p className="text-md font-bold">{`${addressData.firstName} ${addressData.lastName}`}</p>
-                        <div className="flex">
-                            <span>Address Line 1 :</span>
-                            <p className="text-base">{addressData.address1}</p>
-                        </div>
-                        <div className="flex">
-                            <span>Address Line 2 :</span>
-                            <p>{addressData.address2}</p>
-                        </div>
-                        <div className="flex">
-                            <span>City :</span>
-                            <p>{/* Include City Data Here */}</p>
-                        </div>
-                        <div className="flex">
-                            <span>Pin code :</span>
-                            <p>{/* Include Pin Code Data Here */}</p>
-                        </div>
-                        <div className="flex">
-                            <span>Phone :</span>
-                            <p>{addressData.mobile}</p>
-                        </div>
-                        </div>
-                    </div>
+            </div>
+            
+        {isOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-4 w-96">
+              <h2 className="text-xl font-bold mb-4">New Address Form</h2>
+              <form onSubmit={handleSubmit}>
+                {/* Add your form fields */}
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">First Name</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div>            
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">Address Line 1</label>
+                  <input
+                    type="text"
+                    name="addressLine1"
+                    value={formData.addressLine1}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div> 
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">Address Line 2</label>
+                  <input
+                    type="text"
+                    name="addressLine2"
+                    value={formData.addressLine2}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div> 
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div> 
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">Pin code</label>
+                  <input
+                    type="text"
+                    name="pinCode"
+                    value={formData.pinCode}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div> 
 
+                <div className="mb-3">
+                  <label className="block text-sm font-medium text-gray-700">Mobile</label>
+                  <input
+                    type="text"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border rounded w-full"
+                  />
+                </div> 
+                            
+                {/* Repeat the above structure for other form fields */}
+  
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+                >
+                  Submit
+                </button>
+              </form>
+  
+              <button
+                onClick={CloseForm}
+                className="mt-2 text-gray-600 hover:text-gray-800"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+            )}
+            {/* Render addresses */}
+                {addresses.map((address, index) => (
+                    <div
+                    key={index}
+                    className="flex flex-col lg:flex-row w-full lg:w-10/12 justify-evenly items-center"
+                    >
+                    <div className="text-xl font-bold">Address {index + 2}</div>
+                    <div className="lg:w-2/5 w-full h-auto rounded-lg bg-white border my-6 p-5">
+                        <p className="text-md font-bold">
+                        {address.firstName} {address.lastName}
+                        </p>
+                        <div className="flex">
+                        <span>Address Line 1   :</span>
+                        <p className="text-base">{address.addressLine1}</p>
+                        </div>
+                        <div className="flex">
+                        <span>Address Line 2   :</span>
+                        <p>{address.addressLine2}</p>
+                        </div>
+                        <div className="flex">
+                        <span>City   : </span>
+                        <p>{address.city}</p>
+                        </div>
+                        <div className="flex">
+                        <span>Pin code :</span>
+                        <p>{address.pinCode}</p>
+                        </div>
+                        <div className="flex">
+                        <span>Phone</span>
+                        <p>{address.mobile}</p>
+                        </div>
+                    </div>
+                    </div>
+                ))}
+        </div>
+    );
+  };
+  
+
+const ManageAddress = () => {
+
+  
+
+    
+    
+
+  return (
+      <>
+          <div className="w-full">
+              
+              
+                  
+                  
+              
+              
+                  
+                
               
                 
               
-              <div className='max-w-lg mx-auto h-32 rounded-lg bg-white border my-6'>
-                      
-                </div>
+            <NewAddress/>
         </div>
       </>
   )

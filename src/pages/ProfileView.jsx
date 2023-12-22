@@ -179,7 +179,7 @@ const Profileview = () => {
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
-                          to="/"
+                          to="manage-address"
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
                          <BuildingOffice2Icon className="h-6 w-6 " />
@@ -372,7 +372,7 @@ const Profileview = () => {
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
-                          to="/"
+                          to="manage-address"
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
                          <BuildingOffice2Icon className="h-6 w-6 " />
