@@ -390,7 +390,16 @@ export function ProductCart() {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `token ${localStorage.getItem('token')}`
-                }
+                },
+                body: JSON.stringify({
+                    address_line_1: formData.addressLine1,
+                    address_line_2: formData.addressLine2,
+                    city: formData.city,
+                    postal_code: formData.zipCode,
+                    country: formData.country,
+                    state: formData.state,
+                    is_default: formData.is_default
+                })
             })
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
@@ -399,7 +408,7 @@ export function ProductCart() {
             console.log(data);
             Swal.fire({
                 title: 'Success!',
-                text: 'Address Added',
+                text: 'Address Updated',
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 1500
