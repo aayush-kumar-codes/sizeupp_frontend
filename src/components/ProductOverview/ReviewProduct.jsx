@@ -72,7 +72,7 @@ const ReviewProduct = ({ id }) => {
         <section className="flex items-center py-1 font-poppins  ">
             <div className="justify-center flex-1 max-w-6xl px-4 py-6 mx-auto lg:py-4 md:px-6">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <div className="p-6 mb-6 bg-gray-50 ">
+                    {/* <div className="p-6 mb-6 bg-gray-50 ">
                         <h2 className="mb-6 text-xl font-semibold text-left font-gray-600 ">
                             Ratings & Reviews</h2>
                         <div className="flex justify-start ">
@@ -217,11 +217,8 @@ const ReviewProduct = ({ id }) => {
                                 <div className="flex justify-end text-xs font-medium ">14% </div>
                             </div>
                         </div>
-                        {/* <div className="items-center ">
-                            <a href="#" className="px-4 py-2 text-xs text-gray-100 bg-orange-500 hover:bg-blue-600 ">
-                                View all reviews</a>
-                        </div> */}
-                    </div>
+                        
+                    </div> */}
                     <div className="p-6 mb-6 bg-white ">
                         <h2 className="mb-6 text-xl font-semibold text-left font-gray-600 ">
                             Review </h2>

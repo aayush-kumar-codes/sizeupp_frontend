@@ -1028,7 +1028,7 @@ const ProductOverview = () => {
                 </div>
               }
             />
-            <AccordionItem
+            {/* <AccordionItem
               title="Customer Reviews"
               content={
                 <div className="flex flex-col gap-3">
@@ -1049,7 +1049,7 @@ const ProductOverview = () => {
                 </div>
 
               }
-            />
+            /> */}
           </div>
 
         </div>
