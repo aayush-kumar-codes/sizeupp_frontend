@@ -39,10 +39,7 @@ const Modal = ({ children, isOpen, onClose }) => {
 const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
-      firstName:'Kushal',
-      lastName:'King',
-      email:'example@gmail.com',
-      mobile:6726382392,
+      c
     });
   
     const handleEditClick = () => {

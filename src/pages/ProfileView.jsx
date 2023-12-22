@@ -121,7 +121,7 @@ const Profileview = () => {
           className=" w-full flex-grow border-b py-5 lg:flex lg:flex-row lg:py-10"
         >
 
-          <section className="hidden w-[300px] min-h-[700px]  flex-shrink-0 px-12 lg:block rounded-lg border">
+          <section className="hidden w-[300px] min-h-[700px] gap-4 flex-shrink-0 px-12 lg:flex flex-col shadow-lg">
             <Link to="/profile">
               <div className="border-b py-5">
                 <div className="flex items-center">
@@ -141,7 +141,7 @@ const Profileview = () => {
 
             </Link>
 
-            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="w-full">
                 <div className="flex w-full">
                   <div className="flex flex-col gap-2">
@@ -175,7 +175,7 @@ const Profileview = () => {
               </div>
             </div>
             
-            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
@@ -190,7 +190,7 @@ const Profileview = () => {
                     </div>
                   </div>
 
-            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
 
@@ -220,7 +220,7 @@ const Profileview = () => {
               </div>
             </div>
 
-            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
 
@@ -236,7 +236,7 @@ const Profileview = () => {
               </div>
             </div>
 
-            <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
                   <Link
@@ -251,7 +251,7 @@ const Profileview = () => {
               </div>
             </div>
 
-            {/* <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+            {/* <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
                   <Link
@@ -333,13 +333,14 @@ const Profileview = () => {
               </button>
               {/* Sidebar */}
               {isSidebarOpen && (
-
-
+                // <div className="fixed left-0 top-0 w-full h-full bg-opacity-50 bg-gray-800">
+                // </div>
+                
                 <div ref={sidebarRef}
-                  className="fixed transform shadow-md left-0 top-0 h-full w-64 bg-white  border p-4 z-50 pt-24 translate-x-0 ease-in">
+                  className="fixed left-0 top-0 transform shadow-md h-full  w-64 bg-white border p-4 z-50 pt-24 translate-x-0 ease-in">
                   {/* Add your sidebar content here */}
                   
-                   <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                   <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
@@ -367,7 +368,7 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
@@ -382,7 +383,7 @@ const Profileview = () => {
                     </div>
                   </div>
 
-                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
@@ -411,7 +412,7 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
@@ -426,7 +427,7 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
@@ -441,7 +442,7 @@ const Profileview = () => {
                     </div>
                   </div>
 
-                  {/* <div className="flex border-b p-4 rounded-lg hover:bg-gray-200">
+                  {/* <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
@@ -482,6 +483,7 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
+
                 </div>
 
               )}
