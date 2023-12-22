@@ -1,6 +1,38 @@
 import React,{useState} from 'react'
 
 const NewAddress = () => {
+    const [UserAddress, setUserAddress] = useState({})
+
+    const fetchUserAdress = async () => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setUserAddress(data)
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({
       firstName: '',
@@ -32,8 +64,7 @@ const NewAddress = () => {
   
       // Reset form data
       setFormData({
-        firstName: '',
-        lastName: '',
+        
         addressLine1: '',
         addressLine2: '',
         city: '',
@@ -98,31 +129,13 @@ const NewAddress = () => {
             </div>
             
         {isOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-4 w-96">
               <h2 className="text-xl font-bold mb-4">New Address Form</h2>
               <form onSubmit={handleSubmit}>
                 {/* Add your form fields */}
-                <div className="mb-3">
-                  <label className="block text-sm font-medium text-gray-700">First Name</label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border rounded w-full"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border rounded w-full"
-                  />
-                </div>            
+                
+                          
                 <div className="mb-3">
                   <label className="block text-sm font-medium text-gray-700">Address Line 1</label>
                   <input
@@ -198,13 +211,11 @@ const NewAddress = () => {
                 {addresses.map((address, index) => (
                     <div
                     key={index}
-                    className="flex flex-col lg:flex-row w-full lg:w-10/12 justify-evenly items-center"
+                    className="flex flex-col lg:flex-row w-full justify-evenly items-center"
                     >
                     <div className="text-xl font-bold">Address {index + 2}</div>
-                    <div className="lg:w-2/5 w-full h-auto rounded-lg bg-white border my-6 p-5">
-                        <p className="text-md font-bold">
-                        {address.firstName} {address.lastName}
-                        </p>
+                    <div className="lg:w-2/5 max-w-xl h-auto rounded-lg bg-white border my-6 p-5">
+                       
                         <div className="flex">
                         <span>Address Line 1   :</span>
                         <p className="text-base">{address.addressLine1}</p>

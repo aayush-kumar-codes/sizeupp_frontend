@@ -26,6 +26,8 @@ import HomeK from "./pages/HomeK"
 import Contact from "./pages/Account/Contact"
 import ManageAccount from "./pages/Account/ManageAccount"
 import ManageAddress from "./pages/Account/ManageAddress"
+import PaymentSuccessfull from "./pages/PaymentSuccessfull"
+import PaymentUnsuccess from "./pages/PaymentUnsuccess"
 
 
 const App = () => {
@@ -34,13 +36,15 @@ const App = () => {
       <BrowserRouter>
 
         <Routes>
-          <Route path="/" element={<LayoutAuth />} >
             <Route index element={<HomeK />} />
+          <Route path="/" element={<LayoutAuth />} >
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="otp" element={<Otp />} />
             <Route path="forgot" element={<Forgot />} />
             <Route path="reset" element={<ResetPassword />} />
+            <Route path="payment-success" element={<PaymentSuccessfull />} />
+            <Route path="payment-unsuccess" element={<PaymentUnsuccess />} />
             
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />
