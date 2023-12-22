@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
             setproductsbc([])
             setproductcount(0)
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-type': 'application/json' // corrected typo here
                 },
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
     const fetchFilterAuthProducts = async () => {
         try {
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `token ${localStorage.getItem('token')}`
