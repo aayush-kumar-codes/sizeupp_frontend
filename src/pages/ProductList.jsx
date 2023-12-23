@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useState,useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
@@ -17,19 +17,59 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { fetchProducts, fetchProductsAuth, productsbc, setproductcount, product } = useContext(AuthContext)
+    const { fetchProducts, fetchProductsAuth, handlefetchFilterProducts, productsbc, setproductcount,productcount, product } = useContext(AuthContext)
 
+   
+
+    const [itemsInfinite, setItemsInfinite] = useState([])
+    const [hasMore, setHasMore] = useState(true)
+    const [page, setPage] = useState(productcount)
+   
+    useEffect(() => {
+      fetchData(page)
+    }, [page])
+   
+    const fetchData = (page) => {
+        const newItemsInfinite = []
+     
+        for (let i = 0; i < 20; i++) {
+            newItemsInfinite.push(i)
+        }
+     
+        if (page === 20) {
+          setHasMore(false)
+        }
+     
+        setItemsInfinite([...itemsInfinite, ...newItemsInfinite])
+      }
+
+      const onScroll = () => {
+        const scrollTop = document.documentElement.scrollTop
+        const scrollHeight = document.documentElement.scrollHeight
+        const clientHeight = document.documentElement.clientHeight
+     
+        if (scrollTop + clientHeight >= scrollHeight) {
+          setPage(page + 1)
+        }
+      }
+     
+      useEffect(() => {
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
+      }, [itemsInfinite])
+     
+    
     const navigate = useNavigate()
 
     useEffect(() => {
         if (localStorage.token) {
+            handlefetchFilterProducts();
 
             fetchProductsAuth();
 
         } else {
 
             fetchProducts();
-
         }
     }, []);
 
@@ -181,7 +221,7 @@ const ProductList = ({
     }
 
 
-
+    
     return (
         <div className={``}>
             {/* Nav menu- Breadcrumb */}
@@ -192,6 +232,13 @@ const ProductList = ({
             <SideNav display={filterActive} setDisplay={setFilterActive} />
 
             {/* Large Desktop */}
+            {/* <div>
+                {itemsInfinite.map((itemInfinite, index) => (
+                    <div key={index}>
+                    {itemInfinite}
+                    </div>
+                ))}
+                </div> */}
             <div className='hidden xl:block'>
                 {grid ? <CustomGrid gridSize={grid}>
                     {productsbc.length > 0 ? productsbc.map((items, i) => {
@@ -202,7 +249,9 @@ const ProductList = ({
                         })
 
                         if(items.images.length == 0){
+                           
                             return null
+
                         }
 
 
