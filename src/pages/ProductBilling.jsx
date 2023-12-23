@@ -2,53 +2,18 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { styles } from '../style'
-import { useEffect, useState } from 'react'
-import { GEGreen1, Maroon1, Wine1 } from '../assets/images/men'
+import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+import { AuthContext } from '../context/AuthProvider'
 
-const products = [
-    {
-        id: 1,
-        name: 'Oxford Casual Shirts - Sage Green',
-        href: '#',
-        price: '₹2,199',
-        originalPrice: '₹2,900',
-        discount: '5% Off',
-        color: 'Sage Green',
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: GEGreen1
-    },
-    {
-        id: 2,
-        name: 'Oxford Casual Shirts - Maroon',
-        href: '#',
-        price: '₹1,549',
-        originalPrice: '₹2,499',
-        discount: '38% off',
-        color: 'Maroon',
-        leadTime: '3-4 weeks',
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        imageSrc: Maroon1
-    },
-    {
-        id: 3,
-        name: 'Oxford Casual Shirts - Wine',
-        href: '#',
-        price: '₹2,219 ',
-        originalPrice: '₹2999',
-        discount: '78% off',
-        color: 'Wine',
-        imageSrc: Wine1
-    },
-]
 
 export function ProductBilling() {
     const [cart, setCart] = useState([])
     const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
-    const [applyCoupon, setApplyCoupon] = useState("")
     const [pincode, setPincode] = useState('')
     const [changeAddress, setChangeAddress] = useState(false)
+    const { couponcode, setcouponcode } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
         addressLine1: '',
@@ -60,6 +25,47 @@ export function ProductBilling() {
     });
 
     const navigate = useNavigate()
+
+    const fetchCoupon = async () => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    code: couponcode
+                })
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setCart(data)
+            setForm({
+                ...form,
+                mrp_price: data.mrp_price,
+                sub_total: data.sub_total,
+                cupon_discount: data.cupon_discount,
+                coupon: data.coupon,
+                total_price: data.total_price
+            })
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
 
     const fetchUserProfile = async () => {
         try {
@@ -79,6 +85,15 @@ export function ProductBilling() {
             const data = await res.json()
             console.log(data);
             setProfile(data)
+            setForm({
+                ...form,
+                address_id: data.addresses?.map((address, index) => {
+                    if (address.is_default == true) {
+                        return address.id
+                    }
+                })[0]
+            })
+            console.log("----------form 55-----------", form);
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -109,6 +124,16 @@ export function ProductBilling() {
             const data = await res.json()
             console.log(data);
             setCart(data)
+            setForm({
+                ...form,
+                mrp_price: data.mrp_price,
+                sub_total: data.sub_total,
+                cupon_discount: data.cupon_discount,
+                coupon: data.coupon,
+                total_price: data.total_price
+            })
+            console.log("----------form 94-----------", form);
+
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -127,18 +152,17 @@ export function ProductBilling() {
                 return navigate('/login')
             }
             console.log({
-                address: profile.addresses[0].id,
-                sub_total: cart.sub_total,
-                coupon: 'H1234',
-                sub_sub_total: cart.sub_sub_total || 0,
-                deliverycharges: cart.delivery_charges,
-                total_price: cart.total_price,
-                discount_percentage: 0,
-                discount_amount: 0,
-                mrp_price: cart.mrp_price,
-                discount_on_price: cart.discout_on_price,
-                tax: 0,
-                payment_type: 'COD'
+                address_id: profile.addresses?.map((address, index) => {
+                    if (address.is_default == true) {
+                        return address.id
+                    }
+                })[0],
+                mrp_price: form.mrp_price,
+                sub_total: form.sub_total,
+                cupon_discount: form.cupon_discount,
+                coupon: couponcode,
+                total_price: form.total_price,
+                payment_type: "COD"
             })
             const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/order", {
                 method: 'POST',
@@ -147,18 +171,17 @@ export function ProductBilling() {
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    address: profile.addresses[0].id,
-                    sub_total: cart.sub_total,
-                    coupon: applyCoupon,
-                    sub_sub_total: cart.sub_sub_total || 0,
-                    deliverycharges: cart.delivery_charges,
-                    total_price: cart.total_price,
-                    discount_percentage: 0,
-                    discount_amount: 0,
-                    mrp_price: cart.mrp_price,
-                    discount_on_price: cart.discout_on_price,
-                    tax: 0,
-                    payment_type: 'COD'
+                    address_id: profile.addresses?.map((address, index) => {
+                        if (address.is_default == true) {
+                            return address.id
+                        }
+                    })[0],
+                    mrp_price: form.mrp_price,
+                    sub_total: form.sub_total,
+                    cupon_discount: form.cupon_discount,
+                    coupon: couponcode,
+                    total_price: form.total_price,
+                    payment_type: "COD"
                 })
             })
 
@@ -188,27 +211,21 @@ export function ProductBilling() {
     }
 
     useEffect(() => {
-        fetchCart()
+        // fetchCart()
+        fetchCoupon()
         fetchUserProfile()
     }, [])
 
     const [form, setForm] = useState({
-        address: '',
-        grand_total: 0,
+        address_id: "",
+        mrp_price: 0,
         sub_total: 0,
-        sub_sub_total: 0,
-        coupon: '',
-        discount: 0,
-        discount_amount: 0,
-        tax: 0,
-        payment_type: 'COD',
-        deliverycharges: 0
+        cupon_discount: 0,
+        coupon: "",
+        total_price: 0,
+        payment_type: "COD"
     })
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setForm({ ...form, [name]: value })
-    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -259,6 +276,9 @@ export function ProductBilling() {
                 zipCode: '',
                 country: '',
             })
+
+
+
             navigate('/products/cart')
 
         } catch (error) {
@@ -317,7 +337,7 @@ export function ProductBilling() {
                                 <div key={i} className='grid gap-2 py-4 drop-shadow-md lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
                                     <div className='col-span-1'>
                                         <img
-                                            src={import.meta.env.VITE_SERVER_URL + info.product?.img}
+                                            src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                             alt={info.product?.name}
                                             className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                         />
@@ -343,16 +363,35 @@ export function ProductBilling() {
                                             }
                                             <div className="mt-1 flex items-end">
                                                 <p className="text-sm font-medium text-c-gray-900">
-                                                    ₹ {info?.discount_price}
+                                                    ₹ {info?.discounted_price ? info?.discounted_price : info?.mrp}
                                                 </p>
-                                                <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                    ₹ {info?.price}
-                                                </p>
-                                                <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+                                                {info?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
+                                                        <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
+                                                            ₹ {info?.mrp}
+                                                        </p>
+                                                        <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+                                                    </div>}
                                             </div>
-                                            <div className={`${i == 2 ? 'text-red-600' : 'text-green-600'} font-normal text-base py-2`}>
-                                                {i == 2 ? "Out of Stock" : "In Stock"}
-                                            </div>
+                                            <div className={`${info.product?.sqp.map((size, index) => {
+                                                    if (info.size_quantity_price != size.id) {
+                                                        return null
+                                                    }
+
+                                                    return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
+                                                })} font-normal text-base py-2`}>
+                                                    {
+                                                        info.product?.sqp.map((size, index) => {
+                                                            if (info.size_quantity_price != size.id) {
+                                                                return null
+                                                            }
+
+                                                            return (
+
+                                                                parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
                                         </div>
                                     </div>
                                     <div className='col-span-1 flex justify-center items-center'>
@@ -360,16 +399,18 @@ export function ProductBilling() {
                                         <input
                                             type="text"
                                             className="mx-1 h-7 w-9 rounded-md border text-center"
-                                            defaultValue={0}
+                                            value={product?.qty || 0}
+                                            disabled
                                         />
                                     </div>
                                     <div className='col-span-1 flex justify-center items-center'>
-                                        <div className=''>₹ {parseInt(info.total_price)}</div>
+                                        <div className=''>₹ {parseInt(info.sub_total)}</div>
                                     </div>
 
                                 </div>
                             )
-                        }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Cart Empty.</div>}
+                        }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Cart Empty.</div>
+                        }
 
                     </section>
 
@@ -403,24 +444,24 @@ export function ProductBilling() {
                                                             <dt className="flex items-center text-sm text-c-gray-800">
                                                                 <span>Coupon Discount</span>
                                                             </dt>
-                                                            <dd className="text-sm font-medium text-green-700">- ₹ {cart.sub_sub_total ? parseInt(cart.sub_total - cart.sub_sub_total) : 0}</dd>
+                                                            <dd className="text-sm font-medium text-green-700">- ₹ {cart.cupon_discount || 0}</dd>
                                                         </div>
                                                         <div className="flex items-center justify-between pt-4">
                                                             <dt className="flex items-center text-sm text-c-gray-800">
-                                                                <span>Discount MRP</span>
+                                                                <span>Discount on MRP</span>
                                                             </dt>
                                                             <dd className="text-sm font-medium text-green-700">- ₹ {cart.discount_on_price || 0}</dd>
                                                         </div>
 
                                                         <div className="flex items-center justify-between border-b border-dashed py-4 ">
                                                             <dt className="text-sm font-medium text-c-gray-900">Sub Total</dt>
-                                                            <dd className="text-sm font-medium text-c-gray-900">₹ {cart.coupon == 'active' ? cart.sub_sub_total : cart.sub_total}</dd>
+                                                            <dd className="text-sm font-medium text-c-gray-900">₹ {cart.sub_total || 0}</dd>
                                                         </div>
                                                         {cart.delivery_charges && <div className="flex items-center justify-between py-4">
                                                             <dt className="flex text-sm text-c-gray-800">
                                                                 <span>Delivery Charges</span>
                                                             </dt>
-                                                            <dd className="text-sm font-medium text-red-700">+ ₹ {cart.delivery_charges}</dd>
+                                                            <dd className="text-sm font-medium text-green-700">FREE</dd>
                                                         </div>}
 
                                                         <div className="flex items-center justify-between border-b border-dashed py-4 ">
@@ -428,8 +469,8 @@ export function ProductBilling() {
                                                             <dd className="text-sm font-medium text-c-gray-900">₹ {cart.total_price}</dd>
                                                         </div>
                                                     </dl>
-                                                    {cart.sub_sub_total ? <div className="px-2 pb-4 font-medium text-green-700">
-                                                        You will save ₹ {parseInt(cart.sub_total - cart.sub_sub_total)} on this order
+                                                    {couponcode ? <div className="px-2 pb-4 font-medium text-green-700">
+                                                        You will save ₹ {parseInt(cart.cupon_discount)} on this order
                                                     </div> : null}
 
                                                 </div>
@@ -451,6 +492,7 @@ export function ProductBilling() {
                                                                 if (address.is_default != true) {
                                                                     return null
                                                                 }
+
                                                                 return (
                                                                     <p key={index} className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</p>
                                                                 )
@@ -589,7 +631,7 @@ export function ProductBilling() {
                                                         id="payment-type"
                                                         name="payment-type"
                                                         type="radio"
-                                                        defaultChecked
+                                                        checked
                                                         className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                                                     />
                                                     <div className="mr-4">
@@ -600,7 +642,7 @@ export function ProductBilling() {
                                                             Cash on delivery
                                                         </label>
                                                     </div>
-                                                    <input
+                                                    {/* <input
                                                         id="payment-type"
                                                         name="payment-type"
                                                         type="radio"
@@ -614,10 +656,11 @@ export function ProductBilling() {
                                                         >
                                                             Credit Card
                                                         </label>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
-                                            {/* <div className="mt-10">
+                                            {/* 
+                                            <div className="mt-10">
                                                 <h3 className="text-lg font-semibold text-gray-900">Shipping address</h3>
 
                                                 <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">

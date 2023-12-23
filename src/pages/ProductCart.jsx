@@ -2,8 +2,9 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1 as Maroon, White1 as White } from "../assets/images/men"
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+import { AuthContext } from '../context/AuthProvider'
 
 const products = [
     {
@@ -47,7 +48,7 @@ export function ProductCart() {
     const [cart, setCart] = useState([])
     const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
-    const [applyCoupon, setApplyCoupon] = useState("")
+    const { couponcode, setcouponcode } = useContext(AuthContext)
     const [pincode, setPincode] = useState('')
 
     const updateCart = (id, sqpActive, count) => {
@@ -125,6 +126,7 @@ export function ProductCart() {
             const data = await res.json()
             console.log(data);
             setCart(data)
+
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -179,7 +181,7 @@ export function ProductCart() {
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    code: applyCoupon
+                    code: couponcode
                 })
             })
             if (!res.ok) {
@@ -204,72 +206,6 @@ export function ProductCart() {
         fetchCart()
         fetchUserProfile()
     }, [])
-
-    const handlePlaceOrder = async () => {
-        try {
-            if (!localStorage.token) {
-                return navigate('/login')
-            }
-            console.log({
-                address: profile.addresses[0].id,
-                sub_total: cart.sub_total,
-                coupon: 'H1234',
-                sub_sub_total: cart.sub_sub_total || 0,
-                deliverycharges: cart.delivery_charges,
-                total_price: cart.total_price,
-                discount_percentage: 0,
-                discount_amount: 0,
-                mrp_price: cart.mrp_price,
-                discount_on_price: cart.discout_on_price,
-                tax: 0,
-                payment_type: 'PPD'
-            })
-            const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/order", {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    address: profile.addresses[0].id,
-                    sub_total: cart.sub_total,
-                    coupon: applyCoupon,
-                    sub_sub_total: cart.sub_sub_total || 0,
-                    deliverycharges: cart.delivery_charges,
-                    total_price: cart.total_price,
-                    discount_percentage: 0,
-                    discount_amount: 0,
-                    mrp_price: cart.mrp_price,
-                    discount_on_price: cart.discout_on_price,
-                    tax: 0,
-                    payment_type: 'PPD'
-                })
-            })
-
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json()
-            console.log(data);
-            Swal.fire({
-                title: 'Success!',
-                text: 'Order Placed Successfully',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            navigate('/products/billing')
-        }
-        catch (error) {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    }
 
     const handleApplyPincode = async () => {
         try {
@@ -592,11 +528,12 @@ export function ProductCart() {
 
                             {cart.products?.length > 0 ? cart.products?.map((product, i) => {
                                 let info = product.cart
+
                                 return (
                                     <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
                                         <div className='col-span-1'>
                                             <img
-                                                src={import.meta.env.VITE_SERVER_URL + info.product?.img}
+                                                src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                                 alt={info.product?.name}
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                             />
@@ -613,6 +550,7 @@ export function ProductCart() {
                                                         if (info.size_quantity_price != size.id) {
                                                             return null
                                                         }
+
                                                         return (
                                                             <div key={index} className="mt-2 text-sm">
                                                                 <p className="text-sm text-c-gray-500 mb-2"> Size: {size.size}</p>
@@ -622,15 +560,35 @@ export function ProductCart() {
                                                 }
                                                 <div className="mt-1 flex items-end">
                                                     <p className="text-sm font-medium text-c-gray-900">
-                                                        ₹ {info?.discount_price}
+                                                        ₹ {info?.discounted_price ? info?.discounted_price : info?.mrp}
                                                     </p>
-                                                    <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                        ₹ {info?.price}
-                                                    </p>
-                                                    <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+
+                                                    {info?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
+                                                        <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
+                                                            ₹ {info?.mrp}
+                                                        </p>
+                                                        <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+                                                    </div>}
                                                 </div>
-                                                <div className={`${i == 2 ? 'text-red-600' : 'text-green-600'} font-normal text-base py-2`}>
-                                                    {i == 2 ? "Out of Stock" : "In Stock"}
+                                                <div className={`${info.product?.sqp.map((size, index) => {
+                                                    if (info.size_quantity_price != size.id) {
+                                                        return null
+                                                    }
+
+                                                    return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
+                                                })} font-normal text-base py-2`}>
+                                                    {
+                                                        info.product?.sqp.map((size, index) => {
+                                                            if (info.size_quantity_price != size.id) {
+                                                                return null
+                                                            }
+
+                                                            return (
+
+                                                                parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
+                                                            )
+                                                        })
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -649,7 +607,7 @@ export function ProductCart() {
                                             </button>
                                         </div>
                                         <div className='col-span-1 flex justify-center items-center'>
-                                            <div className=''>₹ {parseInt(info.total_price)}</div>
+                                            <div className=''>₹ {parseInt(info.discounted_price ? info.discounted_on_price * info.quantity : info.mrp * info.quantity)}</div>
                                         </div>
                                         <div className='col-span-1 flex justify-center items-center'>
                                             <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
@@ -750,7 +708,7 @@ export function ProductCart() {
                         </section>
                     </section>
 
-
+                    {/* Price Detaiks */}
                     <section
                         aria-labelledby="summary-heading"
                         className="mt-16 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-0"
@@ -765,39 +723,39 @@ export function ProductCart() {
                             <dl className=" space-y-1 px-2 py-4">
                                 <div className="flex items-center justify-between">
                                     <dt className="text-sm text-c-gray-800">Price </dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.mrp_price || 0}</dd>
+                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.mrp || 0}</dd>
                                 </div>
                                 <div className="flex items-center justify-between pt-4">
                                     <dt className="flex items-center text-sm text-c-gray-800">
                                         <span>Coupon Discount</span>
                                     </dt>
-                                    <dd className="text-sm font-medium text-green-700">- ₹ {cart.sub_sub_total ? parseInt(cart.sub_total - cart.sub_sub_total) : 0}</dd>
+                                    <dd className="text-sm font-medium text-green-700">- ₹ {cart.cupon_discount ? cart.cupon_discount : 0}</dd>
                                 </div>
                                 <div className="flex items-center justify-between pt-4">
                                     <dt className="flex items-center text-sm text-c-gray-800">
-                                        <span>Discount MRP</span>
+                                        <span>Discount on MRP</span>
                                     </dt>
                                     <dd className="text-sm font-medium text-green-700">- ₹ {cart.discount_on_price || 0}</dd>
                                 </div>
 
                                 <div className="flex items-center justify-between border-b border-dashed py-4 ">
                                     <dt className="text-sm font-medium text-c-gray-900">Sub Total</dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ {(cart.coupon == 'active' ? cart.sub_sub_total : cart.sub_total) || 0}</dd>
+                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.sub_total || 0}</dd>
                                 </div>
-                                {cart.delivery_charges && <div className="flex items-center justify-between py-4">
+                                {<div className="flex items-center justify-between py-4">
                                     <dt className="flex text-sm text-c-gray-800">
                                         <span>Delivery Charges</span>
                                     </dt>
-                                    <dd className="text-sm font-medium text-red-700">+ ₹ {cart.delivery_charges || 0}</dd>
+                                    <dd className="text-sm font-medium text-green-700">FREE</dd>
                                 </div>}
 
                                 <div className="flex items-center justify-between border-b border-dashed py-4 ">
                                     <dt className="text-sm font-medium text-c-gray-900">Total Price</dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.total_price || 0}</dd>
+                                    <dd className="text-base font-semibold text-c-gray-900">₹ {cart.total_price || 0}</dd>
                                 </div>
                             </dl>
                             {cart.sub_sub_total ? <div className="px-2 pb-4 font-medium text-green-700">
-                                You will save ₹ {parseInt(cart.sub_total - cart.sub_sub_total)} on this order
+                                You will save ₹ {parseInt(cart.cupon_discount)} on this order
                             </div> : null}
                             <button
                                 type="button"
@@ -815,8 +773,6 @@ export function ProductCart() {
 
                     {/* Order summary */}
 
-
-
                     {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                         <form action="#" className="mt-6">
                             <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
@@ -825,7 +781,7 @@ export function ProductCart() {
                                     <input
                                         className="flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="text"
-                                        onChange={(e) => { setApplyCoupon(e.target.value) }}
+                                        onChange={(e) => { setcouponcode(e.target.value) }}
                                         placeholder="Enter coupon code"
                                     />
                                 </div>
@@ -843,7 +799,7 @@ export function ProductCart() {
                     </section> :
                         <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-4 bg-white lg:col-span-4 lg:mt-8'>
                             <div className='text-sm text-gray-800/80 text-center'>Coupon Applied Successfully</div>
-                            <div className='text-base text-center font-semibold'>You Saved ₹ {parseInt(cart.sub_total - cart.sub_sub_total)}</div>
+                            <div className='text-base text-center font-semibold'>You Saved ₹ {parseInt(cart.cupon_discount)}</div>
                         </section>
                     }
                 </form>

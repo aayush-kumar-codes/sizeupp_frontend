@@ -16,6 +16,9 @@ const AuthProvider = ({ children }) => {
     const [productsbc, setproductsbc] = useState([]);
     const [productcount, setproductcount] = useState(0)
 
+    // set coupon code 
+    const [couponcode, setcouponcode] = useState("")
+
     // functions for products
     const fetchFilterProducts = async () => {
         try {
@@ -179,7 +182,10 @@ const AuthProvider = ({ children }) => {
                 productsbc,
                 productcount,
                 setproductsbc,
-                setproductcount
+                setproductcount,
+
+                couponcode,
+                setcouponcode
             }}
         >
             {children}

@@ -76,7 +76,7 @@ const ProductImageView = ({
     const y = preview?.offsetHeight / 180;
 
     if (preview && preview.style) {
-      preview.style.backgroundImage = `url(${arrayImages[currentImageIndex]})`;
+      preview.style.backgroundImage = `url(${import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)})`;
       preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
     }
 
@@ -171,7 +171,7 @@ const ProductImageView = ({
                 {/* Image Current */}
                 <img
                   alt={`Product gallery ${currentImageIndex + 1}`}
-                  src={arrayImages[currentImageIndex]}
+                  src={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)}
                   id="magnify-img"
                   width="650"
                   height="590"
@@ -223,6 +223,7 @@ const ProductImageView = ({
             {/*  Image Thumbnails */}
             <div className="flex gap-2 xl:flex-col m-2 justify-center">
               {arrayImages.map((items, i) => {
+
                 return (
                   <>
                     <div key={i}
@@ -232,7 +233,7 @@ const ProductImageView = ({
                     >
                       <img
                         alt={`Product ${i + 1}`}
-                        src={items}
+                        src={import.meta.env.VITE_SERVER_URL + (items.img + "").slice(6)}
                         decoding="async"
                         loading="lazy"
                         className="h-20 w-20 object-cover  md:h-24 md:w-24 lg:h-28 lg:w-28 xl:w-32"
@@ -258,7 +259,7 @@ const ProductImageView = ({
                   <Slider {...settings}>
                     {arrayImages.map((image, index) => (
                       <div key={index} >
-                        <img src={image} alt={`Image ${index + 1}`} className=" mx-auto " />
+                        <img src={import.meta.env.VITE_SERVER_URL + (image.img + "").slice(6)} alt={`Image ${index + 1}`} className=" mx-auto " />
                       </div>
                     ))}
                   </Slider>
@@ -773,7 +774,7 @@ const ProductOverview = () => {
       <div className="block grid-cols-9 items-start gap-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
         {/* Image Overview */}
         <div className="col-span-5 grid grid-cols-1 gap-2">
-          <ProductImageView arrayImages={images} />
+          <ProductImageView arrayImages={demo.product?.images} />
         </div>
 
         {/* Information Overview */}
@@ -901,13 +902,15 @@ const ProductOverview = () => {
 
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                ₹ {demo.product?.discounted_price}
+                ₹ {demo.product?.discounted_price ? demo.product?.discounted_price : demo.product?.mrp}
               </div>
-              <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
-                ₹ {demo.product?.price}
-              </span>
-              <p className=" md:text-base lg:text-lg xl:text-xl pl-2 font-medium text-[#af0000]">
-                {demo.product?.discount_percentage}%</p>
+              {demo.product?.discounted_price && <div className="flex justify-center items-center">
+                <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
+                  ₹ {demo.product?.mrp}
+                </span>
+                <p className=" md:text-base lg:text-lg xl:text-xl pl-2 font-medium text-[#af0000]">
+                  {demo.product?.discount_percentage}%</p>
+              </div>}
             </div>
 
             <div className="text-green-600 font-normal text-lg py-2">
@@ -995,25 +998,25 @@ const ProductOverview = () => {
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Sleeve Type</h3>
-                      <p className="text-lg">{demo.product?.sleeve || ""}</p>
+                      <p className="text-lg">{demo.product?.sleeve || "Sleeve"}</p>
                     </div>
                     <div className="row-span-1 px-2">
-                      <h3 className="text-base text-gray-800/80 font-semibold">Pack Contains</h3>
-                      <p className="text-lg">1 Casual-Shirt</p>
+                      <h3 className="text-base text-gray-800/80 font-semibold">Fit</h3>
+                      <p className="text-lg">{demo.product?.fit || "Fit"}</p>
                     </div>
                   </div>
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Material</h3>
-                      <p className="text-lg">100% Cotton</p>
+                      <p className="text-lg">{demo.product?.fabric_detail}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Design/Surface</h3>
-                      <p className="text-lg">Solid</p>
+                      <p className="text-lg">{demo.product?.design_surface}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Neckline Type</h3>
-                      <p className="text-lg">Regular Collared</p>
+                      <p className="text-lg">{demo.product?.neck_type}</p>
                     </div>
                   </div>
                 </div>
