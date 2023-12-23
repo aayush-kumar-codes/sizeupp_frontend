@@ -67,14 +67,18 @@ const Megamenu = () => {
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
                         <div className="col-span-1">
-                            <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
+                            <p className="text-base text-black font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
                         </div>
                         <div className="col-span-1 ">
-                            <h2 className="text-base font-semibold mb-2">Casual-Wear Topwear</h2>
+                            <h2 className="text-base text-black font-semibold mb-2">Casual-Wear Topwear</h2>
                             <ul className="grid grid-flow-row gap-4">
                                 {['Co-ord-Set', 'Core-Tee', 'Dress', 'Kurta', 'Kurta-and-Pants', 'Shirts', 'Sweat-Shirts', 'Top', 'T-Shirts', 'Tunic'].map((items, i) => {
                                     return (
@@ -87,7 +91,7 @@ const Megamenu = () => {
                             </ul>
                         </div>
                         <div className="col-span-1 ">
-                            <h2 className="text-md font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
+                            <h2 className="text-md text-black font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
                             <ul className="grid grid-flow-row gap-4">
                                 {['Jeggigns', 'Leggings', 'Pants', 'Trousers'].map((items, i) => {
                                     return (
@@ -103,7 +107,7 @@ const Megamenu = () => {
                             <ul className="grid grid-flow-row gap-4">
                                 {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
                                     return (
-                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
+                                        <li key={i} className="text-base text-black font-semibold hover:underline cursor-pointer">
                                             {items}
                                         </li>
                                     )
@@ -145,14 +149,18 @@ const Megamenu = () => {
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
                         <div className="col-span-1">
-                            <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
+                            <p className="text-base text-black font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
                         </div>
                         <div className="col-span-1 ">
-                            <h2 className="text-base font-semibold mb-2">Casual Topwear</h2>
+                            <h2 className="text-base text-black font-semibold mb-2">Casual Topwear</h2>
                             <ul className="grid grid-flow-row gap-4">
                                 {['Casual-Shirts', 'Core-Tee', 'Formal-Shirts', 'Kurta', 'Polo-Tshirts', 'T-Shirts'].map((items, i) => {
                                     return (
@@ -165,7 +173,7 @@ const Megamenu = () => {
                             </ul>
                         </div>
                         <div className="col-span-1 ">
-                            <h2 className="text-base font-semibold mb-2">Casual Bottomwear</h2>
+                            <h2 className="text-base text-black font-semibold mb-2">Casual Bottomwear</h2>
                             <ul className="grid grid-flow-row gap-4">
                                 {['Chino', 'Denim', 'Joggers', 'Pyjama', 'Track-Pants'].map((items, i) => {
                                     return (
@@ -181,7 +189,7 @@ const Megamenu = () => {
                             <ul className="grid grid-flow-row gap-4">
                                 {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
                                     return (
-                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
+                                        <li key={i} className="text-base text-black font-semibold hover:underline cursor-pointer">
                                             {items}
                                         </li>
                                     )
@@ -215,11 +223,15 @@ const Megamenu = () => {
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
                         <div className="col-span-1">
-                            <p className="text-base font-semibold">Online Only</p>
+                            <p className="text-base text-black font-semibold">Online Only</p>
                             <p className="text-sm text-gray-500">Shop online only products</p>
                             < img src={GEGreen5} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Online Only</button>
-                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
                         </div>
                         <div>
                             <ul>
@@ -514,7 +526,7 @@ function Navbar() {
     const [colorNav, SetColorNav] = useState(false);
 
     const ChangeColornav = () => {
-        if (window.scrollY >= 90) {
+        if (window.scrollY >= 70) {
             SetColorNav(true);
         }
         else {
@@ -525,13 +537,13 @@ function Navbar() {
 
     return (
         // container
-        <div className={colorNav ? `px-10 inset-0 bg-white w-full sticky top-0 z-50` : `px-10 inset-0 bg-transparent w-full absolute top-0 z-50`}>
+        <div className={colorNav ? `px-10  bg-white/10 backdrop-blur text-white w-full sticky top-0 z-50` : `px-10 text-white bg-transparent w-full absolute top-0 z-50`}>
             {/* layout prefixer */}
-            <div className="flex  items-center justify-between py-3">
+            <div className="flex  items-center justify-between py-2">
 
                 {/* brand title */}
                 <Link to="/" className='cursor-pointer'>
-                    <img src={logo} alt="logo" className='w-32 object-contain' />
+                    <img src={logo} alt="logo" className='md:w-36 w-24 object-contain' />
                 </Link>
                 
                         <Megamenu/>
@@ -572,17 +584,17 @@ function Navbar() {
                                                 </Link>
                                             </li>
                                             <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-2 text-sm">
                                                     My Offers
                                                 </Link>
                                             </li>
                                             <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                <Link to="/profile/track-orders" className="text-gray-700 block px-4 py-2 text-sm">
                                                     Track order
                                                 </Link>
                                             </li>
                                             <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="*" className="text-gray-700 block px-4 py-2 text-sm">
+                                                <Link to="/profile/account-settings" className="text-gray-700 block px-4 py-2 text-sm">
                                                     Settings
                                                 </Link>
                                             </li>
@@ -623,7 +635,7 @@ function Navbar() {
                 </div>
 
                 {isMenuOpen && (
-                    <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden">
+                    <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden text-black">
                         <div className="divide-y-2 divide-c-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="px-5 pb-6 pt-5">
                                 <div className="flex items-center justify-between">

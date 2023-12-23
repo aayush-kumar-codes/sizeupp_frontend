@@ -31,7 +31,7 @@ export default function Carousel() {
     clearTimeout(myTimeout);
   }
   return (
-    <div className="overflow-hidden relative w-full max-h-[85vh] flex ">
+    <div className="overflow-hidden relative w-full sm:max-h-[85vh] flex ">
       <div
         className={`-z-10 flex transition ease-out duration-40 w-full sm:h-full sm:object-fill"`}
         style={{
@@ -43,12 +43,10 @@ export default function Carousel() {
         })}
       </div>
 
-      <div className="absolute top-0 h-full justify-center items-start flex flex-col text-white px-12 z-10 
-       sm:items-center sm:px-0 sm:gap-4">
-        <div className="min-w-[30%] h-[70%] flex flex-col items-center justify-center lg:gap-8 lg:mx-12
-          gap-4
+      <div className="absolute top-0 h-full justify-center  flex flex-col text-white px-12 z-10 items-center lg:gap-4 gap-0">
+        <div className="min-w-[30%] h-[70%] flex flex-col items-center justify-center lg:gap-6 lg:mx-12 gap-2
         ">
-          <h1 className="font-normal md:text-5xl uppercase font-[Times-new-roman]
+          <h1 className="font-normal md:text-5xl uppercase font-serif
             text-lg
           ">Live Your Dance</h1>
           <div className="w-full flex justify-between items-center gap-4">
@@ -58,12 +56,12 @@ export default function Carousel() {
             ">Create</h2>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 4" fill="none"><path d="M0 2H196" stroke="white" strokeWidth="3.1134"/></svg>
           </div>
-          <h1 className="font-normal lg:text-7xl uppercase font-[Times-new-roman]
+          <h1 className="font-normal lg:text-7xl uppercase font-serif
             text-3xl
           ">Memories</h1>          
         </div>
           <Link to="/products">
-            <button className="border-2 border-white text-white p-2 text-md lg:text-lg">Shop Now</button>
+            <button className="border-2 border-white text-white p-2 text-md lg:text-lg cursor-pointer z-50">Shop Now</button>
             
         </Link>
       </div>

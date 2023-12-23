@@ -7,78 +7,78 @@ const Footer = () => {
   
   return (
     <>
-    <footer className="text-gray-600 body-font bg-gray-100">
+    <footer className="text-gray-300 body-font bg-[#1E1E1E]">
   <div className=" px-8 py-24 mx-10 flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-      <Link href="/" className="flex text-lg font-bold items-center md:justify-start justify-center text-gray-900">
+      <a href="/" className="flex text-lg font-bold items-center md:justify-start justify-center text-white">
        <img src={logo} className="w-36"/>
         
-      </Link>
+      </a>
       <p className="mt-2 text-sm text-gray-500">Sizeupp: A Newly Launched One Stop Shop for All Things Plus Size </p>
       <div className="p-1">
-            <Link to="/about-us" className="text-gray-600 hover:text-gray-800">About Us</Link>
+            <a href="/about-us" className="text-gray-400 hover:text-white ">About Us</a>
             </div>
             <div className="p-1">
-            <Link to="/faq" className="text-gray-600 hover:text-gray-800">FAQ</Link>
+            <a href="/faq" className="text-gray-400 hover:text-white">FAQ</a>
           </div>
     </div>
     <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Shop</h2>
+        <h2 className="text-lg font-bold text-white tracking-widest mb-3">Shop</h2>
         <nav className="list-none mb-10">
           <li className="p-1">
-          <Link to="/products" className="text-gray-600 hover:text-gray-800">Men</Link>
+          <a href="/products" className="text-gray-400 hover:text-white">Men</a>
           </li>
           <li className="p-1">
-            <Link to="/products" className="text-gray-600 hover:text-gray-800">Women</Link>
+            <a href="/products" className="text-gray-400 hover:text-white">Women</a>
           </li>
           <li className="p-1">
-            <Link to="/products" className="text-gray-600 hover:text-gray-800">Accessories</Link>
+            <a href="/products" className="text-gray-400 hover:text-white">Accessories</a>
           </li>
           <li className="p-1">
-           <Link to="/products" className="text-gray-600 hover:text-gray-800">New Arrivals</Link>
+           <a href="/products" className="text-gray-400 hover:text-white">New Arrivals</a>
           </li>
           <li className="p-1">
-            <Link to="/products" className="text-gray-600 hover:text-gray-800">Seasonal Sale</Link>
+            <a href="/products" className="text-gray-400 hover:text-white">Seasonal Sale</a>
           </li>      
         </nav>
       </div>
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">My Account</h2>
+        <h2 className="text-lg font-bold text-white tracking-widest mb-3">My Account</h2>
         <nav className="list-none mb-10">
           <li className="p-1">
-            <Link to="/profile" className="text-gray-600 hover:text-gray-800">Profile</Link>
+            <a href="/profile" className="text-gray-400 hover:text-white">Profile</a>
           </li>
           <li className="p-1">
-            <Link to="/profile/my-orders" className="text-gray-600 hover:text-gray-800">Orders</Link>
+            <a href="/profile/my-orders" className="text-gray-400 hover:text-white">Orders</a>
           </li>
           <li className="p-1">
-            <Link to="/profile/manage-address" className="text-gray-600 hover:text-gray-800">Addresses</Link>
+            <a href="/profile/manage-address" className="text-gray-400 hover:text-white">Addresses</a>
           </li>
           <li className="p-1">
-            <Link to="/account-settings" className="text-gray-600 hover:text-gray-800">Account Details</Link>
+            <a href="/profile/account-settings" className="text-gray-400 hover:text-white">Account Details</a>
           </li>     
         </nav>
       </div>
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Policies</h2>
+        <h2 className="text-lg font-bold text-white tracking-widest mb-3">Policies</h2>
         <nav className="list-none mb-10">
           <li className="p-1">
-            <Link to="/terms-condition" className="text-gray-600 hover:text-gray-800">Terms & Condition</Link>
+            <a href="/terms-condition" className="text-gray-400 hover:text-white">Terms & Condition</a>
           </li>
           <li className="p-1">
-            <Link to="/return-policy" className="text-gray-600 hover:text-gray-800">Return Policies</Link>
+            <a href="/return-policy" className="text-gray-400 hover:text-white">Return Policies</a>
           </li>
           <li className="p-1">
-            <Link to="/privacy-policy" className="text-gray-600 hover:text-gray-800">Privacy Policy</Link>
+            <a href="/privacy-policy" className="text-gray-400 hover:text-white">Privacy Policy</a>
           </li>
           <li className="p-1">
-            <Link to="/shipping-policy" className="text-gray-600 hover:text-gray-800">Shipping Policy</Link>
+            <a href="/shipping-policy" className="text-gray-400 hover:text-white">Shipping Policy</a>
           </li>
         </nav>
       </div>
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Socials</h2>
+        <h2 className="text-lg font-bold text-white tracking-widest mb-3">Socials</h2>
         <nav className="list-none mb-10">
         <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
         <a href="" className="text-gray-500">

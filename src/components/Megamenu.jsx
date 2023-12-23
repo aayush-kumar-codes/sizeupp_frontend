@@ -47,8 +47,12 @@ const Megamenu = () => {
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
                         </div>
                         {data.women_category?.length > 0 && data.men_category.map((cat) => {
                             return (
@@ -116,8 +120,12 @@ const Megamenu = () => {
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
                         </div>
                         {data.men_category?.length > 0 && data.men_category.map((cat) => {
                             return (
@@ -177,8 +185,12 @@ const Megamenu = () => {
                             <p className="text-base font-semibold">Online Only</p>
                             <p className="text-sm text-gray-500">Shop online only products</p>
                             < img src={GEGreen5} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Online Only</button>
-                            < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
                         </div>
                         <div>
                             <ul>
