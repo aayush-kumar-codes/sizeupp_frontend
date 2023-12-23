@@ -513,8 +513,9 @@ const ProductOverview = () => {
         setdemo(data);
         setRelatedProducts(data.related_products_category)
         let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
-        data.product?.images.forEach(img => {
-          imgs.push(`${import.meta.env.VITE_SERVER_URL}/${img.img}`);
+        data.product_images.forEach(img => {
+          console.log((img.img + "").slice(6));
+          imgs.push(`${import.meta.env.VITE_SERVER_URL} ${(img.img + "").slice(6)}`);
         });
         setImages(imgs);
         setSQPActive(data.sqp_active?.id)
@@ -779,7 +780,7 @@ const ProductOverview = () => {
         <div className="col-span-4 pt-8 lg:pt-0">
           <div className="mb-7 border-b border-c-gray-300 pb-2">
             <div className="flex justify-between items-center ">
-              <p className=" mb-3.5 font-bold " style={{fontSize:'1.3rem'}}>
+              <p className=" mb-3.5 font-bold " style={{ fontSize: '1.3rem' }}>
                 {demo.product?.name}
               </p>
               <div className="flex items-center gap-3">
@@ -894,7 +895,7 @@ const ProductOverview = () => {
             </div>
             <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
 
-              <div dangerouslySetInnerHTML={{ __html: demo.product?.description }} />
+              <div dangerouslySetInnerHTML={{ __html: demo.product?.fabric_detail }} />
             </p>
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
 
@@ -934,9 +935,9 @@ const ProductOverview = () => {
             </div>
             <div className="mb-4 ">
               <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                color
+                color : {demo.product?.color}
               </h3>
-              <ul className="colors -mr-3 flex flex-wrap">
+              {/* <ul className="colors -mr-3 flex flex-wrap">
                 {['bg-[#B2AC88]'].map((color) => (
                   <li
                     key={color}
@@ -945,7 +946,7 @@ const ProductOverview = () => {
                     <span className={`block h-full w-full rounded ${color}`} />
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           </div>
           <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-c-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
@@ -990,11 +991,11 @@ const ProductOverview = () => {
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6 border-r border-black/60">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Occasion</h3>
-                      <p className="text-lg">Casual Wear</p>
+                      <p className="text-lg">{demo.product?.occasion || "Occasion"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Sleeve Type</h3>
-                      <p className="text-lg">Full Sleeves</p>
+                      <p className="text-lg">{demo.product?.sleeve || ""}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Pack Contains</h3>
@@ -1004,7 +1005,7 @@ const ProductOverview = () => {
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Material</h3>
-                      <p className="text-xs">100% Cotton</p>
+                      <p className="text-lg">100% Cotton</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Design/Surface</h3>
@@ -1023,7 +1024,7 @@ const ProductOverview = () => {
               content={
                 <div className="text-base font-semibold text-gray-800/80">
 
-                  <div dangerouslySetInnerHTML={{ __html: demo.product?.care_instructions }} />
+                  <div dangerouslySetInnerHTML={{ __html: demo.product?.Washcare }} />
 
                 </div>
               }

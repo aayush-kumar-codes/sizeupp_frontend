@@ -59,15 +59,17 @@ const Carousel = ({
 
       >
 
-        {slides.map((slide, i) => (
-          <img
+        {slides.map((slide, i) => {
+          let str = slide.img + ""
+          // console.log(str)
+          return(<img
             key={i}
             onClick={() => { navigate(`${id}`) }}
             className="object-cover w-full h-full cursor-pointer rounded-lg"
-            src={slide}
+            src={import.meta.env.VITE_SERVER_URL +str.slice(6)}
             alt="dress"
-          />
-        ))
+          />)
+        })
         }
       </div>
       {/* <div className={`w-8 z-20 absolute bottom-4 right-4 bg-white rounded-full p-1`}>

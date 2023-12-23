@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { fetchProducts,fetchProductsAuth,productsbc,setproductcount,product} = useContext(AuthContext)
+    const { fetchProducts, fetchProductsAuth, productsbc, setproductcount, product } = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -196,7 +196,7 @@ const ProductList = ({
                 {grid ? <CustomGrid gridSize={grid}>
                     {productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
-                        imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
+                        imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
                         items.images.map((img) => {
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
@@ -234,14 +234,17 @@ const ProductList = ({
                             // </div>
 
                             <div key={i} className="mt-1 rounded-xl">
-                                <Carousel id={items.id} isFav={items.wishlist} slides={imgs} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
+                                <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
                                 <div className={`${grid == 5 && "hidden"} p-2 `}>
                                     <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
                                     <div className=' flex flex-wrap justify-between items-center'>
                                         <div className='text-base text-accent flex items-center gap-2'>
-                                            <p>&#8377; {items.discounted_price}</p>
-                                            <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.price}</p>
-                                            <p className="text-base font-medium text-[#af0000]">{items.discount_percentage}%</p>
+                                            <p>&#8377; {items.discounted_price ? items.discount_price : items.mrp}</p>
+                                            {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                                <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
+                                                <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                            </div>
+                                            }
                                         </div>
                                         <button
                                             type="button"
@@ -270,7 +273,7 @@ const ProductList = ({
             {/* Medium Desktop */}
             <div className='hidden xl:hidden md:block'>
                 {mgrid ? <CustomGrid gridSize={mgrid}>
-                    {productsbc.length > 0 && productsbc.map((items, i) => {
+                    {productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -280,15 +283,17 @@ const ProductList = ({
 
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={false} func={() => {}} slides={imgs} />
+                                <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
                                 <div className={` p-2 mt-1 rounded-lg`}>
                                     <div className='truncate text-base text-accent'>{items.name}</div>
 
                                     <div className=' flex flex-wrap justify-between items-center'>
-                                        <div className='text-sm text-accent flex items-center gap-2'><p>&#8377; {items.discounted_price}</p>
-                                            <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.price}</p>
-                                            <p className="text-sm font-medium text-[#af0000]">
-                                                {items.discount_percentage}%</p>
+                                        <div className='text-sm text-accent flex items-center gap-2'><p>&#8377; {items.discount_price ? items.discount_price : items.mrp}</p>
+                                            {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                                <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
+                                                <p className="text-sm font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                            </div>
+                                            }
                                         </div>
                                         <button
                                             type="button"
@@ -301,7 +306,13 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    })}
+                    }) : <>
+                        {
+                            Array(10).fill().map((_, i) => (
+                                <ProductSkullCard key={i} />
+                            ))
+                        }
+                    </>}
                 </CustomGrid>
                     : <div>Loading ....</div>
                 }
@@ -319,12 +330,18 @@ const ProductList = ({
 
                         return (
                             <div key={i} className="">
-                                <Carousel id={items.id} isFav={false} func={() => {}} slides={imgs} />
+                                <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
                                 <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
                                     <p className='truncate text-base text-accent'>{items.name}</p>
                                     <div className='flex flex-wrap justify-between items-center'>
-                                        <div className='text-lg text-accent flex items-center gap-2'><p>&#8377; {items.price}</p><p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.discounted_price}</p> <p className="text-base font-medium text-[#af0000]">
-                                            {items.discount_percentage}%</p></div>
+                                        <div className='text-lg text-accent flex items-center gap-2'>
+                                            <p>&#8377; {items.mrp}</p>
+                                            {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                                <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
+                                                <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                            </div>
+                                            }
+                                        </div>
                                         <button
                                             type="button"
                                             onClick={() => { navigate(`/products/cart`) }}
@@ -336,7 +353,13 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    }) : <div>Loading ....</div>}
+                    }) : <>
+                        {
+                            Array(10).fill().map((_, i) => (
+                                <ProductSkullCard key={i} />
+                            ))
+                        }
+                    </>}
                 </CustomGrid>
 
                     : <div>Loading ....</div>
