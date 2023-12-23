@@ -899,7 +899,7 @@ const ProductOverview = () => {
               <div dangerouslySetInnerHTML={{ __html: demo.product?.fabric_detail }} />
             </p>
             <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
-
+            <p className="text-base text-gray-800/80 font-semibold">MADE IN INIDA</p>
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
                 ₹ {demo.product?.discounted_price ? demo.product?.discounted_price : demo.product?.mrp}

@@ -336,7 +336,7 @@ export function ProductCart() {
             }
             const data = await res.json()
             console.log(data);
-            fetchCart()
+            fetchCart();
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -579,7 +579,7 @@ export function ProductCart() {
                                             <input
                                                 type="text"
                                                 className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                defaultValue={qtyCart.products?.length > 0 ? qtyCart.products[i].qty : product.qty}
+                                                value={product.qty}
                                             />
                                             <button onClick={() => handleUpdateCart(info.product.id,'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
                                                 +
