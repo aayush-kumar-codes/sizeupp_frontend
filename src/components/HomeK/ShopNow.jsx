@@ -1,6 +1,7 @@
 import {banner1,
     banner2,
     banner3} from '../../assets/banners'
+import { Link } from 'react-router-dom'
 
 export default function ShopNow() {
     return (
@@ -52,7 +53,10 @@ const Layout = ({Text, Image, Orientation}) => {
             </div>
             <div className='w-2/3 h-full flex flex-col justify-center items-center text-center z-10 gap-10 p-16 sm:p-2'>
                 <h1 className="font-normal lg:text-5xl capitalize font-[Times-new-roman] text-white text-5xl">{Text}</h1>
+                <Link to="/products">
                 <button className="border-2 border-white text-white text-lg p-2">Shop Now</button>
+
+                </Link>
             </div>
         </div>
     )
