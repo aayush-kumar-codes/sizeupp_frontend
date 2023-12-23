@@ -1,6 +1,6 @@
 import {banner1,
     banner2,
-    banner3} from '../../assets/banners'
+    banner3,banner4,banner5} from '../../assets/banners'
 import { Link } from 'react-router-dom'
 
 export default function ShopNow() {
@@ -13,12 +13,12 @@ export default function ShopNow() {
         />
         <Layout 
           Text="Latest Men's Collection"
-          Image={banner1}
+          Image={banner4}
           Orientation= {true}
         />
         <Layout 
           Text="Shop Now, Slay Later"
-          Image={banner3}
+          Image={banner5}
           Orientation= {false}
         />
       </>
