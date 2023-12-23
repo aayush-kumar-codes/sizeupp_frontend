@@ -28,6 +28,10 @@ import ManageAccount from "./pages/Account/ManageAccount"
 import ManageAddress from "./pages/Account/ManageAddress"
 import PaymentSuccessfull from "./pages/PaymentSuccessfull"
 import PaymentUnsuccess from "./pages/PaymentUnsuccess"
+import TermsCondition from "./constants/TermsCondition"
+import ReturnPolicy from "./constants/ReturnPolicy"
+import PrivacyPolicy from "./constants/PrivacyPolicy"
+import AboutUs from "./constants/AboutUs"
 
 
 const App = () => {
@@ -45,6 +49,10 @@ const App = () => {
             <Route path="reset" element={<ResetPassword />} />
             <Route path="payment-success" element={<PaymentSuccessfull />} />
             <Route path="payment-unsuccess" element={<PaymentUnsuccess />} />
+            <Route path="terms-condition" element={<TermsCondition />} />
+            <Route path="return-policy" element={<ReturnPolicy />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="about-us" element={<AboutUs />} />
             
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />

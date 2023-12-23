@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -14,6 +15,9 @@ const Footer = () => {
         <span className="ml-3 text-xl text-orange-400">SizeUpp</span>
       </a>
       <p className="mt-2 text-sm text-gray-500">Air plant banjo lyft occupy retro adaptogen indego</p>
+      <divs className="p-1">
+            <Link to="/about-us" className="text-gray-600 hover:text-gray-800">About Us</Link>
+          </divs>
     </div>
     <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
@@ -60,16 +64,16 @@ const Footer = () => {
         <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Policies</h2>
         <nav className="list-none mb-10">
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Terms & Condition</a>
+            <Link to="/terms-condition" className="text-gray-600 hover:text-gray-800">Terms & Condition</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Return Policies</a>
+            <Link to="/return-policy" className="text-gray-600 hover:text-gray-800">Return Policies</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Payment Policies</a>
+            <Link to="/privacy-policy" className="text-gray-600 hover:text-gray-800">Privacy Policy</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Offer Conditions</a>
+            <a href="" className="text-gray-600 hover:text-gray-800">Shipping Policy</a>
           </li>
         </nav>
       </div>
