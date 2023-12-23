@@ -19,20 +19,31 @@ const ProductLayout2 = () => {
     color: []
   })
 
+  const {filterdata,setfilterdata} = useContext(AuthContext)
+
   const handleChangeFilter = (event) => {
 
     const { name, value } = event.target;
-    setFilterData(prevState => ({
+    // setFilterData(prevState => ({
+    //   ...prevState,
+    //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
+    // }));
+    console.log("-------------------- name,value 31 ----------------------")
+    console.log(name,value)
+
+    setfilterdata(prevState => ({
       ...prevState,
-      [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
+      [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],	
     }));
 
-    if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
-      handlefetchFilterProducts()
-    } else {
-      handlefetchProducts()
-    }
-    console.log(filterData)
+    handlefetchProducts()
+
+    // if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
+    //   handlefetchFilterProducts()
+    // } else {
+    //   handlefetchProducts()
+    // }
+    console.log(filterdata)
   };
 
   const filters = [
@@ -40,8 +51,8 @@ const ProductLayout2 = () => {
       id: 'gender',
       name: 'Gender',
       options: [
-        { value: 'men', label: 'Men' },
-        { value: 'women', label: 'Women' },
+        { value: 'Men', label: 'Men' },
+        { value: 'Women', label: 'Women' },
       ],
     },
     {
@@ -56,7 +67,7 @@ const ProductLayout2 = () => {
       ],
     },
     {
-      id: 'sizes',
+      id: 'size',
       name: 'Sizes',
       options: [
         { value: '1', label: '1' },
@@ -149,7 +160,7 @@ const ProductLayout2 = () => {
                       <li key={option.value} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                           <input
-                            id={`category-${option.value}`}
+                            id={`${option.value}`}
                             name={filter.id}
                             type="checkbox"
                             className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"

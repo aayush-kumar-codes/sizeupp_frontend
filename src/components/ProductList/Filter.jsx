@@ -3,7 +3,9 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/20/solid"
 import { FunnelIcon, ArrowsUpDownIcon } from "@heroicons/react/24/outline"
 import { styles } from "../../style"
 import PropTypes from 'prop-types'
-
+import { useContext } from "react"
+import { AuthContext } from "../../context/AuthProvider"
+import { useNavigate } from "react-router-dom"
 const Filter = ({
     grid,
     setGrid,
@@ -20,6 +22,26 @@ const Filter = ({
         console.log(index)
         console.log(enums[index], parseInt(e.target.value))
         setGrid(enums[index])
+    }
+
+    const {sort,setSort,handlefetchProducts} = useContext(AuthContext)
+
+    const navigate = useNavigate()
+
+    const handleSort = (e) => {
+        if(e === ''){
+            setSort({phtl:false,plth:false,dhtl:false})
+            handlefetchProducts()
+            return
+        }
+        const newSort = {...sort}
+        newSort[e] = !newSort[e]
+        setSort(newSort)
+        console.log(sort)
+        if(sort.phtl || sort.plth || sort.dhtl){
+            console.log("sort")
+            handlefetchProducts()
+        }
     }
 
     return (
@@ -46,25 +68,25 @@ const Filter = ({
                     </div>
                     <div className="hidden z-50 group-hover:flex flex-col absolute right-8 px-6 py-6 w-fit bg-secondary rounded-md  drop-shadow-md">
                         <h2 className="text-base font-semibold mb-2">Sort by : </h2>
-                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                        <div onClick={()=>handleSort('')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="popular" className="cursor-pointer text-base">Popularity: High to Low</label>
-                            <input type="radio" name="sort" id="popular" className="cursor-pointer  w-4 h-4" />
+                            <input type="radio"  name="sort" id="popular" className="cursor-pointer  w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
-                            <label htmlFor="pricelth" className="cursor-pointer text-base">Price: Low to High</label>
-                            <input type="radio" name="sort" id="pricelth" className="cursor-pointer  w-4 h-4" />
+                        <div onClick={()=>handleSort('plth')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="plth" className="cursor-pointer text-base">Price: Low to High</label>
+                            <input type="radio" name="sort" id="plth"  className="cursor-pointer  w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
-                            <label htmlFor="pricehtl" className="cursor-pointer text-base">Price: High to Low</label>
-                            <input type="radio" name="sort" id="pricehtl" className="cursor-pointer  w-4 h-4" />
+                        <div onClick={()=>handleSort('phtl')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="phtl" className="cursor-pointer text-base">Price: High to Low</label>
+                            <input type="radio" name="sort" id="phtl"  className="cursor-pointer  w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                        <div onClick={()=>handleSort('')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="pricena" className="cursor-pointer text-base">New Arrivals</label>
-                            <input type="radio" name="sort" id="pricena" className="cursor-pointer w-4 h-4" />
+                            <input type="radio" name="sort" id="pricena"  className="cursor-pointer w-4 h-4" />
                         </div>
-                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
-                            <label htmlFor="pricedhtl" className="cursor-pointer text-base">Discount: High to Low</label>
-                            <input type="radio" name="sort" id="pricedhtl" className="cursor-pointer  w-4 h-4 text-orange-500" />
+                        <div onClick={()=>handleSort('dhtl')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="dhtl" className="cursor-pointer text-base">Discount: High to Low</label>
+                            <input type="radio" name="sort" id="dhtl"  className="cursor-pointer  w-4 h-4 text-orange-500" />
                         </div>
 
                     </div>

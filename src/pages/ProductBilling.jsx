@@ -85,15 +85,12 @@ export function ProductBilling() {
             const data = await res.json()
             console.log(data);
             setProfile(data)
-            setForm({
-                ...form,
-                address_id: data.addresses?.map((address, index) => {
-                    if (address.is_default == true) {
-                        return address.id
-                    }
-                })[0]
-            })
-            console.log("----------form 55-----------", form);
+            setPincode(data.addresses?.map((address, index) => {
+                if (address.is_default == true) {
+                    return address.id
+                }
+            }
+            )[0])
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -124,15 +121,15 @@ export function ProductBilling() {
             const data = await res.json()
             console.log(data);
             setCart(data)
-            setForm({
-                ...form,
+            let fors = {
+                address_id : form.address_id,
                 mrp_price: data.mrp_price,
                 sub_total: data.sub_total,
                 cupon_discount: data.cupon_discount,
                 coupon: data.coupon,
                 total_price: data.total_price
-            })
-            console.log("----------form 94-----------", form);
+            }
+            setForm(fors)
 
         }
         catch (error) {
@@ -146,17 +143,14 @@ export function ProductBilling() {
         }
     }
 
+    
     const handlePlaceOrder = async () => {
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
             console.log({
-                address_id: profile.addresses?.map((address, index) => {
-                    if (address.is_default == true) {
-                        return address.id
-                    }
-                })[0],
+                address_id: pincode,
                 mrp_price: form.mrp_price,
                 sub_total: form.sub_total,
                 cupon_discount: form.cupon_discount,
@@ -171,11 +165,7 @@ export function ProductBilling() {
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    address_id: profile.addresses?.map((address, index) => {
-                        if (address.is_default == true) {
-                            return address.id
-                        }
-                    })[0],
+                    address_id: pincode,
                     mrp_price: form.mrp_price,
                     sub_total: form.sub_total,
                     cupon_discount: form.cupon_discount,
@@ -211,7 +201,7 @@ export function ProductBilling() {
     }
 
     useEffect(() => {
-        // fetchCart()
+        fetchCart()
         fetchCoupon()
         fetchUserProfile()
     }, [])
@@ -226,6 +216,7 @@ export function ProductBilling() {
         payment_type: "COD"
     })
 
+    console.log(form)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

@@ -17,7 +17,7 @@ const Megamenu = () => {
             },
         }).then(res => res.json().then(data => {
             console.log(JSON.stringify(data))
-            setData(data.detail_category)
+            setData(data)
             localStorage.setItem("cat_list", JSON.stringify(data))
         }
         ))
@@ -50,32 +50,23 @@ const Megamenu = () => {
                             < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
                             < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                         </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-base font-semibold mb-2">Casual-Wear Topwear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Co-ord-Set', 'Core-Tee', 'Dress', 'Kurta', 'Kurta-and-Pants', 'Shirts', 'Sweat-Shirts', 'Top', 'T-Shirts', 'Tunic'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-md font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Jeggigns', 'Leggings', 'Pants', 'Trousers'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
+                        {data.women_category?.length > 0 && data.men_category.map((cat) => {
+                            return (
+                                <div key={cat.id} className="col-span-1 ">
+                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                    <ul className="grid grid-flow-row gap-4">
+                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                            return (
+                                                <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    {items.name}
+                                                </li>
+                                            )
+                                        })
+                                        }
+                                    </ul>
+                                </div>)
+                        })
+                        }
                         <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
                                 {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
@@ -91,7 +82,7 @@ const Megamenu = () => {
                     </div>
                 </div>
 
-{/* 
+                {/* 
                 {data.length > 0 && data.map((item, index) => (
                     <div key={index} className="group">
                         <div >
@@ -128,32 +119,23 @@ const Megamenu = () => {
                             < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
                             < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                         </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-base font-semibold mb-2">Casual Topwear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Casual-Shirts', 'Core-Tee', 'Formal-Shirts', 'Kurta', 'Polo-Tshirts', 'T-Shirts'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-base font-semibold mb-2">Casual Bottomwear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Chino', 'Denim', 'Joggers', 'Pyjama', 'Track-Pants'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
+                        {data.men_category?.length > 0 && data.men_category.map((cat) => {
+                            return (
+                                <div key={cat.id} className="col-span-1 ">
+                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                    <ul className="grid grid-flow-row gap-4">
+                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                            return (
+                                                <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    {items.name}
+                                                </li>
+                                            )
+                                        })
+                                        }
+                                    </ul>
+                                </div>)
+                        })
+                        }
                         <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
                                 {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {

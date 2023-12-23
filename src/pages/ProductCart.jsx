@@ -316,25 +316,19 @@ export function ProductCart() {
     }
 
 
-    const handleUpdateAddress = async (addressid) => {
+    const handleUpdateCart = async (prodid,status) => {
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/address/${addressid}`, {
-                method: 'PUT',
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${prodid}`, {
+                method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    address_line_1: formData.addressLine1,
-                    address_line_2: formData.addressLine2,
-                    city: formData.city,
-                    postal_code: formData.zipCode,
-                    country: formData.country,
-                    state: formData.state,
-                    is_default: formData.is_default
+                    status : status
                 })
             })
             if (!res.ok) {
@@ -342,24 +336,9 @@ export function ProductCart() {
             }
             const data = await res.json()
             console.log(data);
-            Swal.fire({
-                title: 'Success!',
-                text: 'Address Updated',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            setFormData({
-                addressLine1: '',
-                addressLine2: '',
-                city: '',
-                state: '',
-                zipCode: '',
-                country: '',
-            })
-            navigate('/products/cart')
-
-        } catch (error) {
+            fetchCart()
+        }
+        catch (error) {
             console.error('Fetch error:', error);
             Swal.fire({
                 title: 'Error!',
@@ -594,7 +573,7 @@ export function ProductCart() {
                                         </div>
                                         <div className='col-span-1 flex justify-center items-center'>
 
-                                            <button onClick={() => decrement(i, info.size_quantity_price)} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
+                                            <button onClick={() => handleUpdateCart(info.product.id,'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
                                                 -
                                             </button>
                                             <input
@@ -602,7 +581,7 @@ export function ProductCart() {
                                                 className="mx-1 h-7 w-9 rounded-md border text-center"
                                                 defaultValue={qtyCart.products?.length > 0 ? qtyCart.products[i].qty : product.qty}
                                             />
-                                            <button onClick={() => increment(i, info.size_quantity_price)} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
+                                            <button onClick={() => handleUpdateCart(info.product.id,'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
                                                 +
                                             </button>
                                         </div>
@@ -723,7 +702,7 @@ export function ProductCart() {
                             <dl className=" space-y-1 px-2 py-4">
                                 <div className="flex items-center justify-between">
                                     <dt className="text-sm text-c-gray-800">Price </dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.mrp || 0}</dd>
+                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.mrp_price || 0}</dd>
                                 </div>
                                 <div className="flex items-center justify-between pt-4">
                                     <dt className="flex items-center text-sm text-c-gray-800">
@@ -767,13 +746,7 @@ export function ProductCart() {
 
 
                         </div>
-
-                    </section>
-
-
-                    {/* Order summary */}
-
-                    {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
+                        {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                         <form action="#" className="mt-6">
                             <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
                             <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
@@ -802,6 +775,12 @@ export function ProductCart() {
                             <div className='text-base text-center font-semibold'>You Saved ₹ {parseInt(cart.cupon_discount)}</div>
                         </section>
                     }
+                    </section>
+
+
+                    {/* Order summary */}
+
+                    
                 </form>
             </div>
         </div>
