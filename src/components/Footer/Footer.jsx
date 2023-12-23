@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { logo } from "../../assets/banners";
 
 
 const Footer = () => {
@@ -10,33 +10,36 @@ const Footer = () => {
     <footer className="text-gray-600 body-font bg-gray-100">
   <div className=" px-8 py-24 mx-10 flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-      <a href="" className="flex text-lg font-bold items-center md:justify-start justify-center text-gray-900">
-       
-        <span className="ml-3 text-xl text-orange-400">SizeUpp</span>
-      </a>
-      <p className="mt-2 text-sm text-gray-500">Air plant banjo lyft occupy retro adaptogen indego</p>
-      <divs className="p-1">
+      <Link href="/" className="flex text-lg font-bold items-center md:justify-start justify-center text-gray-900">
+       <img src={logo} className="w-36"/>
+        
+      </Link>
+      <p className="mt-2 text-sm text-gray-500">Sizeupp: A Newly Launched One Stop Shop for All Things Plus Size </p>
+      <div className="p-1">
             <Link to="/about-us" className="text-gray-600 hover:text-gray-800">About Us</Link>
-          </divs>
+            </div>
+            <div className="p-1">
+            <Link to="/faq" className="text-gray-600 hover:text-gray-800">FAQ</Link>
+          </div>
     </div>
     <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
         <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">Shop</h2>
         <nav className="list-none mb-10">
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Men</a>
+          <Link to="/products" className="text-gray-600 hover:text-gray-800">Men</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Women</a>
+            <Link to="/products" className="text-gray-600 hover:text-gray-800">Women</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Accessories</a>
+            <Link to="/products" className="text-gray-600 hover:text-gray-800">Accessories</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">New Arrivals</a>
+           <Link to="/products" className="text-gray-600 hover:text-gray-800">New Arrivals</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Seasonal Sale</a>
+            <Link to="/products" className="text-gray-600 hover:text-gray-800">Seasonal Sale</Link>
           </li>      
         </nav>
       </div>
@@ -44,20 +47,17 @@ const Footer = () => {
         <h2 className="text-lg font-bold text-gray-900 tracking-widest mb-3">My Account</h2>
         <nav className="list-none mb-10">
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Profile</a>
+            <Link to="/profile" className="text-gray-600 hover:text-gray-800">Profile</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Orders</a>
+            <Link to="/profile/my-orders" className="text-gray-600 hover:text-gray-800">Orders</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Addresses</a>
+            <Link to="/profile/manage-address" className="text-gray-600 hover:text-gray-800">Addresses</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Account Details</a>
-          </li>
-          <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Payment Options</a>
-          </li>      
+            <Link to="/account-settings" className="text-gray-600 hover:text-gray-800">Account Details</Link>
+          </li>     
         </nav>
       </div>
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
@@ -73,7 +73,7 @@ const Footer = () => {
             <Link to="/privacy-policy" className="text-gray-600 hover:text-gray-800">Privacy Policy</Link>
           </li>
           <li className="p-1">
-            <a href="" className="text-gray-600 hover:text-gray-800">Shipping Policy</a>
+            <Link to="/shipping-policy" className="text-gray-600 hover:text-gray-800">Shipping Policy</Link>
           </li>
         </nav>
       </div>

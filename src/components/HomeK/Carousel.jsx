@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BannerData } from "../../constants/Banners";
+import { Link } from "react-router-dom";
 
 export default function Carousel() {
   let [current, setCurrent] = useState(0);
@@ -61,8 +62,10 @@ export default function Carousel() {
             text-3xl
           ">Memories</h1>          
         </div>
-
-        <button className="border-2 border-white text-white p-2 text-md lg:text-lg">Shop Now</button>
+          <Link to="/products">
+            <button className="border-2 border-white text-white p-2 text-md lg:text-lg">Shop Now</button>
+            
+        </Link>
       </div>
 
       {/* <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full z-20">

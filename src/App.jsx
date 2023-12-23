@@ -32,6 +32,8 @@ import TermsCondition from "./constants/TermsCondition"
 import ReturnPolicy from "./constants/ReturnPolicy"
 import PrivacyPolicy from "./constants/PrivacyPolicy"
 import AboutUs from "./constants/AboutUs"
+import ShippingPolicy from "./constants/ShippingPolicy"
+import Faq from "./constants/Faq"
 
 
 const App = () => {
@@ -53,6 +55,8 @@ const App = () => {
             <Route path="return-policy" element={<ReturnPolicy />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="shipping-policy" element={<ShippingPolicy />} />
+            <Route path="faq" element={<Faq />} />
             
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />

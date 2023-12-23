@@ -24,6 +24,7 @@ import { dress } from "../assets/images"
 
 import { GEGreen2, GEGreen5, Maroon1 } from "../assets/images/men"
 import { WWhite1 } from "../assets/images/women"
+import Footer from '../components/Footer/Footer'
 
 
 const Megamenu = () => {
@@ -745,7 +746,8 @@ const HomeK = () => {
             <Navbar/>
             <Carousel />
             <ShopCategoryWise/>
-            <ShopNow/>
+            <ShopNow />
+            <Footer/>
             {/* <Newsletter /> */}
         </>
     )
