@@ -358,9 +358,9 @@ export function Navbar() {
                             <li >
                                 <Link to="/products/cart" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
                                     <div className="relative">
-                                    <div className=" absolute -top-2 left-3">
+                                    {/* <div className=" absolute -top-2 left-3">
                                             <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white text-xs">3</p>
-                                        </div>
+                                        </div> */}
                                         <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
 
                                     </div>
