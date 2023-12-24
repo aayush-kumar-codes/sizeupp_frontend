@@ -150,7 +150,7 @@ const AuthProvider = ({ children }) => {
 
     const fetchProducts = async () => {
         try {
-
+            setproductloading(true)
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
