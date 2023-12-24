@@ -1,5 +1,5 @@
-import { useState,  useContext } from 'react'
-import {  Link } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
@@ -9,7 +9,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const {isFilterActive,setIsFilterActive,handlefetchFilterProducts,handlefetchProducts,productcount} = useContext(AuthContext)
+  const { isFilterActive, setIsFilterActive, handlefetchFilterProducts, handlefetchProducts, productcount } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
 
   const [filterData, setFilterData] = useState({
@@ -19,7 +19,7 @@ const ProductLayout2 = () => {
     color: []
   })
 
-  const {filterdata,setfilterdata} = useContext(AuthContext)
+  const { filterdata, setfilterdata } = useContext(AuthContext)
 
   const handleChangeFilter = (event) => {
 
@@ -29,14 +29,14 @@ const ProductLayout2 = () => {
     //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
     // }));
     console.log("-------------------- name,value 31 ----------------------")
-    console.log(name,value)
+    console.log(name, value)
 
     setfilterdata(prevState => ({
       ...prevState,
-      [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],	
+      [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
     }));
 
-    handlefetchProducts()
+    handlefetchProducts();
 
     // if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
     //   handlefetchFilterProducts()
@@ -115,7 +115,7 @@ const ProductLayout2 = () => {
                     Products
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -135,7 +135,7 @@ const ProductLayout2 = () => {
                       Oxford Casual Shirts
                     </span>
                   </div>
-                </li>
+                </li> */}
               </ol>
 
               <h2 className={` text-lg font-normal text-gray-800/80 mx-2`}>Showing {productcount} related results</h2>
@@ -180,7 +180,7 @@ const ProductLayout2 = () => {
 
             </div>
             <div className=" w-full rounded-lg  px-2 lg:col-span-10 lg:h-full">
-              <ProductList  setResults={()=>{console.log("faker v_172.PL2")}} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid}  filterActive={filterActive} setFilterActive={setFilterActive} />
+              <ProductList setResults={() => { console.log("faker v_172.PL2") }} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />
             </div>
           </div>
         </div>

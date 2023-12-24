@@ -28,45 +28,57 @@ const RelatedProducts = ({
                 return (
                     <>
 
-                        <div key={i} className="relative aspect-[16/9] w-auto rounded-md md:aspect-auto md:h-[400px] group overflow-hidden cursor-pointer">
-                            <img
-                                src={`${import.meta.env.VITE_SERVER_URL}${item.images.length > 0 && (item.images[0].img).slice(6)}`}
-                                alt='one'
-                                className="z-0 h-full w-full rounded-md object-cover transition-transform transform scale-100 group-hover:scale-110 ease-in delay-200"
-                            />
-                            <div className="absolute inset-0 rounded-md bg-gradient-to-t from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <div className="absolute bottom-4 left-4 text-left opacity-0 group-hover:opacity-100 transition-opacity p-3">
-                                <h1 className="text-lg font-semibold text-white">{item.name}</h1>
-                                <p className="mt-2 text-sm text-gray-300">
-                                    <span className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl ">
-                                        ₹ {item.mrp}
-                                    </span>
-                                    {item.discounted_price && <div className=''>
-                                        <span className="font-segoe pl-2 text-sm text-c-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
-                                            ₹ {item.discounted_price}
-                                        </span>
-                                        <span className=" md:text-base lg:text-lg xl:text-xl pl-2 font-medium text-[#00ffd5]">
-                                            {item.discount_percentage}%</span>
-                                    </div>}
-                                </p>
-                                <button className="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
-                                    Shop Now &rarr;
-                                </button>
+                        <div key={i} className="mt-1 rounded-xl">
+                            <div className="overflow-hidden relative">
+                                <div
+                                    className="flex transition-transform cursor-pointer ease-out duration-500 z-50 aspect-[3/4]"
+                                >
+
+                                    <img
+                                            key={i}
+                                            onClick={() => { navigate(`/products/${id}`) }}
+                                            className="object-cover w-full h-full cursor-pointer rounded-lg"
+                                            src={import.meta.env.VITE_SERVER_URL + (item.images[0].img).slice(6)}
+                                            alt="dress"
+                                        />
+                                    
+                                </div>
+                                </div>
+
+                                <div className={`p-2 `}>
+                                    <p className='truncate text-lg font-normal text-accent'>{item.name}</p>
+                                    <div className=' flex flex-wrap justify-between items-center'>
+                                        <div className='text-base text-accent flex items-center gap-2'>
+                                            <p>&#8377; {item.discounted_price ? item.discount_price : item.mrp}</p>
+                                            {item.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                                <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {item.mrp}</p>
+                                                <p className="text-base font-medium text-[#af0000]">{item.discount_percentage || 0}%</p>
+                                            </div>
+                                            }
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => { handleNavigate(item.id) }}
+                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </>
-                )
+                        </>
+                        )
             }
-            ) : <div className="text-center text-lg font-semibold">No related products found</div>}
-        </div>
+                        ) : <div className="text-center text-lg font-semibold">No related products found</div>}
+                    </div >
 
     )
 }
 
-RelatedProducts.propTypes = {
-    relatedProducts: PropTypes.arrayOf(PropTypes.object).isRequired,
-    fetchData: PropTypes.func.isRequired,
-    fetchDataAuth: PropTypes.func.isRequired
+            RelatedProducts.propTypes = {
+                relatedProducts: PropTypes.arrayOf(PropTypes.object).isRequired,
+            fetchData: PropTypes.func.isRequired,
+            fetchDataAuth: PropTypes.func.isRequired
 }
 
-export default RelatedProducts
+            export default RelatedProducts

@@ -20,7 +20,9 @@ const AuthProvider = ({ children }) => {
 
 
     //products 
+    const [products, setProducts] = useState([]); // [products, setProducts]
     const [productsbc, setproductsbc] = useState([]);
+    const [productloading, setproductloading] = useState(false)
     const [productcount, setproductcount] = useState(0)
 
     // set coupon code 
@@ -87,11 +89,35 @@ const AuthProvider = ({ children }) => {
         gender: [],
         size: [],
         color: [],
-        search: ""
+        search: "",
+        megamenu:""
     })
 
     // Function to filter data based on multiple criteria
+    const funcFilter = (products, filter) => {
+        return products.filter((product) => {
+            // Check gender filter
+            const isGenderMatch = filter.gender.length === 0 || filter.gender?.includes(product.gender?.toLowerCase());
 
+            // Check size filter
+            const isSizeMatch = filter.size.length === 0 || product.sqp.some((size) => filter.size.includes(size.size));
+
+            // Check color filter
+            const isColorMatch = filter.color.length === 0 || filter.color?.includes(product.color?.toLowerCase());
+
+            // Check search filter
+            const isSearchMatch = filter.search.length === 0 ||
+                product.name.toLowerCase().includes(filter.search.toLowerCase()) ||
+                product.fit?.toLowerCase().includes(filter.search.toLowerCase()) ||
+                product.gender?.toLowerCase().includes(filter.search.toLowerCase()) ||
+                product.color?.toLowerCase().includes(filter.search.toLowerCase());
+
+            
+
+            // Return true only if all criteria match
+            return isGenderMatch && isSizeMatch && isColorMatch && isSearchMatch;
+        });
+    };
 
 
     const fetchProducts = async () => {
@@ -108,7 +134,8 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-                console.log(data);
+                setProducts(data)
+                localStorage.setItem("products", data)
                 // setProducts(data);
                 if (sort.phtl === true) {
                     const sortedProducts = data.sort((a, b) => {
@@ -116,6 +143,9 @@ const AuthProvider = ({ children }) => {
                     }
                     );
                     setproductsbc(sortedProducts)
+                    setproductcount(sortedProducts.length)
+                    setproductloading(false)
+
                 }
                 else if (sort.plth === true) {
                     const sortedProducts = data.sort((a, b) => {
@@ -123,6 +153,10 @@ const AuthProvider = ({ children }) => {
                     }
                     );
                     setproductsbc(sortedProducts)
+                    setproductcount(sortedProducts.length)
+                    setproductloading(false)
+
+
                 }
                 else if (sort.dhtl === true) {
                     const sortedProducts = data.sort((a, b) => {
@@ -130,34 +164,27 @@ const AuthProvider = ({ children }) => {
                     }
                     );
                     setproductsbc(sortedProducts)
-                }
-                else if (filterdata.search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0) {
-                    const filteredProducts = productsbc.filter(product => {
-                        const { gender, color, sqp, name, fit, design_surface, fabric_detail } = product;
+                    setproductcount(sortedProducts.length)
+                    setproductloading(false)
 
-                        return (
-                            (filterdata.color.length === 0 || filterdata.color.includes(color)) &&
-                            (
-                                name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                                gender.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                                color.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                                fit.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                                design_surface.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                                fabric_detail.toLowerCase().includes(filterdata.search.toLowerCase())
-                            ) &&
-                            (
-                                sqp.length > 0 && sqp.some(({ size }) => filterdata.size.includes(size))
-                            )
-                        );
-                    });
-                    console.log(filteredProducts)
+
+                }
+                if (filterdata.search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length >0) {
+                    console.table(filterdata)
+                    const filteredProducts = funcFilter(products, filterdata)
 
                     setproductsbc(filteredProducts)
-                }
-                else {
+                    setproductcount(filteredProducts.length)
+                    setproductloading(false)
+
+
+                } else {
                     setproductsbc(data);
+                    setproductcount(data.length)
+                    setproductloading(false)
+
                 }
-                setproductcount(data.length)
+
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -166,6 +193,7 @@ const AuthProvider = ({ children }) => {
 
     const fetchProductsAuth = async () => {
         try {
+            setproductloading(true)
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
@@ -178,6 +206,7 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
+                setProducts(data)
                 localStorage.setItem("products", data)
                 // setProducts(data);
                 if (sort.phtl === true) {
@@ -186,6 +215,9 @@ const AuthProvider = ({ children }) => {
                     }
                     );
                     setproductsbc(sortedProducts)
+                    setproductcount(sortedProducts.length)
+                    setproductloading(false)
+
                 }
                 else if (sort.plth === true) {
                     const sortedProducts = data.sort((a, b) => {
@@ -193,6 +225,10 @@ const AuthProvider = ({ children }) => {
                     }
                     );
                     setproductsbc(sortedProducts)
+                    setproductcount(sortedProducts.length)
+                    setproductloading(false)
+
+
                 }
                 else if (sort.dhtl === true) {
                     const sortedProducts = data.sort((a, b) => {
@@ -200,41 +236,28 @@ const AuthProvider = ({ children }) => {
                     }
                     );
                     setproductsbc(sortedProducts)
+                    setproductcount(sortedProducts.length)
+                    setproductloading(false)
+
+
                 }
-                else if (filterdata.search  || filterdata.color.length > 0 || filterdata.size.length > 0) {
+                if (filterdata.search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length >0) {
                     console.table(filterdata)
-                    const filteredProducts = productsbc.filter(product => {
-                        const { gender, color, sqp, name, fit, design_surface, fabric_detail } = product;
-                        console.log("----- fig 208 ----------")
-                        console.log()
-                        console.log((color.toLowerCase()).includes(filterdata.search.toLowerCase()))
-                        return (
-                            // (
-                            //     filterdata.color.length === 0 || filterdata.color.toLowerCase().includes(color.toLowerCase())
-                            // ) ||
-                            // (
-                            //     name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                            //     gender.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                            (color.toLowerCase()).includes(filterdata.search.toLowerCase())
-                            // ||
-                            //     fit.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                            //     design_surface.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                            //     fabric_detail.toLowerCase().includes(filterdata.search.toLowerCase())
-                            // ) ||
-                            // (
-                            //     sqp.length > 0 && sqp.some(({ size }) => filterdata.size.includes(size))
-                            // )
-                        );
-                    });
-                    console.log(filteredProducts)
+                    const filteredProducts = funcFilter(products, filterdata)
+                    
 
                     setproductsbc(filteredProducts)
+                    setproductcount(filteredProducts.length)
+                    setproductloading(false)
+
+
                 } else {
                     setproductsbc(data);
+                    setproductcount(data.length)
+                    setproductloading(false)
+
                 }
 
-
-                setproductcount(data.length)
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -257,6 +280,10 @@ const AuthProvider = ({ children }) => {
         } else {
             fetchProducts()
         }
+    }
+
+    const handleMegaMenu =()=>{
+
     }
 
     useEffect(() => {
@@ -300,9 +327,11 @@ const AuthProvider = ({ children }) => {
                 handlefetchProducts,
 
                 productsbc,
+                productloading,
                 productcount,
                 setproductsbc,
                 setproductcount,
+                setproductloading,
 
                 couponcode,
                 setcouponcode,

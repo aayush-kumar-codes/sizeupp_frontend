@@ -1,4 +1,4 @@
-import { useState,useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
@@ -17,48 +17,48 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { fetchProducts, fetchProductsAuth, handlefetchFilterProducts, productsbc, setproductcount,productcount, product } = useContext(AuthContext)
+    const { fetchProducts, fetchProductsAuth, handlefetchFilterProducts, productsbc, setproductcount, productcount, productloading } = useContext(AuthContext)
 
-   
+
 
     const [itemsInfinite, setItemsInfinite] = useState([])
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(productcount)
-   
+
     useEffect(() => {
-      fetchData(page)
+        fetchData(page)
     }, [page])
-   
+
     const fetchData = (page) => {
         const newItemsInfinite = []
-     
+
         for (let i = 0; i < 20; i++) {
             newItemsInfinite.push(i)
         }
-     
-        if (page === 20) {
-          setHasMore(false)
-        }
-     
-        setItemsInfinite([...itemsInfinite, ...newItemsInfinite])
-      }
 
-      const onScroll = () => {
+        if (page === 20) {
+            setHasMore(false)
+        }
+
+        setItemsInfinite([...itemsInfinite, ...newItemsInfinite])
+    }
+
+    const onScroll = () => {
         const scrollTop = document.documentElement.scrollTop
         const scrollHeight = document.documentElement.scrollHeight
         const clientHeight = document.documentElement.clientHeight
-     
+
         if (scrollTop + clientHeight >= scrollHeight) {
-          setPage(page + 1)
+            setPage(page + 1)
         }
-      }
-     
-      useEffect(() => {
+    }
+
+    useEffect(() => {
         window.addEventListener('scroll', onScroll)
         return () => window.removeEventListener('scroll', onScroll)
-      }, [itemsInfinite])
-     
-    
+    }, [itemsInfinite])
+
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -221,7 +221,7 @@ const ProductList = ({
     }
 
 
-    
+
     return (
         <div className={``}>
             {/* Nav menu- Breadcrumb */}
@@ -241,22 +241,22 @@ const ProductList = ({
                 </div> */}
             <div className='hidden xl:block'>
                 {grid ? <CustomGrid gridSize={grid}>
-                    {productsbc.length > 0 ? productsbc.map((items, i) => {
+                    {!productloading ? (productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
                         items.images.map((img) => {
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
 
-                        if(items.images.length == 0){
-                           
+                        if (items.images.length == 0) {
+
                             return null
 
                         }
 
 
                         return (
-                           
+
 
                             <div key={i} className="mt-1 rounded-xl">
                                 <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
@@ -282,7 +282,7 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    }) : <>
+                    }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
                         {
                             Array(10).fill().map((_, i) => (
                                 <ProductSkullCard key={i} />
@@ -298,7 +298,7 @@ const ProductList = ({
             {/* Medium Desktop */}
             <div className='hidden xl:hidden md:block'>
                 {mgrid ? <CustomGrid gridSize={mgrid}>
-                    {productsbc.length > 0 ? productsbc.map((items, i) => {
+                    {!productloading ?( productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -331,7 +331,7 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    }) : <>
+                    }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div> ): <>
                         {
                             Array(10).fill().map((_, i) => (
                                 <ProductSkullCard key={i} />

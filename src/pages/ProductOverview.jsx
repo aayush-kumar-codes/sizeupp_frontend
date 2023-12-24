@@ -10,6 +10,7 @@ import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import { LinkIcon } from "@heroicons/react/20/solid";
 import RelatedProducts from "../components/ProductOverview/RelatedProducts";
 import ReviewProduct from "../components/ProductOverview/ReviewProduct";
+import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOverviewCar";
 
 export const Modal = ({ children, onClose }) => {
   const handleOverlayClick = (e) => {
@@ -401,6 +402,7 @@ const PincodeForm = () => {
 // ------------------------ Main Component ------------------------
 const ProductOverview = () => {
   const [count, setCount] = useState(1);
+  const [overviewloading, setoverviewloading] = useState(true)
 
   const { id } = useParams()
 
@@ -458,79 +460,106 @@ const ProductOverview = () => {
 
   const [sqpActive, setSQPActive] = useState('')
 
-  const fetchDataAuth = (id) => {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `token ${localStorage.getItem('token')}`
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+  const fetchDataAuth = async(id) => {
+    try {
+      setoverviewloading(true)
+      await fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `token ${localStorage.getItem('token')}`
         }
-        return res.json();
       })
-      .then(data => {
-        setdemo(data);
-        setRelatedProducts(data.related_products_category)
-        let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
-        data.product?.images.forEach(img => {
-          imgs.push(`${import.meta.env.VITE_SERVER_URL}/${img.img}`);
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          setdemo(data);
+          setRelatedProducts(data.related_products_category)
+          let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
+          data.product?.images.forEach(img => {
+            imgs.push(`${import.meta.env.VITE_SERVER_URL}/${img.img}`);
+          });
+          setImages(imgs);
+
+          setSQPActive(data.sqp_active?.id)
+          console.log(data);
+          setoverviewloading(false)
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href>Why do I have this issue?</a>'
+          });
+
+
         });
-        setImages(imgs);
-
-        setSQPActive(data.sqp_active?.id)
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          footer: '<a href>Why do I have this issue?</a>'
-        });
-
-
+    } catch (error) {
+      console.log(error)
+      setoverviewloading(false)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href>Why do I have this issue?</a>'
       });
+    }
   }
 
-  const fetchData = (id) => {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+  const fetchData = async(id) => {
+    try {
+      setoverviewloading(true)
+      await fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
         }
-        return res.json();
       })
-      .then(data => {
-        setdemo(data);
-        setRelatedProducts(data.related_products_category)
-        let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
-        data.product_images.forEach(img => {
-          console.log((img.img + "").slice(6));
-          imgs.push(`${import.meta.env.VITE_SERVER_URL} ${(img.img + "").slice(6)}`);
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          setdemo(data);
+          setRelatedProducts(data.related_products_category)
+          let imgs = [`${import.meta.env.VITE_SERVER_URL}/${data.product?.img}`];
+          data.product_images.forEach(img => {
+            console.log((img.img + "").slice(6));
+            imgs.push(`${import.meta.env.VITE_SERVER_URL} ${(img.img + "").slice(6)}`);
+          });
+          setImages(imgs);
+          setSQPActive(data.sqp_active?.id)
+          console.log(data);
+          setoverviewloading(false)
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href>Why do I have this issue?</a>'
+          });
         });
-        setImages(imgs);
-        setSQPActive(data.sqp_active?.id)
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          footer: '<a href>Why do I have this issue?</a>'
-        });
+    }
+    catch (error) {
+      console.log(error)
+      setoverviewloading(false)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href>Why do I have this issue?</a>'
       });
+    }
   }
 
   useEffect(() => {
@@ -754,7 +783,7 @@ const ProductOverview = () => {
               </svg>
 
               <a href="#" className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
-                Men
+                {demo.product?.category.name}
               </a>
             </div>
           </li>
@@ -774,7 +803,7 @@ const ProductOverview = () => {
       <div className="block grid-cols-9 items-start gap-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
         {/* Image Overview */}
         <div className="col-span-5 grid grid-cols-1 gap-2">
-          <ProductImageView arrayImages={demo.product?.images} />
+          {overviewloading ? <ProductOverviewCar /> : <ProductImageView arrayImages={demo.product?.images} />}
         </div>
 
         {/* Information Overview */}
