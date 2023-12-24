@@ -28,22 +28,19 @@ const ProductLayout2 = () => {
     //   ...prevState,
     //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
     // }));
+    setfilterdata({
+      ...filterdata,
+      [name]: filterdata[name].includes(value) ? filterdata[name].filter(v => v !== value) : [...filterdata[name], value],
+    });
     console.log("-------------------- name,value 31 ----------------------")
     console.log(name, value)
-
-    setfilterdata(prevState => ({
-      ...prevState,
-      [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
-    }));
-
-    handlefetchProducts();
 
     // if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
     //   handlefetchFilterProducts()
     // } else {
     //   handlefetchProducts()
     // }
-    console.log(filterdata)
+    console.log(filterdata);
   };
 
   const filters = [
@@ -59,11 +56,11 @@ const ProductLayout2 = () => {
       id: 'category',
       name: 'Category',
       options: [
-        { value: 'new-arrivals', label: 'All New Arrivals' },
-        { value: 'tees', label: 'Tees' },
-        { value: 'crewnecks', label: 'Crewnecks' },
-        { value: 'sweatshirts', label: 'Sweatshirts' },
-        { value: 'pants-shorts', label: 'Pants & Shorts' },
+        { value: 'Men Topwear', label: 'Men Topwear' },
+        { value: 'Men Bottomwear', label: 'Men Bottomwear' },
+        { value: 'Women Topwear', label: 'Women Topwear' },
+        { value: 'Women Bottomwear', label: 'Women Bottomwear' },
+        { value: 'Accessories', label: 'Accessories' },
       ],
     },
     {
@@ -82,12 +79,273 @@ const ProductLayout2 = () => {
       id: 'color',
       name: 'Color',
       options: [
-        { value: 'white', label: 'White' },
-        { value: 'beige', label: 'Beige' },
-        { value: 'blue', label: 'Blue' },
-        { value: 'brown', label: 'Brown' },
-        { value: 'green', label: 'Green' },
-        { value: 'purple', label: 'Purple' },
+        {
+          "label": "Sage Green",value: "Sage Green"
+        },
+        {
+          "label": "Wine" ,value: "Wine"
+        },
+        {
+          "label": "Maroon" ,value: "Maroon"
+        },
+        {
+          "label": "White" ,value: "White"
+        },
+        {
+          "label": "Sky Blue"  ,value: "Sky Blue"
+        },
+        {
+          "label": "Pistachio Green" ,value: "Pistachio Green"
+        },
+        {
+          "label": "Natural" ,value: "Natural"
+        },
+        {
+          "label": "Pink" ,value: "Pink"
+        },
+        {
+          "label": "Navy" ,value: "Navy"
+        },
+        {
+          "label": "Black" ,value: "Black"
+        },
+        {
+          "label": "Brown" ,value: "Brown"
+        },
+        {
+          "label": "Blue" ,value: "Blue"
+        },
+        {
+          "label": "Beige" ,value: "Beige"
+        },
+        {
+          "label": "Peach"  ,value: "Peach"
+        },
+        {
+          "label": "Teal" ,value: "Teal"
+        },
+        {
+          "label": "Multi Color"  ,value: "Multi Color"
+        },
+        {
+          "label": "Dark Blue"  ,value: "Dark Blue"
+        },
+        {
+          "label": "Dark Navy"  ,value: "Dark Navy"
+        },
+        {
+          "label": "Grey" ,value: "Grey"
+        },
+        {
+          "label": "Light Blue" ,value: "Light Blue"
+        },
+        {
+          "label": "Indigo" ,value: "Indigo"
+        },
+        {
+          "label": "Red"  ,value: "Red"
+        },
+        {
+          "label": "Yellow" ,value: "Yellow"
+        },
+        {
+          "label": "Ecru" ,value: "Ecru"
+        },
+        {
+          "label": "Dark Green" ,value: "Dark Green"
+        },
+        {
+          "label": "Light Yellow" ,value: "Light Yellow"
+        },
+        {
+          "label": "Purple" ,value: "Purple"
+        },
+        {
+          "label": "Green"  ,value: "Green"
+        },
+        {
+          "label": "Off White"  ,value: "Off White"
+        },
+        {
+          "label": "Light Green"  ,value: "Light Green"
+        },
+        {
+          "label": "Dark Teal"  ,value: "Dark Teal"
+        },
+        {
+          "label": "Cream"  ,value: "Cream"
+        },
+        {
+          "label": "Rust" ,value: "Rust"
+        },
+        {
+          "label": "Olive"  ,value: "Olive"
+        },
+        {
+          "label": "Orange" ,value: "Orange"
+        },
+        {
+          "label": "Bluish Grey"  ,value: "Bluish Grey"
+        },
+        {
+          "label": "Khaki"  ,value: "Khaki"
+        },
+        {
+          "label": "Dark Pink"  ,value: "Dark Pink"
+        },
+        {
+          "label": "Light Pink" ,value: "Light Pink"
+        },
+        {
+          "label": "Grey Melange" ,value: "Grey Melange"
+        },
+        {
+          "label": "Ecru Melange" ,value: "Ecru Melange"
+        },
+        {
+          "label": "Charcoal Melange" ,value: "Charcoal Melange"
+        },
+        {
+          "label": "Lilac"  ,value: "Lilac"
+        },
+        {
+          "label": "Coral"  ,value: "Coral"
+        },
+        {
+          "label": "Melon"  ,value: "Melon"
+        },
+        {
+          "label": "Anthra" ,value: "Anthra"
+        },
+        {
+          "label": "Coral & Navy" ,value: "Coral & Navy"
+        },
+        {
+          "label": "Light Green & White"  ,value: "Light Green & White"
+        },
+        {
+          "label": "Navy & White" ,value: "Navy & White"
+        },
+        {
+          "label": "Red White & Navy" ,value: "Red White & Navy"
+        },
+        {
+          "label": "Rust Navy & White"  ,value: "Rust Navy & White"
+        },
+        {
+          "label": "Aqua" ,value: "Aqua"
+        },
+        {
+          "label": "Lime" ,value: "Lime"
+        },
+        {
+          "label": "Anthra Melange" ,value: "Anthra Melange"
+        },
+        {
+          "label": "Pastel Lavender"  ,value: "Pastel Lavender"
+        },
+        {
+          "label": "Cherry Pink"  ,value: "Cherry Pink"
+        },
+        {
+          "label": "Rose Pink"  ,value: "Rose Pink"
+        },
+        {
+          "label": "Mustard"  ,value: "Mustard"
+        },
+        {
+          "label": "White & Green"  ,value: "White & Green"
+        },
+        {
+          "label": "White & Pink" ,value: "White & Pink"
+        },
+        {
+          "label": "White & Black"  ,value: "White & Black"
+        },
+        {
+          "label": "Dusty Rose" ,value: "Dusty Rose"
+        },
+        {
+          "label": "Blue Green" ,value: "Blue Green"
+        },
+        {
+          "label": "Deep Pink"  ,value: "Deep Pink"
+        },
+        {
+          "label": "Sea Green"  ,value: "Sea Green"
+        },
+        {
+          "label": "Bright Pink"  ,value: "Bright Pink"
+        },
+        {
+          "label": "Mustard Yellow" ,value: "Mustard Yellow"
+        },
+        {
+          "label": "Lime Green" ,value: "Lime Green"
+        },
+        {
+          "label": "Navy Blue"  ,value: "Navy Blue"
+        },
+        {
+          "label": "Dark Grey"  ,value: "Dark Grey"
+        },
+        {
+          "label": "Pista"  ,value: "Pista"
+        },
+        {
+          "label": "Lavender" ,value: "Lavender"
+        },
+        {
+          "label": "Teal Green" ,value: "Teal Green"
+        },
+        {
+          "label": "Teal Blue"  ,value: "Teal Blue"
+        },
+        {
+          "label": "White & Blue" ,value: "White & Blue"
+        },
+        {
+          "label": "Brick Red"  ,value: "Brick Red"
+        },
+        {
+          "label": "Olive Green"  ,value: "Olive Green"
+        },
+        {
+          "label": "Dusty Pink" ,value: "Dusty Pink"
+        },
+        {
+          "label": "Ice"  ,value: "Ice"
+        },
+        {
+          "label": "Walnut Brown"   ,value: "Walnut Brown"
+        },
+        {
+          "label": "Slate"  ,value: "Slate"
+        },
+        {
+          "label": "Carbon Blue"  ,value: "Carbon Blue" 
+        },
+        {
+          "label": "Light Indigo" ,value: "Light Indigo"
+        },
+        {
+          "label": "Light Grey" ,value: "Light Grey"
+        },
+        {
+          "label": "Royal Blue" ,value: "Royal Blue"
+        },
+        {
+          "label": "Midnight Blue"  ,value: "Midnight Blue"
+        },
+        {
+          "label": "Jet Black"  ,value: "Jet Black"
+        },
+        {
+          "label": "Military Green" ,value: "Military Green"
+        },
+        {
+          "label": "Indigo Melange" ,value: "Indigo Melange"
+        }
       ],
     },
 
@@ -167,7 +425,7 @@ const ProductLayout2 = () => {
                             value={option.value}
                             onChange={handleChangeFilter}
                           />
-                          <label htmlFor={`category-${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
+                          <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
                             {option.label}
                           </label>
                         </div>

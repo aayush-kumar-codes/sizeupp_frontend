@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CustomGrid } from '../components/ProductList/ProductGrid'
 import Carousel from '../components/Custom/Carousel'
@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { fetchProducts, fetchProductsAuth, handlefetchFilterProducts, productsbc, setproductcount, productcount, productloading } = useContext(AuthContext)
+    const {  fetchProductsAuth, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
 
 
 
@@ -61,16 +61,8 @@ const ProductList = ({
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (localStorage.token) {
-            handlefetchFilterProducts();
-
-            fetchProductsAuth();
-
-        } else {
-
-            fetchProducts();
-        }
+    useLayoutEffect(() => {
+        handlefetchProducts()
     }, []);
 
 

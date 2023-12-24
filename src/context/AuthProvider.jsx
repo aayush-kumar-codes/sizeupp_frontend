@@ -89,34 +89,60 @@ const AuthProvider = ({ children }) => {
         gender: [],
         size: [],
         color: [],
-        search: "",
-        megamenu:""
+        category: [],
+        search: ""
     })
 
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
+        // return products.filter((product) => {
+        //     // Check gender filter
+        //     const isGenderMatch = filter.gender.length === 0 || filter.gender?.includes(product.gender?.toLowerCase());
+
+        //     // Check size filter
+        //     const isSizeMatch = filter.size.length === 0 || product.sqp.some((size) => filter.size.includes(size.size));
+
+        //     // Check color filter
+        //     const isColorMatch = filter.color.length === 0 || filter.color?.includes(product.color?.toLowerCase());
+
+        //     // Check search filter
+        //     const isSearchMatch = filter.search.length === 0 ||
+        //         product.name.toLowerCase().includes(filter.search.toLowerCase()) ||
+        //         product.fit?.toLowerCase().includes(filter.search.toLowerCase()) ||
+        //         product.gender?.toLowerCase().includes(filter.search.toLowerCase()) ||
+        //         product.color?.toLowerCase().includes(filter.search.toLowerCase());
+
+
+
+        //     // Return true only if all criteria match
+        //     return isGenderMatch && isSizeMatch && isColorMatch && isSearchMatch;
+        // });
+
+
         return products.filter((product) => {
-            // Check gender filter
-            const isGenderMatch = filter.gender.length === 0 || filter.gender?.includes(product.gender?.toLowerCase());
+            return (
+                search.length === 0 ||
+                product.name.toLowerCase().includes(search.toLowerCase()) ||
+                product.gender?.toLowerCase().includes(search.toLowerCase()) ||
+                product.color?.toLowerCase().includes(search.toLowerCase()) ||
+                product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
+                product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
+            ) &&
+                (
+                    filter.gender?.length === 0 || filter.gender.includes(product.gender)
+                ) &&
+                (
+                    filter.size?.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))
+                ) &&
+                (
+                    filter.color?.length === 0 || filter.color.includes(product.color)
+                ) &&
+                (
+                    filter.category?.length === 0 || filter.category.includes(product.category.name)
+                )
 
-            // Check size filter
-            const isSizeMatch = filter.size.length === 0 || product.sqp.some((size) => filter.size.includes(size.size));
 
-            // Check color filter
-            const isColorMatch = filter.color.length === 0 || filter.color?.includes(product.color?.toLowerCase());
-
-            // Check search filter
-            const isSearchMatch = filter.search.length === 0 ||
-                product.name.toLowerCase().includes(filter.search.toLowerCase()) ||
-                product.fit?.toLowerCase().includes(filter.search.toLowerCase()) ||
-                product.gender?.toLowerCase().includes(filter.search.toLowerCase()) ||
-                product.color?.toLowerCase().includes(filter.search.toLowerCase());
-
-            
-
-            // Return true only if all criteria match
-            return isGenderMatch && isSizeMatch && isColorMatch && isSearchMatch;
-        });
+        })
     };
 
 
@@ -134,8 +160,8 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-                setProducts(data)
-                localStorage.setItem("products", data)
+                setProducts(data);
+                localStorage.setItem("products", data);
                 // setProducts(data);
                 if (sort.phtl === true) {
                     const sortedProducts = data.sort((a, b) => {
@@ -169,9 +195,9 @@ const AuthProvider = ({ children }) => {
 
 
                 }
-                if (filterdata.search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length >0) {
+                if (search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
                     console.table(filterdata)
-                    const filteredProducts = funcFilter(products, filterdata)
+                    const filteredProducts = funcFilter(data, filterdata)
 
                     setproductsbc(filteredProducts)
                     setproductcount(filteredProducts.length)
@@ -193,6 +219,7 @@ const AuthProvider = ({ children }) => {
 
     const fetchProductsAuth = async () => {
         try {
+            console.log("fetching products - auth")
             setproductloading(true)
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
@@ -206,17 +233,17 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-                setProducts(data)
-                localStorage.setItem("products", data)
+                setProducts(data);
+                localStorage.setItem("products", data);
                 // setProducts(data);
                 if (sort.phtl === true) {
                     const sortedProducts = data.sort((a, b) => {
                         return b.mrp - a.mrp;
                     }
                     );
-                    setproductsbc(sortedProducts)
-                    setproductcount(sortedProducts.length)
-                    setproductloading(false)
+                    setproductsbc(sortedProducts);
+                    setproductcount(sortedProducts.length);
+                    setproductloading(false);
 
                 }
                 else if (sort.plth === true) {
@@ -224,9 +251,9 @@ const AuthProvider = ({ children }) => {
                         return a.mrp - b.mrp;
                     }
                     );
-                    setproductsbc(sortedProducts)
-                    setproductcount(sortedProducts.length)
-                    setproductloading(false)
+                    setproductsbc(sortedProducts);
+                    setproductcount(sortedProducts.length);
+                    setproductloading(false);
 
 
                 }
@@ -235,26 +262,26 @@ const AuthProvider = ({ children }) => {
                         return b.discounted_price - a.discounted_price;
                     }
                     );
-                    setproductsbc(sortedProducts)
-                    setproductcount(sortedProducts.length)
-                    setproductloading(false)
+                    setproductsbc(sortedProducts);
+                    setproductcount(sortedProducts.length);
+                    setproductloading(false);
 
 
                 }
-                if (filterdata.search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length >0) {
-                    console.table(filterdata)
-                    const filteredProducts = funcFilter(products, filterdata)
-                    
+                if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || search !== "" || filterdata.category.length > 0) {
+                    console.table(filterdata);
+                    const filteredProducts = funcFilter(data, filterdata);
 
-                    setproductsbc(filteredProducts)
-                    setproductcount(filteredProducts.length)
-                    setproductloading(false)
+
+                    setproductsbc(filteredProducts);
+                    setproductcount(filteredProducts.length);
+                    setproductloading(false);
 
 
                 } else {
                     setproductsbc(data);
-                    setproductcount(data.length)
-                    setproductloading(false)
+                    setproductcount(data.length);
+                    setproductloading(false);
 
                 }
 
@@ -275,6 +302,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const handlefetchProducts = async () => {
+        console.log("handle fetch products", localStorage.token)
         if (localStorage.token) {
             fetchProductsAuth()
         } else {
@@ -282,9 +310,9 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    const handleMegaMenu =()=>{
-
-    }
+    useEffect(() => {
+        handlefetchProducts()
+    }, [ filterdata])
 
     useEffect(() => {
         // effect
