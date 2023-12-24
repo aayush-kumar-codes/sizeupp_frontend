@@ -132,7 +132,7 @@ const Megamenu = () => {
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                        <div className="col-span-1">
+                        {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
@@ -142,7 +142,7 @@ const Megamenu = () => {
                             <Link to="/terms-condition">
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
-                        </div>
+                        </div> */}
                         {data.men_category?.length > 0 && data.men_category.map((cat) => {
                             return (
                                 <div key={cat.id} className="col-span-1 ">
