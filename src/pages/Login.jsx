@@ -35,7 +35,7 @@ export function Login() {
 
     const handleSubmit = async () => {
         setloading(true);
-
+        localStorage.clear()
         if (formData.email === "" || formData.password === "") {
             Swal.fire({
                 icon: 'error',
