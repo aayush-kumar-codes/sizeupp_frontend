@@ -1,4 +1,4 @@
-import { banner1, banner2, banner3 } from "../assets/banners";
+import { banner1, banner2, banner3,banner4,banner5 } from "../assets/banners";
 
 
 export const BannerData = [
@@ -13,5 +13,7 @@ export const BannerData = [
     {
         id : 3,
         img : banner3
-    }
+    },
+    
+    
 ]

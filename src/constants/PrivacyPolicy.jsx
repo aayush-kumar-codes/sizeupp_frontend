@@ -32,8 +32,21 @@ const PrivacyPolicy = () => {
       </p>
 
       {/* ... (Continue with the rest of the content) ... */}
-
+      <h2 className="text-2xl font-bold mt-6">Service-related announcements</h2>
+      <p>
+      We will send you strictly service-related announcements on rare occasions when it is necessary to do so for instance, if our service is temporarily suspended for maintenance, we might send you an email. Generally, you may not opt-out of these communications, which are not promotional in nature. If you do not wish to receive them, you have the option to deactivate your account.
+      </p>
       {/* Include other sections as needed */}
+
+      <h2 className="text-2xl font-bold mt-6">Facebook connect</h2>
+      <p>
+      You can log in to our site using sign-in services such as facebook connect or an open id provider. These services will authenticate your identity and provide you the option to share certain personal information with us such as your name and email address to pre-populate our sign up form. Services like facebook connect give you the option to post information about your activities on this web site to your profile page to share with others within your network.
+      </p>
+
+      <h2 className="text-2xl font-bold mt-6">Tell-a-friend</h2>
+      <p>
+      If you choose to use our referral service to tell a friend about our site or to share your wish list, we will ask you for your friend's name and/or email address. We will automatically send your friend a one-time email inviting him or her to visit the site or view your wish list. Sizeupp stores this information for the sole purpose of sending this one-time email and tracking the success of our referral program. Your friend may contact us at <a href="mailto:">customercare@sizeupp.in</a>  to request that we remove this information from our database.
+      </p>
     </div>
   );
 };
