@@ -26,6 +26,12 @@ const Megamenu = () => {
     const { setSearch, setfilterdata } = useContext(AuthContext)
 
     const handleSearch = (id) => {
+        setfilterdata({
+            gender: [],
+            color: [],
+            size: [],
+            search : ""
+        })
         setSearch(id)
         navigate('/products')
     }

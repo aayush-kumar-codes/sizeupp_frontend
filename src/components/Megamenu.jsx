@@ -10,7 +10,7 @@ const Megamenu = () => {
 
     const [data, setData] = useState([])
 
-    const { category, setSearch, setcategory, handlefetchProducts, setfilterdata } = useContext(AuthContext)
+    const { category, setSearch, setfilterdata, handlefetchProducts, setfilterdata } = useContext(AuthContext)
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
@@ -27,8 +27,15 @@ const Megamenu = () => {
     }, [])
 
     const handleSearch = (id) => {
+        setfilterdata({
+            gender: [],
+            color: [],
+            size: [],
+            search : ""
+        })
         setSearch(id)
         handlefetchProducts()
+
     }
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-white shadow z-40 `}>
