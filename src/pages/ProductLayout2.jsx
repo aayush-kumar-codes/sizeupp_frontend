@@ -9,15 +9,9 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, setIsFilterActive, handlefetchFilterProducts, handlefetchProducts, productcount } = useContext(AuthContext)
+  const { isFilterActive, setIsFilterActive, handlefetchFilterProducts, handlefetchProducts, productcount,search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
 
-  const [filterData, setFilterData] = useState({
-    gender: [],
-    category: [],
-    sizes: [],
-    color: []
-  })
 
   const { filterdata, setfilterdata } = useContext(AuthContext)
 
@@ -373,18 +367,18 @@ const ProductLayout2 = () => {
                     Products
                   </Link>
                 </li>
-                {/* <li>
+                {search && <li>
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
 
                     <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                      Men
+                        {search}
                     </a>
                   </div>
-                </li>
-                <li aria-current="page">
+                </li>}
+                {/* <li aria-current="page">
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

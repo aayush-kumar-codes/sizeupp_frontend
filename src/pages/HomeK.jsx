@@ -1,9 +1,6 @@
 import React from 'react'
 import Carousel from '../components/HomeK/Carousel'
-import Products from '../components/HomeK/Products'
-import DiscountAd from '../components/HomeK/DiscountAd'
 import ShopCategoryWise from '../components/HomeK/ShopCategoryWise'
-import Newsletter from '../components/HomeK/Newsletter'
 
 import ShopNow from '../components/HomeK/ShopNow'
 
@@ -14,22 +11,26 @@ import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@he
 import { Link, useNavigate } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from '../components/Custom/AccordionItem'
-import { UserIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { UserIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline"
-import { dress } from "../assets/images"
-
-import { GEGreen2, GEGreen5, Maroon1 } from "../assets/images/men"
-import { WWhite1 } from "../assets/images/women"
 import Footer from '../components/Footer/Footer'
 
 
 const Megamenu = () => {
 
     const [data, setData] = useState([])
+    const { setSearch, setfilterdata } = useContext(AuthContext)
+
+    const handleSearch = (id) => {
+        setSearch(id)
+        navigate('/products')
+    }
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
@@ -38,9 +39,8 @@ const Megamenu = () => {
                 'Content-type': 'application/json'
             },
         }).then(res => res.json().then(data => {
-            // console.log(JSON.stringify(data))
-            // console.log(data.category_details[0].name)
-            setData(data.detail_category)
+            console.log(JSON.stringify(data))
+            setData(data)
             localStorage.setItem("cat_list", JSON.stringify(data))
         }
         ))
@@ -52,14 +52,22 @@ const Megamenu = () => {
                 {/* All Products */}
                 <div className="group">
 
-                    <Link to="/products" className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                    <Link to="/products" onClick={() => {
+                        setSearch("")
+                        setfilterdata({
+                            search: "",
+                            size: [],
+                            color: [],
+                            gender: []
+                        })
+                    }} className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         All Products
                     </Link>
                 </div>
 
 
                 {/* Woman */}
-                <div className="group">
+                {/* <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Women
@@ -116,9 +124,9 @@ const Megamenu = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-{/* 
+                {/* 
                 {data.length > 0 && data.map((item, index) => (
                     <div key={index} className="group">
                         <div >
@@ -141,15 +149,15 @@ const Megamenu = () => {
                 ))} */}
 
                 {/* Man */}
-                <div className="group">
+                {data && <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Men
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                        <div className="col-span-1">
-                            <p className="text-base text-black font-semibold">Men&apos;s Fashion Era</p>
+                        {/* <div className="col-span-1">
+                            <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
                             <Link to="/products">
@@ -158,47 +166,38 @@ const Megamenu = () => {
                             <Link to="/terms-condition">
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
-                        </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-base text-black font-semibold mb-2">Casual Topwear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Casual-Shirts', 'Core-Tee', 'Formal-Shirts', 'Kurta', 'Polo-Tshirts', 'T-Shirts'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-base text-black font-semibold mb-2">Casual Bottomwear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Chino', 'Denim', 'Joggers', 'Pyjama', 'Track-Pants'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
-                        <div className="col-span-1 ">
+                        </div> */}
+                        {data.men_category?.length > 0 && data.men_category.map((cat) => {
+                            return (
+                                <div key={cat.id} className="col-span-1 ">
+                                    <h2 className="text-base text-gray-800 font-semibold mb-2">{cat.name}</h2>
+                                    <ul className="grid grid-flow-row gap-4">
+                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                            return (
+                                                <li onClick={() => handleSearch(items.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    {items.name}
+                                                </li>
+                                            )
+                                        })
+                                        }
+                                    </ul>
+                                </div>)
+                        })
+                        }
+                        {/* <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
                                 {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
                                     return (
-                                        <li key={i} className="text-base text-black font-semibold hover:underline cursor-pointer">
+                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
                                             {items}
                                         </li>
                                     )
                                 })
                                 }
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
-                </div>
+                </div>}
 
                 {/* Festive Offers */}
                 {/* <div className="group">
@@ -215,7 +214,7 @@ const Megamenu = () => {
                 </div> */}
 
                 {/* Sales */}
-                <div className="group">
+                {/* <div className="group">
 
                     <p className='text-md  font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Sales
@@ -241,7 +240,7 @@ const Megamenu = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
@@ -270,7 +269,7 @@ function Navbar() {
             category: [
                 {
                     name: 'Profile',
-                    href:'/profile',
+                    href: '/profile',
                 },
                 {
                     name: 'My Orders',
@@ -448,7 +447,7 @@ function Navbar() {
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     const [isInputFocused, setIsInputFocused] = useState(false);
-    const {isFilterActive,setIsFilterActive,search,setSearch,isFuncCall,setIsFuncCall,handlefetchProducts,handlefetchFilterProducts} = useContext(AuthContext)
+    const { isFilterActive, setIsFilterActive, search, setSearch, isFuncCall, setIsFuncCall, handlefetchProducts, handlefetchFilterProducts } = useContext(AuthContext)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -545,16 +544,16 @@ function Navbar() {
                 <Link to="/" className='cursor-pointer'>
                     <img src={logo} alt="logo" className='md:w-36 w-24 object-contain' />
                 </Link>
-                
-                        <Megamenu/>
+
+                <Megamenu />
                 <div className="flex items-center  gap-4 w-1/5">
                     {/* Search bar */}
-                    
+
                     {/* Menu */}
 
                     <div className='hidden lg:block '>
                         <ul className="inline-flex space-x-10">
-                   
+
                             <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
                                 <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
                                     <HeartIcon className='w-6 h-6 stroke-2' />
@@ -570,7 +569,7 @@ function Navbar() {
                             <li >
                                 <div className=' cursor-pointer' ref={profileRef}>
                                     <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
-                                        <UserIcon className="h-6 w-6 stroke-2 "  />
+                                        <UserIcon className="h-6 w-6 stroke-2 " />
                                         <span className='text-xs font-medium'>Account</span>
 
                                     </button>
@@ -641,7 +640,7 @@ function Navbar() {
                                 <div className="flex items-center justify-between">
                                     <div className="inline-flex items-center space-x-2">
 
-                                    <Link to="/" className="">
+                                        <Link to="/" className="">
                                             <img src={logo} className="w-32" />
                                         </Link>
                                     </div>
@@ -715,33 +714,33 @@ function Navbar() {
 
                                     </nav>
                                 </div>
-                                
+
                                 {!localStorage.token && noAuthMenuItems.map((item) => (
-                                                <div key={item.name} className=''>
+                                    <div key={item.name} className=''>
                                         <Link to={item.href} className="">
-                                                    <button
-                                                        type="button"
-                                                        className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                                    >
-                                                        {item.name}
-                                                        </button>
-                                                    </Link>
-                                                </div>
-                                            ))}
-                                            {localStorage.token && menuItems.map((item) => (
-                                                <div onClick={() => {
-                                                    item.name == 'Logout' && item.func(item.name, item.href)
-                                                }} key={item.name} className=''>
-                                                    <Link to={item.name == 'Logout' ? '' : item.href} className="">
-                                                    <button
-                                                        type="button"
-                                                        className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                                    >
-                                                        {item.name}
-                                                        </button>
-                                                    </Link>
-                                                </div>
-                                            ))}
+                                            <button
+                                                type="button"
+                                                className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            >
+                                                {item.name}
+                                            </button>
+                                        </Link>
+                                    </div>
+                                ))}
+                                {localStorage.token && menuItems.map((item) => (
+                                    <div onClick={() => {
+                                        item.name == 'Logout' && item.func(item.name, item.href)
+                                    }} key={item.name} className=''>
+                                        <Link to={item.name == 'Logout' ? '' : item.href} className="">
+                                            <button
+                                                type="button"
+                                                className="mt-4 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            >
+                                                {item.name}
+                                            </button>
+                                        </Link>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -755,11 +754,11 @@ function Navbar() {
 const HomeK = () => {
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <Carousel />
-            <ShopCategoryWise/>
+            <ShopCategoryWise />
             <ShopNow />
-            <Footer/>
+            <Footer />
             {/* <Newsletter /> */}
         </>
     )

@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [isVerified, setIsVerified] = useState(localStorage.getItem("user_verified") ? localStorage.isverified : false);
     const [search, setSearch] = useState("");
+    const [category,setcategory] = useState("")
     const [isFuncCall, setIsFuncCall] = useState(false);
 
     // sort 
@@ -89,9 +90,10 @@ const AuthProvider = ({ children }) => {
         gender: [],
         size: [],
         color: [],
-        category: [],
         search: ""
     })
+
+    console.log(category)
 
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
@@ -138,7 +140,7 @@ const AuthProvider = ({ children }) => {
                     filter.color?.length === 0 || filter.color.includes(product.color)
                 ) &&
                 (
-                    filter.category?.length === 0 || filter.category.includes(product.category.name)
+                    category?.length === 0 || category.includes(product.category.name)
                 )
 
 
@@ -268,7 +270,7 @@ const AuthProvider = ({ children }) => {
 
 
                 }
-                if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || search !== "" || filterdata.category.length > 0) {
+                if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || search !== "" || category.length > 0) {
                     console.table(filterdata);
                     const filteredProducts = funcFilter(data, filterdata);
 
@@ -340,8 +342,14 @@ const AuthProvider = ({ children }) => {
                 setIsVerified,
                 isFilterActive,
                 setIsFilterActive,
+
+
                 search,
                 setSearch,
+                category,
+                setcategory,
+
+
                 isFuncCall,
                 setIsFuncCall,
 

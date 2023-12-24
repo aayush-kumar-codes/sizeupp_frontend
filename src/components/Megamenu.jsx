@@ -4,10 +4,13 @@ import { dress } from "../assets/images"
 import { Link } from "react-router-dom"
 import { GEGreen2, GEGreen5, Maroon1 } from "../assets/images/men"
 import { WWhite1 } from "../assets/images/women"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../context/AuthProvider"
 const Megamenu = () => {
 
     const [data, setData] = useState([])
+
+    const { category, setSearch, setcategory, handlefetchProducts, setfilterdata } = useContext(AuthContext)
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
@@ -22,6 +25,11 @@ const Megamenu = () => {
         }
         ))
     }, [])
+
+    const handleSearch = (id) => {
+        setSearch(id)
+        handlefetchProducts()
+    }
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-white shadow z-40 `}>
             {/* layout prefixer */}
@@ -29,14 +37,22 @@ const Megamenu = () => {
                 {/* All Products */}
                 <div className="group">
 
-                    <Link to="/products" className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                    <Link to="/products" onClick={() => {
+                        setSearch("")
+                        setfilterdata({
+                            search: "",
+                            size: [],
+                            color: [],
+                            gender: []
+                        })
+                    }} className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         All Products
                     </Link>
                 </div>
 
 
                 {/* Woman */}
-                <div className="group">
+                {/* <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Women
@@ -61,7 +77,7 @@ const Megamenu = () => {
                                     <ul className="grid grid-flow-row gap-4">
                                         {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
                                             return (
-                                                <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                <li onClick={()=>handleSearch(items.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
                                                 </li>
                                             )
@@ -75,7 +91,7 @@ const Megamenu = () => {
                             <ul className="grid grid-flow-row gap-4">
                                 {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
                                     return (
-                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
+                                        <li onClick={()=>handleSearch(items.name)} key={i} className="text-base font-semibold hover:underline cursor-pointer">
                                             {items}
                                         </li>
                                     )
@@ -84,7 +100,7 @@ const Megamenu = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* 
                 {data.length > 0 && data.map((item, index) => (
@@ -134,7 +150,7 @@ const Megamenu = () => {
                                     <ul className="grid grid-flow-row gap-4">
                                         {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
                                             return (
-                                                <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                <li onClick={() => handleSearch(items.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
                                                 </li>
                                             )
@@ -144,7 +160,7 @@ const Megamenu = () => {
                                 </div>)
                         })
                         }
-                        <div className="col-span-1 ">
+                        {/* <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
                                 {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
                                     return (
@@ -155,7 +171,7 @@ const Megamenu = () => {
                                 })
                                 }
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -174,7 +190,7 @@ const Megamenu = () => {
                 </div> */}
 
                 {/* Sales */}
-                <div className="group">
+                {/* <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Sales
@@ -200,7 +216,7 @@ const Megamenu = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
