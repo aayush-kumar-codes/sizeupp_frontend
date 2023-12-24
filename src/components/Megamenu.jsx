@@ -10,7 +10,7 @@ const Megamenu = () => {
 
     const [data, setData] = useState([])
 
-    const { category, setSearch, setfilterdata, handlefetchProducts, setfilterdata } = useContext(AuthContext)
+    const { category, setSearch, setfilterdata, handlefetchProducts } = useContext(AuthContext)
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
