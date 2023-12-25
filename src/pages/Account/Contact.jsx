@@ -12,7 +12,7 @@ const Contact = () => {
                 <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900 text-3xl sm:text-5xl">
                 Get in Touch
                 </h2>
-                <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600">In hac habitasse platea dictumst</p>
+                <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600">connect with us for any query</p>
             </div>
             </div>
             <div className="flex items-stretch justify-center">
@@ -61,8 +61,7 @@ const Contact = () => {
    
                 <div className="h-full pr-6">
                 <p className="mt-3 mb-12 text-lg text-gray-600">
-                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis nec ipsum
-                    orci. Ut scelerisque sagittis ante, ac tincidunt sem venenatis ut.
+                If you have any questions/comments please feel free to contact us
                 </p>
                 <ul className="mb-6 md:mb-0">
                     <li className="flex">
@@ -76,10 +75,11 @@ const Contact = () => {
                     </div>
                     <div className="ml-4 mb-4">
                         <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Our Address</h3>
-                        <p className="text-gray-600">1230 Maecenas Street Donec Road</p>
-                        <p className="text-gray-600">New York, EEUU</p>
+                        <p className="text-gray-600">Sizeupp Brands Private Limited,F-434, Solaris 1 Indl Estate, Opp L & T Gate No.6, Saki Vihar Rd, Powai,</p>
+                        <p className="text-gray-600"> Andheri-East, Mumbai-400 072 India</p>
                     </div>
                     </li>
+
                     <li className="flex">
                     <div className="flex h-10 w-10 items-center justify-center rounded bg-orange-500 text-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -94,8 +94,8 @@ const Contact = () => {
                     </div>
                     <div className="ml-4 mb-4">
                         <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Contact</h3>
-                        <p className="text-gray-600">Mobile: +1 (123) 456-7890</p>
-                        <p className="text-gray-600">Mail: tailnext@gmail.com</p>
+                        {/* <p className="text-gray-600">Mobile: +1 (123) 456-7890</p> */}
+                        <p className="text-gray-600">Mail: customercare@sizeupp.com</p>
                     </div>
                     </li>
                     <li className="flex">
