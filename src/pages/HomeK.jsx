@@ -33,7 +33,7 @@ const Megamenu = () => {
             size: [],
             search: id
         })
-
+        navigate('/products')
 
     }
 
