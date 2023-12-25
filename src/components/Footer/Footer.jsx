@@ -75,6 +75,9 @@ const Footer = () => {
           <li className="p-1">
             <a href="/shipping-policy" className="text-gray-400 hover:text-white">Shipping Policy</a>
           </li>
+          <li className="p-1">
+            <a href="/cancellation-policy" className="text-gray-400 hover:text-white">Cancellations</a>
+          </li>      
         </nav>
       </div>
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">

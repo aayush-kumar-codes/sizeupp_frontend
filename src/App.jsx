@@ -34,6 +34,7 @@ import PrivacyPolicy from "./constants/PrivacyPolicy"
 import AboutUs from "./constants/AboutUs"
 import ShippingPolicy from "./constants/ShippingPolicy"
 import Faq from "./constants/Faq"
+import CancellationPolicy from "./constants/CancellationPolicy"
 
 
 const App = () => {
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="about-us" element={<AboutUs />} />
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="faq" element={<Faq />} />
+            <Route path="cancellation-policy" element={<CancellationPolicy />} />
             
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />

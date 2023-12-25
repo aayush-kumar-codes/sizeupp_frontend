@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
+
+import { ChevronDoubleDownIcon,ChevronDownIcon  } from "@heroicons/react/24/outline";
+
 
 const Faq = () => {
   const [activeSection, setActiveSection] = useState(null);
 
   const toggleSection = (section) => {
     setActiveSection(activeSection === section ? null : section);
+    
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-8 p-4">
+    <div className="max-w-2xl mx-auto mt-8 p-4 my-24">
       <h1 className="text-3xl font-bold mb-4">FAQs</h1>
 
       {/* Account Section */}
@@ -18,7 +23,7 @@ const Faq = () => {
           onClick={() => toggleSection('account')}
         >
           <h2 className="text-xl font-semibold">Account</h2>
-          <span className="text-blue-500">{activeSection === 'account' ? '▼' : '▶'}</span>
+          <span className="text-blue-500">{activeSection === 'account' ? <ChevronDoubleDownIcon className="h-6 w-6 text-gray-500" /> : <ChevronDoubleRightIcon className="h-6 w-6 text-gray-500" />}</span>
         </div>
 
         {activeSection === 'account' && (
@@ -46,7 +51,7 @@ const Faq = () => {
           onClick={() => toggleSection('order')}
         >
           <h2 className="text-xl font-semibold">Order</h2>
-          <span className="text-blue-500">{activeSection === 'order' ? '▼' : '▶'}</span>
+          <span className="text-blue-500">{activeSection === 'order' ? <ChevronDoubleDownIcon className="h-6 w-6 text-gray-500" /> : <ChevronDoubleRightIcon className="h-6 w-6 text-gray-500" />}</span>
         </div>
 
         {activeSection === 'order' && (
@@ -86,7 +91,7 @@ const Faq = () => {
           onClick={() => toggleSection('shipping')}
         >
           <h2 className="text-xl font-semibold">Shipping</h2>
-          <span className="text-blue-500">{activeSection === 'shipping' ? '▼' : '▶'}</span>
+          <span className="text-blue-500">{activeSection === 'shipping' ? <ChevronDoubleDownIcon className="h-6 w-6 text-gray-500" /> : <ChevronDoubleRightIcon className="h-6 w-6 text-gray-500" />}</span>
         </div>
 
         {activeSection === 'shipping' && (
@@ -116,7 +121,7 @@ const Faq = () => {
           onClick={() => toggleSection('payment')}
         >
           <h2 className="text-xl font-semibold">Payment</h2>
-          <span className="text-blue-500">{activeSection === 'payment' ? '▼' : '▶'}</span>
+          <span className="text-blue-500">{activeSection === 'payment' ? <ChevronDoubleDownIcon className="h-6 w-6 text-gray-500" /> : <ChevronDoubleRightIcon className="h-6 w-6 text-gray-500" />}</span>
         </div>
 
         {activeSection === 'payment' && (
@@ -148,7 +153,7 @@ const Faq = () => {
           onClick={() => toggleSection('returns')}
         >
           <h2 className="text-xl font-semibold">Returns</h2>
-          <span className="text-blue-500">{activeSection === 'returns' ? '▼' : '▶'}</span>
+          <span className="text-blue-500">{activeSection === 'returns' ? <ChevronDoubleDownIcon className="h-6 w-6 text-gray-500" /> : <ChevronDoubleRightIcon className="h-6 w-6 text-gray-500" />}</span>
         </div>
 
         {activeSection === 'returns' && (
@@ -181,7 +186,7 @@ const Dropdown = ({ question, answer }) => {
           onClick={toggleDropdown}
         >
           <h3 className="text-lg font-medium">{question}</h3>
-          <span className={`text-blue-500 ${isOpen ? 'transform rotate-180' : ''}`}>▼</span>
+          <span className={`text-blue-500 ${isOpen ? 'transform rotate-180' : ''}`}><ChevronDownIcon  className="h-6 w-6 text-gray-500" /></span>
         </div>
   
         {isOpen && (
