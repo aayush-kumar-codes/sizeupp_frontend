@@ -40,9 +40,9 @@ const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
       firstName:'Kushal',
-      lastName:'King',
-      email:'example@gmail.com',
-      mobile:6726382392,
+      lastName:'Bauskar',
+      email:'kbauskar07@gmail.com',
+      mobile:8433771414,
     });
   
     const handleEditClick = () => {
@@ -153,7 +153,7 @@ const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
   
 const AccountSetting = () => {
     const [isPasswordModalOpen, setisPasswordModalOpen] = useState(false);
-    const [email, setEmail] = useState('user@example.com'); // Default email
+    const [email, setEmail] = useState('kbauskar07@gmail.com'); // Default email
     const [password, setPassword] = useState('Defaults'); // Default password
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
@@ -233,8 +233,7 @@ const AccountSetting = () => {
             <div className="mb-6 leading-normal ">
                             <h1 className="mb-2 text-lg font-bold text-gray-700 text-center ">This content is
                                 password protected.</h1>
-                            <p className="mb-6 text-sm font-medium text-gray-400 text-center ">Lorem ipsum dor ispum
-                                amit.</p>
+                            <p className="mb-6 text-sm font-medium text-gray-400 text-center "></p>
                             <label htmlFor='current-pass' className='text-md font-bold '>Current password</label>
                             <div className="relative">
                                     <input
