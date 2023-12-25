@@ -24,6 +24,16 @@ export function ProductBilling() {
         country: '',
     });
 
+    const [form, setForm] = useState({
+        address_id: "",
+        mrp_price: 0,
+        sub_total: 0,
+        cupon_discount: 0,
+        coupon: "",
+        total_price: 0,
+        payment_type: "COD"
+    })
+
     const navigate = useNavigate()
 
     const fetchCoupon = async () => {
@@ -103,6 +113,8 @@ export function ProductBilling() {
         }
     }
 
+    
+
     const fetchCart = async () => {
         try {
             if (!localStorage.token) {
@@ -122,7 +134,7 @@ export function ProductBilling() {
             console.log(data);
             setCart(data)
             let fors = {
-                address_id : form.address_id,
+                address_id: form.address_id,
                 mrp_price: data.mrp_price,
                 sub_total: data.sub_total,
                 cupon_discount: data.cupon_discount,
@@ -143,7 +155,7 @@ export function ProductBilling() {
         }
     }
 
-    
+
     const handlePlaceOrder = async () => {
         try {
             if (!localStorage.token) {
@@ -206,15 +218,7 @@ export function ProductBilling() {
         fetchUserProfile()
     }, [])
 
-    const [form, setForm] = useState({
-        address_id: "",
-        mrp_price: 0,
-        sub_total: 0,
-        cupon_discount: 0,
-        coupon: "",
-        total_price: 0,
-        payment_type: "COD"
-    })
+
 
     console.log(form)
 
@@ -357,32 +361,32 @@ export function ProductBilling() {
                                                     ₹ {info?.discounted_price ? info?.discounted_price : info?.mrp}
                                                 </p>
                                                 {info?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
-                                                        <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                            ₹ {info?.mrp}
-                                                        </p>
-                                                        <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
-                                                    </div>}
+                                                    <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
+                                                        ₹ {info?.mrp}
+                                                    </p>
+                                                    <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+                                                </div>}
                                             </div>
                                             <div className={`${info.product?.sqp.map((size, index) => {
-                                                    if (info.size_quantity_price != size.id) {
-                                                        return null
-                                                    }
+                                                if (info.size_quantity_price != size.id) {
+                                                    return null
+                                                }
 
-                                                    return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
-                                                })} font-normal text-base py-2`}>
-                                                    {
-                                                        info.product?.sqp.map((size, index) => {
-                                                            if (info.size_quantity_price != size.id) {
-                                                                return null
-                                                            }
+                                                return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
+                                            })} font-normal text-base py-2`}>
+                                                {
+                                                    info.product?.sqp.map((size, index) => {
+                                                        if (info.size_quantity_price != size.id) {
+                                                            return null
+                                                        }
 
-                                                            return (
+                                                        return (
 
-                                                                parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
+                                                            parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
+                                                        )
+                                                    })
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                     <div className='col-span-1 flex justify-center items-center'>
