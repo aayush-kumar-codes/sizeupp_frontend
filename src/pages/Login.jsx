@@ -239,14 +239,14 @@ export function Login() {
                                             {' '}
                                             Password{' '}
                                         </label>
-                                        <a
-                                            href="#"
+                                        <Link
+                                            to="/forgot"
                                             title=""
                                             className="text-sm font-semibold text-black hover:underline"
                                         >
                                             {' '}
                                             Forgot password?{' '}
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className="mt-2">
                                         <input

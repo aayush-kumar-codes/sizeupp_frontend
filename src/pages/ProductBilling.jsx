@@ -95,12 +95,16 @@ export function ProductBilling() {
             const data = await res.json()
             console.log(data);
             setProfile(data)
-            setPincode(data.addresses?.map((address, index) => {
-                if (address.is_default == true) {
-                    return address.id
+
+            let adressid = ""
+            data.addresses?.map((address, index) => {
+                if (address.is_default === true) {
+                    console.log("logged")
+                    adressid = address.id
                 }
-            }
-            )[0])
+            })
+            localStorage.setItem("address_id", adressid)
+            setPincode(adressid)	
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -113,7 +117,7 @@ export function ProductBilling() {
         }
     }
 
-    
+    console.log(localStorage.address_id)
 
     const fetchCart = async () => {
         try {
@@ -163,7 +167,7 @@ export function ProductBilling() {
                 return navigate('/login')
             }
             console.log({
-                address_id: pincode,
+                address_id: localStorage.address_id,
                 mrp_price: form.mrp_price,
                 sub_total: form.sub_total,
                 cupon_discount: form.cupon_discount,
@@ -178,7 +182,7 @@ export function ProductBilling() {
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    address_id: pincode,
+                    address_id: localStorage.address_id,
                     mrp_price: form.mrp_price,
                     sub_total: form.sub_total,
                     cupon_discount: form.cupon_discount,
@@ -215,6 +219,7 @@ export function ProductBilling() {
     }
 
     useEffect(() => {
+        setPayload(false)
         fetchCart()
         fetchCoupon()
         fetchUserProfile()
@@ -776,7 +781,7 @@ export function ProductBilling() {
                                                     onClick={handlePlaceOrder}
                                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
-                                                   {payload ?  "Make payment" : "Processing .."}
+                                                   {!payload ?  "Make payment" : "Processing .."}
                                                 </button>
                                             </div>
                                         </div>
