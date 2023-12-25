@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Forgot = () => {
 const navigate = useNavigate()
@@ -30,7 +30,7 @@ const navigate = useNavigate()
                     <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " required=""/>
                   </div>
                   <div className="ml-3 text-sm">
-                    <label htmlFor="terms" className="font-light text-gray-500 ">I accept the <a className="font-medium text-blue-600 hover:underline " href="#">Terms and Conditions</a></label>
+                    <label htmlFor="terms" className="font-light text-gray-500 ">I accept the <Link to="/terms-condition" className="font-medium text-blue-600 hover:underline " href="#">Terms and Conditions</Link></label>
                   </div>
               </div>
               <button type="submit" onClick={handleSubmit} className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Reset password</button>
