@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { logo } from '../assets/banners'
 import { useNavigate } from "react-router-dom"
 
@@ -9,6 +10,8 @@ const ResetPassword = () => {
     const handleSubmit = () => {
         navigate("/")
     }
+
+    const [email,  setemail] = useState("")
     
     return (
         <>
