@@ -1,17 +1,53 @@
 import { useState } from 'react'
 import { logo } from '../assets/banners'
 import { useNavigate } from "react-router-dom"
-
+import Swal from 'sweetalert2'
 
 const ResetPassword = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        navigate("/")
+    const handleSubmit =async() => {
+        try{
+            const res= await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/forgot-otp",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    email:form.email,
+                    password:form.password,
+                    confirm_password:form.confirm_password
+                })
+            
+            })
+            const data = await res.json()
+            if(!data.ok){
+                Swal.fire({
+                    icon:"error",
+                    title:"Oops...",
+                    text:data.error
+                })
+            }   
+            console.log("data",data)
+            Swal.fire({
+                icon:"success",
+                title:"Email Exist",
+                text:"Your Email address is valid email"
+            })
+
+            navigate("/otp")
+
+        }catch(error){
+            console.log("error" ,error )
+        }
     }
 
-    const [email,  setemail] = useState("")
+    const [form,  setform] = useState({
+        email: "",
+        password: "",
+        confirm_password: ""
+    })
     
     return (
         <>
@@ -28,15 +64,15 @@ const ResetPassword = () => {
           <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
               <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
-                  <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 " placeholder="name@company.com" required=""/>
+                  <input onChange={(e)=>setform({ ...form,email:e.target.value})} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 " placeholder="name@company.com" required=""/>
               </div>
               <div>
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">New Password</label>
-                  <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5  " required=""/>
+                  <input onChange={(e)=>setform({ ...form,password:e.target.value})} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5  " required=""/>
               </div>
               <div>
                   <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 ">Confirm password</label>
-                  <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 " required=""/>
+                  <input onChange={(e)=>setform({ ...form,confirm_password:e.target.value})} type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 " required=""/>
               </div>
               <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -46,7 +82,7 @@ const ResetPassword = () => {
                     <label htmlFor="newsletter" className="font-light text-gray-500 ">I accept the <a className="font-medium text-blue-600 hover:underline " href="#">Terms and Conditions</a></label>
                   </div>
               </div>
-              <button type="submit" onClick={handleSubmit} className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Reset passwod</button>
+              <button type="button" onClick={handleSubmit} className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Reset passwod</button>
           </form>
       </div>
   </div>
