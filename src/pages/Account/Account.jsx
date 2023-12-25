@@ -5,12 +5,12 @@ import { AuthContext } from '../../context/AuthProvider';
 const BillingAddress = () => {
     const [editBillingMode, setEditBillingMode] = useState(false);
     const [billingFormData, setBillingFormData] = useState({
-        billingAddressLine1: '456 Billing St',
-        billingAddressLine2: '',
-        billingCity: 'Billingtown',
-        billingState: 'USA',
-        billingZipCode: '67890',
-        billingCountry: 'USA',
+        billingAddressLine1: 'MK road, Sia Ram Soc.',
+        billingAddressLine2: 'Palava City',
+        billingCity: 'Dombivali',
+        billingState: 'Maharashtra',
+        billingZipCode: '421202',
+        billingCountry: 'India',
     });
 
     const handleBillingEditClick = () => {
