@@ -157,6 +157,7 @@ export function ProductBilling() {
 
 
     const handlePlaceOrder = async () => {
+        setPayload(true)
         try {
             if (!localStorage.token) {
                 return navigate('/login')
@@ -199,6 +200,7 @@ export function ProductBilling() {
                 showConfirmButton: false,
                 timer: 1500
             })
+            setPayload(false)
             navigate('/products')
         }
         catch (error) {
@@ -229,6 +231,8 @@ export function ProductBilling() {
             [name]: value,
         });
     };
+
+    const [payload, setPayload] = useState(false)
 
     const handleAddAddress = async () => {
         try {
@@ -768,10 +772,11 @@ export function ProductBilling() {
                                             <div className="mt-10 flex justify-end border-t border-gray-200 pt-6">
                                                 <button
                                                     type="button"
+                                                    disabled={payload}
                                                     onClick={handlePlaceOrder}
                                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
-                                                    Make payment
+                                                   {payload ?  "Make payment" : "Processing .."}
                                                 </button>
                                             </div>
                                         </div>
