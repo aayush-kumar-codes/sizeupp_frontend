@@ -32,8 +32,8 @@ const ResetPassword = () => {
             console.log("data",data)
             Swal.fire({
                 icon:"success",
-                title:"Email Exist",
-                text:"Your Email address is valid email"
+                title:"Success",
+                text:"OTP send to your email"
             })
 
             navigate("/otp")
