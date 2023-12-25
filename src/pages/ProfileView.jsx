@@ -16,7 +16,7 @@ const Profileview = () => {
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const {profiledata} = useContext(AuthContext)
+  const {profiledata,fetchProfileData} = useContext(AuthContext)
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -94,6 +94,10 @@ const Profileview = () => {
     }
   };
 
+  useEffect(()=>{
+    fetchProfileData()
+  },[])
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -126,7 +130,7 @@ const Profileview = () => {
                   />
                   <div className="ml-5">
                     <p className="font-medium text-gray-500">Hello,</p>
-                    <p className="font-bold">{profiledata.user_info?.first_name + profiledata.user_info?.lalst_name}</p>
+                    <p className="font-bold">{profiledata.user_info?.first_name + profiledata.user_info?.last_name}</p>
                   </div>
                 </div>
               </div>
@@ -212,7 +216,7 @@ const Profileview = () => {
               </div>
             </div>
 
-            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+            {/* <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">
                 <div className="flex flex-col ">
 
@@ -226,7 +230,7 @@ const Profileview = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="flex w-full">

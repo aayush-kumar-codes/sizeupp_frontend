@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom';
 
 const Profileview = () => {
 
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
+    // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    // const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
 

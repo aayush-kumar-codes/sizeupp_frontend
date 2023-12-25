@@ -1,6 +1,14 @@
-import React,{ useState } from 'react'
+import React,{ useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../context/AuthProvider'
 
 const Account = () => {
+    const {profiledata,fetchProfileData} = useContext(AuthContext)
+
+
+    console.log(profiledata)
+    useEffect(()=>{
+        fetchProfileData()
+    },[])
     
   return (
       <>

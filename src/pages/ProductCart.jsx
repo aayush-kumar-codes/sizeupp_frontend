@@ -261,6 +261,8 @@ export function ProductCart() {
         });
     };
 
+    const [changeAdr, setChangeAdr] = useState(false)
+
     const handleAddAddress = async () => {
         try {
             if (!localStorage.token) {
@@ -302,6 +304,9 @@ export function ProductCart() {
                 zipCode: '',
                 country: '',
             })
+            setChangeAdr(false)
+            fetchUserProfile()
+
             navigate('/products/cart')
 
         } catch (error) {
@@ -316,7 +321,7 @@ export function ProductCart() {
     }
 
 
-    const handleUpdateCart = async (prodid,status) => {
+    const handleUpdateCart = async (prodid, status) => {
         try {
             if (!localStorage.token) {
                 return navigate('/login')
@@ -328,7 +333,7 @@ export function ProductCart() {
                     'Authorization': `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    status : status
+                    status: status
                 })
             })
             if (!res.ok) {
@@ -359,7 +364,7 @@ export function ProductCart() {
 
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-y-4 lg:gap-x-12 xl:gap-x-16">
                     <section className=' lg:col-span-8'>
-                        {profile.addresses?.length > 0 ?
+                        {(profile.addresses?.length > 0 && !changeAdr ) ?
                             <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
                                 <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
                                     Delivery & Services :
@@ -387,10 +392,10 @@ export function ProductCart() {
                     /> */}
                                 <button
                                     type="button"
-                                    onClick={() => { handleApplyPincode() }}
+                                    onClick={() => { setChangeAdr(true) }}
                                     className="inline-flex w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm font-semibold leading-7 text-white hover:bg-black/80"
                                 >
-                                    Apply
+                                    Change Address
                                 </button>
                             </div>
 
@@ -573,7 +578,7 @@ export function ProductCart() {
                                         </div>
                                         <div className='col-span-1 flex justify-center items-center'>
 
-                                            <button onClick={() => handleUpdateCart(info.product.id,'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
+                                            <button onClick={() => handleUpdateCart(info.product.id, 'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
                                                 -
                                             </button>
                                             <input
@@ -581,7 +586,7 @@ export function ProductCart() {
                                                 className="mx-1 h-7 w-9 rounded-md border text-center"
                                                 value={product.qty}
                                             />
-                                            <button onClick={() => handleUpdateCart(info.product.id,'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
+                                            <button onClick={() => handleUpdateCart(info.product.id, 'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
                                                 +
                                             </button>
                                         </div>
@@ -747,40 +752,40 @@ export function ProductCart() {
 
                         </div>
                         {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
-                        <form action="#" className="mt-6">
-                            <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
-                            <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
-                                <div className="flex-grow">
-                                    <input
-                                        className="flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                        type="text"
-                                        onChange={(e) => { setcouponcode(e.target.value) }}
-                                        placeholder="Enter coupon code"
-                                    />
+                            <form action="#" className="mt-6">
+                                <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
+                                <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
+                                    <div className="flex-grow">
+                                        <input
+                                            className="flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                            type="text"
+                                            onChange={(e) => { setcouponcode(e.target.value) }}
+                                            placeholder="Enter coupon code"
+                                        />
+                                    </div>
+                                    <div className="mt-4 sm:mt-0 md:mt-4 lg:mt-0">
+                                        <button
+                                            type="button"
+                                            onClick={handleApplyCoupon}
+                                            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                        >
+                                            Apply Coupon
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="mt-4 sm:mt-0 md:mt-4 lg:mt-0">
-                                    <button
-                                        type="button"
-                                        onClick={handleApplyCoupon}
-                                        className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                    >
-                                        Apply Coupon
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </section> :
-                        <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-4 bg-white lg:col-span-4 lg:mt-8'>
-                            <div className='text-sm text-gray-800/80 text-center'>Coupon Applied Successfully</div>
-                            <div className='text-base text-center font-semibold'>You Saved ₹ {parseInt(cart.cupon_discount)}</div>
-                        </section>
-                    }
+                            </form>
+                        </section> :
+                            <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-4 bg-white lg:col-span-4 lg:mt-8'>
+                                <div className='text-sm text-gray-800/80 text-center'>Coupon Applied Successfully</div>
+                                <div className='text-base text-center font-semibold'>You Saved ₹ {parseInt(cart.cupon_discount)}</div>
+                            </section>
+                        }
                     </section>
 
 
                     {/* Order summary */}
 
-                    
+
                 </form>
             </div>
         </div>

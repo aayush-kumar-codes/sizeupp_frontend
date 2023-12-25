@@ -19,26 +19,34 @@ const AuthProvider = ({ children }) => {
         dhtl: false,
     })
 
-    const [navsearch,setnavsearch] = useState("")
-    const [navgender,setnavgender] = useState("")
+    const [navsearch, setnavsearch] = useState("")
+    const [navgender, setnavgender] = useState("")
 
 
     //profiledata
     const [profiledata, setProfileData] = useState([])
 
-    useEffect(() => {
-        if (localStorage.token) {
-            fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${localStorage.token}`
-                }
-            }).then((res) => res.json().then((data) => {
-                console.log(data)
+    const fetchProfileData = async () => {
+        try {
+            if(localStorage.token){
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': `token ${localStorage.token}`
+                    }
+                })
+                const data = await response.json()
                 setProfileData(data)
-            }))
+            }
+        } catch (error) {
+            console.log(error)
+
         }
+    }
+
+    useEffect(() => {
+        fetchProfileData()
     }, [])
 
 
@@ -115,7 +123,7 @@ const AuthProvider = ({ children }) => {
         search: ""
     })
 
-    console.log(navsearch,navgender,filterdata)
+    console.log(navsearch, navgender, filterdata)
 
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
@@ -128,15 +136,15 @@ const AuthProvider = ({ children }) => {
                 product.color?.toLowerCase().includes(search.toLowerCase()) ||
                 product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
                 product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
-            ) && 
-            (
-                filterdata.search.length === 0 ||
-                product.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                product.gender?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                product.color?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                product.category?.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                product.subcategory?.name.toLowerCase().includes(filterdata.search.toLowerCase())
             ) &&
+                (
+                    filterdata.search.length === 0 ||
+                    product.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                    product.gender?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                    product.color?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                    product.category?.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                    product.subcategory?.name.toLowerCase().includes(filterdata.search.toLowerCase())
+                ) &&
                 (
                     filter.gender?.length === 0 || filter.gender.includes(product.gender)
                 ) &&
@@ -148,9 +156,9 @@ const AuthProvider = ({ children }) => {
                 ) &&
                 (
                     category?.length === 0 || category.includes(product.category.name)
-                ) && 
+                ) &&
                 (
-                    (navsearch.length === 0 || navgender.length === 0) ||  
+                    (navsearch.length === 0 || navgender.length === 0) ||
                     product.subcategory?.name.toLowerCase().includes(navsearch.toLowerCase()) &&
                     product.gender?.toLowerCase().includes(navgender.toLowerCase())
                 )
@@ -390,12 +398,14 @@ const AuthProvider = ({ children }) => {
                 couponcode,
                 setcouponcode,
 
-                profiledata,
-
+                
                 sort,
                 setSort,
                 filterdata,
-                setfilterdata
+                setfilterdata,
+                
+                profiledata,
+                fetchProfileData
             }}
         >
             {children}
