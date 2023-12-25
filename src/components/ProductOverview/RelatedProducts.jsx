@@ -33,14 +33,15 @@ const RelatedProducts = ({
                                 <div
                                     className="flex transition-transform cursor-pointer ease-out duration-500 z-50 aspect-[3/4]"
                                 >
-
+                                    <a href={`/products/${item.id}`}>
                                     <img
                                             key={i}
-                                            onClick={() => { navigate(`/products/${id}`) }}
                                             className="object-cover w-full h-full cursor-pointer rounded-lg"
                                             src={import.meta.env.VITE_SERVER_URL + (item.images[0].img).slice(6)}
-                                            alt="dress"
+                                            alt={item.images[0].img.split("/")[5]}
                                         />
+                                        
+                                   </a>
                                     
                                 </div>
                                 </div>
