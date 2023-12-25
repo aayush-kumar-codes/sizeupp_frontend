@@ -18,6 +18,8 @@ import { AuthContext } from '../context/AuthProvider'
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import Footer from '../components/Footer/Footer'
+import Slider from '../components/Slider/Slider'
+import BannerCarousel from '../components/HomeK/Carouselnew'
 
 
 const Megamenu = () => {
@@ -538,7 +540,7 @@ function Navbar() {
 
                 {/* brand title */}
                 <Link to="/" className='cursor-pointer'>
-                    <img src={logo} alt="logo" className='md:w-36 w-24 object-contain' />
+                    <img src={logo} alt="logo" className='md:w-36 w-32 object-contain' />
                 </Link>
 
                 <Megamenu />
@@ -751,7 +753,9 @@ const HomeK = () => {
     return (
         <>
             <Navbar />
-            <Carousel />
+            {/* <Carousel /> */}
+            <BannerCarousel/>
+            <Slider/>
             <ShopCategoryWise />
             <ShopNow />
             <Footer />

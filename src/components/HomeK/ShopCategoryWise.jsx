@@ -47,16 +47,18 @@ export default function ShopCategoryWise() {
 
 const Layout = ({Text, Image}) => {
   return (
-      <div className={`lg:w-1/3 h-[50rem] relative flex flex-col justify-end
+      <div className={`lg:w-1/3 md:h-[50rem] h-[36rem] relative flex flex-col justify-end
       w-full 
       `}>
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+      
           <div className='w-full h-full absolute top-0 left-0 overflow-hidden'>
               <img src={Image} className='object-cover w-full h-full' alt="product" />
           </div>
           <div className='h-[60%] w-full flex flex-col justify-center items-center text-center z-10 gap-10 p-16'>
         <h1 className="font-extrabold tracking-wider text-5xl capitalize font-sans text-white drop-shadow-lg">{Text}</h1>
         <Link to="/products">
-              <button className="border-2 border-white text-white w-48 h-16 text-2xl md:w-36 md:h-12 md:text-lg sm:w-28 sm:h-8 sm:text-base">Shop Now</button>
+              <button className="border-2 border-white text-white text-lg p-3 font-bold hover:bg-white hover:text-black translate ease-in-out duration-200">Shop Now</button>
 
         </Link>
           </div>
