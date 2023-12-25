@@ -2,7 +2,7 @@ import React from 'react';
 
 const ReturnPolicy = () => {
   return (
-    <div className="max-w-2xl mx-auto mt-8 p-4">
+    <div className="max-w-2xl mx-auto mt-8 p-4 my-5 mb-[6rem]">
       <h1 className="text-3xl font-bold mb-4">Return Policy</h1>
 
       <p>
@@ -98,6 +98,42 @@ const ReturnPolicy = () => {
       {/* ... (Continue with the rest of the content) ... */}
 
       {/* Include other sections as needed */}
+      <h2 className="text-2xl font-bold mt-6">When are Refunds provided?</h2>
+
+      <p>
+        We work to provide the most hassle-free online shopping experience. You are covered, and your money is safe. Refunds are issued when:
+      </p>
+
+      <ul className="list-disc ml-6 mt-2">
+        <li>Seller cannot provide replacement</li>
+        <li>In-line with Buyer Protection, when a dispute has been ruled in your favour</li>
+            </ul>
+      
+      <h2 className="text-2xl font-bold mt-6">I have requested a replacement, when will I get it?</h2>
+
+      <p>
+        The replacement is initiated after the originally delivered item is received. If you don't get the return within the promised date, contact us immediately.
+      </p>
+
+      <h2 className="text-2xl font-bold mt-6">I've still not received the refund to my bank account. Why?</h2>
+
+      <p>
+        If you have received a mail from us confirming your refund request, then rest assured that we have initiated your refund request and are following up with financial organizations for the same.
+      </p>
+
+      <p className="mt-4">
+        Sometimes financial organizations take a longer time to process the refund request. However, if the refund hasn't happened by the date we promised, you can either contact us or your card issuing bank. We will gladly help you too.
+      </p>
+
+      {/* ... (Continue with the rest of the content) ... */}
+
+      <h2 className="text-2xl font-bold mt-6">I have changed my mind and would like to retain the product. What do I do?</h2>
+
+      <p>
+        Please call us to cancel your return request, and we will do the needful. In case the replacement is already dispatched, you can reject the replacement item when it is delivered to you.
+      </p>
+
+      
     </div>
   );
 };

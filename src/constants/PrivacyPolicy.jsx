@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
       <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
 
       <p>
-        This privacy statement describes how Sizeupp collects and uses the personal information you provide on our website: <a href="https://www.sizeupp.in" className="text-blue-500">www.sizeupp.in</a>. It also describes the choices available to you regarding our use of your personal information and how you can access and update this information. We are committed to protecting your privacy. We do not sell, share or rent your personal information to third parties. We collect information about you for 2 reasons: firstly, to process your order and second, to provide you with the best possible service.
+        This privacy statement describes how Sizeupp collects and uses the personal information you provide on our website: <a href="https://www.sizeupp.com" className="text-blue-500">www.sizeupp.com</a>. It also describes the choices available to you regarding our use of your personal information and how you can access and update this information. We are committed to protecting your privacy. We do not sell, share or rent your personal information to third parties. We collect information about you for 2 reasons: firstly, to process your order and second, to provide you with the best possible service.
       </p>
 
       <h2 className="text-2xl font-bold mt-6">Personally Identifiable Information We Collect</h2>
@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-2xl font-bold mt-6">Tell-a-friend</h2>
       <p>
-      If you choose to use our referral service to tell a friend about our site or to share your wish list, we will ask you for your friend's name and/or email address. We will automatically send your friend a one-time email inviting him or her to visit the site or view your wish list. Sizeupp stores this information for the sole purpose of sending this one-time email and tracking the success of our referral program. Your friend may contact us at <a href="mailto:customercare@sizeupp.in" className="text-blue-500">customercare@sizeupp.in</a>  to request that we remove this information from our database.
+      If you choose to use our referral service to tell a friend about our site or to share your wish list, we will ask you for your friend's name and/or email address. We will automatically send your friend a one-time email inviting him or her to visit the site or view your wish list. Sizeupp stores this information for the sole purpose of sending this one-time email and tracking the success of our referral program. Your friend may contact us at <a href="mailto:customercare@sizeupp.com" className="text-blue-500">customercare@sizeupp.com</a>  to request that we remove this information from our database.
       </p>
 
       <h2 className="text-2xl font-bold mt-6">Service providers</h2>
@@ -63,7 +63,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-2xl font-bold mt-6">Business transitions</h2>
       <p>
-      If your personally identifiable information changes, or if you no longer desire our service, you may correct, update, delete or deactivate it by making the change on our member information page or by emailing our customer support at customercare@sizeupp.in. We will respond to your request to access within 12 to 24 hours. We will retain your information for as long as your account is active or as needed to provide you services. We will retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
+      If your personally identifiable information changes, or if you no longer desire our service, you may correct, update, delete or deactivate it by making the change on our member information page or by emailing our customer support at customercare@sizeupp.com. We will respond to your request to access within 12 to 24 hours. We will retain your information for as long as your account is active or as needed to provide you services. We will retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
       </p>
 
       <h2 className="text-2xl font-bold mt-6">Security</h2>
@@ -88,15 +88,18 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-2xl font-bold mt-6">Contact us</h2>
       <p>
-      If you have any questions/comments about privacy policy, you should contact us at customercare@sizeupp.in or via postal mail at the address given below:
-      sizeupp
-      F-434, solaris 1 indl estate,
-      Opp l & t gate no.6,
-      Saki vihar rd, powai,
-      Andheri-east,
-      Mumbai-400 072.
+      If you have any questions/comments about privacy policy, you should contact us at <a href="mailto:customercare@sizeupp.com" className='text-blue-600'>customercare@sizeupp.com</a>  or via postal mail at the address given below:
+      
 
       </p>
+      <address>
+      Sizeupp F-434, solaris 1 indl estate,<br/>
+      Opp l & t gate no.6,<br/>
+      Saki vihar rd, powai,<br/>
+      Andheri-east,<br/>
+      Mumbai-400 072.<br/>
+
+      </address>
     </div>
   );
 };
