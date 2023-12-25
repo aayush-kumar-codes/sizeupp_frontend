@@ -117,7 +117,12 @@ const Register = () => {
                 navigate('/profile');
                 setForm({
                     email: "",
-                    password: ""
+                    password: "",
+                    last_name: "",
+                    first_name : "",
+                    phone : "",
+                    password_confirmation:"",
+                    newsletter: false
                 });
                 setIsAuth(true);
                 setIsVerfied(data.user_verified);
@@ -152,6 +157,7 @@ const Register = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
+    
     return (
 
         <section className="bg-white">

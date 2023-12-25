@@ -1,23 +1,11 @@
 import { useEffect, useState } from "react"
 import Error from "../components/Alerts/Error"
 import Swal from 'sweetalert2'
-import { useNavigate } from "react-router-dom"
+import { useNavigate,Navigate } from "react-router-dom"
 
 const Otp = () => {
     const navigate = useNavigate()
 
-    const fetchData = async() => {
-        const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
-            method : 'GET',
-            headers: {
-                'Authorization': `token ${localStorage.token}`,
-                'Content-type': 'application/json'
-            }
-        })
-        const data = await res.json()
-        console.log(data)
-        localStorage.setItem("user_verified", data.user_verified)
-    }
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
@@ -65,13 +53,26 @@ const Otp = () => {
                 icon: 'success',
                 title: 'Success',
                 text: data.message,
-                confirmButtonText: 'Cool'
-            })
+                confirmButtonText: 'Cool',
+                
+            }).then((result) => {
+                if (result.isConfirmed) {
+                 navigate('/')
+                }
+              });
+
         }
         if (data.user_verified) {
             localStorage.setItem("user_verified", true)
+            navigate('/')
         }
         console.log(data)
+    }
+
+    console.log(localStorage.user_verified == 'true')
+    if(localStorage.user_verified == 'true'){
+       
+        return <Navigate to='/' replace />
     }
 
 

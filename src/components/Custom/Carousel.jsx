@@ -64,6 +64,7 @@ const Carousel = ({
           // console.log(str)
           return(<img
             key={i}
+            loading='lazy'
             onClick={() => { navigate(`${id}`) }}
             className="object-cover w-full h-full cursor-pointer rounded-lg"
             src={import.meta.env.VITE_SERVER_URL +str.slice(6)}

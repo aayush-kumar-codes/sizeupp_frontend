@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
@@ -9,11 +9,11 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, setIsFilterActive, handlefetchFilterProducts, handlefetchProducts, productcount,search } = useContext(AuthContext)
+  const { isFilterActive, setIsFilterActive, setcategory, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
 
 
-  const { filterdata, setfilterdata } = useContext(AuthContext)
+  const { filterdata, setfilterdata, category } = useContext(AuthContext)
 
   const handleChangeFilter = (event) => {
 
@@ -74,276 +74,281 @@ const ProductLayout2 = () => {
       name: 'Color',
       options: [
         {
-          "label": "Sage Green",value: "Sage Green"
+          "label": "Sage Green", value: "Sage Green"
         },
         {
-          "label": "Wine" ,value: "Wine"
+          "label": "Wine", value: "Wine"
         },
         {
-          "label": "Maroon" ,value: "Maroon"
+          "label": "Maroon", value: "Maroon"
         },
         {
-          "label": "White" ,value: "White"
+          "label": "White", value: "White"
         },
         {
-          "label": "Sky Blue"  ,value: "Sky Blue"
+          "label": "Sky Blue", value: "Sky Blue"
         },
         {
-          "label": "Pistachio Green" ,value: "Pistachio Green"
+          "label": "Pistachio Green", value: "Pistachio Green"
         },
         {
-          "label": "Natural" ,value: "Natural"
+          "label": "Natural", value: "Natural"
         },
         {
-          "label": "Pink" ,value: "Pink"
+          "label": "Pink", value: "Pink"
         },
         {
-          "label": "Navy" ,value: "Navy"
+          "label": "Navy", value: "Navy"
         },
         {
-          "label": "Black" ,value: "Black"
+          "label": "Black", value: "Black"
         },
         {
-          "label": "Brown" ,value: "Brown"
+          "label": "Brown", value: "Brown"
         },
         {
-          "label": "Blue" ,value: "Blue"
+          "label": "Blue", value: "Blue"
         },
         {
-          "label": "Beige" ,value: "Beige"
+          "label": "Beige", value: "Beige"
         },
         {
-          "label": "Peach"  ,value: "Peach"
+          "label": "Peach", value: "Peach"
         },
         {
-          "label": "Teal" ,value: "Teal"
+          "label": "Teal", value: "Teal"
         },
         {
-          "label": "Multi Color"  ,value: "Multi Color"
+          "label": "Multi Color", value: "Multi Color"
         },
         {
-          "label": "Dark Blue"  ,value: "Dark Blue"
+          "label": "Dark Blue", value: "Dark Blue"
         },
         {
-          "label": "Dark Navy"  ,value: "Dark Navy"
+          "label": "Dark Navy", value: "Dark Navy"
         },
         {
-          "label": "Grey" ,value: "Grey"
+          "label": "Grey", value: "Grey"
         },
         {
-          "label": "Light Blue" ,value: "Light Blue"
+          "label": "Light Blue", value: "Light Blue"
         },
         {
-          "label": "Indigo" ,value: "Indigo"
+          "label": "Indigo", value: "Indigo"
         },
         {
-          "label": "Red"  ,value: "Red"
+          "label": "Red", value: "Red"
         },
         {
-          "label": "Yellow" ,value: "Yellow"
+          "label": "Yellow", value: "Yellow"
         },
         {
-          "label": "Ecru" ,value: "Ecru"
+          "label": "Ecru", value: "Ecru"
         },
         {
-          "label": "Dark Green" ,value: "Dark Green"
+          "label": "Dark Green", value: "Dark Green"
         },
         {
-          "label": "Light Yellow" ,value: "Light Yellow"
+          "label": "Light Yellow", value: "Light Yellow"
         },
         {
-          "label": "Purple" ,value: "Purple"
+          "label": "Purple", value: "Purple"
         },
         {
-          "label": "Green"  ,value: "Green"
+          "label": "Green", value: "Green"
         },
         {
-          "label": "Off White"  ,value: "Off White"
+          "label": "Off White", value: "Off White"
         },
         {
-          "label": "Light Green"  ,value: "Light Green"
+          "label": "Light Green", value: "Light Green"
         },
         {
-          "label": "Dark Teal"  ,value: "Dark Teal"
+          "label": "Dark Teal", value: "Dark Teal"
         },
         {
-          "label": "Cream"  ,value: "Cream"
+          "label": "Cream", value: "Cream"
         },
         {
-          "label": "Rust" ,value: "Rust"
+          "label": "Rust", value: "Rust"
         },
         {
-          "label": "Olive"  ,value: "Olive"
+          "label": "Olive", value: "Olive"
         },
         {
-          "label": "Orange" ,value: "Orange"
+          "label": "Orange", value: "Orange"
         },
         {
-          "label": "Bluish Grey"  ,value: "Bluish Grey"
+          "label": "Bluish Grey", value: "Bluish Grey"
         },
         {
-          "label": "Khaki"  ,value: "Khaki"
+          "label": "Khaki", value: "Khaki"
         },
         {
-          "label": "Dark Pink"  ,value: "Dark Pink"
+          "label": "Dark Pink", value: "Dark Pink"
         },
         {
-          "label": "Light Pink" ,value: "Light Pink"
+          "label": "Light Pink", value: "Light Pink"
         },
         {
-          "label": "Grey Melange" ,value: "Grey Melange"
+          "label": "Grey Melange", value: "Grey Melange"
         },
         {
-          "label": "Ecru Melange" ,value: "Ecru Melange"
+          "label": "Ecru Melange", value: "Ecru Melange"
         },
         {
-          "label": "Charcoal Melange" ,value: "Charcoal Melange"
+          "label": "Charcoal Melange", value: "Charcoal Melange"
         },
         {
-          "label": "Lilac"  ,value: "Lilac"
+          "label": "Lilac", value: "Lilac"
         },
         {
-          "label": "Coral"  ,value: "Coral"
+          "label": "Coral", value: "Coral"
         },
         {
-          "label": "Melon"  ,value: "Melon"
+          "label": "Melon", value: "Melon"
         },
         {
-          "label": "Anthra" ,value: "Anthra"
+          "label": "Anthra", value: "Anthra"
         },
         {
-          "label": "Coral & Navy" ,value: "Coral & Navy"
+          "label": "Coral & Navy", value: "Coral & Navy"
         },
         {
-          "label": "Light Green & White"  ,value: "Light Green & White"
+          "label": "Light Green & White", value: "Light Green & White"
         },
         {
-          "label": "Navy & White" ,value: "Navy & White"
+          "label": "Navy & White", value: "Navy & White"
         },
         {
-          "label": "Red White & Navy" ,value: "Red White & Navy"
+          "label": "Red White & Navy", value: "Red White & Navy"
         },
         {
-          "label": "Rust Navy & White"  ,value: "Rust Navy & White"
+          "label": "Rust Navy & White", value: "Rust Navy & White"
         },
         {
-          "label": "Aqua" ,value: "Aqua"
+          "label": "Aqua", value: "Aqua"
         },
         {
-          "label": "Lime" ,value: "Lime"
+          "label": "Lime", value: "Lime"
         },
         {
-          "label": "Anthra Melange" ,value: "Anthra Melange"
+          "label": "Anthra Melange", value: "Anthra Melange"
         },
         {
-          "label": "Pastel Lavender"  ,value: "Pastel Lavender"
+          "label": "Pastel Lavender", value: "Pastel Lavender"
         },
         {
-          "label": "Cherry Pink"  ,value: "Cherry Pink"
+          "label": "Cherry Pink", value: "Cherry Pink"
         },
         {
-          "label": "Rose Pink"  ,value: "Rose Pink"
+          "label": "Rose Pink", value: "Rose Pink"
         },
         {
-          "label": "Mustard"  ,value: "Mustard"
+          "label": "Mustard", value: "Mustard"
         },
         {
-          "label": "White & Green"  ,value: "White & Green"
+          "label": "White & Green", value: "White & Green"
         },
         {
-          "label": "White & Pink" ,value: "White & Pink"
+          "label": "White & Pink", value: "White & Pink"
         },
         {
-          "label": "White & Black"  ,value: "White & Black"
+          "label": "White & Black", value: "White & Black"
         },
         {
-          "label": "Dusty Rose" ,value: "Dusty Rose"
+          "label": "Dusty Rose", value: "Dusty Rose"
         },
         {
-          "label": "Blue Green" ,value: "Blue Green"
+          "label": "Blue Green", value: "Blue Green"
         },
         {
-          "label": "Deep Pink"  ,value: "Deep Pink"
+          "label": "Deep Pink", value: "Deep Pink"
         },
         {
-          "label": "Sea Green"  ,value: "Sea Green"
+          "label": "Sea Green", value: "Sea Green"
         },
         {
-          "label": "Bright Pink"  ,value: "Bright Pink"
+          "label": "Bright Pink", value: "Bright Pink"
         },
         {
-          "label": "Mustard Yellow" ,value: "Mustard Yellow"
+          "label": "Mustard Yellow", value: "Mustard Yellow"
         },
         {
-          "label": "Lime Green" ,value: "Lime Green"
+          "label": "Lime Green", value: "Lime Green"
         },
         {
-          "label": "Navy Blue"  ,value: "Navy Blue"
+          "label": "Navy Blue", value: "Navy Blue"
         },
         {
-          "label": "Dark Grey"  ,value: "Dark Grey"
+          "label": "Dark Grey", value: "Dark Grey"
         },
         {
-          "label": "Pista"  ,value: "Pista"
+          "label": "Pista", value: "Pista"
         },
         {
-          "label": "Lavender" ,value: "Lavender"
+          "label": "Lavender", value: "Lavender"
         },
         {
-          "label": "Teal Green" ,value: "Teal Green"
+          "label": "Teal Green", value: "Teal Green"
         },
         {
-          "label": "Teal Blue"  ,value: "Teal Blue"
+          "label": "Teal Blue", value: "Teal Blue"
         },
         {
-          "label": "White & Blue" ,value: "White & Blue"
+          "label": "White & Blue", value: "White & Blue"
         },
         {
-          "label": "Brick Red"  ,value: "Brick Red"
+          "label": "Brick Red", value: "Brick Red"
         },
         {
-          "label": "Olive Green"  ,value: "Olive Green"
+          "label": "Olive Green", value: "Olive Green"
         },
         {
-          "label": "Dusty Pink" ,value: "Dusty Pink"
+          "label": "Dusty Pink", value: "Dusty Pink"
         },
         {
-          "label": "Ice"  ,value: "Ice"
+          "label": "Ice", value: "Ice"
         },
         {
-          "label": "Walnut Brown"   ,value: "Walnut Brown"
+          "label": "Walnut Brown", value: "Walnut Brown"
         },
         {
-          "label": "Slate"  ,value: "Slate"
+          "label": "Slate", value: "Slate"
         },
         {
-          "label": "Carbon Blue"  ,value: "Carbon Blue" 
+          "label": "Carbon Blue", value: "Carbon Blue"
         },
         {
-          "label": "Light Indigo" ,value: "Light Indigo"
+          "label": "Light Indigo", value: "Light Indigo"
         },
         {
-          "label": "Light Grey" ,value: "Light Grey"
+          "label": "Light Grey", value: "Light Grey"
         },
         {
-          "label": "Royal Blue" ,value: "Royal Blue"
+          "label": "Royal Blue", value: "Royal Blue"
         },
         {
-          "label": "Midnight Blue"  ,value: "Midnight Blue"
+          "label": "Midnight Blue", value: "Midnight Blue"
         },
         {
-          "label": "Jet Black"  ,value: "Jet Black"
+          "label": "Jet Black", value: "Jet Black"
         },
         {
-          "label": "Military Green" ,value: "Military Green"
+          "label": "Military Green", value: "Military Green"
         },
         {
-          "label": "Indigo Melange" ,value: "Indigo Melange"
+          "label": "Indigo Melange", value: "Indigo Melange"
         }
       ],
     },
 
   ];
+
+  useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
 
   return (
     <>
@@ -374,10 +379,50 @@ const ProductLayout2 = () => {
                     </svg>
 
                     <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                        {search}
+                      {search}
                     </a>
                   </div>
                 </li>}
+                {!search && filterdata.gender?.length > 0 &&
+                  <li>
+                    <div className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+
+                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                        {filterdata.gender}
+                      </a>
+                    </div>
+                  </li>
+                }
+                {!search && category?.length > 0 &&
+                  <li>
+                    <div className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+
+                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                        {category}
+                      </a>
+                    </div>
+                  </li>
+                }
+                {
+                  !search && filterdata.gender.length === 0 && category.length === 0 &&
+                  <li>
+                    <div className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+
+                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                        All Products
+                      </a>
+                    </div>
+                  </li>
+                }
                 {/* <li aria-current="page">
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -417,7 +462,29 @@ const ProductLayout2 = () => {
                             type="checkbox"
                             className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                             value={option.value}
-                            onChange={handleChangeFilter}
+                            checked={
+                              filter.id === 'gender' ?
+                                (filterdata.gender.find((el) => el == option.value) ? true : false)
+                                :
+                                filter.id === 'size' ?
+                                  (filterdata.size.find((el) => el == option.value) ? true : false)
+                                  :
+                                  filter.id === 'category' ?
+                                    (category === option.value)
+                                    :
+                                    filter.id === 'color' ?
+                                      (filterdata.color.find((el) => el == option.value) ? true : false)
+                                      :
+                                      option.value
+                            }
+                            onChange={(e) => {
+                              if (filter.id === 'category') {
+                                setcategory(e.target.value);
+                                handlefetchProducts()
+                              } else {
+                                handleChangeFilter(e)
+                              }
+                            }}
                           />
                           <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
                             {option.label}

@@ -187,7 +187,7 @@ export function ProductBilling() {
                 showConfirmButton: false,
                 timer: 1500
             })
-            navigate('/products/billing')
+            navigate('/products')
         }
         catch (error) {
             console.error('Fetch error:', error);

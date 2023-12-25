@@ -23,17 +23,18 @@ import Footer from '../components/Footer/Footer'
 const Megamenu = () => {
 
     const [data, setData] = useState([])
-    const { setSearch, setfilterdata } = useContext(AuthContext)
+    const { setfilterdata, setnavsearch, setnavgender, setcategory } = useContext(AuthContext)
 
-    const handleSearch = (id) => {
+    const handleSearch = (id, gender, cat) => {
+        setcategory(cat)
         setfilterdata({
-            gender: [],
+            gender: [`${gender}`],
             color: [],
             size: [],
-            search : ""
+            search: id
         })
-        setSearch(id)
-        navigate('/products')
+
+
     }
 
     const navigate = useNavigate()
@@ -59,7 +60,8 @@ const Megamenu = () => {
                 <div className="group">
 
                     <Link to="/products" onClick={() => {
-                        setSearch("")
+                        setnavsearch("")
+                        setnavgender("")
                         setfilterdata({
                             search: "",
                             size: [],
@@ -73,15 +75,15 @@ const Megamenu = () => {
 
 
                 {/* Woman */}
-                {/* <div className="group">
+                {data.women_category_data?.length > 0 && <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                        <div className="col-span-1">
-                            <p className="text-base text-black font-semibold">Women&apos;s Fashion Era</p>
+                        {/* <div className="col-span-1">
+                            <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
                             <Link to="/products">
@@ -90,47 +92,38 @@ const Megamenu = () => {
                             <Link to="/terms-condition">
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
-                        </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-base text-black font-semibold mb-2">Casual-Wear Topwear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Co-ord-Set', 'Core-Tee', 'Dress', 'Kurta', 'Kurta-and-Pants', 'Shirts', 'Sweat-Shirts', 'Top', 'T-Shirts', 'Tunic'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
-                        <div className="col-span-1 ">
-                            <h2 className="text-md text-black font-semibold mb-2">Casual-Wear Bottom-Wear</h2>
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Jeggigns', 'Leggings', 'Pants', 'Trousers'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div>
-                        <div className="col-span-1 ">
+                        </div> */}
+                        {data.women_category_data?.length > 0 && data.women_category_data.map((cat) => {
+                            return (
+                                <div key={cat.id} className="col-span-1 ">
+                                    <h2 className="text-base text-gray-800 font-semibold mb-2">{cat.name}</h2>
+                                    <ul className="grid grid-flow-row gap-4">
+                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                            return (
+                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    {items.name}
+                                                </li>
+                                            )
+                                        })
+                                        }
+                                    </ul>
+                                </div>)
+                        })
+                        }
+                        {/* <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
                                 {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
                                     return (
-                                        <li key={i} className="text-base text-black font-semibold hover:underline cursor-pointer">
+                                        <li onClick={()=>handleSearch(items.name)} key={i} className="text-base font-semibold hover:underline cursor-pointer">
                                             {items}
                                         </li>
                                     )
                                 })
                                 }
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
-                </div> */}
+                </div>}
 
                 {/* 
                 {data.length > 0 && data.map((item, index) => (
@@ -155,7 +148,7 @@ const Megamenu = () => {
                 ))} */}
 
                 {/* Man */}
-                {data && <div className="group">
+                {data.men_category?.length > 0  && <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Men
@@ -180,7 +173,7 @@ const Megamenu = () => {
                                     <ul className="grid grid-flow-row gap-4">
                                         {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
                                             return (
-                                                <li onClick={() => handleSearch(items.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                <li onClick={() =>handleSearch(items.name,'Men',cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
                                                 </li>
                                             )
@@ -452,9 +445,6 @@ function Navbar() {
     ]
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-    const [isInputFocused, setIsInputFocused] = useState(false);
-    const { isFilterActive, setIsFilterActive, search, setSearch, isFuncCall, setIsFuncCall, handlefetchProducts, handlefetchFilterProducts } = useContext(AuthContext)
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }

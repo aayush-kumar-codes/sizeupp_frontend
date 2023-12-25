@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { Outlet, Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { TruckIcon } from "@heroicons/react/24/outline";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 import { PhoneIcon } from "@heroicons/react/24/outline";
 import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
+import { AuthContext } from '../context/AuthProvider';
 
 
 
@@ -14,6 +15,8 @@ const Profileview = () => {
   const navigate = useNavigate()
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const {profiledata} = useContext(AuthContext)
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -43,17 +46,6 @@ const Profileview = () => {
     console.log(data)
   }
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `token ${localStorage.token}`
-      }
-    }).then((res) => res.json().then((data) => {
-      console.log(data)
-    }))
-  }, [])
 
   const handleAddAddress = async () => {
     try {
@@ -134,7 +126,7 @@ const Profileview = () => {
                   />
                   <div className="ml-5">
                     <p className="font-medium text-gray-500">Hello,</p>
-                    <p className="font-bold">Kushal Bauskar</p>
+                    <p className="font-bold">{profiledata.user_info?.first_name + profiledata.user_info?.lalst_name}</p>
                   </div>
                 </div>
               </div>
@@ -312,7 +304,7 @@ const Profileview = () => {
                     />
                     <div className="ml-5">
                       <p className="font-medium text-gray-500">Hello,</p>
-                      <p className="font-bold">Kushal Bauskar</p>
+                      <p className="font-bold">{profiledata.user_info?.first_name + profiledata.user_info?.last_name}</p>
                     </div>
                   </div>
 

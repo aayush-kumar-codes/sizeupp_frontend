@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
     const [isFilterActive, setIsFilterActive] = useState(false);
     const [isVerified, setIsVerified] = useState(localStorage.getItem("user_verified") ? localStorage.isverified : false);
     const [search, setSearch] = useState("");
-    const [category,setcategory] = useState("")
+    const [category, setcategory] = useState("")
     const [isFuncCall, setIsFuncCall] = useState(false);
 
     // sort 
@@ -18,6 +18,28 @@ const AuthProvider = ({ children }) => {
         plth: false,
         dhtl: false,
     })
+
+    const [navsearch,setnavsearch] = useState("")
+    const [navgender,setnavgender] = useState("")
+
+
+    //profiledata
+    const [profiledata, setProfileData] = useState([])
+
+    useEffect(() => {
+        if (localStorage.token) {
+            fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.token}`
+                }
+            }).then((res) => res.json().then((data) => {
+                console.log(data)
+                setProfileData(data)
+            }))
+        }
+    }, [])
 
 
     //products 
@@ -93,33 +115,10 @@ const AuthProvider = ({ children }) => {
         search: ""
     })
 
-    console.log(category)
+    console.log(navsearch,navgender,filterdata)
 
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
-        // return products.filter((product) => {
-        //     // Check gender filter
-        //     const isGenderMatch = filter.gender.length === 0 || filter.gender?.includes(product.gender?.toLowerCase());
-
-        //     // Check size filter
-        //     const isSizeMatch = filter.size.length === 0 || product.sqp.some((size) => filter.size.includes(size.size));
-
-        //     // Check color filter
-        //     const isColorMatch = filter.color.length === 0 || filter.color?.includes(product.color?.toLowerCase());
-
-        //     // Check search filter
-        //     const isSearchMatch = filter.search.length === 0 ||
-        //         product.name.toLowerCase().includes(filter.search.toLowerCase()) ||
-        //         product.fit?.toLowerCase().includes(filter.search.toLowerCase()) ||
-        //         product.gender?.toLowerCase().includes(filter.search.toLowerCase()) ||
-        //         product.color?.toLowerCase().includes(filter.search.toLowerCase());
-
-
-
-        //     // Return true only if all criteria match
-        //     return isGenderMatch && isSizeMatch && isColorMatch && isSearchMatch;
-        // });
-
 
         return products.filter((product) => {
             return (
@@ -129,6 +128,14 @@ const AuthProvider = ({ children }) => {
                 product.color?.toLowerCase().includes(search.toLowerCase()) ||
                 product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
                 product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
+            ) && 
+            (
+                filterdata.search.length === 0 ||
+                product.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                product.gender?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                product.color?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                product.category?.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
+                product.subcategory?.name.toLowerCase().includes(filterdata.search.toLowerCase())
             ) &&
                 (
                     filter.gender?.length === 0 || filter.gender.includes(product.gender)
@@ -141,6 +148,11 @@ const AuthProvider = ({ children }) => {
                 ) &&
                 (
                     category?.length === 0 || category.includes(product.category.name)
+                ) && 
+                (
+                    (navsearch.length === 0 || navgender.length === 0) ||  
+                    product.subcategory?.name.toLowerCase().includes(navsearch.toLowerCase()) &&
+                    product.gender?.toLowerCase().includes(navgender.toLowerCase())
                 )
 
 
@@ -151,6 +163,7 @@ const AuthProvider = ({ children }) => {
     const fetchProducts = async () => {
         try {
             setproductloading(true)
+            setproductsbc([])
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
@@ -197,7 +210,7 @@ const AuthProvider = ({ children }) => {
 
 
                 }
-                if (search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
+                if (filterdata.search !== "" || search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
                     console.table(filterdata)
                     const filteredProducts = funcFilter(data, filterdata)
 
@@ -223,6 +236,7 @@ const AuthProvider = ({ children }) => {
         try {
             console.log("fetching products - auth")
             setproductloading(true)
+            setproductsbc([])
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
@@ -270,7 +284,7 @@ const AuthProvider = ({ children }) => {
 
 
                 }
-                if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || search !== "" || category.length > 0) {
+                if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || filterdata.search !== "" || search !== "" || category.length > 0 || navsearch !== "" || navgender !== "") {
                     console.table(filterdata);
                     const filteredProducts = funcFilter(data, filterdata);
 
@@ -314,7 +328,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         handlefetchProducts()
-    }, [ filterdata])
+    }, [filterdata])
 
     useEffect(() => {
         // effect
@@ -345,8 +359,12 @@ const AuthProvider = ({ children }) => {
 
 
                 search,
-                setSearch,
+                navsearch,
+                navgender,
                 category,
+                setSearch,
+                setnavgender,
+                setnavsearch,
                 setcategory,
 
 
@@ -371,6 +389,8 @@ const AuthProvider = ({ children }) => {
 
                 couponcode,
                 setcouponcode,
+
+                profiledata,
 
                 sort,
                 setSort,
