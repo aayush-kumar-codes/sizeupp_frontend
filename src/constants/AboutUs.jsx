@@ -1,4 +1,6 @@
 import React from 'react';
+import Img1 from './founder1.png'
+import Img2 from './founder2.png'
 
 const AboutUs = () => {
   return (
@@ -8,7 +10,18 @@ const AboutUs = () => {
         <h2 className="text-center font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
             About US
         </h2>
-
+              <div className="text-center w-full p-2 py-3 mx-auto">
+                  <h1 className='text-3xl my-3 capitalize font-bold'>Our founders</h1>
+                  <img src={Img2} className='w-48 rounded-lg mx-auto'/>
+                  <h2 className="capitalize text-3xl font-bold">mr. anil saraf</h2>
+                  <p className="p-4 mb-8">Mr. Anil Saraf is a seasoned businessman with an impressive three-decade-long career as a garment manufacturer. His illustrious journey includes collaborations with renowned brands such as Pantaloons, Jade Blue and Mufti, solidifying his reputation as a trusted partner. His journey began as a passionate entrepreneur, and today, he stands as a visionary leader in the field. His enduring success stands as a testament to his dedication and vision in the world of fashion.</p>
+                  <img src={Img1} className='w-48 rounded-lg mx-auto'/>
+                  <h2 className="capitalize text-3xl font-bold">mr. vikas singh</h2>
+                  <p className="p-4">The ingenious mind of our little unconventional founder brings to you Sizeupp. A sourcing and product specialist with a never-ending hunger for creating beautiful and affordable clothes geared up to make everyone find their right fit!
+Vikash is a Nift alumni with 16+ years in the trade set out to revolutionise the plus size apparels space. He aspires to create a brand that can provide plus size individuals' clothes for every occasion.</p>
+             
+              </div>
+              
         <div className="flex flex-wrap items-center my-20 text-left text-center">
             <div className="w-full md:w-3/5 lg:w-1/2 px-4">
                 <img src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="gem" className="inline-block rounded shadow-lg border border-merino-400"/>
