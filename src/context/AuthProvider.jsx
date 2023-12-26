@@ -22,8 +22,7 @@ const AuthProvider = ({ children }) => {
     const [navsearch, setnavsearch] = useState("")
     const [navgender, setnavgender] = useState("")
 
-
-
+    
     //profiledata
     const [profiledata, setProfileData] = useState([])
 
@@ -49,16 +48,17 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         fetchProfileData()
     }, [])
-
-
+    
+    
     //products 
     const [products, setProducts] = useState([]); // [products, setProducts]
     const [productsbc, setproductsbc] = useState([]);
     const [productloading, setproductloading] = useState(false)
     const [productcount, setproductcount] = useState(0)
-
-
+    
+    
     // set coupon code 
+    console.log(productsbc)
     const [couponcode, setcouponcode] = useState("")
 
     // functions for products

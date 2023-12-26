@@ -1008,13 +1008,13 @@ const ProductOverview = () => {
               Buy Now
             </button>
           </div>
-          {/* <div className="py-6 border-b-gray-500">
+          <div className="py-6 border-b-gray-500">
             <label htmlFor="pincode" className="flex items-center text-lg font-medium  uppercase ">
               <span className="font-bold ">Delivery & Services </span>
               <TruckIcon className="h-7 w-7 text-gray-800/80 ml-1" />
             </label>
             <PincodeForm />
-          </div> */}
+          </div>
           <div>
             <AccordionItem
               title="Product Details"

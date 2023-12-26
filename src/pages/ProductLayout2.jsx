@@ -40,7 +40,7 @@ const ProductLayout2 = () => {
       setfilterdata({
         ...filterdata,
         category: category  != 'All' ? category  : '',
-        gender: [`${gender != null ? gender : null}`],
+        gender: gender !== null ? gender : [],
         search: (subcategory || 'All'),
       });
 
