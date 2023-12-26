@@ -16,7 +16,6 @@ const ProductLayout2 = () => {
   let [searchParams, setSearchParams] = useSearchParams();
 
 
-  const isFirstRun = useRef(true);
   useEffect(() => {
 
     let category = searchParams.get("category") || ''
@@ -34,7 +33,7 @@ const ProductLayout2 = () => {
       handlefetchProducts()
     }
 
-    if ((subcategory || category) && !isFirstRun.current && !searchParams.has('navsearch')) {
+    if ((subcategory || category)  && !searchParams.has('navsearch')) {
       console.error("useLayoutEffect")
       console.warn()
 
@@ -46,9 +45,7 @@ const ProductLayout2 = () => {
       });
 
 
-    } else {
-      isFirstRun.current = false;
-    }
+    } 
   }, [searchParams])
 
   console.log(searchParams.get("gender"));
