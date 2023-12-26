@@ -16,7 +16,7 @@ const Register = () => {
         newsletter: false
     })
 
-    const { setIsAuth, setIsVerfied } = useContext(AuthContext)
+    const { setIsAuth } = useContext(AuthContext)
 
     const [altcls, setAltcls] = useState(false)
 

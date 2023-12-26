@@ -40,3 +40,24 @@
   background: #868686;
 
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* Starting opacity for the current banner */
+  }
+
+  
+  100% {
+    opacity: 1; /* Fully fade out */
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; /* Start fading out from current opacity */
+  }
+
+  to {
+    opacity: 0; /* Fully fade out */
+  }
+}

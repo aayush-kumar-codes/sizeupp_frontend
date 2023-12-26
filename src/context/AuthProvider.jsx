@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const AuthContext = createContext();
@@ -22,13 +22,13 @@ const AuthProvider = ({ children }) => {
     const [navsearch, setnavsearch] = useState("")
     const [navgender, setnavgender] = useState("")
 
-
+    
     //profiledata
     const [profiledata, setProfileData] = useState([])
 
     const fetchProfileData = async () => {
         try {
-            if(localStorage.token){
+            if (localStorage.token) {
                 const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
                     method: 'GET',
                     headers: {
@@ -48,15 +48,17 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         fetchProfileData()
     }, [])
-
-
+    
+    
     //products 
     const [products, setProducts] = useState([]); // [products, setProducts]
     const [productsbc, setproductsbc] = useState([]);
     const [productloading, setproductloading] = useState(false)
     const [productcount, setproductcount] = useState(0)
-
+    
+    
     // set coupon code 
+    console.log(productsbc)
     const [couponcode, setcouponcode] = useState("")
 
     // functions for products
@@ -120,15 +122,17 @@ const AuthProvider = ({ children }) => {
         gender: [],
         size: [],
         color: [],
-        search: ""
+        category: '',
+        search: "All"
     })
-
-    console.log(navsearch, navgender, filterdata)
-
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
 
         return products.filter((product) => {
+            let urlsearch = filter.search
+            if (filter.search === "All" || filter.search === "") {
+                urlsearch = ""
+            }
             return (
                 search.length === 0 ||
                 product.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -137,14 +141,6 @@ const AuthProvider = ({ children }) => {
                 product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
                 product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
             ) &&
-                (
-                    filterdata.search.length === 0 ||
-                    product.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                    product.gender?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                    product.color?.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                    product.category?.name.toLowerCase().includes(filterdata.search.toLowerCase()) ||
-                    product.subcategory?.name.toLowerCase().includes(filterdata.search.toLowerCase())
-                ) &&
                 (
                     filter.gender?.length === 0 || filter.gender.includes(product.gender)
                 ) &&
@@ -157,6 +153,13 @@ const AuthProvider = ({ children }) => {
                 (
                     category?.length === 0 || category.includes(product.category.name)
                 ) &&
+                (
+                    filter.category?.length === 0 || filter.category.includes(product.category.name)
+                ) &&
+                (
+                    urlsearch.length === 0 || product.subcategory?.name.toLowerCase().includes(urlsearch.toLowerCase())
+                )
+                &&
                 (
                     (navsearch.length === 0 || navgender.length === 0) ||
                     product.subcategory?.name.toLowerCase().includes(navsearch.toLowerCase()) &&
@@ -218,6 +221,8 @@ const AuthProvider = ({ children }) => {
 
 
                 }
+
+
                 if (filterdata.search !== "" || search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
                     console.table(filterdata)
                     const filteredProducts = funcFilter(data, filterdata)
@@ -231,6 +236,7 @@ const AuthProvider = ({ children }) => {
                     setproductsbc(data);
                     setproductcount(data.length)
                     setproductloading(false)
+                    console.log(productsbc);
 
                 }
 
@@ -307,6 +313,7 @@ const AuthProvider = ({ children }) => {
                     setproductcount(data.length);
                     setproductloading(false);
 
+
                 }
 
             }
@@ -314,7 +321,6 @@ const AuthProvider = ({ children }) => {
             console.error('Error fetching products:', error);
         }
     };
-    console.log(productsbc);
 
     //handling auth functions 
     const handlefetchFilterProducts = async () => {
@@ -327,13 +333,18 @@ const AuthProvider = ({ children }) => {
 
     const handlefetchProducts = async () => {
         console.log("handle fetch products", localStorage.token)
+
         if (localStorage.token) {
             fetchProductsAuth()
+            localStorage.setItem("count", localStorage.count + 1);
         } else {
             fetchProducts()
+            localStorage.setItem("count", localStorage.count + 1);
+
         }
     }
 
+    const firstRun = useRef(true);
     useEffect(() => {
         handlefetchProducts()
     }, [filterdata])
@@ -398,12 +409,12 @@ const AuthProvider = ({ children }) => {
                 couponcode,
                 setcouponcode,
 
-                
+
                 sort,
                 setSort,
                 filterdata,
                 setfilterdata,
-                
+
                 profiledata,
                 fetchProfileData
             }}

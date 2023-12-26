@@ -71,10 +71,10 @@ const Slider = () => {
 
         <div className="slider-controler">
           <div className="swiper-button-prev slider-arrow">
-          <ArrowLeftIcon className="h-6 w-6 text-gray-500" />
+          {/* <ArrowLeftIcon className="h-6 w-6 text-gray-100" /> */}
           </div>
           <div className="swiper-button-next slider-arrow">
-          <ArrowRightIcon className="h-6 w-6 text-gray-500" />
+          {/* <ArrowRightIcon className="h-6 w-6 text-gray-100" /> */}
           </div>
           <div className="swiper-pagination"></div>
         </div>

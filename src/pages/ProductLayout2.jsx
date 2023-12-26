@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useContext, useEffect, useLayoutEffect, useRef } from 'react'
+import { Link, useSearchParams ,useNavigate} from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
@@ -9,11 +9,50 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, setIsFilterActive, setcategory, handlefetchProducts, productcount, search } = useContext(AuthContext)
+  const { isFilterActive, setSearch, setIsFilterActive, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
-
-
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
+
+  useEffect(() => {
+
+    let category = searchParams.get("category") || ''
+    let subcategory = searchParams.get("subcategory") || 'All'
+    let gender = searchParams.get('gender') || null
+
+    if (searchParams.has('navsearch')) {
+      setSearch(searchParams.get("navsearch") || '')
+      setfilterdata({
+        ...filterdata,
+        search: "",
+        category: "",
+        gender: []
+      });
+      handlefetchProducts()
+    }
+
+    if ((subcategory || category)  && !searchParams.has('navsearch')) {
+      console.error("useLayoutEffect")
+      console.warn()
+
+      setfilterdata({
+        ...filterdata,
+        category: category  != 'All' ? category  : '',
+        gender: gender !== null ? [`${gender}`] : [],
+        search: (subcategory || 'All'),
+      });
+
+
+    } 
+  }, [searchParams])
+
+  console.log(searchParams.get("gender"));
+  console.warn(filterdata)
+  const navigate = useNavigate();
+
+  
 
   const handleChangeFilter = (event) => {
 
@@ -22,6 +61,8 @@ const ProductLayout2 = () => {
     //   ...prevState,
     //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
     // }));
+
+    navigate(`/products?${name}=${value}`)
     setfilterdata({
       ...filterdata,
       [name]: filterdata[name].includes(value) ? filterdata[name].filter(v => v !== value) : [...filterdata[name], value],
@@ -36,6 +77,7 @@ const ProductLayout2 = () => {
     // }
     console.log(filterdata);
   };
+
 
   const filters = [
     {
@@ -396,7 +438,7 @@ const ProductLayout2 = () => {
                     </div>
                   </li>
                 }
-                {!search && category?.length > 0 &&
+                {!search && filterdata.category?.length > 0 &&
                   <li>
                     <div className="flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -404,7 +446,20 @@ const ProductLayout2 = () => {
                       </svg>
 
                       <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                        {category}
+                        {filterdata.category}
+                      </a>
+                    </div>
+                  </li>
+                }
+                {!search && filterdata.search?.length > 0 &&
+                  <li>
+                    <div className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+
+                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                        {filterdata.search}
                       </a>
                     </div>
                   </li>
@@ -470,7 +525,7 @@ const ProductLayout2 = () => {
                                   (filterdata.size.find((el) => el == option.value) ? true : false)
                                   :
                                   filter.id === 'category' ?
-                                    (category === option.value)
+                                    (filterdata.category === option.value)
                                     :
                                     filter.id === 'color' ?
                                       (filterdata.color.find((el) => el == option.value) ? true : false)
@@ -478,10 +533,12 @@ const ProductLayout2 = () => {
                                       option.value
                             }
                             onChange={(e) => {
-                              if (filter.id === 'category') {
-                                setcategory(e.target.value);
-                                handlefetchProducts()
-                              } else {
+                              if(e.target.id === 'category'){
+                                setfilterdata({
+                                  ...filterdata,
+                                  category: e.target.value,
+                                });
+                              }else{
                                 handleChangeFilter(e)
                               }
                             }}
