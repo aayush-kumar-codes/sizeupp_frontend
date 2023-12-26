@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useLayoutEffect, useRef } from 'react'
-import { Link, useSearchParams ,useNavigate} from 'react-router-dom'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
@@ -13,17 +13,14 @@ const ProductLayout2 = () => {
   const [filterActive, setFilterActive] = useState(false)
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
 
-  let [searchParams, setSearchParams] = useSearchParams();
 
 
   const isFirstRun = useRef(true);
+  let [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
 
-    let category = searchParams.get("category") || ''
-    let subcategory = searchParams.get("subcategory") || 'All'
-
     if (searchParams.has('navsearch')) {
-    
+
       setSearch(searchParams.get("navsearch") || '')
       setfilterdata({
         ...filterdata,
@@ -55,7 +52,7 @@ const ProductLayout2 = () => {
   console.warn(filterdata)
   const navigate = useNavigate();
 
-  
+
 
   const handleChangeFilter = (event) => {
 
@@ -536,12 +533,12 @@ const ProductLayout2 = () => {
                                       option.value
                             }
                             onChange={(e) => {
-                              if(e.target.id === 'category'){
+                              if (e.target.id === 'category') {
                                 setfilterdata({
                                   ...filterdata,
                                   category: e.target.value,
                                 });
-                              }else{
+                              } else {
                                 handleChangeFilter(e)
                               }
                             }}

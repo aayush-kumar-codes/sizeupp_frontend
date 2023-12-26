@@ -50,7 +50,7 @@ const Megamenu = () => {
         }
         ))
     }, [])
-    
+
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-inherit z-40 `}>
             {/* layout prefixer */}
@@ -80,7 +80,7 @@ const Megamenu = () => {
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-4 gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md  drop-shadow-md`}>
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-${data.women_category_data?.length} gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md  drop-shadow-md`}>
                         {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -154,7 +154,7 @@ const Megamenu = () => {
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                        <div className={`hidden focus:hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md drop-shadow-md`}>
+                        <div className={`hidden focus:hidden group-hover:grid grid-cols-${data.men_category?.length} gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md drop-shadow-md`}>
                             {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
