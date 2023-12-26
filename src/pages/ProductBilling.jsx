@@ -299,9 +299,7 @@ export function ProductBilling() {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
-    if(cart.length === 0 ){
-        return <Navigate to="/products" />
-    }
+    
 
     return (
         <div className={`${styles.padding} mx-10 my-6`}>

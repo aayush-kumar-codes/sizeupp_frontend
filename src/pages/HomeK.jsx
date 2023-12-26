@@ -50,6 +50,7 @@ const Megamenu = () => {
         }
         ))
     }, [])
+    
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-inherit z-40 `}>
             {/* layout prefixer */}
