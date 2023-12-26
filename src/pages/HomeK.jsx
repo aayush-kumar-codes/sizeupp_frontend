@@ -856,6 +856,7 @@ const HomeK = () => {
             <Slider />
             {/* <ShopCategoryWise />
             <ShopNow /> */}
+            
             <Footer />
             {/* <Newsletter /> */}
         </>
