@@ -23,7 +23,6 @@ const ProductLayout2 = () => {
     let subcategory = searchParams.get("subcategory") || 'All'
 
     if (searchParams.has('navsearch')) {
-    
       setSearch(searchParams.get("navsearch") || '')
       setfilterdata({
         ...filterdata,
