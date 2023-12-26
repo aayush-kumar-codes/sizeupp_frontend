@@ -169,12 +169,14 @@ export const ProductFav = () => {
                             if(item.id == favData[index-1]?.id) {
                                 return null
                             } 
+
+
                             return (
                                 <div key={index} className="mx-auto my-2 flex flex-wrap items-center lg:w-4/5">
                                     <img
                                         alt="dress"
                                         className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
-                                        src={import.meta.env.VITE_SERVER_URL + item.img}
+                                        src={import.meta.env.VITE_SERVER_URL + (item.images[0].img).slice(6)}
                                     />
                                     <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
                                         {/* <div className="text-orange-600 font-normal text-lg">
@@ -208,7 +210,7 @@ export const ProductFav = () => {
                                             ) : null}
                                         </div> */}
                                         <div className="flex mt-4 items-center justify-between">
-                                            <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.price}</span>
+                                            <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.mrp}</span>
                                             <div className="flex gap-2">
                                                 <button
                                                     type="button"

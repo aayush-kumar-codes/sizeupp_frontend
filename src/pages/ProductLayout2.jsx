@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useLayoutEffect, useRef } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams ,useNavigate} from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
@@ -50,8 +50,12 @@ const ProductLayout2 = () => {
       isFirstRun.current = false;
     }
   }, [searchParams])
+
   console.log(searchParams.get("gender"));
   console.warn(filterdata)
+  const navigate = useNavigate();
+
+  
 
   const handleChangeFilter = (event) => {
 
@@ -60,6 +64,8 @@ const ProductLayout2 = () => {
     //   ...prevState,
     //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
     // }));
+
+    navigate(`/products?${name}=${value}`)
     setfilterdata({
       ...filterdata,
       [name]: filterdata[name].includes(value) ? filterdata[name].filter(v => v !== value) : [...filterdata[name], value],
@@ -74,9 +80,6 @@ const ProductLayout2 = () => {
     // }
     console.log(filterdata);
   };
-
-
-
 
 
   const filters = [
@@ -533,7 +536,14 @@ const ProductLayout2 = () => {
                                       option.value
                             }
                             onChange={(e) => {
-                              handleChangeFilter(e)
+                              if(e.target.id === 'category'){
+                                setfilterdata({
+                                  ...filterdata,
+                                  category: e.target.value,
+                                });
+                              }else{
+                                handleChangeFilter(e)
+                              }
                             }}
                           />
                           <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
