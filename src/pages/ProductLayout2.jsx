@@ -21,6 +21,7 @@ const ProductLayout2 = () => {
 
     let category = searchParams.get("category") || ''
     let subcategory = searchParams.get("subcategory") || 'All'
+    let gender = searchParams.get('gender') || null
 
     if (searchParams.has('navsearch')) {
       setSearch(searchParams.get("navsearch") || '')
@@ -39,9 +40,9 @@ const ProductLayout2 = () => {
 
       setfilterdata({
         ...filterdata,
-        category: (searchParams.get("category") || '') != 'All' ? (searchParams.get("category") || '') : '',
-        gender: [`${(searchParams.get("gender") || '') != 'All' ? (searchParams.get("gender") || '') : ''}`],
-        search: (searchParams.get("subcategory") || 'All'),
+        category: category  != 'All' ? category  : '',
+        gender: [`${gender != null ? gender : null}`],
+        search: (subcategory || 'All'),
       });
 
 
