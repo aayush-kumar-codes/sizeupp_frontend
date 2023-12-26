@@ -48,7 +48,7 @@ const filters = [
 
 const SideNav = (
     {
-        display = false,
+        display = true,
         setDisplay = () => { }
     }
 ) => {

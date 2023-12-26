@@ -99,8 +99,8 @@ const Carousel = ({
             <div
               key={i}
               className={`
-              transition-all w-2 h-2 md:w-3 md:h-3 bg-white rounded-full
-              ${currentSlide === i ? "p-2" : "bg-opacity-50"}
+              transition-all w-[5px] h-[5px] md:w-[6px] md:h-[6px] bg-white rounded-full
+              ${currentSlide === i ? "p-1.5" : "bg-opacity-50"}
             `}
             />
           ))}

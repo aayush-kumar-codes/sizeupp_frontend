@@ -395,7 +395,7 @@ const ProductLayout2 = () => {
   return (
     <>
       <section className="w-full">
-        <div className="mx-auto px-2 py-10 lg:px-10">
+        <div className="mx-auto px-2 py-6 lg:px-10">
           <div className="md:flex md:flex-row md:items-start md:justify-between justify-center">
             <div className="px-12">
               {/* Nav menu- Breadcrumb */}
@@ -490,7 +490,7 @@ const ProductLayout2 = () => {
                 </li> */}
               </ol>
 
-              <h2 className={` text-lg font-normal text-gray-800/80 mx-2`}>Showing {productcount} related results</h2>
+              <h2 className={` text-md font-normal text-gray-800/80 mx-2`}>Showing {productcount} related results</h2>
             </div>
             <div className="mt-6 flex items-center pt-2 md:mt-0 md:space-x-4 md:pt-0">
               {/* Filter navbar */}
@@ -499,7 +499,7 @@ const ProductLayout2 = () => {
 
             </div>
           </div>
-          <hr className='my-6' />
+          <hr className='my-3' />
 
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
             <div className="hidden space-y-6 divide-y lg:col-span-2 lg:block">
