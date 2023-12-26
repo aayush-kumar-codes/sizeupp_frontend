@@ -3,11 +3,12 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
+import { useNavigate } from "react-router-dom"
 const Megamenu = () => {
 
     const [data, setData] = useState([])
 
-    const { setfilterdata,setnavsearch,setnavgender, setcategory } = useContext(AuthContext)
+    const { setnavsearch,setfilterdata, setnavgender, setcategory } = useContext(AuthContext)
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
@@ -22,17 +23,14 @@ const Megamenu = () => {
         }
         ))
     }, [])
+    const navigate = useNavigate()
 
-    const handleSearch = (id,gender,cat) => {
-        setcategory(cat)
-        setfilterdata({
-            gender: [`${gender}`],
-            color: [],
-            size: [],
-            search : id
-        })
+    const [megamenuhide, setMegamenuhide] = useState(false)
 
-
+    const handleSearch = (id, gender, cat) => {
+        setMegamenuhide(true)
+        navigate(`/products?gender=${gender}&category=${cat}&subcategory=${id}`)
+        setMegamenuhide(false)
     }
     return (
         <div className={`${styles.paddingX} hidden md:block py-4 w-full relative bg-white shadow z-40 `}>
@@ -41,14 +39,13 @@ const Megamenu = () => {
                 {/* All Products */}
                 <div className="group">
 
-                    <Link to="/products" onClick={() => {
-                        setnavsearch("")
-                        setnavgender("")
+                    <Link to="/products" onClick={()=>{
                         setfilterdata({
-                            search: "",
-                            size: [],
+                            gender : [],
                             color: [],
-                            gender: []
+                            size : [],
+                            search:"",
+                            category : ""
                         })
                     }} className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         All Products
@@ -57,13 +54,13 @@ const Megamenu = () => {
 
 
                 {/* Woman */}
-                {data.women_category_data?.length > 0 && <div className="group">
+                { <div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-4 gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md  drop-shadow-md`}>
                         {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -82,7 +79,7 @@ const Megamenu = () => {
                                     <ul className="grid grid-flow-row gap-4">
                                         {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
                                             return (
-                                                <li onClick={()=>handleSearch(items.name,'Women',cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
                                                 </li>
                                             )
@@ -136,8 +133,9 @@ const Megamenu = () => {
                         Men
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                        {/* <div className="col-span-1">
+                    <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
+                        <div className={`hidden focus:hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md drop-shadow-md`}>
+                            {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
                             < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
@@ -148,24 +146,24 @@ const Megamenu = () => {
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
                         </div> */}
-                        {data.men_category?.length > 0 && data.men_category.map((cat) => {
-                            return (
-                                <div key={cat.id} className="col-span-1 ">
-                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
-                                    <ul className="grid grid-flow-row gap-4">
-                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
-                                            return (
-                                                <li onClick={() => handleSearch(items.name,'Men',cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                                    {items.name}
-                                                </li>
-                                            )
-                                        })
-                                        }
-                                    </ul>
-                                </div>)
-                        })
-                        }
-                        {/* <div className="col-span-1 ">
+                            {data.men_category?.length > 0 && data.men_category.map((cat) => {
+                                return (
+                                    <div key={cat.id} className="col-span-1 ">
+                                        <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                        <ul className="grid grid-flow-row gap-4">
+                                            {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                                return (
+                                                    <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                        {items.name}
+                                                    </li>
+                                                )
+                                            })
+                                            }
+                                        </ul>
+                                    </div>)
+                            })
+                            }
+                            {/* <div className="col-span-1 ">
                             <ul className="grid grid-flow-row gap-4">
                                 {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
                                     return (
@@ -177,6 +175,7 @@ const Megamenu = () => {
                                 }
                             </ul>
                         </div> */}
+                        </div>
                     </div>
                 </div>
 

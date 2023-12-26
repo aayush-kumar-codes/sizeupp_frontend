@@ -5,13 +5,13 @@ const Forgot = () => {
     const navigate = useNavigate()
 
 
-    const [email, , setemail] = useState("")
+    const [email,  setemail] = useState("")
 
 
 
     const handleCheckEmail = async () => {
         try {
-            const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/forgot_password", {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/forgot-otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -45,6 +45,7 @@ const Forgot = () => {
 
         }
     }
+
     return (
         <>
             <section className="bg-gray-50 ">

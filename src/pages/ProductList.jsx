@@ -61,9 +61,7 @@ const ProductList = ({
 
     const navigate = useNavigate()
 
-    useLayoutEffect(() => {
-        handlefetchProducts()
-    }, []);
+ 
 
 
     useEffect(() => {

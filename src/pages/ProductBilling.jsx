@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,Navigate } from 'react-router-dom'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { styles } from '../style'
 import { useContext, useEffect, useState } from 'react'
@@ -167,7 +167,6 @@ export function ProductBilling() {
                 return navigate('/login')
             }
             console.log({
-                address_id: localStorage.address_id,
                 mrp_price: form.mrp_price,
                 sub_total: form.sub_total,
                 cupon_discount: form.cupon_discount,
@@ -220,7 +219,6 @@ export function ProductBilling() {
 
     useEffect(() => {
         setPayload(false)
-        fetchCart()
         fetchCoupon()
         fetchUserProfile()
     }, [])
@@ -300,6 +298,10 @@ export function ProductBilling() {
         // 👇️ scroll to top on page load
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
+
+    if(cart.length === 0 ){
+        return <Navigate to="/products" />
+    }
 
     return (
         <div className={`${styles.padding} mx-10 my-6`}>

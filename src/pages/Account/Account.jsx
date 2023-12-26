@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
-
+import Swal from 'sweetalert2'
 
 const BillingAddress = () => {
     const [editBillingMode, setEditBillingMode] = useState(false);
@@ -33,6 +33,7 @@ const BillingAddress = () => {
         setEditBillingMode(false);
         alert('Billing address changes made successfully');
     };
+
 
     return (
         <div className="mx-16 mt-8">
@@ -124,6 +125,52 @@ const Account = () => {
     useEffect(() => {
         fetchProfileData()
     }, [])
+
+
+    const handleEdit = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/update-profile', {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    'Authorization' : 'token ' + localStorage.getItem('token')
+                },
+                body : JSON.stringify({
+                    address_line_1: formData.addressLine1,
+                    address_line_2: formData.addressLine2,
+                    city: formData.city,
+                    state: formData.state,
+                    postal_code: formData.zipCode,
+                    country: formData.country,
+
+                })
+            })
+
+            const data = await res.json()
+
+            if(!data.ok){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.error,
+                })
+            }
+            console.log(data)
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: data.message,
+            })
+        } catch (err) {
+            console.error(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.message,
+            })
+        }
+    }
+
 
     return (
         <>
@@ -292,7 +339,7 @@ const Account = () => {
 
                                             {editMode && (
                                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                    <button type="submit" className="rounded-lg bg-blue-500 text-white px-4 py-2">
+                                                    <button type="button" onClick={()=>{handleEdit()}} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                                         Save
                                                     </button>
                                                 </div>

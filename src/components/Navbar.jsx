@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { styles } from '../style'
 import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from './Custom/AccordionItem'
-import { UserIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { UserIcon, MagnifyingGlassIcon} from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 
@@ -214,8 +214,15 @@ export function Navbar() {
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
-        
     }
+
+    const [searchParams,setSearchParams] = useSearchParams()
+
+    useEffect(()=>{ 
+        if(searchParams.has('gender')){
+            console.log(searchParams.get('gender'))
+        }
+    },[])
 
 
     const toggleMenu = () => {
@@ -334,12 +341,12 @@ export function Navbar() {
                             </div>
                             <button onClick={handlefetchFilterProducts}> Submit</button>
                         </div> */}
-                        <form className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
-                            <input type="text" value={search} onChange={(e)=>{handleSearch(e)}} placeholder="Search anything" className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search"/>
-                                <button type="button" onClick={()=>{handlefetchProducts()}} className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
+                        <div className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
+                            <input type="text" value={search} onChange={(e)=>{handleSearch(e)}} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search"/>
+                                <button type="button" onClick={()=>{handlefetchProducts(); navigate(`/products?navsearch=${search}`)}} className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
                                 <MagnifyingGlassIcon className="h-4 w-4 text-white "/>
                             </button>
-                        </form>
+                        </div>
                     </div>
 
                     {/* Menu */}
