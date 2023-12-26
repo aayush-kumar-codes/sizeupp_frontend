@@ -34,7 +34,7 @@ const ProductLayout2 = () => {
       handlefetchProducts()
     }
 
-    if ((searchParams.has("subcategory") || searchParams.has("category")) && !isFirstRun.current && !searchParams.has('navsearch')) {
+    if ((subcategory || category) && !isFirstRun.current && !searchParams.has('navsearch')) {
       console.error("useLayoutEffect")
       console.warn()
 
