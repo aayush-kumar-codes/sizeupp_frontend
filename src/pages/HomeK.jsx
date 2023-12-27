@@ -21,6 +21,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import Footer from '../components/Footer/Footer'
 import Slider from '../components/Slider/Slider'
 import BannerCarousel from '../components/HomeK/Carouselnew'
+import SlideShow from '../components/Slider/NewSlider';
 
 
 const Megamenu = () => {
@@ -842,11 +843,12 @@ const HomeK = () => {
     return (
         <>
             <Navbar />
-            {/* <Carousel /> */}
-            <BannerCarousel />
+            <Carousel />
+            {/* <SlideShow/> */}
+            {/* <BannerCarousel /> */}
             <Slider />
-            {/* <ShopCategoryWise />
-            <ShopNow /> */}
+            <ShopCategoryWise />
+            <ShopNow />
             
             <Footer />
             {/* <Newsletter /> */}
