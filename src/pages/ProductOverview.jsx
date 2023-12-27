@@ -756,7 +756,18 @@ const ProductOverview = () => {
     }
   }
 
+  const current = new Date();
 
+  const [isAsideOpen, setAsideOpen] = useState(false);
+
+  const toggleAside = () => {
+    setAsideOpen(!isAsideOpen);
+  };
+
+  const closeAside = () => {
+    setAsideOpen(false);
+  };
+  
   return (
     <div className={`${styles.padding}`}>
 
@@ -946,22 +957,47 @@ const ProductOverview = () => {
           </div>
 
           <div className="border-b border-c-gray-300 pb-3  ">
-            <div className="mb-4">
-              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                size
-              </h3>
+          <div className="flex w-full">
+              <div className="mb-4">
+                <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
+                  size
+                </h3>
 
-              <ul className="colors -mr-3 flex flex-wrap">
-                {demo.product?.sqp.map((sizes) => (
-                  <li
-                    key={sizes.id}
-                    onClick={() => { setSQPActive(sizes.id) }}
-                    className={`text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out ${sqpActive == sizes.id && 'border-black'} hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm `}
+                <ul className="colors -mr-3 flex flex-wrap">
+                  {demo.product?.sqp.map((sizes) => (
+                    <li
+                      key={sizes.id}
+                      onClick={() => { setSQPActive(sizes.id) }}
+                      className={`text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out ${sqpActive == sizes.id && 'border-black'} hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm `}
+                    >
+                      {sizes.size}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="p-2">
+              <div className="relative">
+                <button onClick={toggleAside} className="font-bold hover:scale-105 inline-flex items-center ">Size Chart
+                  <ChevronRightIcon className="h-4 w-4 " />
+                </button>
+
+                {/* Aside bar */}
+                <aside
+                  className={`fixed z-50 right-0 top-0 h-full bg-gray-100 text-white w-${isAsideOpen ? '2/5' : '0'} transition-all duration-300 ease-in-out`}
+                >
+                    {/* Close button at the top corner */}
+                    
+                  <button
+                    className="relative top-4 right-0 text-black"
+                    onClick={closeAside}
                   >
-                    {sizes.size}
-                  </li>
-                ))}
-              </ul>
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+
+                  {/* Your aside bar content goes here */}
+                  </aside>
+                  </div>
+              </div>
             </div>
             <div className="mb-4 ">
               <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">

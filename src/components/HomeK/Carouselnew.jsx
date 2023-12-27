@@ -47,15 +47,17 @@ const BannerCarousel = () => {
       {BannerData.map((banner, index) => (
         <div
           key={banner.id}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 bg-black ${
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000  bg-black ${
             index === currentBanner ? 'opacity-100' : 'opacity-0'
-          }`}
+            
+            }`}
+           
         >
           <img
             src={banner.img}
             alt={`Banner ${banner.id}`}
             className={`object-cover w-full h-full ${
-                index === currentBanner ? 'sm:origin-[33%_75%]' : ''
+                index === currentBanner ? 'sm:origin-[75%]' : ''
               }`}
   
           />
@@ -75,7 +77,7 @@ const BannerCarousel = () => {
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`w-4 h-4 rounded-full bg-white opacity-50 focus:outline-none ${
+            className={`w-2 h-2 rounded-full bg-white opacity-50 focus:outline-none ${
                 index === currentBanner ? 'opacity-100 scale-110' : ''
               }`}
           ></button>

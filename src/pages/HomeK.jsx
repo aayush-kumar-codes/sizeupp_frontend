@@ -3,12 +3,13 @@ import Carousel from '../components/HomeK/Carousel'
 import ShopCategoryWise from '../components/HomeK/ShopCategoryWise'
 
 import ShopNow from '../components/HomeK/ShopNow'
+import { MagnifyingGlassIcon} from "@heroicons/react/24/outline";
 
 
 import { useState, useEffect, useRef, useContext } from 'react'
 import { styles } from '../style'
 import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useSearchParams } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from '../components/Custom/AccordionItem'
 import { UserIcon } from "@heroicons/react/24/outline";
@@ -80,7 +81,7 @@ const Megamenu = () => {
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-${data.women_category_data?.length} gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md  drop-shadow-md`}>
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-${data.women_category_data?.length} gap-4 justify-between absolute right-4 p-6 w-[30vw] bg-secondary rounded-md  drop-shadow-md`}>
                         {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -94,12 +95,12 @@ const Megamenu = () => {
                         </div> */}
                         {data.women_category_data?.length > 0 && data.women_category_data.map((cat) => {
                             return (
-                                <div key={cat.id} className="col-span-1 ">
+                                <div key={cat.id} className="col-span-1">
                                     <h2 className="text-base text-gray-800 font-semibold mb-2">{cat.name}</h2>
-                                    <ul className="grid grid-flow-row gap-4">
+                                    <ul className="grid grid-flow-row gap-1">
                                         {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
                                             return (
-                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
                                                 </li>
                                             )
@@ -154,7 +155,7 @@ const Megamenu = () => {
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                        <div className={`hidden focus:hidden group-hover:grid grid-cols-${data.men_category?.length} gap-10 justify-between absolute p-10 w-fit bg-secondary rounded-md drop-shadow-md`}>
+                        <div className={`hidden focus:hidden group-hover:grid grid-cols-${data.men_category?.length} gap-4 justify-between absolute right-4 p-6 w-[25vw] bg-secondary rounded-md drop-shadow-md`}>
                             {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -170,10 +171,10 @@ const Megamenu = () => {
                                 return (
                                     <div key={cat.id} className="col-span-1 ">
                                         <h2 className="text-base text-gray-800 font-semibold mb-2">{cat.name}</h2>
-                                        <ul className="grid grid-flow-row gap-4">
+                                        <ul className="grid grid-flow-row gap-1">
                                             {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
                                                 return (
-                                                    <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                         {items.name}
                                                     </li>
                                                 )
@@ -274,6 +275,14 @@ function Navbar() {
                 {
                     name: 'My Orders',
                     href: '/profile/my-orders'
+                },
+                {
+                    name: 'Wishlist',
+                    href: '/products/favourite'
+                },
+                {
+                    name: 'Cart',
+                    href: '/products/cart'
                 },
             ]
         },
@@ -531,97 +540,187 @@ function Navbar() {
     }
     window.addEventListener('scroll', ChangeColornav);
 
+    const {search,setSearch,handlefetchProducts} = useContext(AuthContext)
+
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const [searchParams,setSearchParams] = useSearchParams()
+
+    useEffect(()=>{ 
+        if(searchParams.has('gender')){
+            console.log(searchParams.get('gender'))
+        }
+    },[])
+
+
     return (
         // container
         <div className={colorNav ? `px-10  bg-white/10 backdrop-blur text-white w-full sticky top-0 z-50` : `px-10 text-white bg-transparent w-full absolute top-0 z-50`}>
             {/* layout prefixer */}
             <div className="flex  items-center justify-between py-2">
+                <div className="flex">
+                    
+                    {/* brand title */}
+                    <Link to="/" className='cursor-pointer'>
+                        <img src={logo} alt="logo" className='w-28 object-contain' />
+                    </Link>
+            </div>
+                
+                <div className="lg:flex hidden justify-end items-end w-2/5">
+                            <div className="flex rounded-full border focus-within:border-gray-300 px-6">
+                                <input type="text" value={search} onChange={(e)=>{handleSearch(e)}} placeholder="Search " className="bg-transparent w-full  focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-2" name="search"/>
+                                    <button type="button" onClick={()=>{handlefetchProducts(); navigate(`/products?navsearch=${search}`)}} className="flex flex-row items-center justify-center px-2 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent my-1 h-[30px] -mr-3" >
+                                    <MagnifyingGlassIcon className="h-4 w-4 text-white "/>
+                                </button>
 
-                {/* brand title */}
-                <Link to="/" className='cursor-pointer'>
-                    <img src={logo} alt="logo" className='md:w-36 w-32 object-contain' />
-                </Link>
-
-                <Megamenu />
-                <div className="flex items-center  gap-4 w-1/5">
-                    {/* Search bar */}
-
-                    {/* Menu */}
-
-                    <div className='hidden lg:block '>
-                        <ul className="inline-flex space-x-10">
-
-                            <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
-                                <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
-                                    <HeartIcon className='w-6 h-6 stroke-2' />
-                                    <span className='text-xs font-medium '>Wishlist</span>
-                                </Link>
-                            </li>
-                            <li >
-                                <Link to="/products/cart" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
-                                    <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
-                                    <span className='text-xs font-medium '>Cart</span>
-                                </Link>
-                            </li>
-                            <li >
-                                <div className=' cursor-pointer' ref={profileRef}>
-                                    <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
-                                        <UserIcon className="h-6 w-6 stroke-2 " />
-                                        <span className='text-xs font-medium'>Account</span>
-
-                                    </button>
-
-                                    {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                        <ul className="py-1" role="none">
-                                            {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                                            <li className='hover:bg-gray-200/30 pl-2 '>
-                                                <Link to="/profile" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    Profile
-                                                </Link>
-                                            </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    My Offers
-                                                </Link>
-                                            </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/track-orders" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    Track order
-                                                </Link>
-                                            </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/account-settings" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    Settings
-                                                </Link>
-                                            </li>
-                                            {!localStorage.token && noAuthMenuItems.map((item) => (
-                                                <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
-                                                    <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
-                                                        {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                            {localStorage.token && menuItems.map((item) => (
-                                                <li onClick={() => {
-                                                    item.name == 'Logout' && item.func(item.name, item.href)
-                                                }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
-                                                    <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-2 text-sm">
-                                                        {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-
-                                        </ul>
-                                    </div>}
-
-                                </div>
-                            </li>
-
-
-
-
-                        </ul>
+                            </div>
                     </div>
+                    
+                
+                <div className="flex items-center ">
+                    <Megamenu />
+                    <div className='lg:flex hidden cursor-pointer' ref={profileRef}>
+                                        <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
+                                            <Bars3BottomLeftIcon className="h-6 w-6 stroke-2 " />
+                                            <span className='text-xs font-medium'>Account</span>
+
+                                        </button>
+
+                                        {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                            <ul className="py-1" role="none">
+                                                {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
+                                                    <Link to="/profile" className="text-gray-700 block px-4 py-1 text-sm">
+                                                        Profile
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
+                                                    <Link to="/product/favourite" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        Wishlist
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
+                                                    <Link to="/product/cart" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        Cart
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        My Offers
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/track-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        Track order
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/account-settings" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        Settings
+                                                    </Link>
+                                                </li>
+                                                {!localStorage.token && noAuthMenuItems.map((item) => (
+                                                    <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                                        <Link to={item.href} className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                            {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                                {localStorage.token && menuItems.map((item) => (
+                                                    <li onClick={() => {
+                                                        item.name == 'Logout' && item.func(item.name, item.href)
+                                                    }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                            {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+
+                                            </ul>
+                                        </div>}
+
+                                    </div>
+                   {/* <div className="flex items-center  gap-4 w-1/5">
+                        
+                        
+                         <div className='hidden lg:block '>
+                            <ul className="inline-flex space-x-10">
+
+                                <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
+                                    <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
+                                        <HeartIcon className='w-6 h-6 stroke-2' />
+                                        <span className='text-xs font-medium '>Wishlist</span>
+                                    </Link>
+                                </li>
+                                <li >
+                                    <Link to="/products/cart" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
+                                        <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
+                                        <span className='text-xs font-medium '>Cart</span>
+                                    </Link>
+                                </li>
+                                <li >
+                                    <div className=' cursor-pointer' ref={profileRef}>
+                                        <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
+                                            <UserIcon className="h-6 w-6 stroke-2 " />
+                                            <span className='text-xs font-medium'>Account</span>
+
+                                        </button>
+
+                                        {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                            <ul className="py-1" role="none">
+                                                
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
+                                                    <Link to="/profile" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        Profile
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        My Offers
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/track-orders" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        Track order
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/account-settings" className="text-gray-700 block px-4 py-2 text-sm">
+                                                        Settings
+                                                    </Link>
+                                                </li>
+                                                {!localStorage.token && noAuthMenuItems.map((item) => (
+                                                    <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                                        <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
+                                                            {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                                {localStorage.token && menuItems.map((item) => (
+                                                    <li onClick={() => {
+                                                        item.name == 'Logout' && item.func(item.name, item.href)
+                                                    }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-2 text-sm">
+                                                            {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+
+                                            </ul>
+                                        </div>}
+
+                                    </div>
+                                </li>
+
+
+
+
+                            </ul>
+                        </div> 
+
+                    </div>*/}
 
                 </div>
 
@@ -755,8 +854,9 @@ const HomeK = () => {
             {/* <Carousel /> */}
             <BannerCarousel />
             <Slider />
-            <ShopCategoryWise />
-            <ShopNow />
+            {/* <ShopCategoryWise />
+            <ShopNow /> */}
+            
             <Footer />
             {/* <Newsletter /> */}
         </>
