@@ -19,6 +19,38 @@ const ProductLayout2 = () => {
     // Clone the existing searchParams to avoid mutation
     const newSearchParams = new URLSearchParams(searchParams);
 
+    // handle category
+    if (key === 'category') {
+      newSearchParams.delete('subcategory')
+      newSearchParams.delete('navsearch')
+      newSearchParams.delete('fit')
+      newSearchParams.delete('sleeve')
+      newSearchParams.delete('necktype')
+      newSearchParams.delete('color')
+      newSearchParams.delete('size')
+
+    }
+    if(key === 'subcategory'){
+      newSearchParams.delete('navsearch')
+      newSearchParams.delete('fit')
+      newSearchParams.delete('sleeve')
+      newSearchParams.delete('necktype')
+      newSearchParams.delete('color')
+      newSearchParams.delete('size')
+    }
+    if(key === 'gender') {
+      newSearchParams.delete('subcategory')
+      newSearchParams.delete('navsearch')
+      newSearchParams.delete('fit')
+      newSearchParams.delete('sleeve')
+      newSearchParams.delete('necktype')
+      newSearchParams.delete('color')
+      newSearchParams.delete('size')
+      newSearchParams.delete('category')
+
+    }
+
+
     // If the value is an array, append each item individually
     if (Array.isArray(value)) {
       value.forEach((item) => newSearchParams.append(key, item));
@@ -310,7 +342,7 @@ const ProductLayout2 = () => {
 
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
             <div className="hidden space-y-6 divide-y lg:col-span-2 lg:block">
-              <div onClick={()=>{navigate('/products')}} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
+              <div onClick={() => { navigate('/products') }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
               {filters.map((filter) => (
                 <div key={filter.id}>
                   <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
