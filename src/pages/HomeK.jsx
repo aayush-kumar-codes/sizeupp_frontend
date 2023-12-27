@@ -91,12 +91,12 @@ const Megamenu = () => {
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
                         </div> */}
-                        {data.women_category_data?.length > 0 && data.women_category_data.map((cat) => {
+                        { data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
                             return (
-                                <div key={cat.id} className="col-span-1">
-                                    <h2 className="text-base text-gray-800 font-semibold mb-2">{cat.name}</h2>
-                                    <ul className="grid grid-flow-row gap-1">
-                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                <div key={cat.id} className="col-span-1 ">
+                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                    <ul className="grid grid-flow-row gap-2">
+                                        {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
                                             return (
                                                 <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
@@ -165,14 +165,14 @@ const Megamenu = () => {
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
                         </div> */}
-                            {data.men_category?.length > 0 && data.men_category.map((cat) => {
+                            {data.men_category && data.men_category[0]?.subcategories.map((cat) => {
                                 return (
                                     <div key={cat.id} className="col-span-1 ">
-                                        <h2 className="text-base text-gray-800 font-semibold mb-2">{cat.name}</h2>
-                                        <ul className="grid grid-flow-row gap-1">
-                                            {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                        <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                        <ul className="grid grid-flow-row gap-2">
+                                            {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
                                                 return (
-                                                    <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-sm text-gray-800/80  hover:underline cursor-pointer">
                                                         {items.name}
                                                     </li>
                                                 )
@@ -555,7 +555,7 @@ function Navbar() {
 
     return (
         // container
-        <div className={colorNav ? `px-10  bg-white/10 text-white w-full sticky top-0 z-50` : `px-10 text-white w-full absolute top-0 z-50`}>
+        <div className={colorNav ? `px-10 text-white w-full sticky top-0 z-50` : `px-10 text-white w-full absolute top-0 z-50`}>
             {/* layout prefixer */}
             <div className="flex  items-center justify-between py-2">
                 <div className="flex">
