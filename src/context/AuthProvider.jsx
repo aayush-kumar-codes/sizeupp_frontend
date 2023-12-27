@@ -123,7 +123,9 @@ const AuthProvider = ({ children }) => {
         size: [],
         color: [],
         category: '',
-        subcategory: 'All',
+        fit : "",
+        sleeve : "",
+        necktype: "",
         search: "All"
     })
     // Function to filter data based on multiple criteria
@@ -137,28 +139,37 @@ const AuthProvider = ({ children }) => {
             return (
                 search.length === 0 ||
                 product.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.category?.name?.toLowerCase().includes(search.toLowerCase()) ||
-                product.color?.toLowerCase().includes(search.toLowerCase()) ||
-                product.subcategory?.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.subsubcategory?.name.toLowerCase().includes(search.toLowerCase())
+                product.gender?.toLowerCase().includes(search.toLowerCase()) ||
+                product.cf?.toLowerCase().includes(search.toLowerCase()) ||
+                product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
+                product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
             ) &&
                 (
-                    filter.gender?.length === 0 || filter.gender.includes(product.category?.name)
+                    filter.gender?.length === 0 || filter.gender.includes(product.category.name)
                 ) &&
                 (
                     filter.size?.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))
                 ) &&
                 (
-                    filter.color?.length === 0 || filter.color.includes(product.color)
+                    filter.color?.length === 0 || filter.color.includes(product.cf)
+                ) &&
+                (
+                    category?.length === 0 || category.includes(product.category.name)
                 ) &&
                 (
                     filter.category?.length === 0 || filter.category.includes(product.subcategory.name)
                 ) &&
                 (
-                    filter.subcategory === 'All' || filter.subcategory.includes(product.subsubcategory.name)
+                    filter.fit?.length === 0 || filter.fit.includes(product.fit)
                 ) &&
                 (
-                    urlsearch.length === 0 || product.subcategory?.name.toLowerCase().includes(urlsearch.toLowerCase())
+                    filter.necktype?.length === 0 || filter.necktype.includes(product.neck_type)
+                ) &&
+                (
+                    filter.sleeve?.length === 0 || filter.sleeve.includes(product.sleeve)
+                ) &&
+                (
+                    urlsearch.length === 0 || product.subsubcategory?.name.toLowerCase().includes(urlsearch.toLowerCase())
                 )
                 &&
                 (
