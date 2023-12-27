@@ -114,11 +114,17 @@ const ProductLayout2 = () => {
       id: 'category',
       name: 'Category',
       options: [
-        { value: 'Men Topwear', label: 'Men Topwear' },
-        { value: 'Men Bottomwear', label: 'Men Bottomwear' },
+        { value: 'Casual Topwear', label: 'Casual Topwear' },
+        { value: 'Casual Bottomwear', label: 'Casual Bottomwear' },
         { value: 'Women Topwear', label: 'Women Topwear' },
         { value: 'Women Bottomwear', label: 'Women Bottomwear' },
-        { value: 'Accessories', label: 'Accessories' },
+        { value: 'Ethnic Wear', label: 'Ethnic Wear' },
+        { value: 'Festive Wear', label: 'Festive Wear' },
+        { value: 'Formal Wear', label: 'Formal Wear' },
+        { value: 'Winter Wear', label: 'Winter Wear' },
+        { value: 'Evening Wear', label: 'Evening Wear' },
+
+
       ],
     },
     {
