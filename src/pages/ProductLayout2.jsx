@@ -195,7 +195,7 @@ const ProductLayout2 = () => {
       name: 'Fit',
       options: [
         { value: 'Regular fit', label: 'Regular fit' },
-        { value: 'Slim fit', label: 'Slim fit' },
+        { value: 'Straight fit', label: 'Straight fit' },
         { value: 'Slim fit', label: 'Slim fit' },
         { value: 'Antifit', label: 'Antifit' }
       ]
