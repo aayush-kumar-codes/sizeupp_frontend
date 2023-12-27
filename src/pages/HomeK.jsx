@@ -79,7 +79,7 @@ const Megamenu = () => {
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-${data.women_category_data?.length} gap-4 justify-between absolute right-4 p-6 w-[30vw] bg-secondary rounded-md  drop-shadow-md`}>
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-3 gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
                         {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -94,7 +94,7 @@ const Megamenu = () => {
                         { data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
                             return (
                                 <div key={cat.id} className="col-span-1 ">
-                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                    <h2 className="text-sm text-gray-800 font-semibold mb-2">{cat.name}</h2>
                                     <ul className="grid grid-flow-row gap-2">
                                         {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
                                             return (
@@ -153,7 +153,7 @@ const Megamenu = () => {
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                        <div className={`hidden focus:hidden group-hover:grid grid-cols-${data.men_category?.length} gap-4 justify-between absolute right-4 p-6 w-[25vw] bg-secondary rounded-md drop-shadow-md`}>
+                        <div className={`hidden focus:hidden group-hover:grid grid-cols-4 gap-y-4 gap-x-10 justify-between absolute right-4 p-6 w-fit bg-secondary rounded-md drop-shadow-md`}>
                             {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -168,7 +168,7 @@ const Megamenu = () => {
                             {data.men_category && data.men_category[0]?.subcategories.map((cat) => {
                                 return (
                                     <div key={cat.id} className="col-span-1 ">
-                                        <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                        <h2 className="text-sm text-gray-800 font-semibold mb-2">{cat.name}</h2>
                                         <ul className="grid grid-flow-row gap-2">
                                             {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
                                                 return (
@@ -572,7 +572,6 @@ function Navbar() {
                                     <button type="button" onClick={()=>{handlefetchProducts(); navigate(`/products?navsearch=${search}`)}} className="flex flex-row items-center justify-center px-2 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent my-1 h-[30px] -mr-3" >
                                     <MagnifyingGlassIcon className="h-4 w-4 text-white "/>
                                 </button>
-
                             </div>
                     </div>
                     
