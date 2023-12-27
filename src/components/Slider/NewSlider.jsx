@@ -5,7 +5,7 @@ import './New.css';
 import { GEGreen1, Wine1, Darknavy3, Maroon1, Navy1 } from '../../assets/images/men';
 
 import { WMustard1, WBlue1 } from '../../assets/images/women';
-import { banner1,banner2, banner3,banner4,banner5} from '../../assets/banners';
+import { banner1,banner2, banner3,banner4,banner5,banner6,banner7} from '../../assets/banners';
 // Import Font Awesome styles
 // import 'font-awesome/css/all.min.css';
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
@@ -129,7 +129,7 @@ const SlideShow = () => {
       <div className="slide" ref={slideRef}>
         <div
           className="item"
-          style={{ backgroundImage:`url(${banner5})` }}
+          style={{ backgroundImage:`url(${banner6})` }}
         >
           <div className="content">
             <div className="name">Curves & Confidence Combined</div>

@@ -6,7 +6,7 @@ import {
   dress4
 } from '../../assets/images'
 import {
-  Link
+  Link,useNavigate
 } from 'react-router-dom';
 import { WBlue1 } from '../../assets/images/women';
 import { Wine1 } from '../../assets/images/men';
@@ -41,17 +41,19 @@ export const Categories = [
 
 export default function ShopCategoryWise() {
 
+  const navigate = useNavigate();
   const { setfilterdata, setnavsearch, setnavgender, setcategory } = useContext(AuthContext)
 
   const handleSearch = (id, gender, cat) => {
-    setcategory(cat)
-    setfilterdata({
-      gender: [`${gender}`],
-      color: [],
-      size: [],
-      search: id
-    })
+    // setcategory(cat)
+    // setfilterdata({
+    //   gender: [`${gender}`],
+    //   color: [],
+    //   size: [],
+    //   search: id
+    // })
 
+    navigate(`/products?gender=${gender}&category=${cat}&subcategory=${id}`);
 
   }
   return (
@@ -84,9 +86,9 @@ const Layout = ({ Text, Image,linkref,func,gender,cat }) => {
         <img src={Image} className='object-cover w-full h-full' alt="product" />
       </div>
       <div className='h-[60%] w-full flex flex-col justify-center items-center text-center z-10 gap-10 p-16'>
-        <h1 className="font-extrabold tracking-wider text-5xl capitalize font-sans text-white drop-shadow-lg">{Text}</h1>
+        <h1 className="font-semibold tracking-wider text-3xl capitalize font-sans text-white drop-shadow-lg">{Text}</h1>
        
-          <button onClick={()=>func(Text,gender,cat)} className="border-2 border-white text-white w-48 h-16 text-2xl md:w-36 md:h-12 md:text-lg sm:w-28 sm:h-8 sm:text-base">Shop Now</button>
+          <button onClick={()=>func(linkref,gender,cat)} className="border-2 border-white text-white w-48 h-16 text-2xl md:w-36 md:h-12 md:text-lg sm:w-28 sm:h-8 sm:text-base">Shop Now</button>
 
       </div>
     </div>

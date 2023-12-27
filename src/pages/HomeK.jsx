@@ -847,8 +847,8 @@ const HomeK = () => {
             <SlideShow/>
             {/* <BannerCarousel /> */}
             <Slider />
-            {/* <ShopCategoryWise />
-            <ShopNow /> */}
+            <ShopCategoryWise />
+            <ShopNow />
             
             <Footer />
             {/* <Newsletter /> */}
