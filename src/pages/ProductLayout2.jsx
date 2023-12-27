@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useLayoutEffect, useRef } from 'react'
-import { Link, useSearchParams ,useNavigate} from 'react-router-dom'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
@@ -15,44 +15,63 @@ const ProductLayout2 = () => {
 
   let [searchParams, setSearchParams] = useSearchParams();
 
+  const appendToSearchParams = (key, value) => {
+    // Clone the existing searchParams to avoid mutation
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    // If the value is an array, append each item individually
+    if (Array.isArray(value)) {
+      value.forEach((item) => newSearchParams.append(key, item));
+    } else {
+      newSearchParams.set(key, value);
+    }
+
+    // Set the updated searchParams in the URL
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
+  };
 
   useEffect(() => {
 
     let category = searchParams.get("category") || ''
     let subcategory = searchParams.get("subcategory") || 'All'
     let gender = searchParams.get('gender') || null
+    let color = searchParams.get('color') || null
+    let size = searchParams.get('size') || null
 
-    if (searchParams.has('navsearch')) {
+    if(searchParams.has('navsearch')) {
       setSearch(searchParams.get("navsearch") || '')
       setfilterdata({
-        ...filterdata,
+        size : [],
         search: "",
         category: "",
-        gender: []
+        gender: [],
+        color: [],
       });
       handlefetchProducts()
     }
 
-    if ((subcategory || category)  && !searchParams.has('navsearch')) {
+    if ((subcategory || category) && !searchParams.has('navsearch')) {
       console.error("useLayoutEffect")
       console.warn()
 
       setfilterdata({
         ...filterdata,
-        category: category  != 'All' ? category  : '',
+        category: category != 'All' ? category : '',
         gender: gender !== null ? [`${gender}`] : [],
         search: (subcategory || 'All'),
+        color : color !== null ? [`${color}`] : [],
+        size : size !== null ? [`${size}`] : [],
       });
 
 
-    } 
+    }
   }, [searchParams])
 
   console.log(searchParams.get("gender"));
   console.warn(filterdata)
   const navigate = useNavigate();
 
-  
+
 
   const handleChangeFilter = (event) => {
 
@@ -62,14 +81,7 @@ const ProductLayout2 = () => {
     //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
     // }));
 
-    navigate(`/products?${name}=${value}`)
-    setfilterdata({
-      ...filterdata,
-      [name]: filterdata[name].includes(value) ? filterdata[name].filter(v => v !== value) : [...filterdata[name], value],
-    });
-    console.log("-------------------- name,value 31 ----------------------")
-    console.log(name, value)
-
+    appendToSearchParams(name, value);
     // if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
     //   handlefetchFilterProducts()
     // } else {
@@ -453,14 +465,7 @@ const ProductLayout2 = () => {
                                       option.value
                             }
                             onChange={(e) => {
-                              if(e.target.id === 'category'){
-                                setfilterdata({
-                                  ...filterdata,
-                                  category: e.target.value,
-                                });
-                              }else{
-                                handleChangeFilter(e)
-                              }
+                              handleChangeFilter(e)
                             }}
                           />
                           <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
