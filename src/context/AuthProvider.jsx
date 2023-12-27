@@ -165,8 +165,6 @@ const AuthProvider = ({ children }) => {
                     product.subcategory?.name.toLowerCase().includes(navsearch.toLowerCase()) &&
                     product.gender?.toLowerCase().includes(navgender.toLowerCase())
                 )
-
-
         })
     };
 

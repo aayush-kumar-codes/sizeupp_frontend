@@ -460,7 +460,7 @@ const ProductOverview = () => {
 
   const [sqpActive, setSQPActive] = useState('')
 
-  const fetchDataAuth = async(id) => {
+  const fetchDataAuth = async (id) => {
     try {
       setoverviewloading(true)
       await fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
@@ -512,7 +512,7 @@ const ProductOverview = () => {
     }
   }
 
-  const fetchData = async(id) => {
+  const fetchData = async (id) => {
     try {
       setoverviewloading(true)
       await fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/${id}`, {
@@ -755,8 +755,6 @@ const ProductOverview = () => {
       });
     }
   }
-
-  const current = new Date();
 
 
   return (
@@ -1033,6 +1031,10 @@ const ProductOverview = () => {
                       <h3 className="text-base text-gray-800/80 font-semibold">Fit</h3>
                       <p className="text-lg">{demo.product?.fit || "Fit"}</p>
                     </div>
+                    <div className="row-span-1 px-2">
+                      <h3 className="text-base text-gray-800/80 font-semibold">Origin</h3>
+                      <p className="text-lg">MADE IN INDIA</p>
+                    </div>
                   </div>
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
@@ -1046,6 +1048,10 @@ const ProductOverview = () => {
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Neckline Type</h3>
                       <p className="text-lg">{demo.product?.neck_type}</p>
+                    </div>
+                    <div className="row-span-1 px-2">
+                      <h3 className="text-base text-gray-800/80 font-semibold">Color</h3>
+                      <p className="text-lg">{demo.product?.color}</p>
                     </div>
                   </div>
                 </div>
