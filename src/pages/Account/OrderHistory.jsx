@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1, Navy1 } from '../../assets/images/men';
-
+import Swal from 'sweetalert2'
+import { AuthContext } from '../../context/AuthProvider';
 const DeliveryHistoryTable = () => {
     const navigate = useNavigate();
     const deliveryHistoryData = [
@@ -40,13 +41,13 @@ const DeliveryHistoryTable = () => {
         // Add more delivery history data as needed
     ];
 
-    const getStatusBadge = (status) => {
+    const getStatusBadge = (status,id) => {
         let colorClass = '';
         switch (status.toLowerCase()) {
             case 'delivered':
                 colorClass = 'green';
                 break;
-            case 'progress':
+            case 'Order Processing':
                 colorClass = 'blue';
                 break;
             case 'cancelled':
@@ -59,7 +60,7 @@ const DeliveryHistoryTable = () => {
                 colorClass = 'gray';
         }
         const handletrack = () => {
-            navigate('/profile/track-order')
+            navigate('/profile/track-order/'+id)
         }
         return (
             <div onClick={handletrack} className={`border border-${colorClass}-500 px-2 py-1 text-${colorClass}-500 rounded-full text-md cursor-pointer`}>
@@ -69,38 +70,41 @@ const DeliveryHistoryTable = () => {
     };
 
 
+    const {profiledata,fetchProfileData} = React.useContext(AuthContext)
+    
+    React.useEffect(()=>{
+        fetchProfileData()
+    },[])
 
+
+    console.log(profiledata)
     return (
         <>
             <div className="overflow-x-auto mx-4 rounded-lg hidden lg:block">
                 <div className="min-w-full bg-white  border rounded-lg">
                     <thead className="h-16 bg-neutral-100">
                         <tr>
-                            <th className="px-6 py-3 text-left">Product</th>
-                            <th className="px-6 py-3 text-left">Name</th>
-                            <th className="px-6 py-3 text-left">DATE</th>
-                            <th className="px-6 py-3 text-left">TOTAL</th>
-                            <th className="px-6 py-3 text-left">STATUS</th>
+                            <th className="px-6 py-3 text-left">Order Id</th>
+                            <th className="px-6 py-3 text-left">Qty</th>
+                            <th className="px-6 py-3 text-left">Price</th>
+                            <th className="px-6 py-3 text-left">Payment</th>
+                            <th className="px-6 py-3 text-left">Status</th>
                             <th className="px-6 py-3 text-left">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {deliveryHistoryData.map((item) => (
+                        {profiledata.orders?.length > 0 && profiledata.orders.map((item) => (
                             <tr key={item.id} className="border-b-gray-500">
                                 <td className="px-6 py-4 ">
-                                    <img
-                                        src={item.image}
-                                        alt={`Order #${item.id}`}
-                                        className="w-60 object-cover rounded"
-                                    />
+                                    {item.id}
                                 </td>
-                                <td className="px-6 py-4">{item.orderName}</td>
-                                <td className="px-6 py-4">{item.date}</td>
-                                <td className="px-6 py-4">{item.total}</td>
-                                <td className="px-6 py-4 text-center">{getStatusBadge(item.status)}</td>
+                                <td className="px-6 py-4">{item.order_items?.length || 0}</td>
+                                <td className="px-6 py-4">{item.mrp_price || 0}</td>
+                                <td className="px-6 py-4">{(item.payment_status + ' (' + item.payment_type + ')') || "Ship deight"}</td>
+                                <td className="px-6 py-4 text-center">{getStatusBadge(item.delivery_status,item.id)}</td>
                                 <td className="px-6 py-4">
-                                    <Link to="/profile/order-details">
-                                        <button className="text-blue-500 text-md hover:scale-110 hover:text-blue-800 ease-in-out">View </button>
+                                    <Link to={`/profile/order-details/${item.id}`}>
+                                        <button className="text-blue-500 text-md hover:scale-110 hover:text-blue-800 ease-in-out">View</button>
                                     </Link>
                                 </td>
                             </tr>
@@ -112,22 +116,22 @@ const DeliveryHistoryTable = () => {
             {/* Mobile view */}
             <section className="container mx-auto my-3 flex flex-col gap-3 p-4 md:hidden">
                 {/* Order Cards */}
-                {deliveryHistoryData.map((order) => (
+                {profiledata.orders?.length > 0 && profiledata.orders?.map((order) => (
                     <div key={order.id} className="flex w-full border px-4 py-4 rounded-lg">
                         <div className="ml-3 flex w-full flex-col justify-center">
                             <div className="flex items-center justify-between">
-                                <p className="text-xl font-bold">{order.orderName}</p>
-                                <div className={`border px-2 py-1 rounded ${order.status === 'Delivered' ? 'border-green-500 text-green-500' : order.status === 'In Progress' ? 'border-orange-500 text-orange-500' : order.status === 'Cancelled' ? 'border-red-500 text-red-500' : 'border-blue-500 text-blue-500'}`}>
-                                    {order.status}
+                                <p className="text-xl font-bold">{order.id}</p>
+                                <div className={`border px-2 py-1 rounded ${order.status === 'Delivered' ? 'border-green-500 text-green-500' : order.status === 'Order Processing' ? 'border-orange-500 text-orange-500' : order.status === 'Cancelled' ? 'border-red-500 text-red-500' : 'border-blue-500 text-blue-500'}`}>
+                                    {order.delivery_status}
                                 </div>
                             </div>
-                            <p className="text-sm text-gray-400">{order.date}</p>
-                            <p className="py-3 text-xl font-bold text-violet-900">{order.total}</p>
+                            <p className="text-sm text-gray-400">{(order.payment_status + ' (' + order.payment_type + ')') || "Ship deight"}</p>
+                            <p className="py-3 text-xl font-bold text-violet-900">Rs. {order.mrp_price || 0}</p>
                             <div className="mt-2 flex w-full items-center justify-between">
                                 <div className="flex items-center justify-center">
-                                    <a href={`order-overview.html?id=${order.id}`} className="flex items-center justify-center bg-amber-500 px-2 py-2 active:ring-gray-500 rounded cursor-pointer">
+                                    <Link to={`/profile/order-details/${order.id}`} className="flex items-center justify-center bg-amber-500 px-2 py-2 active:ring-gray-500 rounded cursor-pointer">
                                         View order
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

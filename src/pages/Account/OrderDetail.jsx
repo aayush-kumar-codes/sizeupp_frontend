@@ -1,6 +1,7 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams} from 'react-router-dom';
 import { GEGreen1 } from '../../assets/images/men';
+import { AuthContext } from '../../context/AuthProvider';
 
 const OrderDetail = () => {
 
@@ -12,6 +13,26 @@ const OrderDetail = () => {
     const handleInvoice = () => {
         navigate('/profile/invoice');
     }
+
+    const [order,setorder] = useState({})
+
+    const {id} = useParams()
+
+    const handleFindOrder = () => {
+        const order = profiledata.orders.filter((order) => order.id === id)
+        console.log(order[0])
+        setorder(order[0])
+    }
+
+    const {profiledata,fetchProfileData} = React.useContext(AuthContext)
+    React.useEffect(() => {
+        fetchProfileData()
+        if(profiledata.orders){
+            handleFindOrder()
+        }
+    }, [])
+    
+    
     return (
         <>
 

@@ -63,9 +63,9 @@ const App = () => {
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />
               <Route path="my-orders" element={<OrderHistory />} />
-              <Route path="track-order" element={<TrackOrder />} />
+              <Route path="track-order/:id" element={<TrackOrder />} />
               <Route path="invoice" element={<Invoice />} />
-              <Route path="order-details" element={<OrderDetail />} />
+              <Route path="order-details/:id" element={<OrderDetail />} />
               <Route path="contact" element={<Contact />} />
               <Route path="account-settings" element={<ManageAccount />} />
               <Route path="manage-address" element={<ManageAddress />} />
