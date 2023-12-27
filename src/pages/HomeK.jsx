@@ -79,7 +79,7 @@ const Megamenu = () => {
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-3 gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-2 gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
                         {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -153,7 +153,7 @@ const Megamenu = () => {
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                        <div className={`hidden focus:hidden group-hover:grid grid-cols-4 gap-y-4 gap-x-10 justify-between absolute right-4 p-6 w-fit bg-secondary rounded-md drop-shadow-md`}>
+                        <div className={`hidden focus:hidden group-hover:grid grid-cols-3 gap-y-4 gap-x-10 justify-between absolute right-4 p-6 w-fit bg-secondary rounded-md drop-shadow-md`}>
                             {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
