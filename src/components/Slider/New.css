@@ -25,7 +25,9 @@
     position: absolute;
     top: 70%;
     transform: translate(0, -50%);
-    border-radius: 20px;
+    /* border-radius: 9999px; */
+    border-radius: 30px;
+    border:0.5px solid rgba(88, 88, 88, 0.4);
     background-position: 50% 50%;
     background-size: cover;
     display: inline-block;
@@ -73,7 +75,7 @@
       top: 50%;
       right: 50%;
       transform: translate(-50%, -50%);
-      border-radius: 10px;
+      border-radius: 50px;
       width: 80%; /* Adjust as needed */
       height: 80%; /* Adjust as needed */
     }

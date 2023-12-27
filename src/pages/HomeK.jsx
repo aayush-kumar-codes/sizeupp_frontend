@@ -843,8 +843,8 @@ const HomeK = () => {
     return (
         <>
             <Navbar />
-            {/* <Carousel /> */}
-            <SlideShow/>
+            <Carousel />
+            {/* <SlideShow/> */}
             {/* <BannerCarousel /> */}
             <Slider />
             <ShopCategoryWise />
