@@ -58,7 +58,7 @@ const ProductLayout2 = () => {
         ...filterdata,
         category: category != 'All' ? category : '',
         gender: gender !== null ? [`${gender}`] : [],
-        search: (subcategory || 'All'),
+        subcategory: (subcategory || 'All'),
         color : color !== null ? [`${color}`] : [],
         size : size !== null ? [`${size}`] : [],
       });

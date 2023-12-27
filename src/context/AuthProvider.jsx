@@ -123,6 +123,7 @@ const AuthProvider = ({ children }) => {
         size: [],
         color: [],
         category: '',
+        subcategory: 'All',
         search: "All"
     })
     // Function to filter data based on multiple criteria
@@ -136,13 +137,13 @@ const AuthProvider = ({ children }) => {
             return (
                 search.length === 0 ||
                 product.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.gender?.toLowerCase().includes(search.toLowerCase()) ||
+                product.category?.name?.toLowerCase().includes(search.toLowerCase()) ||
                 product.color?.toLowerCase().includes(search.toLowerCase()) ||
-                product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
+                product.subcategory?.name.toLowerCase().includes(search.toLowerCase()) ||
+                product.subsubcategory?.name.toLowerCase().includes(search.toLowerCase())
             ) &&
                 (
-                    filter.gender?.length === 0 || filter.gender.includes(product.gender)
+                    filter.gender?.length === 0 || filter.gender.includes(product.category?.name)
                 ) &&
                 (
                     filter.size?.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))
@@ -151,10 +152,10 @@ const AuthProvider = ({ children }) => {
                     filter.color?.length === 0 || filter.color.includes(product.color)
                 ) &&
                 (
-                    category?.length === 0 || category.includes(product.category.name)
+                    filter.category?.length === 0 || filter.category.includes(product.subcategory.name)
                 ) &&
                 (
-                    filter.category?.length === 0 || filter.category.includes(product.category.name)
+                    filter.subcategory === 'All' || filter.subcategory.includes(product.subsubcategory.name)
                 ) &&
                 (
                     urlsearch.length === 0 || product.subcategory?.name.toLowerCase().includes(urlsearch.toLowerCase())

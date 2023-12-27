@@ -33,7 +33,7 @@ const Megamenu = () => {
         setMegamenuhide(false)
     }
     return (
-        <div className={`${styles.paddingX} hidden md:block py-2 w-full relative sticky top-16 bg-white shadow z-40 `}>
+        <div className={`${styles.paddingX} hidden md:block py-2 w-full sticky top-16 bg-white shadow z-40 `}>
             {/* layout prefixer */}
             <div className={`flex items-center gap-10 max-w-5xl mx-auto`}>
                 {/* All Products */}
@@ -60,7 +60,7 @@ const Megamenu = () => {
                         Women
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-2 gap-10 justify-between absolute p-6 border top-10 w-fit bg-secondary rounded-md  drop-shadow-md`}>
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-${data.women_category_data ? data.women_category_data[0]?.subcategories?.length :'2'} gap-10 justify-between absolute p-6 border top-10 w-fit bg-secondary rounded-md  drop-shadow-md`}>
                         {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -72,12 +72,12 @@ const Megamenu = () => {
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
                         </div> */}
-                        {data.women_category_data?.length > 0 && data.women_category_data.map((cat) => {
+                        { data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
                             return (
                                 <div key={cat.id} className="col-span-1 ">
                                     <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
                                     <ul className="grid grid-flow-row gap-2">
-                                        {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                        {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
                                             return (
                                                 <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
                                                     {items.name}
@@ -134,7 +134,7 @@ const Megamenu = () => {
                         <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                     </p>
                     <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                        <div className={`hidden focus:hidden group-hover:grid grid-cols-2 gap-10 justify-between absolute p-6 w-fit border bg-secondary rounded-md drop-shadow-md`}>
+                        <div className={`hidden focus:hidden group-hover:grid grid-cols-${data.men_category ? data.men_category[0]?.subcategories?.length/3 : '2'} gap-10 justify-between absolute p-6 w-fit border bg-secondary rounded-md drop-shadow-md`}>
                             {/* <div className="col-span-1">
                             <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
                             <p className="text-sm text-gray-500">New products</p>
@@ -146,12 +146,12 @@ const Megamenu = () => {
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
                         </div> */}
-                            {data.men_category?.length > 0 && data.men_category.map((cat) => {
+                            {data.men_category && data.men_category[0]?.subcategories.map((cat) => {
                                 return (
                                     <div key={cat.id} className="col-span-1 ">
                                         <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
                                         <ul className="grid grid-flow-row gap-2">
-                                            {cat.subcategories?.length > 0 && cat.subcategories?.map((items, i) => {
+                                            {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
                                                 return (
                                                     <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-sm text-gray-800/80  hover:underline cursor-pointer">
                                                         {items.name}

@@ -8,11 +8,10 @@ import { MagnifyingGlassIcon} from "@heroicons/react/24/outline";
 
 import { useState, useEffect, useRef, useContext } from 'react'
 import { styles } from '../style'
-import { HeartIcon, ShoppingCartIcon, Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate,useSearchParams } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from '../components/Custom/AccordionItem'
-import { UserIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 
@@ -20,8 +19,6 @@ import { AuthContext } from '../context/AuthProvider'
 import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import Footer from '../components/Footer/Footer'
 import Slider from '../components/Slider/Slider'
-import BannerCarousel from '../components/HomeK/Carouselnew'
-import SlideShow from '../components/Slider/NewSlider';
 
 
 const Megamenu = () => {
@@ -558,7 +555,7 @@ function Navbar() {
 
     return (
         // container
-        <div className={colorNav ? `px-10  bg-white/10 backdrop-blur text-white w-full sticky top-0 z-50` : `px-10 text-white bg-transparent w-full absolute top-0 z-50`}>
+        <div className={colorNav ? `px-10  bg-white/10 text-white w-full sticky top-0 z-50` : `px-10 text-white w-full absolute top-0 z-50`}>
             {/* layout prefixer */}
             <div className="flex  items-center justify-between py-2">
                 <div className="flex">
