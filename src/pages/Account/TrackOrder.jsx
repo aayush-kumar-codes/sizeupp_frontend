@@ -49,7 +49,7 @@ const TrackOrderPage = () => {
                                         d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                                 </svg>
                             </span>
-                            <h2 className="text-lg font-medium  ">Customer</h2>
+                            <h2 className="text-lg font-medium  ">Order Processing</h2>
                         </div>
                     </div>
                     <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 lg:mb-0">
@@ -63,7 +63,7 @@ const TrackOrderPage = () => {
                                 className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-100 bg-blue-600 rounded-full shadow-md ">
                                 2
                             </span>
-                            <h2 className="text-lg font-medium ">Order Processing</h2>
+                            <h2 className="text-lg font-medium ">In Preparation</h2>
                         </div>
                     </div>
                     <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 md:mb-0">
@@ -77,7 +77,7 @@ const TrackOrderPage = () => {
                                 className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
                                 3
                             </span>
-                            <h2 className="text-lg font-medium ">Payment</h2>
+                            <h2 className="text-lg font-medium ">Shipping</h2>
                         </div>
                     </div>
                     <div className="relative w-full px-4 md:w-1/2 lg:w-1/4">
@@ -86,7 +86,7 @@ const TrackOrderPage = () => {
                                 className="inline-flex items-center justify-center w-10 h-10 mb-8 text-gray-700 bg-gray-200 rounded-full shadow-md  ">
                                 4
                             </span>
-                            <h2 className="text-lg font-medium ">Confirm</h2>
+                            <h2 className="text-lg font-medium ">Delivered</h2>
                         </div>
                     </div>
                 </div>

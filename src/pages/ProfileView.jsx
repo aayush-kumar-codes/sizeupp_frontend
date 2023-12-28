@@ -125,7 +125,7 @@ const Profileview = () => {
                     width="40px"
                     height="40px"
                     className="rounded-full object-cover"
-                    src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    src="https://cdn2.iconfinder.com/data/icons/web-solid/32/user-512.png"
                     alt="Red woman portrait"
                   />
                   <div className="ml-5">
