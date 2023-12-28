@@ -239,7 +239,7 @@ const ProductList = ({
                         })
 
                         if (items.images.length == 0) {
-                            setproductcount(prev => prev - 1)
+                            // setproductcount(prev => prev - 1)
                             return null
 
                         }
