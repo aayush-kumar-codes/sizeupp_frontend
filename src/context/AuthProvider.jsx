@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
     const [navsearch, setnavsearch] = useState("")
     const [navgender, setnavgender] = useState("")
 
-    
+
     //profiledata
     const [profiledata, setProfileData] = useState([])
 
@@ -48,15 +48,15 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         fetchProfileData()
     }, [])
-    
-    
+    console.log(profiledata)
+
     //products 
     const [products, setProducts] = useState([]); // [products, setProducts]
     const [productsbc, setproductsbc] = useState([]);
     const [productloading, setproductloading] = useState(false)
     const [productcount, setproductcount] = useState(0)
-    
-    
+
+
     // set coupon code 
     console.log(productsbc)
     const [couponcode, setcouponcode] = useState("")
@@ -123,8 +123,8 @@ const AuthProvider = ({ children }) => {
         size: [],
         color: [],
         category: '',
-        fit : "",
-        sleeve : "",
+        fit: "",
+        sleeve: "",
         necktype: "",
         search: "All"
     })
@@ -376,6 +376,37 @@ const AuthProvider = ({ children }) => {
     }, [])
 
 
+    // fetch cart and set count 
+    const [cart, setCart] = useState([])
+    const fetchCart = async () => {
+        try {
+            
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setCart(data)
+
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            
+        }
+    }
+
+    useEffect(() => {
+        fetchCart()
+    }, [])
+
+
     return (
         <AuthContext.Provider
             value={{
@@ -427,7 +458,10 @@ const AuthProvider = ({ children }) => {
 
                 profiledata,
                 setProfileData,
-                fetchProfileData
+                fetchProfileData,
+
+                cart,
+                fetchCart
             }}
         >
             {children}

@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const {  fetchProductsAuth,setproductcount,isFilterActive,setIsFilterActive, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
+    const {  fetchProductsAuth,cart,fetchCart,isFilterActive,setIsFilterActive, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
 
 
 
@@ -112,6 +112,7 @@ const ProductList = ({
                 }
                 const datas = await res.json()
                 console.log(datas);
+                
                 Swal.fire({
                     title: 'Success!',
                     text: 'Product Updated in Cart',
@@ -119,7 +120,7 @@ const ProductList = ({
                 })
             }
             console.log(data);
-
+            fetchCart()
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Updated in Cart',

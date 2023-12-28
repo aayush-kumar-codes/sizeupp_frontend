@@ -13,7 +13,7 @@ export function ProductBilling() {
     const [profile, setProfile] = useState({})
     const [pincode, setPincode] = useState('')
     const [changeAddress, setChangeAddress] = useState(false)
-    const { couponcode, setcouponcode } = useContext(AuthContext)
+    const { couponcode, setcouponcode,fetchCart } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
         addressLine1: '',
@@ -119,45 +119,45 @@ export function ProductBilling() {
 
     console.log(localStorage.address_id)
 
-    const fetchCart = async () => {
-        try {
-            if (!localStorage.token) {
-                return navigate('/login')
-            }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                }
-            })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json()
-            console.log(data);
-            setCart(data)
-            let fors = {
-                address_id: form.address_id,
-                mrp_price: data.mrp_price,
-                sub_total: data.sub_total,
-                cupon_discount: data.cupon_discount,
-                coupon: data.coupon,
-                total_price: data.total_price
-            }
-            setForm(fors)
+    // const fetchCart = async () => {
+    //     try {
+    //         if (!localStorage.token) {
+    //             return navigate('/login')
+    //         }
+    //         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-type': 'application/json',
+    //                 'Authorization': `token ${localStorage.getItem('token')}`
+    //             }
+    //         })
+    //         if (!res.ok) {
+    //             throw new Error(`HTTP error! status: ${res.status}`);
+    //         }
+    //         const data = await res.json()
+    //         console.log(data);
+    //         setCart(data)
+    //         let fors = {
+    //             address_id: form.address_id,
+    //             mrp_price: data.mrp_price,
+    //             sub_total: data.sub_total,
+    //             cupon_discount: data.cupon_discount,
+    //             coupon: data.coupon,
+    //             total_price: data.total_price
+    //         }
+    //         setForm(fors)
 
-        }
-        catch (error) {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    }
+    //     }
+    //     catch (error) {
+    //         console.error('Fetch error:', error);
+    //         Swal.fire({
+    //             title: 'Error!',
+    //             text: 'Fetch error: ' + error,
+    //             icon: 'error',
+    //             confirmButtonText: 'OK'
+    //         });
+    //     }
+    // }
 
 
     const handlePlaceOrder = async () => {
@@ -196,6 +196,7 @@ export function ProductBilling() {
             }
             const data = await res.json()
             console.log(data);
+            fetchCart()
             Swal.fire({
                 title: 'Success!',
                 text: 'Order Placed Successfully',

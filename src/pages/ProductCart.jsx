@@ -48,7 +48,7 @@ export function ProductCart() {
     const [cart, setCart] = useState([])
     const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
-    const { couponcode, setcouponcode } = useContext(AuthContext)
+    const { couponcode, setcouponcode,fetchCart } = useContext(AuthContext)
     const [pincode, setPincode] = useState('')
 
     const updateCart = (id, sqpActive, count) => {
@@ -108,36 +108,7 @@ export function ProductCart() {
         }
     }
 
-    const fetchCart = async () => {
-        try {
-            if (!localStorage.token) {
-                return navigate('/login')
-            }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                }
-            })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json()
-            console.log(data);
-            setCart(data)
-
-        }
-        catch (error) {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    }
+    
 
     const handleRemoveCart = async (id) => {
         try {
