@@ -235,7 +235,74 @@ const ProductLayout2 = () => {
     <>
       <section className="w-full">
         <div className="mx-auto px-2 py-6 lg:px-10">
-          <div className="md:flex md:flex-row md:items-start md:justify-between justify-center">
+          
+
+          <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
+            <div className="hidden lg:block fixed z-20 bg-white inset-0 top-[8rem] left-[max(0px,calc(44%-45rem))] right-auto w-fit pb-10 px-10 overflow-y-auto">
+              <div onClick={() => { navigate('/products') }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
+              {filters.map((filter) => (
+                <div key={filter.id}>
+                  <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
+                  <ul className="mt-2">
+                    {filter.options.map((option) => {
+
+                      return (
+                        <li key={option.value} className="flex items-center justify-between py-2">
+                          <div className="flex items-center">
+                            <input
+                              id={`${option.value}`}
+                              name={filter.id}
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                              value={option.value}
+                              checked={
+                                filter.id === 'gender' ?
+                                  (filterdata.gender?.find((el) => el == option.value) ? true : false)
+                                  :
+                                  filter.id === 'size' ?
+                                    (filterdata.size?.find((el) => el == option.value) ? true : false)
+                                    :
+                                    filter.id === 'category' ?
+                                      (filterdata.category === option.value)
+                                      :
+                                      filter.id === 'fit' ?
+                                        (filterdata.fit === option.value)
+                                        :
+                                        filter.id === 'sleeve' ?
+                                          (filterdata.sleeve === option.value)
+                                          :
+                                          filter.id === 'necktype' ?
+                                            (filterdata.necktype === option.value)
+                                            :
+                                            filter.id === 'color' ?
+                                              (filterdata.color.find((el) => el == option.value) ? true : false)
+                                              :
+                                              option.value
+                              }
+                              onChange={(e) => {
+                                handleChangeFilter(e)
+                              }}
+                            />
+                            <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
+                              {option.label}
+                            </label>
+                          </div>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              ))}
+
+
+
+
+
+            </div>
+
+            <div className=" w-full rounded-lg  px-2 lg:col-span-10 lg:h-full lg:ml-[12rem]">
+
+            <div className="md:flex md:flex-row md:items-start md:justify-between justify-center">
             <div className="px-12">
               {/* Nav menu- Breadcrumb */}
 
@@ -337,72 +404,10 @@ const ProductLayout2 = () => {
 
 
             </div>
-          </div>
+              </div>
           <hr className='my-3' />
+              
 
-          <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
-            <div className="hidden space-y-6 divide-y lg:col-span-2 lg:block">
-              <div onClick={() => { navigate('/products') }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
-              {filters.map((filter) => (
-                <div key={filter.id}>
-                  <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
-                  <ul className="mt-2">
-                    {filter.options.map((option) => {
-
-                      return (
-                        <li key={option.value} className="flex items-center justify-between py-2">
-                          <div className="flex items-center">
-                            <input
-                              id={`${option.value}`}
-                              name={filter.id}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                              value={option.value}
-                              checked={
-                                filter.id === 'gender' ?
-                                  (filterdata.gender?.find((el) => el == option.value) ? true : false)
-                                  :
-                                  filter.id === 'size' ?
-                                    (filterdata.size?.find((el) => el == option.value) ? true : false)
-                                    :
-                                    filter.id === 'category' ?
-                                      (filterdata.category === option.value)
-                                      :
-                                      filter.id === 'fit' ?
-                                        (filterdata.fit === option.value)
-                                        :
-                                        filter.id === 'sleeve' ?
-                                          (filterdata.sleeve === option.value)
-                                          :
-                                          filter.id === 'necktype' ?
-                                            (filterdata.necktype === option.value)
-                                            :
-                                            filter.id === 'color' ?
-                                              (filterdata.color.find((el) => el == option.value) ? true : false)
-                                              :
-                                              option.value
-                              }
-                              onChange={(e) => {
-                                handleChangeFilter(e)
-                              }}
-                            />
-                            <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
-                              {option.label}
-                            </label>
-                          </div>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-              ))}
-
-
-
-
-
-            </div>
-            <div className=" w-full rounded-lg  px-2 lg:col-span-10 lg:h-full">
               <ProductList setResults={() => { console.log("faker v_172.PL2") }} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />
             </div>
           </div>
