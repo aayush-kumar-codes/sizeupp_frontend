@@ -294,6 +294,11 @@ const ProductList = ({
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
 
+                        if (items.images.length == 0) {
+                            // setproductcount(prev => prev - 1)
+                            return null
+
+                        }
 
                         return (
                             <div key={i} className="">
@@ -341,6 +346,12 @@ const ProductList = ({
                         items.images.map((img) => {
                             imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                         })
+
+                        if (items.images.length == 0) {
+                            // setproductcount(prev => prev - 1)
+                            return null
+
+                        }
 
                         return (
                             <div key={i} className="">
