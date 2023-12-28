@@ -122,7 +122,7 @@ const AuthProvider = ({ children }) => {
         gender: [],
         size: [],
         color: [],
-        category: '',
+        category: [],
         fit: "",
         sleeve: "",
         necktype: "",
@@ -132,52 +132,25 @@ const AuthProvider = ({ children }) => {
     const funcFilter = (products, filter) => {
 
         return products.filter((product) => {
-            let urlsearch = filter.search
-            if (filter.search === "All" || filter.search === "") {
-                urlsearch = ""
-            }
+            const urlsearch = filter.search === "All" || filter.search === "" ? "" : filter.search.toLowerCase();
+        
             return (
-                search.length === 0 ||
-                product.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.gender?.toLowerCase().includes(search.toLowerCase()) ||
-                product.cf?.toLowerCase().includes(search.toLowerCase()) ||
-                product.category?.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.subcategory?.name.toLowerCase().includes(search.toLowerCase())
-            ) &&
-                (
-                    filter.gender?.length === 0 || filter.gender.includes(product.category.name)
-                ) &&
-                (
-                    filter.size?.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))
-                ) &&
-                (
-                    filter.color?.length === 0 || filter.color.includes(product.cf)
-                ) &&
-                (
-                    category?.length === 0 || category.includes(product.category.name)
-                ) &&
-                (
-                    filter.category?.length === 0 || filter.category.includes(product.subcategory.name)
-                ) &&
-                (
-                    filter.fit?.length === 0 || filter.fit.includes(product.fit)
-                ) &&
-                (
-                    filter.necktype?.length === 0 || filter.necktype.includes(product.neck_type)
-                ) &&
-                (
-                    filter.sleeve?.length === 0 || filter.sleeve.includes(product.sleeve)
-                ) &&
-                (
-                    urlsearch.length === 0 || product.subsubcategory?.name.toLowerCase().includes(urlsearch.toLowerCase())
-                )
-                &&
-                (
-                    (navsearch.length === 0 || navgender.length === 0) ||
-                    product.subcategory?.name.toLowerCase().includes(navsearch.toLowerCase()) &&
-                    product.gender?.toLowerCase().includes(navgender.toLowerCase())
-                )
-        })
+              (urlsearch === "" ||
+                product.subsubcategory?.name.toLowerCase().includes(urlsearch) ||
+                product.name.toLowerCase().includes(urlsearch) ||
+                product.gender?.toLowerCase().includes(urlsearch) ||
+                product.cf.toLowerCase().includes(urlsearch) ||
+                product.category?.name.toLowerCase().includes(urlsearch) ||
+                product.subcategory?.name.toLowerCase().includes(urlsearch)) &&
+              (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
+              (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
+              (filter.color.length === 0 || filter.color.includes(product.cf)) &&
+              (filter.category.length === 0 || filter.category.includes(product.subcategory.name)) &&
+              (filter.fit.length === 0 || filter.fit.includes(product.fit)) &&
+              (filter.necktype.length === 0 || filter.necktype.includes(product.neck_type)) &&
+              (filter.sleeve.length === 0 || filter.sleeve.includes(product.sleeve))
+            );
+          });
     };
 
 

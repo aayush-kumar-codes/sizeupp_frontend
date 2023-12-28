@@ -30,7 +30,7 @@ const ProductLayout2 = () => {
       newSearchParams.delete('size')
 
     }
-    if(key === 'subcategory'){
+    if (key === 'subcategory') {
       newSearchParams.delete('navsearch')
       newSearchParams.delete('fit')
       newSearchParams.delete('sleeve')
@@ -38,7 +38,7 @@ const ProductLayout2 = () => {
       newSearchParams.delete('color')
       newSearchParams.delete('size')
     }
-    if(key === 'gender') {
+    if (key === 'gender') {
       newSearchParams.delete('subcategory')
       newSearchParams.delete('navsearch')
       newSearchParams.delete('fit')
@@ -50,12 +50,19 @@ const ProductLayout2 = () => {
 
     }
 
-
-    // If the value is an array, append each item individually
-    if (Array.isArray(value)) {
-      value.forEach((item) => newSearchParams.append(key, item));
+    // Clear the URL param if the value is null or an empty array
+    if (value === null || (Array.isArray(value) && value.length === 0)) {
+      newSearchParams.delete(key);
     } else {
-      newSearchParams.set(key, value);
+      // If the value is an array, append each item individually
+      if (Array.isArray(value)) {
+        // Remove all occurrences of the value from the URL params
+        newSearchParams.delete(key);
+        value.forEach((item) => newSearchParams.append(key, item));
+      } else {
+        // Toggle the value in the URL params
+        newSearchParams.set(key, newSearchParams.get(key) === value ? '' : value);
+      }
     }
 
     // Set the updated searchParams in the URL
@@ -64,7 +71,7 @@ const ProductLayout2 = () => {
 
   useEffect(() => {
 
-    let category = searchParams.get("category") || ''
+    let category = searchParams.get("category") || null
     let subcategory = searchParams.get("subcategory") || 'All'
     let gender = searchParams.get('gender') || null
     let color = searchParams.get('color') || null
@@ -78,7 +85,7 @@ const ProductLayout2 = () => {
       setfilterdata({
         size: [],
         search: "",
-        category: "",
+        category: [],
         gender: [],
         color: [],
         fit: [],
@@ -94,7 +101,7 @@ const ProductLayout2 = () => {
 
       setfilterdata({
         ...filterdata,
-        category: category != '' ? category : '',
+        category: category !== null ? [`${category}`] : [],
         gender: gender !== null ? [`${gender}`] : [],
         search: (subcategory || 'All'),
         color: color !== null ? [`${color}`] : [],
@@ -117,19 +124,35 @@ const ProductLayout2 = () => {
 
   const handleChangeFilter = (event) => {
 
-    const { name, value } = event.target;
-    // setFilterData(prevState => ({
-    //   ...prevState,
-    //   [name]: prevState[name].includes(value) ? prevState[name].filter(v => v !== value) : [...prevState[name], value],
-    // }));
+    const { name, value, checked, type } = event.target;
 
-    appendToSearchParams(name, value);
-    // if (filterData.gender.length > 0 || filterData.category.length > 0 || filterData.sizes.length > 0 || filterData.color.length > 0) {
-    //   handlefetchFilterProducts()
-    // } else {
-    //   handlefetchProducts()
-    // }
-    console.log(filterdata);
+    setfilterdata((prevFilterData) => {
+      let updatedFilterData = { ...prevFilterData };
+
+      if (type === 'checkbox') {
+        // Toggle the value in the array based on checkbox state
+        updatedFilterData[name] = checked
+          ? [...(updatedFilterData[name] || []), value]
+          : (updatedFilterData[name] || []).filter((item) => item !== value);
+      } else {
+        // Handle non-checkbox inputs
+        updatedFilterData[name] = value;
+      }
+
+      // Remove the filter from the URL if it's unchecked or empty
+      if (!checked || (Array.isArray(updatedFilterData[name]) && updatedFilterData[name].length === 0)) {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        urlSearchParams.delete(name);
+        window.history.replaceState({}, '', `${window.location.pathname}?${urlSearchParams}`);
+      } else {
+        // Update the URL with the new filter
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        urlSearchParams.set(name, Array.isArray(updatedFilterData[name]) ? updatedFilterData[name].join(',') : updatedFilterData[name]);
+        window.history.replaceState({}, '', `${window.location.pathname}?${urlSearchParams}`);
+      }
+
+      return updatedFilterData;
+    });
   };
 
 
@@ -231,6 +254,41 @@ const ProductLayout2 = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
+  const filterFields = [
+    'gender',
+    'size',
+    'color',
+    'category',
+    'fit',
+    'sleeve',
+    'necktype',
+    // Add other filter field names as needed
+  ];
+
+  const handleClearFilter = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+
+    // Remove all filters from the URL
+    filterFields.forEach((fieldName) => {
+      urlSearchParams.delete(fieldName);
+    });
+
+    navigate('/products', { replace: true })
+
+    // Clear the filters in the state
+    setfilterdata({
+      gender: [],
+      size: [],
+      color: [],
+      category: [],
+      fit: "",
+      sleeve: "",
+      necktype: "",
+      search: "All"
+    });
+  };
+
+
   return (
     <>
       <section className="w-full">
@@ -272,7 +330,7 @@ const ProductLayout2 = () => {
                       </svg>
 
                       <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                        {filterdata.gender}
+                        {filterdata.gender.map((el) => el).join(', ')}
                       </a>
                     </div>
                   </li>
@@ -285,7 +343,7 @@ const ProductLayout2 = () => {
                       </svg>
 
                       <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                        {filterdata.category}
+                        {filterdata.category.map((el) => el).join(', ')}
                       </a>
                     </div>
                   </li>
@@ -342,7 +400,7 @@ const ProductLayout2 = () => {
 
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
             <div className="hidden space-y-6 divide-y lg:col-span-2 lg:block">
-              <div onClick={() => { navigate('/products') }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
+              <div onClick={() => { handleClearFilter() }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
               {filters.map((filter) => (
                 <div key={filter.id}>
                   <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
@@ -366,7 +424,7 @@ const ProductLayout2 = () => {
                                     (filterdata.size?.find((el) => el == option.value) ? true : false)
                                     :
                                     filter.id === 'category' ?
-                                      (filterdata.category === option.value)
+                                      (filterdata.category?.find((el) => el == option.value) ? true : false)
                                       :
                                       filter.id === 'fit' ?
                                         (filterdata.fit === option.value)

@@ -432,7 +432,6 @@ export function Navbar() {
                             </li>
                         </ul>
                     </div>
-
                 </div>
 
                 {/* Mobile/small-Tab Menu */}
