@@ -24,7 +24,7 @@ const Filter = ({
         setGrid(enums[index])
     }
 
-    const {sort,setSort,handlefetchProducts} = useContext(AuthContext)
+    const {sort,setSort,handlefetchProducts,setIsFilterActive} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -93,7 +93,7 @@ const Filter = ({
                 </div>
 
                  {/* filter */}
-                 <div onClick={() => { setFilterActive(true) }} className="lg:hidden flex mx-4 items-center cursor-pointer">
+                 <div onClick={() => { setIsFilterActive(prev => !prev) }} className="lg:hidden flex mx-4 items-center cursor-pointer">
                     <div className="hover:underline ">Filter</div>
                     <FunnelIcon className='w-5 h-5 m-1' />
                 </div>
