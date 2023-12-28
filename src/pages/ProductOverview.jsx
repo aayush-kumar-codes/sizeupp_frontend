@@ -411,9 +411,6 @@ const PincodeForm = () => {
         });
         return
       }
-      if (!localStorage.token) {
-        return navigate('/login')
-      }
       const res = await fetch(`https://api.instashipin.com/api/v1/courier-vendor/check-pincode`, {
         method: 'POST',
         headers: {
