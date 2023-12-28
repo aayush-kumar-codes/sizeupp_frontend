@@ -97,7 +97,7 @@ const Otp = () => {
                                 <p>Email Verification</p>
                             </div>
                             <div className="flex flex-row text-sm font-medium text-gray-400">
-                                <p>We have sent a code to your email hi@tekkubit.com</p>
+                                <p>We have sent a code to your email</p>
                             </div>
                         </div>
 
