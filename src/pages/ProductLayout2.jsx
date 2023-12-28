@@ -106,9 +106,9 @@ const ProductLayout2 = () => {
         search: (subcategory || 'All'),
         color: color !== null ? [`${color}`] : [],
         size: size !== null ? [`${size}`] : [],
-        fit: (fit || ""),
-        sleeve: (sleeve || ""),
-        necktype: (necktype || "")
+        fit: fit !== null ? [`${fit}`] : [],
+        sleeve: sleeve !== null ? [`${sleeve}`] : [],
+        necktype: necktype !== null ? [`${necktype}`] : []
 
       });
 
@@ -281,9 +281,9 @@ const ProductLayout2 = () => {
       size: [],
       color: [],
       category: [],
-      fit: "",
-      sleeve: "",
-      necktype: "",
+      fit: [],
+      sleeve: [],
+      necktype: [],
       search: "All"
     });
   };
@@ -427,16 +427,16 @@ const ProductLayout2 = () => {
                                       (filterdata.category?.find((el) => el == option.value) ? true : false)
                                       :
                                       filter.id === 'fit' ?
-                                        (filterdata.fit === option.value)
+                                        (filterdata.fit?.find((el) => el == option.value) ? true : false)
                                         :
                                         filter.id === 'sleeve' ?
-                                          (filterdata.sleeve === option.value)
+                                          (filterdata.sleeve?.find((el) => el == option.value) ? true : false)
                                           :
                                           filter.id === 'necktype' ?
-                                            (filterdata.necktype === option.value)
+                                            (filterdata.necktype?.find((el) => el == option.value) ? true : false)
                                             :
                                             filter.id === 'color' ?
-                                              (filterdata.color.find((el) => el == option.value) ? true : false)
+                                              (filterdata.color?.find((el) => el == option.value) ? true : false)
                                               :
                                               option.value
                               }

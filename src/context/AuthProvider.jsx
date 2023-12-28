@@ -123,9 +123,9 @@ const AuthProvider = ({ children }) => {
         size: [],
         color: [],
         category: [],
-        fit: "",
-        sleeve: "",
-        necktype: "",
+        fit: [],
+        sleeve: [],
+        necktype: [],
         search: "All"
     })
     // Function to filter data based on multiple criteria
