@@ -1159,8 +1159,8 @@ const ProductOverview = () => {
                         filterWomen.map((image, index) => (
                           <div key={index}>
                             {/* You can customize the img tag based on your requirements */}
-                            <img src={image.url[0]} alt={image.name} />
-                            <img src={image.url[1]} alt={image.name} />
+                            <img className="w-3/5 mx-auto" src={image.url[0]} alt={image.name} />
+                            <img className="w-3/5 mx-auto mt-2" src={image.url[1]} alt={image.name} />
 
                           </div>
                         ))
@@ -1246,6 +1246,10 @@ const ProductOverview = () => {
                       <h3 className="text-base text-gray-800/80 font-semibold">Origin</h3>
                       <p className="text-lg">MADE IN INDIA</p>
                     </div>
+                    <div className="row-span-1 px-2">
+                      <h3 className="text-base text-gray-800/80 font-semibold">Season</h3>
+                      <p className="text-lg">{demo.product?.season}</p>
+                    </div>
                   </div>
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
@@ -1263,6 +1267,10 @@ const ProductOverview = () => {
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Color Family</h3>
                       <p className="text-lg">{demo.product?.cf}</p>
+                    </div>
+                    <div className="row-span-1 px-2">
+                      <h3 className="text-base text-gray-800/80 font-semibold">Style</h3>
+                      <p className="text-lg">{demo.product?.style}</p>
                     </div>
                   </div>
                 </div>
