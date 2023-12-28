@@ -127,7 +127,7 @@ const AuthProvider = ({ children }) => {
         subcategory: '',
         sleeve: [],
         necktype: [],
-        search: ""
+        search: "All"
     })
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
@@ -137,12 +137,12 @@ const AuthProvider = ({ children }) => {
 
             return (
                 (urlsearch === "" ||
-                    product.subsubcategory?.name.toLowerCase() === (urlsearch) ||
-                    product.name.toLowerCase() === (urlsearch) ||
-                    product.gender?.toLowerCase() === (urlsearch) ||
-                    product.cf.toLowerCase() === (urlsearch) ||
-                    product.category?.name.toLowerCase() === (urlsearch) ||
-                    product.subcategory?.name.toLowerCase() === (urlsearch)) &&
+                    product.subsubcategory?.name.toLowerCase() ===(urlsearch) ||
+                    product.name.toLowerCase() ===(urlsearch) ||
+                    product.gender?.toLowerCase() ===(urlsearch) ||
+                    product.cf.toLowerCase() ===(urlsearch) ||
+                    product.category?.name.toLowerCase() ===(urlsearch) ||
+                    product.subcategory?.name.toLowerCase() ===(urlsearch)) &&
                 (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
                 (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
                 (filter.color.length === 0 || filter.color.includes(product.cf)) &&

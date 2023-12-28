@@ -79,7 +79,6 @@ const ProductLayout2 = () => {
     let fit = searchParams.get('fit') || null
     let sleeve = searchParams.get('sleeve') || null
     let necktype = searchParams.get('necktype') || null
-    let navsearch = searchParams.get('navsearch') || null
 
 
     const shouldResetFilters =
@@ -100,7 +99,6 @@ const ProductLayout2 = () => {
         search: "",
         category: [],
         gender: [],
-        subcategory: '',
         color: [],
         fit: [],
         sleeve: [],
@@ -117,8 +115,7 @@ const ProductLayout2 = () => {
         ...filterdata,
         category: category !== null ? [`${category}`] : [],
         gender: gender !== null ? [`${gender}`] : [],
-        subcategory: subcategory !== null ? `${subcategory}` : '',
-        search: navsearch !== null ? `${navsearch}` : '',
+        search: (subcategory || 'All'),
         color: color !== null ? [`${color}`] : [],
         size: size !== null ? [`${size}`] : [],
         fit: fit !== null ? [`${fit}`] : [],
@@ -364,7 +361,7 @@ const ProductLayout2 = () => {
                     </div>
                   </li>
                 }
-                {!search && filterdata.subcategory?.length > 0 &&
+                {!search && filterdata.search?.length > 0 &&
                   <li>
                     <div className="flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -372,7 +369,7 @@ const ProductLayout2 = () => {
                       </svg>
 
                       <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                        {filterdata.subcategory}
+                        {filterdata.search}
                       </a>
                     </div>
                   </li>
