@@ -6,8 +6,9 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import "swiper/css/autoplay";
 
-import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Navigation,Autoplay } from 'swiper/modules';
 
 import { GEGreen1, Wine1, Darknavy3, Maroon1, Navy1 } from '../../assets/images/men';
 import { WMustard1, WBlue1 } from '../../assets/images/women';
@@ -40,8 +41,14 @@ const Slider = () => {
             prevEl: '.swiper-button-prev',
             clickable: true,
           }}
-          modules={[EffectCoverflow, Pagination, Navigation]}
+          modules={[EffectCoverflow, Pagination, Navigation,Autoplay]}
           className="swiper_container"
+          autoplay={{
+            delay: 1500,
+            pauseOnMouseEnter: true,
+            disableOnInteraction: false
+           }}
+
         >
           <SwiperSlide>
             <Link to="/products">

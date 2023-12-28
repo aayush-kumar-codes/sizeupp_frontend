@@ -31,11 +31,11 @@ export default function Carousel() {
     clearTimeout(myTimeout);
   }
   return (
-    <div className="overflow-hidden relative w-full sm:max-h-[85vh] flex ">
-      <div
+    <div className="overflow-hidden relative w-full min-w-screen h-full flex ">
+      <div 
         className={`-z-10 flex transition ease-out duration-40 w-full sm:h-full sm:object-fill"`}
         style={{
-          transform: `translateX(-${current * 100}%)`,
+          transform: `translateX(-${current *100}%)`,
         }}
       >
         {BannerData.map((s,i) => {
@@ -58,12 +58,13 @@ export default function Carousel() {
           </div>
           <h1 className="font-normal lg:text-7xl uppercase font-serif
             text-3xl
-          ">Memories</h1>          
-        </div>
+          ">Memories</h1>  
           <Link to="/products">
             <button className="border-2 border-white text-white p-2 text-md lg:text-lg cursor-pointer z-50">Shop Now</button>
             
         </Link>
+        </div>
+          
       </div>
 
       {/* <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full z-20">
