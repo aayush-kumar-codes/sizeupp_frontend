@@ -403,7 +403,7 @@ const ProductLayout2 = () => {
 
             </div>
             <div className=" w-full rounded-lg  px-2 lg:col-span-10 lg:h-full">
-              <ProductList setResults={() => { console.log("faker v_172.PL2") }} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} />
+              <ProductList setResults={() => { console.log("faker v_172.PL2") }} grid={grid} setGrid={setGrid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={isFilterActive} setFilterActive={setIsFilterActive} />
             </div>
           </div>
         </div>
