@@ -569,6 +569,11 @@ const ProductOverview = () => {
   };
 
   useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+}, []);
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
@@ -1247,8 +1252,8 @@ const ProductOverview = () => {
                       <p className="text-lg">MADE IN INDIA</p>
                     </div>
                     <div className="row-span-1 px-2">
-                      <h3 className="text-base text-gray-800/80 font-semibold">Season</h3>
-                      <p className="text-lg">{demo.product?.season}</p>
+                      <h3 className="text-base text-gray-800/80 font-semibold"></h3>
+                      <p className="text-lg">{""}</p>
                     </div>
                   </div>
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
