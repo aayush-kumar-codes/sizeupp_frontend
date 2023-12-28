@@ -363,13 +363,17 @@ export function Navbar() {
                             </li>
                             <li >
                                 <Link to="/products/cart" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
-                                    <div className="relative">
+                                    
+                                { cart.products?.length > 0 ?
+                                        <div className="relative">
                                         <div className=" absolute -top-2 left-3">
                                             <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{cart.products?.length}</p>
                                         </div>
                                         <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
 
                                     </div>
+                                    :  <ShoppingCartIcon className='w-6 h-6 stroke-2 ' />
+                                }
                                     <span className='text-xs font-medium '>Cart</span>
                                 </Link>
                             </li>
