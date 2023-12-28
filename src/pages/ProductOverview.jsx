@@ -1150,7 +1150,7 @@ const ProductOverview = () => {
                       <XMarkIcon className="h-6 w-6" />
                     </button>
                     <div className="w-full h-full flex flex-col items-center justify-center">
-                      <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in Cm an inches</h1>
+                      <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in cm and inches</h1>
                       {/* {demo.product?.subsubcategory.name == Images[i].name} 
                       <img src={CasualBottom_boxer} className="w-fit m-2" /> */}
                       {/* {demo.product?.category.name == "Men" ?() :()}  */}
@@ -1169,8 +1169,13 @@ const ProductOverview = () => {
                         filterWomen.map((image, index) => (
                           <div key={index}>
                             {/* You can customize the img tag based on your requirements */}
+                            <div className="text-base p-2">In cm</div>
                             <img className="w-3/5 mx-auto" src={image.url[0]} alt={image.name} />
-                            <img className="w-3/5 mx-auto mt-2" src={image.url[1]} alt={image.name} />
+
+                           {image.url[1] && <>
+                              <div className="text-base p-2">In inches</div>
+                              <img className="w-3/5 mx-auto mt-2" src={image.url[1]} alt={image.name} />
+                            </>}
 
                           </div>
                         ))
