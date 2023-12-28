@@ -7,7 +7,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="text-gray-300 body-font bg-[#1E1E1E]">
+      <footer className="text-gray-300 z-50 body-font bg-[#1E1E1E]">
         <div className=" px-8 py-24 mx-10 flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
             <a href="/" className="flex text-lg font-bold items-center md:justify-start justify-center text-white">
