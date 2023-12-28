@@ -39,13 +39,15 @@ const NewAddress = () => {
 
     setAddresses([...addresses, formData]);
 
-
+    if(isEdit){
+      handleUpdateAdddress(formData.addressid)
+    }
     // Add your logic to handle the form data, for example, send it to an API or update state.
     console.log('Form data submitted:', formData);
 
     // Reset form data
     setFormData({
-
+      addressid : "",
       addressLine1: '',
       addressLine2: '',
       city: '',
@@ -311,6 +313,7 @@ const NewAddress = () => {
             </div>
             <div className="flex justify-end w-full gap-4">
               <button onClick={()=> {OpenForm(); setIsEdit(true); setFormData({
+                addressid : address.id,
                 addressLine1: address.address_line_1,
                 addressLine2: address.address_line_2,
                 city: address.city,
@@ -319,7 +322,7 @@ const NewAddress = () => {
                 country: address.country,
                 state : address.state
               })}} className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
-              <button onClick={()=>{handleDeleteAddress(address.id)}} className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
+              <button onClick={()=>{handleDeleteAddress(address.id);}} className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
 
             </div>
           </div>
