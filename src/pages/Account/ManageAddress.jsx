@@ -163,7 +163,7 @@ const NewAddress = () => {
                 />
               </div>
 
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label className="block text-sm font-medium text-gray-700">Mobile</label>
                 <input
                   type="text"
@@ -172,12 +172,12 @@ const NewAddress = () => {
                   onChange={handleInputChange}
                   className="mt-1 p-2 border rounded w-full"
                 />
-              </div>
+              </div> */}
 
               {/* Repeat the above structure for other form fields */}
         
               <button
-                type="submit"
+                type="button"
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
               >
                 Submit
@@ -233,7 +233,7 @@ const NewAddress = () => {
                 mobile: address.mobile,
               
               })}} className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
-              <button className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
+              {/* <button className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button> */}
 
             </div>
           </div>
