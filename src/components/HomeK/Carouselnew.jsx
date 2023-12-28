@@ -64,13 +64,13 @@ const BannerCarousel = () => {
           {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
               <div className="absolute inset-0 flex flex-row items-center text-white">
                   <div className="flex flex-col w-full justify-start ml-16">
-                        <h1 className="text-[3rem] font-serif font-bold shadow">{banner.title}</h1>
+                        <h1 className="text-[3rem] font-serif font-bold drop-shadow-xl">{banner.title}</h1>
                         <h2 className="text-4xl font-[Times-new-roman] italic">{banner.subtitle}</h2>
                         <p className="text-[3rem] font-serif">{banner.description}</p>
                         <Link to="/products">
-                        <button className="border-2 border-white mt-12 text-white p-2 text-md lg:text-lg cursor-pointer z-50">Shop Now</button>
+                        <button className="border-2 border-white mt-12 text-white p-2 text-md lg:text-lg cursor-pointer ">Shop Now</button>
                         
-                    </Link>
+                         </Link>
                   </div>
           </div>
         </div>
