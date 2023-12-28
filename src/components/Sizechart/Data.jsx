@@ -63,6 +63,10 @@ export const Images = [
     url:CasualBottom_jeans_regular
   },
   {
+    name : 'Chino',
+    url: CasualBottom_chinos
+  },
+  {
     name: 'Boxers',
     url: CasualBottom_boxer
   },
@@ -75,5 +79,13 @@ export const Images = [
     url:[WomenBottomwear_cm,WomenBottomwear_inch]
     
   },
+  {
+    name : 'Festive Wear',
+    url : [WomenBottomwear_cm,WomenBottomwear_inch]
+  },
+  {
+    name : 'Winter Wear',
+    url : [CasualTopwear_sweatshirt_men]
+  }
 ]
 

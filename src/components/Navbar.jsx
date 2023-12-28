@@ -389,7 +389,7 @@ export function Navbar() {
                                             </li>
                                             <li className='hover:bg-gray-200/30 pl-2'>
                                                 <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    My Offers
+                                                    My Orders
                                                 </Link>
                                             </li>
                                             <li className='hover:bg-gray-200/30 pl-2'>

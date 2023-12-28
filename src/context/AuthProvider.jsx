@@ -426,6 +426,7 @@ const AuthProvider = ({ children }) => {
                 setfilterdata,
 
                 profiledata,
+                setProfileData,
                 fetchProfileData
             }}
         >

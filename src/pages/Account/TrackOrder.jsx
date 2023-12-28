@@ -6,7 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 const TrackOrderPage = () => {
 
     const [order, setorder] = useState({})
-    const { profiledata, fetchProfileData } = React.useContext(AuthContext)
+    const { profiledata, setProfileData } = React.useContext(AuthContext)
     const { id } = useParams()
     const navigate = useNavigate();
 
@@ -16,12 +16,32 @@ const TrackOrderPage = () => {
         setorder(order[0])
     }
 
-    React.useEffect(() => {
-        fetchProfileData()
-        if (profiledata.orders) {
-            handleFindOrder()
+    const fetchProfileData = async (id) => {
+        try {
+            if (localStorage.token) {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': `token ${localStorage.token}`
+                    }
+                })
+                const data = await response.json()
+                const order = data.orders.filter((order) => order.id === id)
+                console.log(order[0])
+                setorder(order[0])
+            }
+        } catch (error) {
+            console.log(error)
+
         }
-    }, [])
+    }
+
+    React.useEffect(() => {
+        if (id) {
+            fetchProfileData(id)
+        }
+    }, [id])
 
     return (
         <div className="container mx-auto mt-8 p-4">
@@ -60,7 +80,7 @@ const TrackOrderPage = () => {
                         </div>
                         <div className="relative text-center">
                             <span
-                                className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-100 bg-blue-600 rounded-full shadow-md ">
+                                className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
                                 2
                             </span>
                             <h2 className="text-lg font-medium ">In Preparation</h2>
@@ -107,7 +127,7 @@ const TrackOrderPage = () => {
                             <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded border border-slate-200 shadow">
                                 <div className="flex items-center justify-between space-x-2 mb-1">
                                     <div className="font-bold text-slate-900">Order Placed</div>
-                                    <time className="font-caveat font-medium text-indigo-500">08/06/2023</time>
+                                    <time className="font-caveat font-medium text-indigo-500">{Date(order.created_at)}</time>
                                 </div>
                                 <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
                             </div>
@@ -193,42 +213,29 @@ const TrackOrderPage = () => {
                 <div className="max-w-4xl mx-auto mb-10">
                     <h2 className="mb-4 text-xl font-medium ">What you ordered:</h2>
 
-                    {order.order_items?.length > 0 &&
-                        order.order_items.map((items) => {
-                            return (
-
-                                <div key={items.id} className="p-10 bg-white border shadow-md rounded-lg sm:flex sm:items-center xl:py-5 xl:px-12">
-                                    <a href="#" className="mr-6 md:mr-12">
-                                        <img className=" w-full lg:w-[80px] h-[200px] lg:h-[80px] object-cover  mx-auto mb-6 sm:mb-0 "
-                                            src="https://i.postimg.cc/br9C4mmc/430.jpg " alt="dress" />
-                                    </a>
-                                    <div>
-                                        <a className="inline-block mb-1 text-lg font-medium  hover:underline" href="#">
-                                            Summer Black T-shirt
-                                        </a>
-                                        <div className="flex flex-wrap">
-                                            <p className="mr-4 text-sm font-medium ">
-                                                <span className="font-medium">Color:</span>
-                                                <span className="ml-2 text-gray-400">Silver</span>
-                                            </p>
-                                            <p className="mr-4 text-sm font-medium ">
-                                                <span className="font-medium">Size:</span>
-                                                <span className="ml-2 text-gray-400">medium</span>
-                                            </p>
-                                            <p className="mr-4 text-sm font-medium ">
-                                                <span className="font-medium">Style:</span>
-                                                <span className="ml-2 text-gray-400">Uk minimal design</span>
-                                            </p>
-                                            <p className="text-sm font-medium ">
-                                                <span>Qty:</span>
-                                                <span className="ml-2 text-gray-400">1</span>
-                                            </p>
-                                        </div>
+                    {order.order_items?.length > 0 && order.order_items?.map((item) => (
+                        <div key={item.id} className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+                            <div className="pb-4 md:pb-8 w-full md:w-40">
+                                <img className="w-full hidden md:block" src={import.meta.env.VITE_SERVER_URL + (item.product.images[0].img).slice(6)} alt="dress" />
+                                <img className="w-full md:hidden" src={import.meta.env.VITE_SERVER_URL + (item.product.images[0].img).slice(6)} alt="dress" />
+                            </div>
+                            <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+                                <div className="w-full flex flex-col justify-start items-start space-y-8">
+                                    <h3 className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">{item.product.name || ''}</h3>
+                                    <div className="flex justify-start items-start flex-col space-y-2">
+                                        <p className="text-sm  leading-none text-gray-800"><span className="text-gray-400 ">Style: </span>{item.product.subsubcategory.name || ''}</p>
+                                        <p className="text-sm  leading-none text-gray-800"><span className="text-gray-400 ">Size: </span> {item.size || ''}</p>
+                                        <p className="text-sm  leading-none text-gray-800"><span className="text-gray-400 ">Color: </span> {item.color || ''}</p>
                                     </div>
                                 </div>
-                            )
-                        })
-                    }
+                                <div className="flex justify-between space-x-8 items-start w-full">
+                                    <p className="text-base  xl:text-lg leading-6">Rs. {item.mrp || 0} </p>
+                                    <p className="text-base  xl:text-lg leading-6 text-gray-800">{item.quantity}</p>
+                                    <p className="text-base  xl:text-lg font-semibold leading-6 text-gray-800">Rs. {item.mrp || 0} </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
                 <div className="max-w-4xl mx-auto ">
                     <h2 className="mb-4 text-xl font-medium  ">Order Details:</h2>
@@ -238,7 +245,7 @@ const TrackOrderPage = () => {
                             <span>Shipping</span>
                             <span className="flex items-center">
                                 <span className="ml-3 mr-1 text-sm">Rs.</span>
-                                <span className="text-xl">4,000</span>
+                                <span className="text-xl">0 </span>
                             </span>
                         </div>
                         <div
@@ -247,7 +254,7 @@ const TrackOrderPage = () => {
                                 className="absolute right-0 flex items-center justify-center bg-gray-800 rounded-md w-14 h-14 ">
                                 <div
                                     className="flex items-center justify-center text-lg font-bold bg-gray-100 rounded-full   w-11 h-11">
-                                    2</div>
+                                    {order.order_items?.length}</div>
                             </div>
                             <span className="mr-16">Products</span>
                         </div>
@@ -256,7 +263,7 @@ const TrackOrderPage = () => {
                             <span>Total</span>
                             <span className="flex items-center  ">
                                 <span className="ml-3 mr-1 text-sm">Rs.</span>
-                                <span className="text-xl">7,000</span>
+                                <span className="text-xl">{order.payment_amount}</span>
                             </span>
                         </div>
                     </div>

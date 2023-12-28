@@ -1,5 +1,14 @@
+import { useState } from "react";
 
 const Contact = () => {
+
+    const [form ,setform] = useState({
+        name:'',
+        email:'',
+        phone:'',
+        issue:'',
+        textarea:''
+    })
     return (
         <>
         <section className="bg-gray-50" id="contact">
@@ -7,7 +16,7 @@ const Contact = () => {
             <div className="mb-4">
             <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
                 <p className="text-base font-semibold uppercase tracking-wide text-blue-600">
-                Contact
+                Support Tiket
                 </p>
                 <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900 text-3xl sm:text-5xl">
                 Get in Touch
@@ -40,6 +49,12 @@ const Contact = () => {
                             id="phone" autoComplete="given-phone" placeholder="Phone Number"
                             className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb-0 focus:outline-none"
                             name="name" />
+                        </div>
+                        <div className="mx-0 mb-1 sm:mb-4">
+                        <label htmlFor="issues" className="pb-1 text-xs uppercase tracking-wider"></label><input type="text"
+                            id="issue" autoComplete="issue" placeholder="Enter Issue"
+                            className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb-0 focus:outline-none"
+                            name="issue" />
                         </div>
                     </div>
                     <div className="mx-0 mb-1 sm:mb-4">

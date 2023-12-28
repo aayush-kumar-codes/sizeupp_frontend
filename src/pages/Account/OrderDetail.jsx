@@ -8,10 +8,10 @@ const OrderDetail = () => {
     const navigate = useNavigate();
 
     const handleTracking = () => {
-        navigate('/profile/track-order');
+        navigate('/profile/track-order/'+id);
     }
     const handleInvoice = () => {
-        navigate('/profile/invoice');
+        window.location.href = "https://dashboard.sizeupp.com/invoice/" + id
     }
 
     const [order,setorder] = useState({})

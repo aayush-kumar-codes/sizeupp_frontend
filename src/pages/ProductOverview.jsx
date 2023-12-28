@@ -366,7 +366,7 @@ const PincodeForm = () => {
       }
       const data = await res.json()
       console.log(data);
-      if(data.response?.error){
+      if (data.response?.error) {
         Swal.fire({
           title: 'Error!',
           text: data.response?.error,
@@ -397,6 +397,15 @@ const PincodeForm = () => {
   const handlePincode = async () => {
     try {
       await handleToken()
+      if (pincode.length !== 6) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Please enter valid pincode',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return
+      }
       if (!localStorage.token) {
         return navigate('/login')
       }
@@ -405,9 +414,9 @@ const PincodeForm = () => {
         headers: {
           'Content-type': 'application/json'
         },
-        body : JSON.stringify({
-            "token_id": token,
-            "pincode": pincode
+        body: JSON.stringify({
+          "token_id": token,
+          "pincode": pincode
         })
       })
       // if (!res.ok) {
@@ -415,7 +424,7 @@ const PincodeForm = () => {
       // }
       const data = await res.json()
       console.log(data);
-      if(data.data?.response?.error){
+      if (data.data?.response?.error) {
         Swal.fire({
           title: 'Error!',
           text: data.data?.response?.message,
@@ -423,7 +432,7 @@ const PincodeForm = () => {
           confirmButtonText: 'OK'
         });
       }
-      
+
       setIsDeliveryValid(true)
 
       Swal.fire({
@@ -900,7 +909,7 @@ const ProductOverview = () => {
 
   const closeAside = () => {
     setAsideOpen(false);
-  };                                                              
+  };
   const filteredImages = Images.filter(image => image.name === demo.product?.subsubcategory.name);
 
   const filterWomen = Images.filter(image => image.name === demo.product?.subcategory.name);
@@ -929,7 +938,7 @@ const ProductOverview = () => {
               </svg>
 
               <a href="#" className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.category.name} 
+                {demo.product?.category.name}
               </a>
             </div>
           </li>
@@ -1073,7 +1082,7 @@ const ProductOverview = () => {
 
               <div dangerouslySetInnerHTML={{ __html: demo.product?.fabric_detail }} />
             </p>
-            <p className="text-sm text-gray-800/80 font-semibold">In picture product size is {demo.sqp_active?.size} (128cm) in chest</p>
+            <p className="text-sm text-gray-800/80 font-semibold">{demo.product?.model_size}</p>
             <p className="text-base text-gray-800/80 font-semibold">MADE IN INDIA</p>
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
@@ -1118,32 +1127,49 @@ const ProductOverview = () => {
                     <ChevronRightIcon className="h-4 w-4 " />
                   </button>
 
-                {/* Aside bar */}
-                <aside
-                  className={`fixed z-50 right-0 top-0 h-full bg-gray-100 ${isAsideOpen ? 'w-[50vw]' : 'hidden'} shadow-2xl transition-all duration-300 ease-in-out`}
-                >
-                    
-                    
-                  <button
-                    className="relative top-4 right-0 text-black p-2 rounded-full bg-white shadow mx-2"
-                    onClick={closeAside}
+                  {/* Aside bar */}
+                  <aside
+                    className={`fixed z-50 right-0 top-0 h-full bg-gray-100 ${isAsideOpen ? 'w-[50vw]' : 'hidden'} shadow-2xl transition-all duration-300 ease-in-out`}
                   >
-                    <XMarkIcon className="h-6 w-6" />
-                  </button>
+
+
+                    <button
+                      className="relative top-4 right-0 text-black p-2 rounded-full bg-white shadow mx-2"
+                      onClick={closeAside}
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
                     <div className="w-full h-full flex flex-col items-center justify-center">
                       <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in Cm an inches</h1>
                       {/* {demo.product?.subsubcategory.name == Images[i].name} 
                       <img src={CasualBottom_boxer} className="w-fit m-2" /> */}
                       {/* {demo.product?.category.name == "Men" ?() :()}  */}
-                      {filteredImages.map((image, index) => (
-                        <div key={index}>
-                          {/* You can customize the img tag based on your requirements */}
-                          <img src={image.url} alt={image.name} />
-                        </div>
-                      ))}
+                      {demo.product?.category?.name === 'Men' &&
 
-                  </div>
-                  {/* Your aside bar content goes here */}
+                        filteredImages.map((image, index) => (
+                          <div key={index}>
+                            {/* You can customize the img tag based on your requirements */}
+                            <img src={image.url} alt={image.name} />
+                          </div>
+                        ))
+
+                      }
+                      {demo.product?.category?.name === 'Women' &&
+
+                        filterWomen.map((image, index) => (
+                          <div key={index}>
+                            {/* You can customize the img tag based on your requirements */}
+                            <img src={image.url[0]} alt={image.name} />
+                            <img src={image.url[1]} alt={image.name} />
+
+                          </div>
+                        ))
+
+                      }
+
+
+                    </div>
+                    {/* Your aside bar content goes here */}
                   </aside>
                 </div>
               </div>
