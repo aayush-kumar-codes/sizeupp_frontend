@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const {  fetchProductsAuth, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
+    const {  fetchProductsAuth,setproductcount, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
 
 
 
@@ -239,7 +239,7 @@ const ProductList = ({
                         })
 
                         if (items.images.length == 0) {
-
+                            setproductcount(prev => prev - 1)
                             return null
 
                         }

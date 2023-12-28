@@ -76,6 +76,7 @@ const NewAddress = () => {
           title: 'Success',
           text: 'Address Deleted Successfully',
         })
+        fetchProfileData()
       } else {
         Swal.fire({
           icon: 'error',
@@ -114,12 +115,13 @@ const NewAddress = () => {
       const data = await res.json();
       console.log(data);
       setIsEdit(false)
-      if (data.success) {
+      if (res.ok) {
         Swal.fire({
           icon: 'success',
           title: 'Success',
           text: 'Address Updated Successfully',
         })
+        fetchProfileData()
       } else {
         Swal.fire({
           icon: 'error',
