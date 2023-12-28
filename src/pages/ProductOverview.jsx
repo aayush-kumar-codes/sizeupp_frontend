@@ -431,7 +431,7 @@ const PincodeForm = () => {
       console.log(data);
       if (data.data?.response?.message == 'PINCODE NOT SERVICEABLE') {
         setIsDeliveryValid(false)
-        Swal.fire({
+        return Swal.fire({
           title: 'Error!',
           text: data.data?.response?.message,
           icon: 'error',
