@@ -392,11 +392,11 @@ export function Navbar() {
                                                     My Orders
                                                 </Link>
                                             </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
+                                            {/* <li className='hover:bg-gray-200/30 pl-2'>
                                                 <Link to="/profile/track-order" className="text-gray-700 block px-4 py-2 text-sm">
                                                     Track order
                                                 </Link>
-                                            </li>
+                                            </li> */}
                                             <li className='hover:bg-gray-200/30 pl-2'>
                                                 <Link to="/profile/account-settings" className="text-gray-700 block px-4 py-2 text-sm">
                                                     Settings
@@ -424,10 +424,6 @@ export function Navbar() {
 
                                 </div>
                             </li>
-
-
-
-
                         </ul>
                     </div>
 

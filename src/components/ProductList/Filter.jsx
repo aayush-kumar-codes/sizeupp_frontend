@@ -70,23 +70,23 @@ const Filter = ({
                         <h2 className="text-base font-semibold mb-2">Sort by : </h2>
                         <div onClick={()=>handleSort('')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="popular" className="cursor-pointer text-base">Popularity: High to Low</label>
-                            <input type="radio"  name="sort" id="popular" className="cursor-pointer  w-4 h-4" />
+                            <input onChange={()=>handleSort('')} type="radio"  name="sort" id="popular" className="cursor-pointer  w-4 h-4" />
                         </div>
                         <div onClick={()=>handleSort('plth')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="plth" className="cursor-pointer text-base">Price: Low to High</label>
-                            <input type="radio" name="sort" id="plth"  className="cursor-pointer  w-4 h-4" />
+                            <input onChange={()=>handleSort('plth')} type="radio" name="sort" id="plth"  className="cursor-pointer  w-4 h-4" />
                         </div>
                         <div onClick={()=>handleSort('phtl')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="phtl" className="cursor-pointer text-base">Price: High to Low</label>
-                            <input type="radio" name="sort" id="phtl"  className="cursor-pointer  w-4 h-4" />
+                            <input onChange={()=>handleSort('phtl')} type="radio" name="sort" id="phtl"  className="cursor-pointer  w-4 h-4" />
                         </div>
                         <div onClick={()=>handleSort('')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="pricena" className="cursor-pointer text-base">New Arrivals</label>
-                            <input type="radio" name="sort" id="pricena"  className="cursor-pointer w-4 h-4" />
+                            <input onChange={()=>handleSort('')} type="radio" name="sort" id="pricena"  className="cursor-pointer w-4 h-4" />
                         </div>
                         <div onClick={()=>handleSort('dhtl')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
                             <label htmlFor="dhtl" className="cursor-pointer text-base">Discount: High to Low</label>
-                            <input type="radio" name="sort" id="dhtl"  className="cursor-pointer  w-4 h-4 text-orange-500" />
+                            <input onChange={()=>handleSort('dhtl')} type="radio" name="sort" id="dhtl"  className="cursor-pointer  w-4 h-4 text-orange-500" />
                         </div>
 
                     </div>
