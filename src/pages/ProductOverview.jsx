@@ -331,24 +331,148 @@ const PincodeForm = () => {
     setPincode(event.target.value);
   };
 
-  const handleCheckClick = (event) => {
-    event.preventDefault();
+  const handleCheckClick = () => {
 
-    const isValid = pincodeData[pincode];
-
-    if (isValid) {
-      setIsDeliveryValid(true);
-    } else {
-      alert('Not available');
-    }
+    handlePincode()
 
   };
+
+  const navigate = useNavigate()
 
   const handleChangeClick = () => {
     // Reset the pincode and delivery status when changing
     setPincode('');
     setIsDeliveryValid(false);
   };
+
+  const [token, setToken] = useState('')
+
+
+  const handleToken = async () => {
+    try {
+      const res = await fetch(`https://api.instashipin.com/api/v1/tenancy/authToken`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          "api_key": "6092655223372029e7404dc4"
+        })
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      if(data.response?.error){
+        Swal.fire({
+          title: 'Error!',
+          text: data.response?.error,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return
+      }
+      setToken(data.data?.response.token_id)
+      // Swal.fire({
+      //   title: 'Success!',
+      //   text: 'Pincode Added',
+      //   icon: 'success',
+      // })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+
+  }
+
+  const handlePincode = async () => {
+    try {
+      await handleToken()
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      const res = await fetch(`https://api.instashipin.com/api/v1/courier-vendor/check-pincode`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body : JSON.stringify({
+            "token_id": token,
+            "pincode": pincode
+        })
+      })
+      // if (!res.ok) {
+      //   throw new Error(`HTTP error! status: ${res.status}`);
+      // }
+      const data = await res.json()
+      console.log(data);
+      if(data.data?.response?.error){
+        Swal.fire({
+          title: 'Error!',
+          text: data.data?.response?.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+      
+
+      Swal.fire({
+        title: 'Success!',
+        text: data.data?.response?.message,
+        icon: 'success',
+      })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  const handleApplyPincode = async () => {
+    try {
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/validate-pincode/` + pincode, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Pincode Added',
+        icon: 'success',
+      })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
 
   return (
     <>
@@ -367,7 +491,14 @@ const PincodeForm = () => {
           type="button"
           className="cursor-pointer relative right-14 pt-2 -mx-2 text-orange-500 hover:font-bold"
           value={isDeliveryValid ? 'Change' : 'Check'}
-          onClick={isDeliveryValid ? handleChangeClick : handleCheckClick}
+          onClick={() => {
+            if (isDeliveryValid) {
+              handleChangeClick()
+            } else {
+              handleCheckClick()
+            }
+          }}
+
         />
         {isDeliveryValid && (
           <div className="ok relative right-7 top-10 transform -translate-y-1/2">
@@ -767,7 +898,7 @@ const ProductOverview = () => {
   const closeAside = () => {
     setAsideOpen(false);
   };
-  
+
   return (
     <div className={`${styles.padding}`}>
 
@@ -957,7 +1088,7 @@ const ProductOverview = () => {
           </div>
 
           <div className="border-b border-c-gray-300 pb-3  ">
-          <div className="flex w-full">
+            <div className="flex w-full">
               <div className="mb-4">
                 <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
                   size
@@ -976,27 +1107,27 @@ const ProductOverview = () => {
                 </ul>
               </div>
               <div className="p-2">
-              <div className="relative">
-                <button onClick={toggleAside} className="font-bold hover:scale-105 inline-flex items-center ">Size Chart
-                  <ChevronRightIcon className="h-4 w-4 " />
-                </button>
-
-                {/* Aside bar */}
-                <aside
-                  className={`fixed z-50 right-0 top-0 h-full bg-gray-100 text-white w-${isAsideOpen ? '2/5' : '0'} transition-all duration-300 ease-in-out`}
-                >
-                    {/* Close button at the top corner */}
-                    
-                  <button
-                    className="relative top-4 right-0 text-black"
-                    onClick={closeAside}
-                  >
-                    <XMarkIcon className="h-6 w-6" />
+                <div className="relative">
+                  <button onClick={toggleAside} className="font-bold hover:scale-105 inline-flex items-center ">Size Chart
+                    <ChevronRightIcon className="h-4 w-4 " />
                   </button>
 
-                  {/* Your aside bar content goes here */}
+                  {/* Aside bar */}
+                  <aside
+                    className={`fixed z-50 right-0 top-0 h-full bg-gray-100 text-white w-${isAsideOpen ? '2/5' : '0'} transition-all duration-300 ease-in-out`}
+                  >
+                    {/* Close button at the top corner */}
+
+                    <button
+                      className="relative top-4 right-0 text-black"
+                      onClick={closeAside}
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+
+                    {/* Your aside bar content goes here */}
                   </aside>
-                  </div>
+                </div>
               </div>
             </div>
             <div className="mb-4 ">
