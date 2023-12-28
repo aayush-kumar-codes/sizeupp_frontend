@@ -19,6 +19,7 @@ import { AuthContext } from '../context/AuthProvider'
 import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import Footer from '../components/Footer/Footer'
 import Slider from '../components/Slider/Slider'
+import BannerCarousel from '../components/HomeK/Carouselnew';
 
 
 const Megamenu = () => {
@@ -843,9 +844,9 @@ const HomeK = () => {
     return (
         <>
             <Navbar />
-            <Carousel />
+            {/* <Carousel /> */}
             {/* <SlideShow/> */}
-            {/* <BannerCarousel /> */}
+            <BannerCarousel/>
             <Slider />
             <ShopCategoryWise />
             <ShopNow />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { banner1, banner2, banner3 } from "../../assets/banners";
-
+import { Link } from 'react-router-dom';
 
 const BannerData = [
   {
@@ -32,7 +32,7 @@ const BannerCarousel = () => {
     useEffect(() => {
       const interval = setInterval(() => {
         setCurrentBanner((prev) => (prev + 1) % BannerData.length);
-      }, 5000);
+      }, 4000);
   
       return () => clearInterval(interval);
     }, []);
@@ -48,7 +48,7 @@ const BannerCarousel = () => {
         <div
           key={banner.id}
           className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000  bg-black ${
-            index === currentBanner ? 'opacity-100' : 'opacity-0'
+            index === currentBanner ? 'transform translate-x-0' : 'transform -translate-x-full'
             
             }`}
            
@@ -61,13 +61,16 @@ const BannerCarousel = () => {
               }`}
   
           />
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-              <div className="absolute inset-0 flex flex-row items-center md:justify-start justify-center text-white">
-                  <div className="flex flex-col w-full mx-12">
-                        <h1 className="text-[5rem]  font-bold">{banner.title}</h1>
-                        <h2 className="text-4xl">{banner.subtitle}</h2>
-                        <p className="text-[3rem]">{banner.description}</p>
-                      
+          {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
+              <div className="absolute inset-0 flex flex-row items-center text-white">
+                  <div className="flex flex-col w-full justify-start ml-16">
+                        <h1 className="text-[3rem] font-serif font-bold shadow">{banner.title}</h1>
+                        <h2 className="text-4xl font-[Times-new-roman] italic">{banner.subtitle}</h2>
+                        <p className="text-[3rem] font-serif">{banner.description}</p>
+                        <Link to="/products">
+                        <button className="border-2 border-white mt-12 text-white p-2 text-md lg:text-lg cursor-pointer z-50">Shop Now</button>
+                        
+                    </Link>
                   </div>
           </div>
         </div>

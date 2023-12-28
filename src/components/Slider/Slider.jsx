@@ -22,7 +22,7 @@ const Slider = () => {
     <>
       <div className=" bg-[#0B1121]/90 py-12">
         {/* <div className="w-full h-full bg-white/10 absolute backdrop-blur "></div> */}
-        <h1 className="heading font-semibold tracking-wider text-white font-sans">Product collection</h1>
+        <h1 className="heading font-normal tracking-wider text-white font-serif">Product collection</h1>
         <Swiper
           effect={'coverflow'}
           grabCursor={true}
@@ -44,7 +44,7 @@ const Slider = () => {
           modules={[EffectCoverflow, Pagination, Navigation,Autoplay]}
           className="swiper_container"
           autoplay={{
-            delay: 1500,
+            delay: 3000,
             pauseOnMouseEnter: true,
             disableOnInteraction: false
            }}
