@@ -1247,45 +1247,45 @@ const ProductOverview = () => {
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6 border-r border-black/60">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Occasion</h3>
-                      <p className="text-lg">{demo.product?.occasion != "nan" ? demo.product?.occasion : 'N/A' || "Occasion"}</p>
+                      <p className="text-[18px]">{demo.product?.occasion != "nan" ? demo.product?.occasion : 'N/A' || "Occasion"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Sleeve Type</h3>
-                      <p className="text-lg">{demo.product?.sleeve != "nan" ? demo.product?.sleeve : "N/A" || "Sleeve"}</p>
+                      <p className="text-[18px]">{demo.product?.sleeve != "nan" ? demo.product?.sleeve : "N/A" || "Sleeve"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Fit</h3>
-                      <p className="text-lg">{demo.product?.fit != "nan" ? demo.product?.fit : "N/A" || "Fit"}</p>
+                      <p className="text-[18px]">{demo.product?.fit != "nan" ? demo.product?.fit : "N/A" || "Fit"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Origin</h3>
-                      <p className="text-lg">MADE IN INDIA</p>
+                      <p className="text-[18px]">MADE IN INDIA</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold"> </h3>
-                      <p className="text-lg">{" "}</p>
+                      <p className="text-[18px]">{" "}</p>
                     </div>
                   </div>
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Material</h3>
-                      <p className="text-lg">{demo.product?.fabric_detail != "nan" ? demo.product?.fabric_detail : "N/A"}</p>
+                      <p className="text-[18px]">{demo.product?.fabric_detail != "nan" ? demo.product?.fabric_detail : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Design/Surface</h3>
-                      <p className="text-lg">{demo.product?.design_surface != "nan" ? demo.product?.design_surface : "N/A"}</p>
+                      <p className="text-[18px]">{demo.product?.design_surface != "nan" ? demo.product?.design_surface : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Neckline Type</h3>
-                      <p className="text-lg">{demo.product?.neck_type != "nan" ? demo.product?.neck_type : "N/A"}</p>
+                      <p className="text-[18px]">{demo.product?.neck_type != "nan" ? demo.product?.neck_type : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Color Family</h3>
-                      <p className="text-lg">{demo.product?.cf != "nan" ? demo.product?.cf : "N/A"}</p>
+                      <p className="text-[18px]">{demo.product?.cf != "nan" ? demo.product?.cf : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Style</h3>
-                      <p className="text-lg">{demo.product?.style != "nan" ? demo.product?.style : "N/A"}</p>
+                      <p className="text-[18px]">{demo.product?.style != "nan" ? demo.product?.style : "N/A"}</p>
                     </div>
                   </div>
                 </div>
