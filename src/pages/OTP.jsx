@@ -48,6 +48,15 @@ const Otp = () => {
         })
 
         const data = await res.json()
+        if(!res.ok){
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: data.message,
+                confirmButtonText: 'Cool',
+                
+            })
+        }
         if (data.message) {
             Swal.fire({
                 icon: 'success',

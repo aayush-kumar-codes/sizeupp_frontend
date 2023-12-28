@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
-
+import Swal from 'sweetalert2'
 const NewAddress = () => {
   const [UserAddress, setUserAddress] = useState({})
   const [changeAddress, setChangeAddress] = useState(false)
@@ -49,6 +49,8 @@ const NewAddress = () => {
       addressLine1: '',
       addressLine2: '',
       city: '',
+      state : "",
+      country: '',
       pinCode: '',
       mobile: '',
     });
@@ -56,6 +58,85 @@ const NewAddress = () => {
     // Close the modal
     CloseForm();
   };
+
+  const handleDeleteAddress = async(id) => {
+    try {
+      const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/'+id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'token '+localStorage.getItem('token')
+        }
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Address Deleted Successfully',
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      }
+    }catch(error){
+      console.log("error",error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    }
+  }
+
+  const handleUpdateAdddress = async(id) => {
+    try {
+      const res = await fetch(import.meta.env.VITE_SERVER_URL+'/api/address/'+id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'token '+localStorage.getItem('token')
+        },
+        body: JSON.stringify({
+          address_line_1: formData.addressLine1,
+          address_line_2: formData.addressLine2,
+          city: formData.city,
+          postal_code: formData.pinCode,
+          country: formData.country,
+          state : formData.state,
+          is_default : true
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      setIsEdit(false)
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Address Updated Successfully',
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      }
+    }catch(error){
+      console.log("error",error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+
+      })
+    }
+  }
 
 
   const handleInputChange = (e) => {
@@ -71,6 +152,8 @@ const NewAddress = () => {
   useEffect(() => {
     fetchProfileData()
   }, [])
+
+  const [isEdit, setIsEdit] = useState(false)
   return (
     <div>
       <div className="px-10 flex justify-between items-center border-b">
@@ -225,15 +308,16 @@ const NewAddress = () => {
               <p>{address.country}</p>
             </div>
             <div className="flex justify-end w-full gap-4">
-              <button onClick={()=> {OpenForm(); setFormData({
+              <button onClick={()=> {OpenForm(); setIsEdit(true); setFormData({
                 addressLine1: address.address_line_1,
                 addressLine2: address.address_line_2,
                 city: address.city,
                 pinCode: address.postal_code,
                 mobile: address.mobile,
-              
+                country: address.country,
+                state : address.state
               })}} className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
-              {/* <button className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button> */}
+              <button onClick={()=>{handleDeleteAddress(address.id)}} className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
 
             </div>
           </div>
