@@ -79,6 +79,19 @@ const ProductLayout2 = () => {
     let fit = searchParams.get('fit') || null
     let sleeve = searchParams.get('sleeve') || null
     let necktype = searchParams.get('necktype') || null
+    let navsearch = searchParams.get('navsearch') || null
+
+
+    const shouldResetFilters =
+      searchParams.has('gender') &&
+      searchParams.has('subcategory') &&
+      searchParams.has('subsubcategory');
+
+    if (shouldResetFilters) {
+      // Delete all URL parameters
+      const newSearchParams = new URLSearchParams();
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
+    }
 
     if (searchParams.has('navsearch')) {
       setSearch(searchParams.get("navsearch") || '')
@@ -87,6 +100,7 @@ const ProductLayout2 = () => {
         search: "",
         category: [],
         gender: [],
+        subcategory: '',
         color: [],
         fit: [],
         sleeve: [],
@@ -103,7 +117,8 @@ const ProductLayout2 = () => {
         ...filterdata,
         category: category !== null ? [`${category}`] : [],
         gender: gender !== null ? [`${gender}`] : [],
-        search: (subcategory || 'All'),
+        subcategory: subcategory !== null ? `${subcategory}` : '',
+        search: navsearch !== null ? `${navsearch}` : '',
         color: color !== null ? [`${color}`] : [],
         size: size !== null ? [`${size}`] : [],
         fit: fit !== null ? [`${fit}`] : [],
@@ -280,6 +295,7 @@ const ProductLayout2 = () => {
       gender: [],
       size: [],
       color: [],
+      subcategory: '',
       category: [],
       fit: [],
       sleeve: [],
@@ -348,7 +364,7 @@ const ProductLayout2 = () => {
                     </div>
                   </li>
                 }
-                {!search && filterdata.search?.length > 0 &&
+                {!search && filterdata.subcategory?.length > 0 &&
                   <li>
                     <div className="flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -356,7 +372,7 @@ const ProductLayout2 = () => {
                       </svg>
 
                       <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                        {filterdata.search}
+                        {filterdata.subcategory}
                       </a>
                     </div>
                   </li>
@@ -418,27 +434,27 @@ const ProductLayout2 = () => {
                               value={option.value}
                               checked={
                                 filter.id === 'gender' ?
-                                  (filterdata.gender?.find((el) => el == option.value) ? true : false)
+                                  filterdata.gender?.includes(option.value)
                                   :
                                   filter.id === 'size' ?
-                                    (filterdata.size?.find((el) => el == option.value) ? true : false)
+                                    filterdata.size?.includes(option.value)
                                     :
                                     filter.id === 'category' ?
-                                      (filterdata.category?.find((el) => el == option.value) ? true : false)
+                                      filterdata.category?.includes(option.value)
                                       :
                                       filter.id === 'fit' ?
-                                        (filterdata.fit?.find((el) => el == option.value) ? true : false)
+                                        filterdata.fit?.includes(option.value)
                                         :
                                         filter.id === 'sleeve' ?
-                                          (filterdata.sleeve?.find((el) => el == option.value) ? true : false)
+                                          filterdata.sleeve?.includes(option.value)
                                           :
                                           filter.id === 'necktype' ?
-                                            (filterdata.necktype?.find((el) => el == option.value) ? true : false)
+                                            filterdata.necktype?.includes(option.value)
                                             :
                                             filter.id === 'color' ?
-                                              (filterdata.color?.find((el) => el == option.value) ? true : false)
+                                              filterdata.color?.includes(option.value)
                                               :
-                                              option.value
+                                              false
                               }
                               onChange={(e) => {
                                 handleChangeFilter(e)

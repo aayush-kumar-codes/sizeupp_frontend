@@ -124,33 +124,35 @@ const AuthProvider = ({ children }) => {
         color: [],
         category: [],
         fit: [],
+        subcategory: '',
         sleeve: [],
         necktype: [],
-        search: "All"
+        search: ""
     })
     // Function to filter data based on multiple criteria
     const funcFilter = (products, filter) => {
 
         return products.filter((product) => {
-            const urlsearch = filter.search === "All" || filter.search === "" ? "" : filter.search.toLowerCase();
-        
+            const urlsearch = (filter.search === "All" || filter.search === "") ? "" : filter.search.toLowerCase();
+
             return (
-              (urlsearch === "" ||
-                product.subsubcategory?.name.toLowerCase().includes(urlsearch) ||
-                product.name.toLowerCase().includes(urlsearch) ||
-                product.gender?.toLowerCase().includes(urlsearch) ||
-                product.cf.toLowerCase().includes(urlsearch) ||
-                product.category?.name.toLowerCase().includes(urlsearch) ||
-                product.subcategory?.name.toLowerCase().includes(urlsearch)) &&
-              (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
-              (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
-              (filter.color.length === 0 || filter.color.includes(product.cf)) &&
-              (filter.category.length === 0 || filter.category.includes(product.subcategory.name)) &&
-              (filter.fit.length === 0 || filter.fit.includes(product.fit)) &&
-              (filter.necktype.length === 0 || filter.necktype.includes(product.neck_type)) &&
-              (filter.sleeve.length === 0 || filter.sleeve.includes(product.sleeve))
+                (urlsearch === "" ||
+                    product.subsubcategory?.name.toLowerCase() === (urlsearch) ||
+                    product.name.toLowerCase() === (urlsearch) ||
+                    product.gender?.toLowerCase() === (urlsearch) ||
+                    product.cf.toLowerCase() === (urlsearch) ||
+                    product.category?.name.toLowerCase() === (urlsearch) ||
+                    product.subcategory?.name.toLowerCase() === (urlsearch)) &&
+                (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
+                (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
+                (filter.color.length === 0 || filter.color.includes(product.cf)) &&
+                (filter.category.length === 0 || filter.category.includes(product.subcategory.name)) &&
+                (filter.fit.length === 0 || filter.fit.includes(product.fit)) &&
+                (filter.necktype.length === 0 || filter.necktype.includes(product.neck_type)) &&
+                (filter.sleeve.length === 0 || filter.sleeve.includes(product.sleeve)) &&
+                (filter.subcategory === "" || product.subsubcategory?.name.toLowerCase() === (filter.subcategory.toLowerCase()))
             );
-          });
+        });
     };
 
 
@@ -353,7 +355,7 @@ const AuthProvider = ({ children }) => {
     const [cart, setCart] = useState([])
     const fetchCart = async () => {
         try {
-            
+
             const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
                 method: 'GET',
                 headers: {
@@ -371,7 +373,7 @@ const AuthProvider = ({ children }) => {
         }
         catch (error) {
             console.error('Fetch error:', error);
-            
+
         }
     }
 
