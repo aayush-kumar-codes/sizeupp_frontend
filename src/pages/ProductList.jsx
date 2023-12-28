@@ -132,7 +132,6 @@ const ProductList = ({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
             });
         }
     }
@@ -170,7 +169,6 @@ const ProductList = ({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
             });
         }
     }
