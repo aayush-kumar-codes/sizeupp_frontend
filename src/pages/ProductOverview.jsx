@@ -1247,15 +1247,15 @@ const ProductOverview = () => {
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6 border-r border-black/60">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Occasion</h3>
-                      <p className="text-lg">{demo.product?.occasion != "nan" ? demo.product?.occasion : '--' || "Occasion"}</p>
+                      <p className="text-lg">{demo.product?.occasion != "nan" ? demo.product?.occasion : 'N/A' || "Occasion"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Sleeve Type</h3>
-                      <p className="text-lg">{demo.product?.sleeve != "nan" ? demo.product?.sleeve : "--" || "Sleeve"}</p>
+                      <p className="text-lg">{demo.product?.sleeve != "nan" ? demo.product?.sleeve : "N/A" || "Sleeve"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Fit</h3>
-                      <p className="text-lg">{demo.product?.fit != "nan" ? demo.product?.fit : "--" || "Fit"}</p>
+                      <p className="text-lg">{demo.product?.fit != "nan" ? demo.product?.fit : "N/A" || "Fit"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Origin</h3>
@@ -1269,23 +1269,23 @@ const ProductOverview = () => {
                   <div className=" col-span-1 grid grid-rows-3 gap-y-6">
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Material</h3>
-                      <p className="text-lg">{demo.product?.fabric_detail != "nan" ? demo.product?.fabric_detail : "--"}</p>
+                      <p className="text-lg">{demo.product?.fabric_detail != "nan" ? demo.product?.fabric_detail : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Design/Surface</h3>
-                      <p className="text-lg">{demo.product?.design_surface != "nan" ? demo.product?.design_surface : "--"}</p>
+                      <p className="text-lg">{demo.product?.design_surface != "nan" ? demo.product?.design_surface : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Neckline Type</h3>
-                      <p className="text-lg">{demo.product?.neck_type != "nan" ? demo.product?.neck_type : "--"}</p>
+                      <p className="text-lg">{demo.product?.neck_type != "nan" ? demo.product?.neck_type : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Color Family</h3>
-                      <p className="text-lg">{demo.product?.cf != "nan" ? demo.product?.cf : "--"}</p>
+                      <p className="text-lg">{demo.product?.cf != "nan" ? demo.product?.cf : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Style</h3>
-                      <p className="text-lg">{demo.product?.style != "nan" ? demo.product?.style : "--"}</p>
+                      <p className="text-lg">{demo.product?.style != "nan" ? demo.product?.style : "N/A"}</p>
                     </div>
                   </div>
                 </div>
