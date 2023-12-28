@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const {  fetchProductsAuth,setproductcount, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
+    const {  fetchProductsAuth,setproductcount,isFilterActive,setIsFilterActive, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
 
 
 
@@ -219,7 +219,7 @@ const ProductList = ({
 
             {/* Filter navbar */}
             {/* <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} /> */}
-            <SideNav display={filterActive} setDisplay={setFilterActive} />
+            <SideNav display={isFilterActive} setDisplay={setIsFilterActive} />
 
             {/* Large Desktop */}
             {/* <div>
