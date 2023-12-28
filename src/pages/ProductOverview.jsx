@@ -422,6 +422,7 @@ const PincodeForm = () => {
         });
       }
       
+      setIsDeliveryValid(true)
 
       Swal.fire({
         title: 'Success!',
@@ -509,16 +510,16 @@ const PincodeForm = () => {
       {isDeliveryValid ? (
         <div className="w-full m-3">
           <ul className="flex flex-col gap-3 font-bold">
-            <li>
+            {/* <li>
               <h4>Get it by Thu, Dec 21</h4>
-            </li>
+            </li> */}
             <li>
               <h4>Pay on delivery available</h4>
             </li>
-            <li>
+            {/* <li>
               <h4>Easy 14 days return &amp; exchange available</h4>
               <span></span>
-            </li>
+            </li> */}
           </ul>
         </div>
       ) : (
