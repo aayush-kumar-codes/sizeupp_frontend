@@ -1218,8 +1218,8 @@ const ProductOverview = () => {
                       <p className="text-lg">{demo.product?.neck_type}</p>
                     </div>
                     <div className="row-span-1 px-2">
-                      <h3 className="text-base text-gray-800/80 font-semibold">Color</h3>
-                      <p className="text-lg">{demo.product?.color}</p>
+                      <h3 className="text-base text-gray-800/80 font-semibold">Color Family</h3>
+                      <p className="text-lg">{demo.product?.cf}</p>
                     </div>
                   </div>
                 </div>
