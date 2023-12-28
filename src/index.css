@@ -61,3 +61,10 @@
     opacity: 0; /* Fully fade out */
   }
 }
+
+@media(min-width:768px){
+  .shift-banner{
+    transform: translateX(-200px)!important;
+  }
+
+}

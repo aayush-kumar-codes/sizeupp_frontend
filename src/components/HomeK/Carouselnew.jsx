@@ -43,12 +43,12 @@ const BannerCarousel = () => {
   
 
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen ">
       {BannerData.map((banner, index) => (
         <div
           key={banner.id}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000  bg-black ${
-            index === currentBanner ? 'transform translate-x-0' : 'transform -translate-x-full'
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000  bg-black  ${
+            index === currentBanner ? 'transform ' : 'transform -translate-x-full'
             
             }`}
            
@@ -57,7 +57,7 @@ const BannerCarousel = () => {
             src={banner.img}
             alt={`Banner ${banner.id}`}
             className={`object-cover w-full h-full ${
-                index === currentBanner ? 'sm:origin-[75%]' : ''
+                index === currentBanner ? '' : ''
               }`}
   
           />
@@ -68,9 +68,8 @@ const BannerCarousel = () => {
                         <h2 className="text-4xl font-[Times-new-roman] italic">{banner.subtitle}</h2>
                         <p className="text-[3rem] font-serif">{banner.description}</p>
                         <Link to="/products">
-                        <button className="border-2 border-white mt-12 text-white p-2 text-md lg:text-lg cursor-pointer ">Shop Now</button>
-                        
-                         </Link>
+                          <button className="border-2 border-white mt-12 text-white p-2 text-md lg:text-lg cursor-pointer ">Shop Now</button>
+                        </Link>
                   </div>
           </div>
         </div>
