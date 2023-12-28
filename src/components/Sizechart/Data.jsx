@@ -23,7 +23,7 @@ export const Images = [
     url:CasualTopwear_tshirt_men,
   },
   {
-    name: 'Evening Wear Shirts',
+    name: 'Evening Wear',
     url:EveningWear_casualshirt,
   },
   {
