@@ -8,7 +8,7 @@ const Megamenu = () => {
 
     const [data, setData] = useState([])
 
-    const { setnavsearch,setfilterdata, setnavgender, setcategory } = useContext(AuthContext)
+    const { setnavsearch, setfilterdata, setnavgender, setcategory } = useContext(AuthContext)
 
     useEffect(() => {
         fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
@@ -39,13 +39,13 @@ const Megamenu = () => {
                 {/* All Products */}
                 <div className="group">
 
-                    <Link to="/products" onClick={()=>{
+                    <Link to="/products" onClick={() => {
                         setfilterdata({
-                            gender : [],
+                            gender: [],
                             color: [],
-                            size : [],
-                            search:"",
-                            category : ""
+                            size: [],
+                            search: "",
+                            category: ""
                         })
                     }} className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         All Products
@@ -53,56 +53,7 @@ const Megamenu = () => {
                 </div>
 
 
-                {/* Woman */}
-                { <div className="group">
 
-                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                        Women
-                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                    </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-2 gap-10 justify-between absolute p-6 border w-fit bg-secondary rounded-md  drop-shadow-md`}>
-                        {/* <div className="col-span-1">
-                            <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
-                            <p className="text-sm text-gray-500">New products</p>
-                            < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            <Link to="/products">
-                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            </Link>
-                            <Link to="/terms-condition">
-                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
-                            </Link>
-                        </div> */}
-                        { data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
-                            return (
-                                <div key={cat.id} className="col-span-1 ">
-                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
-                                    <ul className="grid grid-flow-row gap-2">
-                                        {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
-                                            return (
-                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                                    {items.name}
-                                                </li>
-                                            )
-                                        })
-                                        }
-                                    </ul>
-                                </div>)
-                        })
-                        }
-                        {/* <div className="col-span-1 ">
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
-                                    return (
-                                        <li onClick={()=>handleSearch(items.name)} key={i} className="text-base font-semibold hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div> */}
-                    </div>
-                </div>}
 
                 {/* 
                 {data.length > 0 && data.map((item, index) => (
@@ -178,6 +129,57 @@ const Megamenu = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Woman */}
+                {<div className="group">
+
+                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                        Women
+                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                    </p>
+                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-2 gap-10 justify-between absolute p-6 border w-fit bg-secondary rounded-md  drop-shadow-md`}>
+                        {/* <div className="col-span-1">
+                            <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
+                            <p className="text-sm text-gray-500">New products</p>
+                            < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
+                            <Link to="/products">
+                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
+                            </Link>
+                            <Link to="/terms-condition">
+                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
+                            </Link>
+                        </div> */}
+                        {data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
+                            return (
+                                <div key={cat.id} className="col-span-1 ">
+                                    <h2 className="text-base font-semibold mb-2">{cat.name}</h2>
+                                    <ul className="grid grid-flow-row gap-2">
+                                        {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
+                                            return (
+                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
+                                                    {items.name}
+                                                </li>
+                                            )
+                                        })
+                                        }
+                                    </ul>
+                                </div>)
+                        })
+                        }
+                        {/* <div className="col-span-1 ">
+                            <ul className="grid grid-flow-row gap-4">
+                                {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
+                                    return (
+                                        <li onClick={()=>handleSearch(items.name)} key={i} className="text-base font-semibold hover:underline cursor-pointer">
+                                            {items}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div> */}
+                    </div>
+                </div>}
 
                 {/* Festive Offers */}
                 {/* <div className="group">

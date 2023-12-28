@@ -57,6 +57,7 @@ const NewAddress = () => {
       }
       const data = await res.json()
       console.log(data);
+      fetchProfileData()
       Swal.fire({
         title: 'Success!',
         text: 'Address Added',
@@ -93,7 +94,7 @@ const NewAddress = () => {
 
     if (isEdit) {
       handleUpdateAdddress(formData.addressid)
-    }else{
+    } else {
       handleAddAddress()
     }
     // Add your logic to handle the form data, for example, send it to an API or update state.
@@ -170,6 +171,17 @@ const NewAddress = () => {
       });
       const data = await res.json();
       console.log(data);
+      setFormData({
+        addressid: "",
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: "",
+        country: '',
+        pinCode: '',
+        mobile: '',
+        
+      })
       setIsEdit(false)
       if (res.ok) {
         Swal.fire({
@@ -257,82 +269,110 @@ const NewAddress = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 w-96">
-            <h2 className="text-xl font-bold mb-4">New Address Form</h2>
-            <form onSubmit={handleSubmit}>
-              {/* Add your form fields */}
-
-
-              <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700">Address Line 1</label>
+          <div className="px-4 bg-white">
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Address Line 1
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   type="text"
+                  className="form-input px-2 py-1"
+                  placeholder="Enter Address Line 1"
+                  required
                   name="addressLine1"
                   value={formData.addressLine1}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 border rounded w-full"
                 />
-              </div>
-              <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700">Address Line 2</label>
-                <input
-                  type="text"
+              </dd>
+            </div>
+
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Address Line 2
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input type="text"
+                  className="form-input px-2 py-1"
+                  placeholder="Enter Address Line 2"
                   name="addressLine2"
                   value={formData.addressLine2}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border rounded w-full"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700">City</label>
-                <input
-                  type="text"
+                  onChange={handleInputChange} />
+              </dd>
+            </div>
+
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                City
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input type="text"
+                  className="form-input px-2 py-1"
+                  placeholder="Enter City"
+                  required
                   name="city"
                   value={formData.city}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border rounded w-full"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700">Pin code</label>
-                <input
-                  type="text"
-                  name="pinCode"
-                  value={formData.pinCode}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border rounded w-full"
-                />
-              </div>
+                  onChange={handleInputChange} />
+              </dd>
+            </div>
 
-              {/* <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700">Mobile</label>
-                <input
-                  type="text"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border rounded w-full"
-                />
-              </div> */}
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                State
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input type="text"
+                  className="form-input px-2 py-1"
+                  placeholder="Enter State"
+                  required
+                  name="state"
+                  value={formData.state}
+                  onChange={handleInputChange} />
+              </dd>
+            </div>
 
-              {/* Repeat the above structure for other form fields */}
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Zip Code
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input type="text"
+                  className="form-input px-2 py-1"
+                  placeholder="Enter Zip code"
+                  required
+                  name="zipCode"
+                  value={formData.postal_cde}
+                  onChange={handleInputChange} />
+              </dd>
+            </div>
 
-              <button
-                type="button"
-                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-              >
-                Submit
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Country
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input type="text"
+                  className="form-input px-2 py-1"
+                  placeholder="Enter country"
+                  required
+                  name="country"
+                  value={formData.country}
+                  onChange={handleInputChange} />
+              </dd>
+            </div>
+
+            {/* Include other fields similarly */}
+
+
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <button type="button" onClick={handleSubmit} className="rounded-lg bg-blue-500 text-white px-4 py-2">
+                Save
               </button>
-            </form>
-            <div className="flex justify-end w-full">
-              <button
-                onClick={CloseForm}
-                className="mt-2 text-gray-100 hover:text-gray-200 bg-red-600 rounded p-2"
-              >
+              <button type="button" onClick={() => { setIsOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2">
                 Close
               </button>
-
             </div>
+
           </div>
         </div>
       )}

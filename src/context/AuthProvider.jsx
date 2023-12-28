@@ -461,6 +461,7 @@ const AuthProvider = ({ children }) => {
                 fetchProfileData,
 
                 cart,
+                setCart,
                 fetchCart
             }}
         >

@@ -8,12 +8,11 @@ import { AuthContext } from '../context/AuthProvider'
 
 
 export function ProductBilling() {
-    const [cart, setCart] = useState([])
     const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
     const [pincode, setPincode] = useState('')
     const [changeAddress, setChangeAddress] = useState(false)
-    const { couponcode, setcouponcode,fetchCart } = useContext(AuthContext)
+    const { couponcode, setcouponcode,fetchCart,cart,setCart } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
         addressLine1: '',

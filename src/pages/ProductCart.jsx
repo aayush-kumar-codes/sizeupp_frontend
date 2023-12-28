@@ -45,10 +45,9 @@ const products = [
 ]
 
 export function ProductCart() {
-    const [cart, setCart] = useState([])
     const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
-    const { couponcode, setcouponcode,fetchCart } = useContext(AuthContext)
+    const { couponcode, setcouponcode,fetchCart,cart,setCart } = useContext(AuthContext)
     const [pincode, setPincode] = useState('')
 
     const updateCart = (id, sqpActive, count) => {
@@ -469,6 +468,9 @@ export function ProductCart() {
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <button type="button" onClick={handleAddAddress} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                         Save
+                                    </button>
+                                    <button type="button" onClick={()=>{setChangeAdr(false)}} className="rounded-lg bg-red-500 text-white px-4 py-2">
+                                        Close
                                     </button>
                                 </div>
 
