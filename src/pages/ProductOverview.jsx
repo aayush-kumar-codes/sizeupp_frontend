@@ -11,6 +11,8 @@ import { LinkIcon } from "@heroicons/react/20/solid";
 import RelatedProducts from "../components/ProductOverview/RelatedProducts";
 import ReviewProduct from "../components/ProductOverview/ReviewProduct";
 import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOverviewCar";
+import { CasualBottom_boxer } from "../assets/sizechart";
+import { Images } from "../components/Sizechart/Data";
 
 export const Modal = ({ children, onClose }) => {
   const handleOverlayClick = (e) => {
@@ -33,7 +35,7 @@ export const Modal = ({ children, onClose }) => {
     };
   }, [onClose]);
   return ReactDOM.createPortal(
-    <div className="fixed overflow-hidden top-0 left-0 w-screen h-full flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
+    <div className="fixed overflow-hidden top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
       <div className=" p-8 rounded-md max-w-screen-lg w-full h-auto overflow-auto">
         {children}
         <button className="absolute top-4 right-6 text-gray-100" onClick={onClose}>
@@ -898,7 +900,10 @@ const ProductOverview = () => {
 
   const closeAside = () => {
     setAsideOpen(false);
-  };
+  };                                                              
+  const filteredImages = Images.filter(image => image.name === demo.product?.subsubcategory.name);
+
+  const filterWomen = Images.filter(image => image.name === demo.product?.subcategory.name);
 
   return (
     <div className={`${styles.padding}`}>
@@ -924,7 +929,7 @@ const ProductOverview = () => {
               </svg>
 
               <a href="#" className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.category.name}
+                {demo.product?.category.name} 
               </a>
             </div>
           </li>
@@ -1113,20 +1118,32 @@ const ProductOverview = () => {
                     <ChevronRightIcon className="h-4 w-4 " />
                   </button>
 
-                  {/* Aside bar */}
-                  <aside
-                    className={`fixed z-50 right-0 top-0 h-full bg-gray-100 text-white w-${isAsideOpen ? '2/5' : '0'} transition-all duration-300 ease-in-out`}
+                {/* Aside bar */}
+                <aside
+                  className={`fixed z-50 right-0 top-0 h-full bg-gray-100 ${isAsideOpen ? 'w-[50vw]' : 'hidden'} shadow-2xl transition-all duration-300 ease-in-out`}
+                >
+                    
+                    
+                  <button
+                    className="relative top-4 right-0 text-black p-2 rounded-full bg-white shadow mx-2"
+                    onClick={closeAside}
                   >
-                    {/* Close button at the top corner */}
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                    <div className="w-full h-full flex flex-col items-center justify-center">
+                      <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in Cm an inches</h1>
+                      {/* {demo.product?.subsubcategory.name == Images[i].name} 
+                      <img src={CasualBottom_boxer} className="w-fit m-2" /> */}
+                      {/* {demo.product?.category.name == "Men" ?() :()}  */}
+                      {filteredImages.map((image, index) => (
+                        <div key={index}>
+                          {/* You can customize the img tag based on your requirements */}
+                          <img src={image.url} alt={image.name} />
+                        </div>
+                      ))}
 
-                    <button
-                      className="relative top-4 right-0 text-black"
-                      onClick={closeAside}
-                    >
-                      <XMarkIcon className="h-6 w-6" />
-                    </button>
-
-                    {/* Your aside bar content goes here */}
+                  </div>
+                  {/* Your aside bar content goes here */}
                   </aside>
                 </div>
               </div>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon } from "@heroicons/react/24/outline";
+import { AuthContext } from '../../context/AuthProvider';
 
 
 
@@ -37,12 +38,19 @@ const Modal = ({ children, isOpen, onClose }) => {
 
 
 const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
+
+  const { profiledata, fetchProfileData } = useContext(AuthContext)
+  console.log(profiledata.user_info);
+  React.useEffect(() => {
+    fetchProfileData()
+  }, [])
+
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
-      firstName:'Kushal',
-      lastName:'Bauskar',
-      email:'kbauskar07@gmail.com',
-      mobile:8433771414,
+      firstName:profiledata.user_info?.first_name || '',
+      lastName:profiledata.user_info?.last_name || '',
+      email:profiledata.user_info?.email || '',
+      mobile:profiledata.user_info?.phone || '',
     });
   
     const handleEditClick = () => {
@@ -61,7 +69,7 @@ const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
         [name]: value,
       }));
     };
-  
+    
     return (
         <div className="w-full mx-16  mt-8">
             <h2 className="text-2xl font-semibold mb-4 mx-8 border-b pb-4">Profile Settings</h2>
@@ -152,8 +160,13 @@ const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
   };
   
 const AccountSetting = () => {
+
+  const { profiledata, fetchProfileData } = useContext(AuthContext)
+  console.log(profiledata.user_info);
+
+
     const [isPasswordModalOpen, setisPasswordModalOpen] = useState(false);
-    const [email, setEmail] = useState('kbauskar07@gmail.com'); // Default email
+    const [email, setEmail] = useState(profiledata.user_info?.email || ''); // Default email
     const [password, setPassword] = useState('Defaults'); // Default password
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
@@ -181,7 +194,7 @@ const AccountSetting = () => {
   
     return (
         <>
-        <div className=" w-full ml-12">
+        <div className=" w-full mx-6">
             <h2 className="text-2xl font-semibold mb-4 mx-8 border-b pb-4">Account Settings</h2>
             <div className="max-w-md mx-8 mt-2 h-72 p-6 bg-white border shadow rounded-md">
   
@@ -322,7 +335,7 @@ const ManageAccount = () => {
   
     return (
         <>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full overflow-hidden">
                 <AccountSetting />
                 <ProfileForm/>
         </div>

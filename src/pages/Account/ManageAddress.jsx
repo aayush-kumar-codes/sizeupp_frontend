@@ -3,9 +3,17 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const NewAddress = () => {
   const [UserAddress, setUserAddress] = useState({})
+  const [changeAddress, setChangeAddress] = useState(false)
+  const [isAddressModalOpen, setAddressModalOpen] = useState(false);
 
-
-
+  const handleOpenAdrees = () => {
+    setAddressModalOpen(true);
+    setChangeAddress(true);
+  }
+  
+  const handleCloseAddresses = () => {
+    setAddressModalOpen(false);
+  }
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -167,7 +175,7 @@ const NewAddress = () => {
               </div>
 
               {/* Repeat the above structure for other form fields */}
-
+        
               <button
                 type="submit"
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
@@ -175,13 +183,15 @@ const NewAddress = () => {
                 Submit
               </button>
             </form>
-
-            <button
-              onClick={CloseForm}
-              className="mt-2 text-gray-600 hover:text-gray-800"
-            >
-              Close
-            </button>
+            <div className="flex justify-end w-full">
+              <button
+                onClick={CloseForm}
+                className="mt-2 text-gray-100 hover:text-gray-200 bg-red-600 rounded p-2"
+              >
+                Close
+              </button>
+              
+            </div>
           </div>
         </div>
       )}
@@ -214,6 +224,11 @@ const NewAddress = () => {
               <span>Country</span>
               <p>{address.country}</p>
             </div>
+            <div className="flex justify-end w-full gap-4">
+              <button className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
+              <button className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
+
+            </div>
           </div>
         </div>
       ))}
@@ -232,16 +247,6 @@ const ManageAddress = () => {
   return (
     <>
       <div className="w-full">
-
-
-
-
-
-
-
-
-
-
 
         <NewAddress />
       </div>

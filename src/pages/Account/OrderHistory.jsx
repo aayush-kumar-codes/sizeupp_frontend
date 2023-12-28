@@ -80,64 +80,74 @@ const DeliveryHistoryTable = () => {
     console.log(profiledata)
     return (
         <>
-            <div className="overflow-x-auto mx-4 rounded-lg hidden lg:block">
-                <div className="min-w-full bg-white  border rounded-lg">
-                    <thead className="h-16 bg-neutral-100">
-                        <tr>
-                            <th className="px-6 py-3 text-left">Order Id</th>
-                            <th className="px-6 py-3 text-left">Qty</th>
-                            <th className="px-6 py-3 text-left">Price</th>
-                            <th className="px-6 py-3 text-left">Payment</th>
-                            <th className="px-6 py-3 text-left">Status</th>
-                            <th className="px-6 py-3 text-left">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {profiledata.orders?.length > 0 && profiledata.orders.map((item) => (
-                            <tr key={item.id} className="border-b-gray-500">
-                                <td className="px-6 py-4 ">
-                                    {item.id}
-                                </td>
-                                <td className="px-6 py-4">{item.order_items?.length || 0}</td>
-                                <td className="px-6 py-4">{item.mrp_price || 0}</td>
-                                <td className="px-6 py-4">{(item.payment_status + ' (' + item.payment_type + ')') || "Ship deight"}</td>
-                                <td className="px-6 py-4 text-center">{getStatusBadge(item.delivery_status,item.id)}</td>
-                                <td className="px-6 py-4">
-                                    <Link to={`/profile/order-details/${item.id}`}>
-                                        <button className="text-blue-500 text-md hover:scale-110 hover:text-blue-800 ease-in-out">View</button>
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </div>
-            </div>
+            <div>
+                <h1 className="font-semibold text-xl p-4">Order History List</h1>
+                <div className="overflow-x-auto mx-4 rounded-lg hidden lg:block">
+                    <div className="w-fit bg-white border rounded-lg mx-auto">
+                        <thead className="h-16 bg-neutral-100">
+                            <tr>
+                                <th className="px-6 py-3 text-left">Order Id</th>
+                                <th className="px-6 py-3 text-left">Qty</th>
+                                <th className="px-6 py-3 text-left">Price</th>
+                                <th className="px-6 py-3 text-left">Payment</th>
+                                <th className="px-6 py-3 text-left">Status</th>
+                                <th className="px-6 py-3 text-left">ACTION</th>
+                                <th className="px-6 py-3 text-left">Query</th>
 
-            {/* Mobile view */}
-            <section className="container mx-auto my-3 flex flex-col gap-3 p-4 md:hidden">
-                {/* Order Cards */}
-                {profiledata.orders?.length > 0 && profiledata.orders?.map((order) => (
-                    <div key={order.id} className="flex w-full border px-4 py-4 rounded-lg">
-                        <div className="ml-3 flex w-full flex-col justify-center">
-                            <div className="flex items-center justify-between">
-                                <p className="text-xl font-bold">{order.id}</p>
-                                <div className={`border px-2 py-1 rounded ${order.status === 'Delivered' ? 'border-green-500 text-green-500' : order.status === 'Order Processing' ? 'border-orange-500 text-orange-500' : order.status === 'Cancelled' ? 'border-red-500 text-red-500' : 'border-blue-500 text-blue-500'}`}>
-                                    {order.delivery_status}
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {profiledata.orders?.length > 0 && profiledata.orders.map((item) => (
+                                <tr key={item.id} className="border-b-gray-500">
+                                    <td className="px-6 py-4 ">
+                                        {item.id}
+                                    </td>
+                                    <td className="px-6 py-4">{item.order_items?.length || 0}</td>
+                                    <td className="px-6 py-4">{item.mrp_price || 0}</td>
+                                    <td className="px-6 py-4">{(item.payment_status + ' (' + item.payment_type + ')') || "Ship deight"}</td>
+                                    <td className="px-6 py-4 text-center">{getStatusBadge(item.delivery_status,item.id)}</td>
+                                    <td className="px-6 py-4">
+                                        <Link to={`/profile/order-details/${item.id}`}>
+                                            <button className="text-blue-500 text-md hover:scale-110 hover:text-blue-800 ease-in-out">View</button>
+                                        </Link>
+                                    </td>
+                                    
+                                    <td className="px-6 py-4">Generte Query</td>
+
+                                </tr>
+                            ))}
+                        </tbody>
+                    </div>
+                </div>
+
+                {/* Mobile view */}
+                <section className="container mx-auto my-3 flex flex-col gap-3 p-4 md:hidden">
+                    {/* Order Cards */}
+                    {profiledata.orders?.length > 0 && profiledata.orders?.map((order) => (
+                        <div key={order.id} className="flex w-full border px-4 py-4 rounded-lg">
+                            <div className="ml-3 flex w-full flex-col justify-center">
+                                <div className="flex items-center justify-between">
+                                    <p className="text-xl font-bold">{order.id}</p>
+                                    <div className={`border px-2 py-1 rounded ${order.status === 'Delivered' ? 'border-green-500 text-green-500' : order.status === 'Order Processing' ? 'border-orange-500 text-orange-500' : order.status === 'Cancelled' ? 'border-red-500 text-red-500' : 'border-blue-500 text-blue-500'}`}>
+                                        {order.delivery_status}
+                                    </div>
                                 </div>
-                            </div>
-                            <p className="text-sm text-gray-400">{(order.payment_status + ' (' + order.payment_type + ')') || "Ship deight"}</p>
-                            <p className="py-3 text-xl font-bold text-violet-900">Rs. {order.mrp_price || 0}</p>
-                            <div className="mt-2 flex w-full items-center justify-between">
-                                <div className="flex items-center justify-center">
-                                    <Link to={`/profile/order-details/${order.id}`} className="flex items-center justify-center bg-amber-500 px-2 py-2 active:ring-gray-500 rounded cursor-pointer">
-                                        View order
-                                    </Link>
+                                <p className="text-sm text-gray-400">{(order.payment_status + ' (' + order.payment_type + ')') || "Ship deight"}</p>
+                                <p className="py-3 text-xl font-bold text-violet-900">Rs. {order.mrp_price || 0}</p>
+                                <div className="mt-2 flex w-full items-center justify-between">
+                                    <div className="flex items-center justify-center">
+                                        <Link to={`/profile/order-details/${order.id}`} className="flex items-center justify-center bg-amber-500 px-2 py-2 active:ring-gray-500 rounded cursor-pointer">
+                                            View order
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </section>
+                    ))}
+                </section>
+
+            </div>
         </>
     );
 };
