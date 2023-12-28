@@ -333,24 +333,149 @@ const PincodeForm = () => {
     setPincode(event.target.value);
   };
 
-  const handleCheckClick = (event) => {
-    event.preventDefault();
+  const handleCheckClick = () => {
 
-    const isValid = pincodeData[pincode];
-
-    if (isValid) {
-      setIsDeliveryValid(true);
-    } else {
-      alert('Not available');
-    }
+    handlePincode()
 
   };
+
+  const navigate = useNavigate()
 
   const handleChangeClick = () => {
     // Reset the pincode and delivery status when changing
     setPincode('');
     setIsDeliveryValid(false);
   };
+
+  const [token, setToken] = useState('')
+
+
+  const handleToken = async () => {
+    try {
+      const res = await fetch(`https://api.instashipin.com/api/v1/tenancy/authToken`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          "api_key": "6092655223372029e7404dc4"
+        })
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      if(data.response?.error){
+        Swal.fire({
+          title: 'Error!',
+          text: data.response?.error,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return
+      }
+      setToken(data.data?.response.token_id)
+      // Swal.fire({
+      //   title: 'Success!',
+      //   text: 'Pincode Added',
+      //   icon: 'success',
+      // })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+
+  }
+
+  const handlePincode = async () => {
+    try {
+      await handleToken()
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      const res = await fetch(`https://api.instashipin.com/api/v1/courier-vendor/check-pincode`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body : JSON.stringify({
+            "token_id": token,
+            "pincode": pincode
+        })
+      })
+      // if (!res.ok) {
+      //   throw new Error(`HTTP error! status: ${res.status}`);
+      // }
+      const data = await res.json()
+      console.log(data);
+      if(data.data?.response?.error){
+        Swal.fire({
+          title: 'Error!',
+          text: data.data?.response?.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+      
+      setIsDeliveryValid(true)
+
+      Swal.fire({
+        title: 'Success!',
+        text: data.data?.response?.message,
+        icon: 'success',
+      })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  const handleApplyPincode = async () => {
+    try {
+      if (!localStorage.token) {
+        return navigate('/login')
+      }
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/validate-pincode/` + pincode, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Pincode Added',
+        icon: 'success',
+      })
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
 
   return (
     <>
@@ -369,7 +494,14 @@ const PincodeForm = () => {
           type="button"
           className="cursor-pointer relative right-14 pt-2 -mx-2 text-orange-500 hover:font-bold"
           value={isDeliveryValid ? 'Change' : 'Check'}
-          onClick={isDeliveryValid ? handleChangeClick : handleCheckClick}
+          onClick={() => {
+            if (isDeliveryValid) {
+              handleChangeClick()
+            } else {
+              handleCheckClick()
+            }
+          }}
+
         />
         {isDeliveryValid && (
           <div className="ok relative right-7 top-10 transform -translate-y-1/2">
@@ -380,16 +512,16 @@ const PincodeForm = () => {
       {isDeliveryValid ? (
         <div className="w-full m-3">
           <ul className="flex flex-col gap-3 font-bold">
-            <li>
+            {/* <li>
               <h4>Get it by Thu, Dec 21</h4>
-            </li>
+            </li> */}
             <li>
               <h4>Pay on delivery available</h4>
             </li>
-            <li>
+            {/* <li>
               <h4>Easy 14 days return &amp; exchange available</h4>
               <span></span>
-            </li>
+            </li> */}
           </ul>
         </div>
       ) : (
@@ -962,7 +1094,7 @@ const ProductOverview = () => {
           </div>
 
           <div className="border-b border-c-gray-300 pb-3  ">
-          <div className="flex w-full">
+            <div className="flex w-full">
               <div className="mb-4">
                 <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
                   size
@@ -981,10 +1113,10 @@ const ProductOverview = () => {
                 </ul>
               </div>
               <div className="p-2">
-              <div className="relative">
-                <button onClick={toggleAside} className="font-bold hover:scale-105 inline-flex items-center ">Size Chart
-                  <ChevronRightIcon className="h-4 w-4 " />
-                </button>
+                <div className="relative">
+                  <button onClick={toggleAside} className="font-bold hover:scale-105 inline-flex items-center ">Size Chart
+                    <ChevronRightIcon className="h-4 w-4 " />
+                  </button>
 
                 {/* Aside bar */}
                 <aside
@@ -1013,7 +1145,7 @@ const ProductOverview = () => {
                   </div>
                   {/* Your aside bar content goes here */}
                   </aside>
-                  </div>
+                </div>
               </div>
             </div>
             <div className="mb-4 ">
@@ -1103,8 +1235,8 @@ const ProductOverview = () => {
                       <p className="text-lg">{demo.product?.neck_type}</p>
                     </div>
                     <div className="row-span-1 px-2">
-                      <h3 className="text-base text-gray-800/80 font-semibold">Color</h3>
-                      <p className="text-lg">{demo.product?.color}</p>
+                      <h3 className="text-base text-gray-800/80 font-semibold">Color Family</h3>
+                      <p className="text-lg">{demo.product?.cf}</p>
                     </div>
                   </div>
                 </div>

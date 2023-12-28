@@ -53,7 +53,7 @@ const ReviewProduct = ({ id }) => {
             console.log(data);
             Swal.fire({
                 title: 'Success!',
-                text: 'Product Added to Wishlist',
+                text: 'Review added successfully',
                 icon: 'success',
             })
         }
