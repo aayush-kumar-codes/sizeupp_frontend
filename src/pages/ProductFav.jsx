@@ -26,8 +26,8 @@ export const ProductFav = () => {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json()
-            console.log(data);
             setFavData(data.wishlist)
+            console.log(data.wishlist);
 
         }
         catch (error) {
@@ -165,24 +165,23 @@ export const ProductFav = () => {
             <div className="px-4 py-8">
                 {
                     favData.length > 0 ?
-                        favData.map((item, index) => {
+                        favData?.map((item, index) => {
                             if(item.id == favData[index-1]?.id) {
                                 return null
                             } 
-
-
+                            let img = item.product?.images[0]
                             return (
                                 <div key={index} className="mx-auto my-2 flex flex-wrap items-center lg:w-4/5">
                                     <img
                                         alt="dress"
                                         className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
-                                        src={import.meta.env.VITE_SERVER_URL + (item.images[0].img).slice(6)}
+                                        src={import.meta.env.VITE_SERVER_URL + (img.img).slice(6)}
                                     />
                                     <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
                                         {/* <div className="text-orange-600 font-normal text-lg">
                                             Only 4 left in stock -Order soon
                                         </div> */}
-                                        <h2 className="my-4 text-3xl font-semibold text-black">{item.name}</h2>
+                                        <h2 className="my-4 text-3xl font-semibold text-black">{item.product.name}</h2>
                                         <div className="my-4 flex items-center">
                                             <span className="flex items-center space-x-1">
                                                 {[...Array(5)].map((_, i) => (
@@ -192,7 +191,7 @@ export const ProductFav = () => {
                                             </span>
                                         </div>
                                         <p className="leading-relaxed">
-                                            {item.care_instructions}
+                                            {item.product.care_instructions}
                                         </p>
                                         {/* <div className="mt-2 text-sm">
                                             <p className="text-sm text-c-gray-500 mb-2">{item?.color}</p>
@@ -210,7 +209,7 @@ export const ProductFav = () => {
                                             ) : null}
                                         </div> */}
                                         <div className="flex mt-4 items-center justify-between">
-                                            <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.mrp}</span>
+                                            <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.product.mrp}</span>
                                             <div className="flex gap-2">
                                                 <button
                                                     type="button"

@@ -225,7 +225,14 @@ const NewAddress = () => {
               <p>{address.country}</p>
             </div>
             <div className="flex justify-end w-full gap-4">
-              <button className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
+              <button onClick={()=> {OpenForm(); setFormData({
+                addressLine1: address.address_line_1,
+                addressLine2: address.address_line_2,
+                city: address.city,
+                pinCode: address.postal_code,
+                mobile: address.mobile,
+              
+              })}} className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
               <button className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
 
             </div>
