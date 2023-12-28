@@ -137,7 +137,7 @@ const Profileview = () => {
 
             </Link>
 
-            <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+            {/* <div className="flex border p-4 rounded-lg hover:bg-gray-200">
               <div className="w-full">
                 <div className="flex w-full">
                   <div className="flex flex-col gap-2">
@@ -169,7 +169,7 @@ const Profileview = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             
             <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">

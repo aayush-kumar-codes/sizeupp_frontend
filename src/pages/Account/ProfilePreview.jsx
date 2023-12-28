@@ -114,7 +114,7 @@ const Profileview = () => {
                             >
                                 Manage Addresses
                             </Link>
-                            <Link to="change-password.html"
+                            <Link to="/forgot"
                                 className="text-gray-500 duration-100 hover:text-blue-800"
                             >
                                 Change password
