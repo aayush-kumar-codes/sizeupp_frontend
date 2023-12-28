@@ -10,7 +10,7 @@ const NewAddress = () => {
     setAddressModalOpen(true);
     setChangeAddress(true);
   }
-  
+
   const handleCloseAddresses = () => {
     setAddressModalOpen(false);
   }
@@ -34,24 +34,78 @@ const NewAddress = () => {
     setIsOpen(false);
   };
 
+  const handleAddAddress = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/address`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          address_line_1: formData.addressLine1,
+          address_line_2: formData.addressLine2,
+          city: formData.city,
+          postal_code: formData.zipCode,
+          country: formData.country,
+          state: formData.state,
+          is_default: 'on'
+        })
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json()
+      console.log(data);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Address Added',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      setFormData({
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        country: '',
+      })
+
+
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fetch error: ' + error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setAddresses([...addresses, formData]);
 
-    if(isEdit){
+    if (isEdit) {
       handleUpdateAdddress(formData.addressid)
+    }else{
+      handleAddAddress()
     }
     // Add your logic to handle the form data, for example, send it to an API or update state.
     console.log('Form data submitted:', formData);
 
     // Reset form data
     setFormData({
-      addressid : "",
+      addressid: "",
       addressLine1: '',
       addressLine2: '',
       city: '',
-      state : "",
+      state: "",
       country: '',
       pinCode: '',
       mobile: '',
@@ -61,13 +115,13 @@ const NewAddress = () => {
     CloseForm();
   };
 
-  const handleDeleteAddress = async(id) => {
+  const handleDeleteAddress = async (id) => {
     try {
-      const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/'+id, {
+      const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'token '+localStorage.getItem('token')
+          'Authorization': 'token ' + localStorage.getItem('token')
         }
       });
       const data = await res.json();
@@ -86,8 +140,8 @@ const NewAddress = () => {
           text: 'Something went wrong!',
         })
       }
-    }catch(error){
-      console.log("error",error)
+    } catch (error) {
+      console.log("error", error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -96,13 +150,13 @@ const NewAddress = () => {
     }
   }
 
-  const handleUpdateAdddress = async(id) => {
+  const handleUpdateAdddress = async (id) => {
     try {
-      const res = await fetch(import.meta.env.VITE_SERVER_URL+'/api/address/'+id, {
+      const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'token '+localStorage.getItem('token')
+          'Authorization': 'token ' + localStorage.getItem('token')
         },
         body: JSON.stringify({
           address_line_1: formData.addressLine1,
@@ -110,8 +164,8 @@ const NewAddress = () => {
           city: formData.city,
           postal_code: formData.pinCode,
           country: formData.country,
-          state : formData.state,
-          is_default : true
+          state: formData.state,
+          is_default: true
         }),
       });
       const data = await res.json();
@@ -131,8 +185,8 @@ const NewAddress = () => {
           text: 'Something went wrong!',
         })
       }
-    }catch(error){
-      console.log("error",error)
+    } catch (error) {
+      console.log("error", error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -262,7 +316,7 @@ const NewAddress = () => {
               </div> */}
 
               {/* Repeat the above structure for other form fields */}
-        
+
               <button
                 type="button"
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
@@ -277,7 +331,7 @@ const NewAddress = () => {
               >
                 Close
               </button>
-              
+
             </div>
           </div>
         </div>
@@ -312,17 +366,19 @@ const NewAddress = () => {
               <p>{address.country}</p>
             </div>
             <div className="flex justify-end w-full gap-4">
-              <button onClick={()=> {OpenForm(); setIsEdit(true); setFormData({
-                addressid : address.id,
-                addressLine1: address.address_line_1,
-                addressLine2: address.address_line_2,
-                city: address.city,
-                pinCode: address.postal_code,
-                mobile: address.mobile,
-                country: address.country,
-                state : address.state
-              })}} className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
-              <button onClick={()=>{handleDeleteAddress(address.id);}} className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
+              <button onClick={() => {
+                OpenForm(); setIsEdit(true); setFormData({
+                  addressid: address.id,
+                  addressLine1: address.address_line_1,
+                  addressLine2: address.address_line_2,
+                  city: address.city,
+                  pinCode: address.postal_code,
+                  mobile: address.mobile,
+                  country: address.country,
+                  state: address.state
+                })
+              }} className='bg-blue-500 rounded p-1 px-2 text-white'>Edit</button>
+              <button onClick={() => { handleDeleteAddress(address.id); }} className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
 
             </div>
           </div>

@@ -371,10 +371,10 @@ const PincodeForm = () => {
       }
       const data = await res.json()
       console.log(data);
-      if (data.response?.error) {
+      if (data.data.response?.error) {
         Swal.fire({
           title: 'Error!',
-          text: data.response?.error,
+          text: data.data.response?.error,
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -429,7 +429,8 @@ const PincodeForm = () => {
       // }
       const data = await res.json()
       console.log(data);
-      if (data.data?.response?.error) {
+      if (data.data?.response?.message == 'PINCODE NOT SERVICEABLE') {
+        setIsDeliveryValid(false)
         Swal.fire({
           title: 'Error!',
           text: data.data?.response?.message,
