@@ -35,8 +35,8 @@ export const Modal = ({ children, onClose }) => {
     };
   }, [onClose]);
   return ReactDOM.createPortal(
-    <div className="fixed overflow-hidden top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
-      <div className=" p-8 rounded-md max-w-screen-lg w-full h-auto overflow-auto">
+    <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
+      <div className=" p-8 rounded-md max-w-screen-md w-full h-auto overflow-auto">
         {children}
         <button className="absolute top-4 right-6 text-gray-100" onClick={onClose}>
           <XMarkIcon className="h-8 w-8 text-gray-100" />
@@ -258,11 +258,15 @@ const ProductImageView = ({
             {isModalOpen && (
               <Modal onClose={handleCloseModal}>
                 {/* Content of the modal goes here */}
-                <div className="">
-                  <Slider {...settings}>
+                <div className="w-full h-full flex items-center justify-center">
+                  <Slider {...settings} className="w-full h-full">
                     {arrayImages.map((image, index) => (
-                      <div key={index} >
-                        <img src={import.meta.env.VITE_SERVER_URL + (image.img + "").slice(6)} alt={`Image ${index + 1}`} className=" mx-auto " />
+                      <div key={index} className="w-full h-full">
+                        <img
+                          src={import.meta.env.VITE_SERVER_URL + (image.img + "").slice(6)}
+                          alt={`Image ${index + 1}`}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                     ))}
                   </Slider>
@@ -571,7 +575,7 @@ const ProductOverview = () => {
   useEffect(() => {
     // 👇️ scroll to top on page load
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-}, []);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
