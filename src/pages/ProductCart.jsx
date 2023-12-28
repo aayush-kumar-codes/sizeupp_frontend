@@ -490,6 +490,7 @@ export function ProductCart() {
                                     <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
                                         <div className='col-span-1'>
                                             <img
+                                                onClick={()=>{navigate(`/products/${info.product?.id}`)}}
                                                 src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                                 alt={info.product?.name}
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
