@@ -3,13 +3,13 @@ import Carousel from '../components/HomeK/Carousel'
 import ShopCategoryWise from '../components/HomeK/ShopCategoryWise'
 
 import ShopNow from '../components/HomeK/ShopNow'
-import { MagnifyingGlassIcon} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 
 import { useState, useEffect, useRef, useContext } from 'react'
 import { styles } from '../style'
 import { Bars3BottomLeftIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, useNavigate,useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { logo } from '../assets/banners'
 import AccordionItem from '../components/Custom/AccordionItem'
 import Swal from 'sweetalert2'
@@ -73,7 +73,7 @@ const Megamenu = () => {
                 </div>
 
 
-                
+
 
                 {/* 
                 {data.length > 0 && data.map((item, index) => (
@@ -153,7 +153,7 @@ const Megamenu = () => {
                 </div>
 
                 {/* Woman */}
-                { <div className="group">
+                {<div className="group">
 
                     <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         Women
@@ -171,7 +171,7 @@ const Megamenu = () => {
                                 < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
                             </Link>
                         </div> */}
-                        { data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
+                        {data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
                             return (
                                 <div key={cat.id} className="col-span-1 ">
                                     <h2 className="text-sm text-gray-800 font-semibold mb-2">{cat.name}</h2>
@@ -294,82 +294,82 @@ function Navbar() {
             name: 'Men',
             category: [
                 {
-                    dropdown: true,
                     name: 'Casual Topwear',
-                    category: [
-                        {
-                            name: 'Casual Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Core Tee',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Formal Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Kurta',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Polo Tshirts',
-                            href: '/products'
-                        }
-                    ]
+                    href: '/products?gender=Men&category=Casual Topwear'
+                    // category: [
+                    //     {
+                    //         name: 'Casual Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Core Tee',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Formal Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Kurta',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Polo Tshirts',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
-                    dropdown: true,
                     name: 'Casual Bottomwear',
-                    category: [
-                        {
-                            name: 'Chino',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Denim',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Joggers',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Pyjama',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Track Pants',
-                            href: '/products'
-                        }
-                    ]
+                    href: '/products?gender=Men&category=Casual Bottomwear'
+                    // category: [
+                    //     {
+                    //         name: 'Chino',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Denim',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Joggers',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Pyjama',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Track Pants',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
-                    dropdown: true,
                     name: 'Ethnic Wear',
-                    category: [
-                        {
-                            name: 'Kurta',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Waist Coat',
-                            href: '/products'
-                        }
-                    ]
+                    href: "/products?gender=Men&category=Ethnic Wear"
+                    // category: [
+                    //     {
+                    //         name: 'Kurta',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Waist Coat',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
                     name: 'Evening Wear',
-                    href: '/products'
+                    href: '/products?gender=Men&category=Evening Wear'
                 },
                 {
                     name: 'Formal Wear',
-                    href: '/products'
+                    href: '/products?gender=Men&category=Formal Wear'
                 },
                 {
                     name: 'Winter Wear',
-                    href: '/products'
+                    href: '/products?gender=Men&category=Winter Wear'
                 }
             ],
         },
@@ -378,80 +378,80 @@ function Navbar() {
             name: 'Women',
             category: [
                 {
-                    dropdown: true,
-                    name: 'Casual Topwear',
-                    category: [
-                        {
-                            name: 'Co Ord Set',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Core Tee',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Dress',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Kurta',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Kurta and Pants',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Sweat Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Top',
-                            href: '/products'
-                        },
-                        {
-                            name: 'T Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Tunic',
-                            href: '/products'
-                        }
-                    ]
+                    href: '/products?gender=Women&category=Women Topwear',
+                    name: 'Women Topwear',
+                    // category: [
+                    //     {
+                    //         name: 'Co Ord Set',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Core Tee',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Dress',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Kurta',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Kurta and Pants',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Sweat Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Top',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'T Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Tunic',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
-                    name: 'Casual Bottomwear',
-                    dropdown: true,
-                    category: [
-                        {
-                            name: 'Jeggings',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Leggings',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Pants',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Trousers',
-                            href: '/products'
-                        }
-                    ]
+                    name: 'Women Bottomwear',
+                    href: "/products?gender=Women&category=Women Bottomwear",
+                    // category: [
+                    //     {
+                    //         name: 'Jeggings',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Leggings',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Pants',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Trousers',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
                     name: 'Festive Wear',
-                    href: '/products'
+                    href: '/products?gender=Women&category=Festive Wear',
                 },
                 {
                     name: 'Winter Wear',
-                    href: '/products'
+                    href: '/products?gender=Women&category=Winter Wear',
                 }
             ]
         }
@@ -543,19 +543,19 @@ function Navbar() {
     }
     window.addEventListener('scroll', ChangeColornav);
 
-    const {search,setSearch,handlefetchProducts} = useContext(AuthContext)
+    const { search, setSearch, handlefetchProducts } = useContext(AuthContext)
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
     }
 
-    const [searchParams,setSearchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
 
-    useEffect(()=>{ 
-        if(searchParams.has('gender')){
+    useEffect(() => {
+        if (searchParams.has('gender')) {
             console.log(searchParams.get('gender'))
         }
-    },[])
+    }, [])
 
 
     return (
@@ -564,78 +564,78 @@ function Navbar() {
             {/* layout prefixer */}
             <div className="flex  items-center justify-between py-2">
                 <div className="flex">
-                    
+
                     {/* brand title */}
                     <Link to="/" className='cursor-pointer'>
                         <img src={logo} alt="logo" className='w-28 object-contain' />
                     </Link>
-            </div>
-                
+                </div>
+
                 <div className="lg:flex hidden justify-end items-end w-2/5">
-                            <div className="flex rounded-full border focus-within:border-gray-300 px-6">
-                                <input type="text" value={search} onChange={(e)=>{handleSearch(e)}} placeholder="Search " className="bg-transparent w-full  focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-2" name="search"/>
-                                    <button type="button" onClick={()=>{handlefetchProducts(); navigate(`/products?navsearch=${search}`)}} className="flex flex-row items-center justify-center px-2 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent my-1 h-[30px] -mr-3" >
-                                    <MagnifyingGlassIcon className="h-4 w-4 text-white "/>
-                                </button>
-                            </div>
+                    <div className="flex rounded-full border focus-within:border-gray-300 px-6">
+                        <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full  focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-2" name="search" />
+                        <button type="button" onClick={() => { handlefetchProducts(); navigate(`/products?navsearch=${search}`) }} className="flex flex-row items-center justify-center px-2 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent my-1 h-[30px] -mr-3" >
+                            <MagnifyingGlassIcon className="h-4 w-4 text-white " />
+                        </button>
                     </div>
-                    
-                
+                </div>
+
+
                 <div className="flex items-center ">
                     <Megamenu />
                     <div className='lg:flex hidden cursor-pointer' ref={profileRef}>
-                                        <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
-                                            <Bars3BottomLeftIcon className="h-6 w-6 stroke-2 " />
-                                            <span className='text-xs font-medium'>Account</span>
+                        <button className='flex flex-col items-center cursor-pointer hover:scale-110' onClick={toggleProfile}>
+                            <Bars3BottomLeftIcon className="h-6 w-6 stroke-2 " />
+                            <span className='text-xs font-medium'>Account</span>
 
-                                        </button>
+                        </button>
 
-                                        {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                            <ul className="py-1" role="none">
-                                                {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                                               {localStorage.token && <><li className='hover:bg-gray-200/30 pl-2 '>
-                                                    <Link to="/profile" className="text-gray-700 block px-4 py-1 text-sm">
-                                                        Profile
-                                                    </Link>
-                                                </li>
-                                                <li className='hover:bg-gray-200/30 pl-2 '>
-                                                    <Link to="/products/favourite" className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                        Wishlist
-                                                    </Link>
-                                                </li>
-                                                <li className='hover:bg-gray-200/30 pl-2 '>
-                                                    <Link to="/products/cart" className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                        Cart
-                                                    </Link>
-                                                </li>
-                                                <li className='hover:bg-gray-200/30 pl-2'>
-                                                    <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                        My Orders
-                                                    </Link>
-                                                </li>
-                                                </>}
-                                                {!localStorage.token && noAuthMenuItems.map((item) => (
-                                                    <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
-                                                        <Link to={item.href} className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                            {item.name}
-                                                        </Link>
-                                                    </li>
-                                                ))}
-                                                {localStorage.token && menuItems.map((item) => (
-                                                    <li onClick={() => {
-                                                        item.name == 'Logout' && item.func(item.name, item.href)
-                                                    }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
-                                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                            {item.name}
-                                                        </Link>
-                                                    </li>
-                                                ))}
+                        {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                            <ul className="py-1" role="none">
+                                {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+                                {localStorage.token && <><li className='hover:bg-gray-200/30 pl-2 '>
+                                    <Link to="/profile" className="text-gray-700 block px-4 py-1 text-sm">
+                                        Profile
+                                    </Link>
+                                </li>
+                                    <li className='hover:bg-gray-200/30 pl-2 '>
+                                        <Link to="/products/favourite" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                            Wishlist
+                                        </Link>
+                                    </li>
+                                    <li className='hover:bg-gray-200/30 pl-2 '>
+                                        <Link to="/products/cart" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                            Cart
+                                        </Link>
+                                    </li>
+                                    <li className='hover:bg-gray-200/30 pl-2'>
+                                        <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                            My Orders
+                                        </Link>
+                                    </li>
+                                </>}
+                                {!localStorage.token && noAuthMenuItems.map((item) => (
+                                    <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                        <Link to={item.href} className="text-gray-700 block px-4 py-1.5 text-sm">
+                                            {item.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                                {localStorage.token && menuItems.map((item) => (
+                                    <li onClick={() => {
+                                        item.name == 'Logout' && item.func(item.name, item.href)
+                                    }} key={item.name} className='hover:bg-gray-200/30 pl-2'>
+                                        <Link to={item.name == 'Logout' ? '' : item.href} className="text-gray-700 block px-4 py-1.5 text-sm">
+                                            {item.name}
+                                        </Link>
+                                    </li>
+                                ))}
 
-                                            </ul>
-                                        </div>}
+                            </ul>
+                        </div>}
 
-                                    </div>
-                   {/* <div className="flex items-center  gap-4 w-1/5">
+                    </div>
+                    {/* <div className="flex items-center  gap-4 w-1/5">
                         
                         
                          <div className='hidden lg:block '>
@@ -846,11 +846,11 @@ const HomeK = () => {
             <Navbar />
             {/* <Carousel /> */}
             {/* <SlideShow/> */}
-            <BannerCarousel/>
+            <BannerCarousel />
             <Slider />
             <ShopCategoryWise />
             <ShopNow />
-            
+
             <Footer />
             {/* <Newsletter /> */}
         </>

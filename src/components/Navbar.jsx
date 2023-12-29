@@ -38,6 +38,14 @@ export function Navbar() {
                     name: 'My Orders',
                     href: '/profile/my-orders'
                 },
+                {
+                    name: 'Wishlist',
+                    href: '/products/favourite'
+                },
+                {
+                    name: 'Cart',
+                    href: '/products/cart'
+                },
             ]
         },
         {
@@ -45,82 +53,82 @@ export function Navbar() {
             name: 'Men',
             category: [
                 {
-                    dropdown: true,
                     name: 'Casual Topwear',
-                    category: [
-                        {
-                            name: 'Casual Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Core Tee',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Formal Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Kurta',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Polo Tshirts',
-                            href: '/products'
-                        }
-                    ]
+                    href: '/products?gender=Men&category=Casual Topwear'
+                    // category: [
+                    //     {
+                    //         name: 'Casual Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Core Tee',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Formal Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Kurta',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Polo Tshirts',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
-                    dropdown: true,
                     name: 'Casual Bottomwear',
-                    category: [
-                        {
-                            name: 'Chino',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Denim',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Joggers',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Pyjama',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Track Pants',
-                            href: '/products'
-                        }
-                    ]
+                    href: '/products?gender=Men&category=Casual Bottomwear'
+                    // category: [
+                    //     {
+                    //         name: 'Chino',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Denim',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Joggers',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Pyjama',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Track Pants',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
-                    dropdown: true,
                     name: 'Ethnic Wear',
-                    category: [
-                        {
-                            name: 'Kurta',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Waist Coat',
-                            href: '/products'
-                        }
-                    ]
+                    href: "/products?gender=Men&category=Ethnic Wear"
+                    // category: [
+                    //     {
+                    //         name: 'Kurta',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Waist Coat',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
                     name: 'Evening Wear',
-                    href: '/products'
+                    href: '/products?gender=Men&category=Evening Wear'
                 },
                 {
                     name: 'Formal Wear',
-                    href: '/products'
+                    href: '/products?gender=Men&category=Formal Wear'
                 },
                 {
                     name: 'Winter Wear',
-                    href: '/products'
+                    href: '/products?gender=Men&category=Winter Wear'
                 }
             ],
         },
@@ -129,80 +137,80 @@ export function Navbar() {
             name: 'Women',
             category: [
                 {
-                    dropdown: true,
-                    name: 'Casual Topwear',
-                    category: [
-                        {
-                            name: 'Co Ord Set',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Core Tee',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Dress',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Kurta',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Kurta and Pants',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Sweat Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Top',
-                            href: '/products'
-                        },
-                        {
-                            name: 'T Shirts',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Tunic',
-                            href: '/products'
-                        }
-                    ]
+                    href: '/products?gender=Women&category=Women Topwear',
+                    name: 'Women Topwear',
+                    // category: [
+                    //     {
+                    //         name: 'Co Ord Set',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Core Tee',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Dress',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Kurta',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Kurta and Pants',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Sweat Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Top',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'T Shirts',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Tunic',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
-                    name: 'Casual Bottomwear',
-                    dropdown: true,
-                    category: [
-                        {
-                            name: 'Jeggings',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Leggings',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Pants',
-                            href: '/products'
-                        },
-                        {
-                            name: 'Trousers',
-                            href: '/products'
-                        }
-                    ]
+                    name: 'Women Bottomwear',
+                    href: "/products?gender=Women&category=Women Bottomwear",
+                    // category: [
+                    //     {
+                    //         name: 'Jeggings',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Leggings',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Pants',
+                    //         href: '/products'
+                    //     },
+                    //     {
+                    //         name: 'Trousers',
+                    //         href: '/products'
+                    //     }
+                    // ]
                 },
                 {
                     name: 'Festive Wear',
-                    href: '/products'
+                    href: '/products?gender=Women&category=Festive Wear',
                 },
                 {
                     name: 'Winter Wear',
-                    href: '/products'
+                    href: '/products?gender=Women&category=Winter Wear',
                 }
             ]
         }
@@ -440,7 +448,7 @@ export function Navbar() {
                 </div>
 
                 {isMenuOpen && (
-                    <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden">
+                    <div className="absolute inset-x-0 top-0 z-50 h-[44rem] overflow-y-auto origin-top-right transform p-2 transition lg:hidden">
                         <div className="divide-y-2 divide-c-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="px-5 pb-6 pt-5">
                                 <div className="flex items-center justify-between">
