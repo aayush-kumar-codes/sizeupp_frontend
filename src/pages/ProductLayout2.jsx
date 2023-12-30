@@ -138,6 +138,7 @@ const ProductLayout2 = () => {
 
     const { name, value, checked, type } = event.target;
 
+
     setfilterdata((prevFilterData) => {
       let updatedFilterData = { ...prevFilterData };
 
@@ -154,11 +155,44 @@ const ProductLayout2 = () => {
       // Remove the filter from the URL if it's unchecked or empty
       if (!checked || (Array.isArray(updatedFilterData[name]) && updatedFilterData[name].length === 0)) {
         const urlSearchParams = new URLSearchParams(window.location.search);
+        
         urlSearchParams.delete(name);
+        
         window.history.replaceState({}, '', `${window.location.pathname}?${urlSearchParams}`);
       } else {
         // Update the URL with the new filter
         const urlSearchParams = new URLSearchParams(window.location.search);
+        // handle category
+        if (name === 'category') {
+          urlSearchParams.delete('subcategory')
+          urlSearchParams.delete('navsearch')
+          urlSearchParams.delete('fit')
+          urlSearchParams.delete('sleeve')
+          urlSearchParams.delete('necktype')
+          urlSearchParams.delete('color')
+          urlSearchParams.delete('size')
+
+        }
+        if (name === 'subcategory') {
+          urlSearchParams.delete('navsearch')
+          urlSearchParams.delete('fit')
+          urlSearchParams.delete('sleeve')
+          urlSearchParams.delete('necktype')
+          urlSearchParams.delete('color')
+          urlSearchParams.delete('size')
+        }
+        if (name === 'gender') {
+          urlSearchParams.delete('subcategory')
+          urlSearchParams.delete('navsearch')
+          urlSearchParams.delete('fit')
+          urlSearchParams.delete('sleeve')
+          urlSearchParams.delete('necktype')
+          urlSearchParams.delete('color')
+          urlSearchParams.delete('size')
+          urlSearchParams.delete('category')
+
+        }
+
         urlSearchParams.set(name, Array.isArray(updatedFilterData[name]) ? updatedFilterData[name].join(',') : updatedFilterData[name]);
         window.history.replaceState({}, '', `${window.location.pathname}?${urlSearchParams}`);
       }

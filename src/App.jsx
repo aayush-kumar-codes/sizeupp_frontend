@@ -35,6 +35,7 @@ import AboutUs from "./constants/AboutUs"
 import ShippingPolicy from "./constants/ShippingPolicy"
 import Faq from "./constants/Faq"
 import CancellationPolicy from "./constants/CancellationPolicy"
+import ProductLayout from "./pages/ProductLayout"
 
 
 const App = () => {
@@ -73,7 +74,7 @@ const App = () => {
             </Route>
           </Route >
           <Route path="/products" element={<Layout />} >
-            <Route index element={<ProductLayout2 />} />
+            <Route index element={<ProductLayout />} />
             <Route path=":id" element={<ProductOverview />} />
             <Route path="cart" element={<ProductCart />} />
             <Route path="favourite" element={<ProductFav />} />
