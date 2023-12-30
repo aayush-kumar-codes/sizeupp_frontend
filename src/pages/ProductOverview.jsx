@@ -1157,7 +1157,7 @@ const ProductOverview = () => {
           </div>
 
           <div className="border-b border-c-gray-300 pb-3  ">
-            <div className="flex w-full">
+            <div className="flex w-full flex-col">
               <div className="mb-4">
                 <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
                   size

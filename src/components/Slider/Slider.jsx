@@ -22,7 +22,7 @@ const Slider = () => {
     <>
       <div className=" bg-[#0B1121]/90 py-12">
         {/* <div className="w-full h-full bg-white/10 absolute backdrop-blur "></div> */}
-        <h1 className="heading font-normal tracking-wider text-white font-serif">Product collection</h1>
+        <p className="text-center font-normal text-[1.8rem] lg:text-[2.8rem] tracking-wider text-white font-serif py-2">Product collection</p>
         <Swiper
           effect={'coverflow'}
           grabCursor={true}
