@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const {  fetchProductsAuth,cart,fetchCart,isFilterActive,setIsFilterActive, productsbc, productcount, productloading,handlefetchProducts } = useContext(AuthContext)
+    const {  fetchProductsAuth,fetchCart,isFilterActive,setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
 
 
 

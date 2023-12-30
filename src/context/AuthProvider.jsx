@@ -137,12 +137,12 @@ const AuthProvider = ({ children }) => {
 
             return (
                 (urlsearch === "" ||
-                    product.subsubcategory?.name.toLowerCase() ===(urlsearch) ||
-                    product.name.toLowerCase() ===(urlsearch) ||
-                    product.gender?.toLowerCase() ===(urlsearch) ||
-                    product.cf.toLowerCase() ===(urlsearch) ||
-                    product.category?.name.toLowerCase() ===(urlsearch) ||
-                    product.subcategory?.name.toLowerCase() ===(urlsearch)) &&
+                    product.subsubcategory?.name.toLowerCase() === (urlsearch) ||
+                    product.name.toLowerCase() === (urlsearch) ||
+                    product.gender?.toLowerCase() === (urlsearch) ||
+                    product.cf.toLowerCase() === (urlsearch) ||
+                    product.category?.name.toLowerCase() === (urlsearch) ||
+                    product.subcategory?.name.toLowerCase() === (urlsearch)) &&
                 (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
                 (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
                 (filter.color.length === 0 || filter.color.includes(product.cf)) &&
@@ -155,15 +155,15 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const [pagecount,setpagecount] = useState(1)
+    const [pagecount, setpagecount] = useState(1)
 
 
     const fetchProducts = async () => {
         try {
             setproductloading(true)
             setproductsbc([])
-            console.log("pagecount",pagecount)
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' + pagecount , {
+            console.log("pagecount", pagecount)
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' + pagecount, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json' // corrected typo here
@@ -221,10 +221,10 @@ const AuthProvider = ({ children }) => {
 
 
                 // } else {
-                    setproductsbc(data);
-                    setproductcount(data.length)
-                    setproductloading(false)
-                    console.log(productsbc);
+                setproductsbc(data);
+                setproductcount(data.length)
+                setproductloading(false)
+                console.log(productsbc);
 
                 // }
 
@@ -239,7 +239,7 @@ const AuthProvider = ({ children }) => {
             console.log("fetching products - auth")
             setproductloading(true)
             setproductsbc([])
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' +pagecount , {
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' + pagecount, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json', // corrected typo here,
@@ -297,9 +297,9 @@ const AuthProvider = ({ children }) => {
 
 
                 // } else {
-                    setproductsbc(data);
-                    setproductcount(data.length);
-                    setproductloading(false);
+                setproductsbc(data);
+                setproductcount(data.length);
+                setproductloading(false);
 
 
                 // }
