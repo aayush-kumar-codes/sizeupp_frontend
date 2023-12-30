@@ -51,7 +51,7 @@ const Layout = ({ Text, Image, Orientation,href }) => {
     }
 
     return (
-        <div className={`w-full h-screen relative flex ${SetOrientation()} overflow-hidden
+        <div className={`w-full h-[100vh] relative flex ${SetOrientation()} overflow-hidden
           
         `}>
             <div className='w-full h-full absolute top-0 left-0'>

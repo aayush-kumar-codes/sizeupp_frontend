@@ -47,11 +47,10 @@ const BannerCarousel = () => {
       {BannerData.map((banner, index) => (
         <div
           key={banner.id}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000  bg-black  ${
-            index === currentBanner ? 'transform ' : 'transform -translate-x-full'
+          className={`absolute top-0 left-0 w-full h-full   bg-black  ${
+            index === currentBanner ? 'transform translate-x-0' : 'transform -translate-x-full'
             
             }`}
-           
         >
           <img
             src={banner.img}
@@ -62,9 +61,9 @@ const BannerCarousel = () => {
   
           />
           {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
-              <div className="absolute inset-0 flex flex-row items-center text-white">
-                  <div className="flex flex-col w-full justify-start ml-16">
-                        <h1 className="text-[3rem] font-serif font-bold drop-shadow-xl">{banner.title}</h1>
+              <div className="absolute inset-0 flex flex-row items-center text-white z-50">
+                  <div className="flex flex-col w-full justify-start md:ml-24 ml-16">
+                        <h1 className="text-[3rem] lg:text-[4rem] font-serif font-bold drop-shadow-xl">{banner.title}</h1>
                         <h2 className="text-4xl font-[Times-new-roman] italic">{banner.subtitle}</h2>
                         <p className="text-[3rem] font-serif">{banner.description}</p>
                         <Link to="/products">
@@ -72,6 +71,8 @@ const BannerCarousel = () => {
                         </Link>
                   </div>
           </div>
+          
+          {/* <div className="absolute w-full h-full top-0 z-1" style={{ backgroundImage: "linear-gradient(to right, rgba(0,0,0,0.6), transparent)" }}></div> */}
         </div>
       ))}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
