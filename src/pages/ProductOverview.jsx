@@ -401,11 +401,20 @@ const PincodeForm = () => {
 
   const handlePincode = async () => {
     try {
-      await handleToken()
+      await handleToken();
       if (pincode.length !== 6) {
         Swal.fire({
           title: 'Error!',
           text: 'Please enter valid pincode',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return
+      }
+      if (!token) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Please enter pincode again',
           icon: 'error',
           confirmButtonText: 'OK'
         });

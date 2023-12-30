@@ -155,12 +155,15 @@ const AuthProvider = ({ children }) => {
         });
     };
 
+    const [pagecount,setpagecount] = useState(1)
+
 
     const fetchProducts = async () => {
         try {
             setproductloading(true)
             setproductsbc([])
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
+            console.log("pagecount",pagecount)
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' + pagecount , {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json' // corrected typo here
@@ -172,58 +175,58 @@ const AuthProvider = ({ children }) => {
             } else {
                 const data = await response.json();
                 setProducts(data);
-                localStorage.setItem("products", data);
+                // localStorage.setItem("products", data);
                 // setProducts(data);
-                if (sort.phtl === true) {
-                    const sortedProducts = data.sort((a, b) => {
-                        return b.mrp - a.mrp;
-                    }
-                    );
-                    setproductsbc(sortedProducts)
-                    setproductcount(sortedProducts.length)
-                    setproductloading(false)
+                // if (sort.phtl === true) {
+                //     const sortedProducts = data.sort((a, b) => {
+                //         return b.mrp - a.mrp;
+                //     }
+                //     );
+                //     setproductsbc(sortedProducts)
+                //     setproductcount(sortedProducts.length)
+                //     setproductloading(false)
 
-                }
-                else if (sort.plth === true) {
-                    const sortedProducts = data.sort((a, b) => {
-                        return a.mrp - b.mrp;
-                    }
-                    );
-                    setproductsbc(sortedProducts)
-                    setproductcount(sortedProducts.length)
-                    setproductloading(false)
-
-
-                }
-                else if (sort.dhtl === true) {
-                    const sortedProducts = data.sort((a, b) => {
-                        return b.discounted_price - a.discounted_price;
-                    }
-                    );
-                    setproductsbc(sortedProducts)
-                    setproductcount(sortedProducts.length)
-                    setproductloading(false)
+                // }
+                // else if (sort.plth === true) {
+                //     const sortedProducts = data.sort((a, b) => {
+                //         return a.mrp - b.mrp;
+                //     }
+                //     );
+                //     setproductsbc(sortedProducts)
+                //     setproductcount(sortedProducts.length)
+                //     setproductloading(false)
 
 
-                }
+                // }
+                // else if (sort.dhtl === true) {
+                //     const sortedProducts = data.sort((a, b) => {
+                //         return b.discounted_price - a.discounted_price;
+                //     }
+                //     );
+                //     setproductsbc(sortedProducts)
+                //     setproductcount(sortedProducts.length)
+                //     setproductloading(false)
 
 
-                if (filterdata.search !== "" || search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
-                    console.table(filterdata)
-                    const filteredProducts = funcFilter(data, filterdata)
-
-                    setproductsbc(filteredProducts)
-                    setproductcount(filteredProducts.length)
-                    setproductloading(false)
+                // }
 
 
-                } else {
+                // if (filterdata.search !== "" || search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
+                //     console.table(filterdata)
+                //     const filteredProducts = funcFilter(data, filterdata)
+
+                //     setproductsbc(filteredProducts)
+                //     setproductcount(filteredProducts.length)
+                //     setproductloading(false)
+
+
+                // } else {
                     setproductsbc(data);
                     setproductcount(data.length)
                     setproductloading(false)
                     console.log(productsbc);
 
-                }
+                // }
 
             }
         } catch (error) {
@@ -236,7 +239,7 @@ const AuthProvider = ({ children }) => {
             console.log("fetching products - auth")
             setproductloading(true)
             setproductsbc([])
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' +pagecount , {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json', // corrected typo here,
@@ -249,57 +252,57 @@ const AuthProvider = ({ children }) => {
             } else {
                 const data = await response.json();
                 setProducts(data);
-                localStorage.setItem("products", data);
+                // localStorage.setItem("products", data);
                 // setProducts(data);
-                if (sort.phtl === true) {
-                    const sortedProducts = data.sort((a, b) => {
-                        return b.mrp - a.mrp;
-                    }
-                    );
-                    setproductsbc(sortedProducts);
-                    setproductcount(sortedProducts.length);
-                    setproductloading(false);
+                // if (sort.phtl === true) {
+                //     const sortedProducts = data.sort((a, b) => {
+                //         return b.mrp - a.mrp;
+                //     }
+                //     );
+                //     setproductsbc(sortedProducts);
+                //     setproductcount(sortedProducts.length);
+                //     setproductloading(false);
 
-                }
-                else if (sort.plth === true) {
-                    const sortedProducts = data.sort((a, b) => {
-                        return a.mrp - b.mrp;
-                    }
-                    );
-                    setproductsbc(sortedProducts);
-                    setproductcount(sortedProducts.length);
-                    setproductloading(false);
-
-
-                }
-                else if (sort.dhtl === true) {
-                    const sortedProducts = data.sort((a, b) => {
-                        return b.discounted_price - a.discounted_price;
-                    }
-                    );
-                    setproductsbc(sortedProducts);
-                    setproductcount(sortedProducts.length);
-                    setproductloading(false);
+                // }
+                // else if (sort.plth === true) {
+                //     const sortedProducts = data.sort((a, b) => {
+                //         return a.mrp - b.mrp;
+                //     }
+                //     );
+                //     setproductsbc(sortedProducts);
+                //     setproductcount(sortedProducts.length);
+                //     setproductloading(false);
 
 
-                }
-                if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || filterdata.search !== "" || search !== "" || category.length > 0 || navsearch !== "" || navgender !== "") {
-                    console.table(filterdata);
-                    const filteredProducts = funcFilter(data, filterdata);
+                // }
+                // else if (sort.dhtl === true) {
+                //     const sortedProducts = data.sort((a, b) => {
+                //         return b.discounted_price - a.discounted_price;
+                //     }
+                //     );
+                //     setproductsbc(sortedProducts);
+                //     setproductcount(sortedProducts.length);
+                //     setproductloading(false);
 
 
-                    setproductsbc(filteredProducts);
-                    setproductcount(filteredProducts.length);
-                    setproductloading(false);
+                // }
+                // if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || filterdata.search !== "" || search !== "" || category.length > 0 || navsearch !== "" || navgender !== "") {
+                //     console.table(filterdata);
+                //     const filteredProducts = funcFilter(data, filterdata);
 
 
-                } else {
+                //     setproductsbc(filteredProducts);
+                //     setproductcount(filteredProducts.length);
+                //     setproductloading(false);
+
+
+                // } else {
                     setproductsbc(data);
                     setproductcount(data.length);
                     setproductloading(false);
 
 
-                }
+                // }
 
             }
         } catch (error) {
@@ -329,10 +332,10 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    const firstRun = useRef(true);
+    // const firstRun = useRef(true);
     useEffect(() => {
         handlefetchProducts()
-    }, [filterdata])
+    }, [pagecount])
 
     useEffect(() => {
         // effect
@@ -437,7 +440,11 @@ const AuthProvider = ({ children }) => {
 
                 cart,
                 setCart,
-                fetchCart
+                fetchCart,
+
+
+                pagecount,
+                setpagecount
             }}
         >
             {children}

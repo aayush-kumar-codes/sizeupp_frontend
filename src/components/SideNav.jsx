@@ -106,64 +106,64 @@ const SideNav = (
 
   let [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    let category = searchParams.get("category") || null
-    let subcategory = searchParams.get("subcategory") || 'All'
-    let gender = searchParams.get('gender') || null
-    let color = searchParams.get('color') || null
-    let size = searchParams.get('size') || null
-    let fit = searchParams.get('fit') || null
-    let sleeve = searchParams.get('sleeve') || null
-    let necktype = searchParams.get('necktype') || null
-
-
-    const shouldResetFilters =
-      searchParams.has('gender') &&
-      searchParams.has('subcategory') &&
-      searchParams.has('subsubcategory');
-
-    if (shouldResetFilters) {
-      // Delete all URL parameters
-      const newSearchParams = new URLSearchParams();
-      navigate(`?${newSearchParams.toString()}`, { replace: true });
-    }
-
-    if (searchParams.has('navsearch')) {
-      setSearch(searchParams.get("navsearch") || '')
-      setfilterdata({
-        size: [],
-        search: "",
-        category: [],
-        gender: [],
-        color: [],
-        fit: [],
-        sleeve: [],
-        necktype: []
-      });
-      handlefetchProducts()
-    }
-
-    if ((subcategory || category) && !searchParams.has('navsearch')) {
-      console.error("useLayoutEffect")
-      console.warn()
-
-      setfilterdata({
-        ...filterdata,
-        category: category !== null ? [`${category}`] : [],
-        gender: gender !== null ? [`${gender}`] : [],
-        search: (subcategory || 'All'),
-        color: color !== null ? [`${color}`] : [],
-        size: size !== null ? [`${size}`] : [],
-        fit: fit !== null ? [`${fit}`] : [],
-        sleeve: sleeve !== null ? [`${sleeve}`] : [],
-        necktype: necktype !== null ? [`${necktype}`] : []
-
-      });
+  //   let category = searchParams.get("category") || null
+  //   let subcategory = searchParams.get("subcategory") || 'All'
+  //   let gender = searchParams.get('gender') || null
+  //   let color = searchParams.get('color') || null
+  //   let size = searchParams.get('size') || null
+  //   let fit = searchParams.get('fit') || null
+  //   let sleeve = searchParams.get('sleeve') || null
+  //   let necktype = searchParams.get('necktype') || null
 
 
-    }
-  }, [searchParams])
+  //   const shouldResetFilters =
+  //     searchParams.has('gender') &&
+  //     searchParams.has('subcategory') &&
+  //     searchParams.has('subsubcategory');
+
+  //   if (shouldResetFilters) {
+  //     // Delete all URL parameters
+  //     const newSearchParams = new URLSearchParams();
+  //     navigate(`?${newSearchParams.toString()}`, { replace: true });
+  //   }
+
+  //   if (searchParams.has('navsearch')) {
+  //     setSearch(searchParams.get("navsearch") || '')
+  //     setfilterdata({
+  //       size: [],
+  //       search: "",
+  //       category: [],
+  //       gender: [],
+  //       color: [],
+  //       fit: [],
+  //       sleeve: [],
+  //       necktype: []
+  //     });
+  //     handlefetchProducts()
+  //   }
+
+  //   if ((subcategory || category) && !searchParams.has('navsearch')) {
+  //     console.error("useLayoutEffect")
+  //     console.warn()
+
+  //     setfilterdata({
+  //       ...filterdata,
+  //       category: category !== null ? [`${category}`] : [],
+  //       gender: gender !== null ? [`${gender}`] : [],
+  //       search: (subcategory || 'All'),
+  //       color: color !== null ? [`${color}`] : [],
+  //       size: size !== null ? [`${size}`] : [],
+  //       fit: fit !== null ? [`${fit}`] : [],
+  //       sleeve: sleeve !== null ? [`${sleeve}`] : [],
+  //       necktype: necktype !== null ? [`${necktype}`] : []
+
+  //     });
+
+
+  //   }
+  // }, [searchParams])
 
   console.log(searchParams.get("gender"));
   console.warn(filterdata)
@@ -249,7 +249,7 @@ const SideNav = (
         </span>
         <div className="space-y-6 divide-y col-span-2 ">
           <div onClick={() => { handleClearFilter() }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
-          {filters.map((filter) => (
+          {/* {filters.map((filter) => (
             <div key={filter.id}>
               <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
               <ul className="mt-2">
@@ -301,11 +301,7 @@ const SideNav = (
                 })}
               </ul>
             </div>
-          ))}
-
-
-
-
+              ))} */}
 
         </div>
 
