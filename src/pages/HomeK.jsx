@@ -567,7 +567,7 @@ function Navbar() {
 
                     {/* brand title */}
                     <Link to="/" className='cursor-pointer'>
-                        <img src={logo} alt="logo" className='w-28 object-contain' />
+                        <img src={logo} alt="logo" className='w-32 hidden md:block object-contain' />
                     </Link>
                 </div>
 

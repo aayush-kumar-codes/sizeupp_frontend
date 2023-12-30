@@ -931,6 +931,15 @@ const ProductOverview = () => {
 
   const filterWomen = Images.filter(image => image.name === demo.product?.subcategory.name);
 
+
+
+  const [activeButton, setActiveButton] = useState('inches');
+
+  const handletoggleActive = (sizeType) => {
+    setActiveButton(sizeType);
+  };
+
+
   return (
     <div className={`${styles.padding}`}>
 
@@ -954,8 +963,30 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
 
-              <a href="#" className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
+              <a href={`/products?`} className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
                 {demo.product?.category.name}
+              </a>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+
+              <a href={`/products?`} className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
+                {demo.product?.subcategory.name}
+              </a>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+
+              <a href={`/products?`} className="ml-1 text-base text-c-gray-800 hover:underline md:ml-2">
+                {demo.product?.subsubcategory.name}
               </a>
             </div>
           </li>
@@ -1145,54 +1176,83 @@ const ProductOverview = () => {
                   </button>
 
                   {/* Aside bar */}
-                  <aside
+                  {isAsideOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <button
+                        className="absolute top-4 right-0 text-black p-2 rounded-full bg-gray-200 shadow mx-2"
+                        onClick={closeAside}
+                      >
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
+                      <div className="px-3 bg-white rounded-md">
+                      <div className="w-full h-full flex flex-col items-center justify-center">
+                        <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in cm and inches</h1>
+                        {/* {demo.product?.subsubcategory.name == Images[i].name} 
+                        <img src={CasualBottom_boxer} className="w-fit m-2" /> */}
+                        {/* {demo.product?.category.name == "Men" ?() :()}  */}
+                        {demo.product?.category?.name === 'Men' &&
+
+                          filteredImages.map((image, index) => (
+                            <div key={index} className='p-3'>
+                              {/* You can customize the img tag based on your requirements */}
+                              <img src={image.url} alt={image.name} />
+                            </div>
+                          ))
+
+                        }
+                        {demo.product?.category?.name === 'Women' &&
+
+                          filterWomen.map((image, index) => (
+                            <div key={index} className="flex flex-col  lg:gap-5 my-4">
+                              <div className="w-full text-center">
+                              <button
+                                    className={`p-2 rounded-lg border m-2 ${activeButton === 'cms' ? 'bg-gray-800 text-white' : ''}`}
+                                    onClick={() => handletoggleActive('cms')}
+                                  >
+                                    size in cms
+                                </button>
+                                <button
+                                    className={`p-2 rounded-lg border ${activeButton === 'inches' ? 'bg-gray-800 text-white' : ''}`}
+                                    onClick={() => handletoggleActive('inches')}
+                                  >
+                                    size in inches
+                                </button>
+                              </div>
+                              {activeButton === 'cms' && (
+                                    <img className=" w-fit mx-auto md:p-6" src={image.url[0]} alt={image.name} />
+                                   
+                                  )}
+                          {activeButton === 'inches' && (
+                                
+                              image.url[1] && <>
+                                  
+                                  <img className="w-fit mx-auto md:p-6" src={image.url[1]} alt={image.name} />
+                                </>
+                                
+                                )}
+
+                            </div>
+                          ))
+
+                        }
+
+
+                      </div>
+                      </div>
+                      </div>
+
+                  )}
+                  
+                  
+                  {/* <aside
                     className={`fixed z-50 right-0 top-0 h-full bg-gray-100 ${isAsideOpen ? 'w-[50vw]' : 'hidden'} shadow-2xl transition-all duration-300 ease-in-out`}
                   >
 
 
-                    <button
-                      className="relative top-4 right-0 text-black p-2 rounded-full bg-white shadow mx-2"
-                      onClick={closeAside}
-                    >
-                      <XMarkIcon className="h-6 w-6" />
-                    </button>
-                    <div className="w-full h-full flex flex-col items-center justify-center">
-                      <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in cm and inches</h1>
-                      {/* {demo.product?.subsubcategory.name == Images[i].name} 
-                      <img src={CasualBottom_boxer} className="w-fit m-2" /> */}
-                      {/* {demo.product?.category.name == "Men" ?() :()}  */}
-                      {demo.product?.category?.name === 'Men' &&
-
-                        filteredImages.map((image, index) => (
-                          <div key={index}>
-                            {/* You can customize the img tag based on your requirements */}
-                            <img src={image.url} alt={image.name} />
-                          </div>
-                        ))
-
-                      }
-                      {demo.product?.category?.name === 'Women' &&
-
-                        filterWomen.map((image, index) => (
-                          <div key={index}>
-                            {/* You can customize the img tag based on your requirements */}
-                            <div className="text-base p-2">In cm</div>
-                            <img className="w-3/5 mx-auto" src={image.url[0]} alt={image.name} />
-
-                           {image.url[1] && <>
-                              <div className="text-base p-2">In inches</div>
-                              <img className="w-3/5 mx-auto mt-2" src={image.url[1]} alt={image.name} />
-                            </>}
-
-                          </div>
-                        ))
-
-                      }
-
-
-                    </div>
-                    {/* Your aside bar content goes here */}
-                  </aside>
+                    
+                   
+                  
+                  </aside> */}
                 </div>
               </div>
             </div>

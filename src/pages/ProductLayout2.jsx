@@ -3,6 +3,8 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
+import { PlusIcon,MinusIcon } from "@heroicons/react/24/outline";
+
 
 const ProductLayout2 = () => {
 
@@ -206,6 +208,7 @@ const ProductLayout2 = () => {
     {
       id: 'gender',
       name: 'Gender',
+      value:true,
       options: [
         { value: 'Men', label: 'Men' },
         { value: 'Women', label: 'Women' },
@@ -214,6 +217,7 @@ const ProductLayout2 = () => {
     {
       id: 'category',
       name: 'Category',
+      value:true,
       options: [
         { value: 'Casual Topwear', label: 'Casual Topwear' },
         { value: 'Casual Bottomwear', label: 'Casual Bottomwear' },
@@ -231,6 +235,7 @@ const ProductLayout2 = () => {
     {
       id: 'size',
       name: 'Sizes',
+      value:true,
       options: [
         { value: '1', label: '1' },
         { value: '2', label: '2' },
@@ -243,6 +248,7 @@ const ProductLayout2 = () => {
     {
       id: 'color',
       name: 'Color',
+      value:true,
       options: [
         { value: 'Black', label: 'Black' },
         { value: 'Blue', label: 'Blue' },
@@ -262,6 +268,7 @@ const ProductLayout2 = () => {
     {
       id: 'fit',
       name: 'Fit',
+      value:true,
       options: [
         { value: 'Regular Fit', label: 'Regular Fit' },
         { value: 'Straight Fit', label: 'Straight Fit' },
@@ -272,6 +279,7 @@ const ProductLayout2 = () => {
     {
       id: 'sleeve',
       name: 'Sleeve',
+      value:true,
       options: [
         { value: 'Full Sleeve', label: 'Full Sleeve' },
         { value: 'Half Sleeve', label: 'Half Sleeve' },
@@ -282,6 +290,7 @@ const ProductLayout2 = () => {
     {
       id: 'necktype',
       name: 'Neck Type',
+      value:true,
       options: [
         { value: 'Crew Neck', label: 'Crew Neck' },
         { value: 'Cuban Collar', label: 'Cuban Collar' },
@@ -335,7 +344,23 @@ const ProductLayout2 = () => {
     });
   };
 
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
+  const [activeSection, setActiveSection] = useState(null);
+  const toggleSection = (section) => {
+    setActiveSection(activeSection === section ? null : section);
+    
+  };
+  {/*
+setIsFilterOpen((prev) => ({
+      ...prev,
+      [filterFields]: !prev[filterFields] || false,
+    }));
+*/}
   return (
     <>
       <section className="w-full">
@@ -450,55 +475,66 @@ const ProductLayout2 = () => {
               <div onClick={() => { handleClearFilter() }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
               {filters.map((filter) => (
                 <div key={filter.id}>
-                  <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
-                  <ul className="mt-2">
-                    {filter.options.map((option) => {
+                  <div className="flex justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
+                    <button onClick={() => toggleSection(filter.name)}>
+                      {activeSection === filter.name ?
+                        (<MinusIcon className="h-6 w-6 text-gray-800 p-1" />)
+                        :
+                        (<PlusIcon className="h-6 w-6 text-gray-800 p-1" />)
+                      }
+                    </button>
+                  </div>
+                  {activeSection === filter.name && (
+                    <ul className="mt-2">
+                      {filter.options.map((option) => {
 
-                      return (
-                        <li key={option.value} className="flex items-center justify-between py-2">
-                          <div className="flex items-center">
-                            <input
-                              id={`${option.value}`}
-                              name={filter.id}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                              value={option.value}
-                              checked={
-                                filter.id === 'gender' ?
-                                  filterdata.gender?.includes(option.value)
-                                  :
-                                  filter.id === 'size' ?
-                                    filterdata.size?.includes(option.value)
+                        return (
+                          <li key={option.value} className="flex items-center justify-between py-2">
+                            <div className="flex items-center">
+                              <input
+                                id={`${option.value}`}
+                                name={filter.id}
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                                value={option.value}
+                                checked={
+                                  filter.id === 'gender' ?
+                                    filterdata.gender?.includes(option.value)
                                     :
-                                    filter.id === 'category' ?
-                                      filterdata.category?.includes(option.value)
+                                    filter.id === 'size' ?
+                                      filterdata.size?.includes(option.value)
                                       :
-                                      filter.id === 'fit' ?
-                                        filterdata.fit?.includes(option.value)
+                                      filter.id === 'category' ?
+                                        filterdata.category?.includes(option.value)
                                         :
-                                        filter.id === 'sleeve' ?
-                                          filterdata.sleeve?.includes(option.value)
+                                        filter.id === 'fit' ?
+                                          filterdata.fit?.includes(option.value)
                                           :
-                                          filter.id === 'necktype' ?
-                                            filterdata.necktype?.includes(option.value)
+                                          filter.id === 'sleeve' ?
+                                            filterdata.sleeve?.includes(option.value)
                                             :
-                                            filter.id === 'color' ?
-                                              filterdata.color?.includes(option.value)
+                                            filter.id === 'necktype' ?
+                                              filterdata.necktype?.includes(option.value)
                                               :
-                                              false
-                              }
-                              onChange={(e) => {
-                                handleChangeFilter(e)
-                              }}
-                            />
-                            <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
-                              {option.label}
-                            </label>
-                          </div>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                                              filter.id === 'color' ?
+                                                filterdata.color?.includes(option.value)
+                                                :
+                                                false
+                                }
+                                onChange={(e) => {
+                                  handleChangeFilter(e)
+                                }}
+                              />
+                              <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
+                                {option.label}
+                              </label>
+                            </div>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                    )}
                 </div>
               ))}
 
