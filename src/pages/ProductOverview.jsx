@@ -785,6 +785,8 @@ const ProductOverview = () => {
           title: 'Success!',
           text: 'Product Updated in Cart',
           icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
         })
       }
       console.log(data);
@@ -793,6 +795,8 @@ const ProductOverview = () => {
         title: 'Success!',
         text: 'Product Updated in Cart',
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
       })
 
     } catch (error) {
@@ -801,7 +805,8 @@ const ProductOverview = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1500
       });
     }
   }
@@ -939,7 +944,7 @@ const ProductOverview = () => {
     setActiveButton(sizeType);
   };
 
-
+  
   return (
     <div className={`${styles.padding}`}>
 
@@ -1126,12 +1131,13 @@ const ProductOverview = () => {
                 </div>
               </div>
             </div>
-            <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-
-              <div dangerouslySetInnerHTML={{ __html: demo.product?.fabric_detail }} />
-            </p>
-            <p className="text-sm text-gray-800/80 font-semibold">{demo.product?.model_size}</p>
-            <p className="text-base text-gray-800/80 font-semibold">MADE IN INDIA</p>
+            <div className="mb-4 ">
+              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
+                color : {demo.product?.color}
+              </h3>
+              
+            </div>
+            
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
                 ₹ {demo.product?.discounted_price ? demo.product?.discounted_price : demo.product?.mrp}
@@ -1256,21 +1262,7 @@ const ProductOverview = () => {
                 </div>
               </div>
             </div>
-            <div className="mb-4 ">
-              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                color : {demo.product?.color}
-              </h3>
-              {/* <ul className="colors -mr-3 flex flex-wrap">
-                {['bg-[#B2AC88]'].map((color) => (
-                  <li
-                    key={color}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm"
-                  >
-                    <span className={`block h-full w-full rounded ${color}`} />
-                  </li>
-                ))}
-              </ul> */}
-            </div>
+            
           </div>
           <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-c-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
 
@@ -1291,6 +1283,7 @@ const ProductOverview = () => {
                 +
               </button>
             </div>
+            
             <button
               type="button"
               onClick={() => { handleAddToCart() }}
@@ -1298,6 +1291,13 @@ const ProductOverview = () => {
             >
               Buy Now
             </button>
+            {/* <button
+              type="button"
+              onClick={() => { navigate("/products/cart") }}
+              className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            >
+              Proceed to cart
+            </button> */}
           </div>
           <div className="py-6 border-b-gray-500">
             <label htmlFor="pincode" className="flex items-center text-lg font-medium  uppercase ">
