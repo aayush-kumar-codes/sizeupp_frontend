@@ -100,11 +100,8 @@ const SideNav = (
     setDisplay
   }
 ) => {
-  const { isFilterActive, setSearch, setIsFilterActive, handlefetchProducts, productcount, search } = useContext(AuthContext)
 
-  const { filterdata, setfilterdata, category } = useContext(AuthContext)
-
-  let [searchParams, setSearchParams] = useSearchParams();
+  const { filterdata, setfilterdata } = useContext(AuthContext)
 
   // useEffect(() => {
 
@@ -165,44 +162,8 @@ const SideNav = (
   //   }
   // }, [searchParams])
 
-  console.log(searchParams.get("gender"));
-  console.warn(filterdata)
   const navigate = useNavigate();
 
-
-
-  const handleChangeFilter = (event) => {
-
-    const { name, value, checked, type } = event.target;
-
-    setfilterdata((prevFilterData) => {
-      let updatedFilterData = { ...prevFilterData };
-
-      if (type === 'checkbox') {
-        // Toggle the value in the array based on checkbox state
-        updatedFilterData[name] = checked
-          ? [...(updatedFilterData[name] || []), value]
-          : (updatedFilterData[name] || []).filter((item) => item !== value);
-      } else {
-        // Handle non-checkbox inputs
-        updatedFilterData[name] = value;
-      }
-
-      // Remove the filter from the URL if it's unchecked or empty
-      if (!checked || (Array.isArray(updatedFilterData[name]) && updatedFilterData[name].length === 0)) {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        urlSearchParams.delete(name);
-        window.history.replaceState({}, '', `${window.location.pathname}?${urlSearchParams}`);
-      } else {
-        // Update the URL with the new filter
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        urlSearchParams.set(name, Array.isArray(updatedFilterData[name]) ? updatedFilterData[name].join(',') : updatedFilterData[name]);
-        window.history.replaceState({}, '', `${window.location.pathname}?${urlSearchParams}`);
-      }
-
-      return updatedFilterData;
-    });
-  };
 
   const filterFields = [
     'gender',

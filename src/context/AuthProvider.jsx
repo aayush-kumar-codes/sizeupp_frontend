@@ -48,7 +48,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         fetchProfileData()
     }, [])
-    console.log(profiledata)
 
     //products 
     const [products, setProducts] = useState([]); // [products, setProducts]
@@ -56,66 +55,8 @@ const AuthProvider = ({ children }) => {
     const [productloading, setproductloading] = useState(false)
     const [productcount, setproductcount] = useState(0)
 
-
-    // set coupon code 
-    console.log(productsbc)
     const [couponcode, setcouponcode] = useState("")
 
-    // functions for products
-    const fetchFilterProducts = async () => {
-        // try {
-        //     setproductsbc([])
-        //     setproductcount(0)
-        //     const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-type': 'application/json' // corrected typo here
-        //         },
-        //         body: JSON.stringify({
-        //             search: search
-        //         })
-        //     });
-
-        //     if (!response.ok) {
-        //         throw new Error(`HTTP error! status: ${response.status}`);
-        //     } else {
-        //         const data = await response.json();
-        //         console.log(data);
-        //         // setProducts(data);
-        //         setproductsbc(data);
-        //         setproductcount(data.length)
-        //     }
-        // } catch (error) {
-        //     console.error('Error fetching products:', error);
-        // }
-    };
-
-    const fetchFilterAuthProducts = async () => {
-        // try {
-        //     const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-type': 'application/json',
-        //             'Authorization': `token ${localStorage.getItem('token')}`
-        //         },
-        //         body: JSON.stringify({
-        //             search: search
-        //         })
-        //     });
-
-        //     if (!response.ok) {
-        //         throw new Error(`HTTP error! status: ${response.status}`);
-        //     } else {
-        //         const data = await response.json();
-        //         console.log(data);
-        //         // setProducts(data);
-        //         setproductsbc(data);
-        //         setproductcount(data.length)
-        //     }
-        // } catch (error) {
-        //     console.error('Error fetching products:', error);
-        // }
-    };
 
     // Assuming your product data is stored in the 'products' array
     const [filterdata, setfilterdata] = useState({
@@ -124,36 +65,36 @@ const AuthProvider = ({ children }) => {
         color: [],
         category: [],
         fit: [],
-        subcategory: '',
+        subcategory: [],
         sleeve: [],
         necktype: [],
-        search: "All"
+        search: []
     })
     // Function to filter data based on multiple criteria
-    const funcFilter = (products, filter) => {
+    // const funcFilter = (products, filter) => {
 
-        return products.filter((product) => {
-            const urlsearch = (filter.search === "All" || filter.search === "") ? "" : filter.search.toLowerCase();
+    //     return products.filter((product) => {
+    //         const urlsearch = (filter.search === "All" || filter.search === "") ? "" : filter.search.toLowerCase();
 
-            return (
-                (urlsearch === "" ||
-                    product.subsubcategory?.name.toLowerCase() === (urlsearch) ||
-                    product.name.toLowerCase() === (urlsearch) ||
-                    product.gender?.toLowerCase() === (urlsearch) ||
-                    product.cf.toLowerCase() === (urlsearch) ||
-                    product.category?.name.toLowerCase() === (urlsearch) ||
-                    product.subcategory?.name.toLowerCase() === (urlsearch)) &&
-                (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
-                (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
-                (filter.color.length === 0 || filter.color.includes(product.cf)) &&
-                (filter.category.length === 0 || filter.category.includes(product.subcategory.name)) &&
-                (filter.fit.length === 0 || filter.fit.includes(product.fit)) &&
-                (filter.necktype.length === 0 || filter.necktype.includes(product.neck_type)) &&
-                (filter.sleeve.length === 0 || filter.sleeve.includes(product.sleeve)) &&
-                (filter.subcategory === "" || product.subsubcategory?.name.toLowerCase() === (filter.subcategory.toLowerCase()))
-            );
-        });
-    };
+    //         return (
+    //             (urlsearch === "" ||
+    //                 product.subsubcategory?.name.toLowerCase() === (urlsearch) ||
+    //                 product.name.toLowerCase() === (urlsearch) ||
+    //                 product.gender?.toLowerCase() === (urlsearch) ||
+    //                 product.cf.toLowerCase() === (urlsearch) ||
+    //                 product.category?.name.toLowerCase() === (urlsearch) ||
+    //                 product.subcategory?.name.toLowerCase() === (urlsearch)) &&
+    //             (filter.gender.length === 0 || filter.gender.includes(product.category.name)) &&
+    //             (filter.size.length === 0 || product.sqp.some((productsize) => filter.size.includes(productsize.size))) &&
+    //             (filter.color.length === 0 || filter.color.includes(product.cf)) &&
+    //             (filter.category.length === 0 || filter.category.includes(product.subcategory.name)) &&
+    //             (filter.fit.length === 0 || filter.fit.includes(product.fit)) &&
+    //             (filter.necktype.length === 0 || filter.necktype.includes(product.neck_type)) &&
+    //             (filter.sleeve.length === 0 || filter.sleeve.includes(product.sleeve)) &&
+    //             (filter.subcategory === "" || product.subsubcategory?.name.toLowerCase() === (filter.subcategory.toLowerCase()))
+    //         );
+    //     });
+    // };
 
     const [pagecount, setpagecount] = useState(1)
 
@@ -162,8 +103,7 @@ const AuthProvider = ({ children }) => {
         try {
             setproductloading(true)
             setproductsbc([])
-            console.log("pagecount", pagecount)
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' + pagecount, {
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json' // corrected typo here
@@ -224,7 +164,6 @@ const AuthProvider = ({ children }) => {
                 setproductsbc(data);
                 setproductcount(data.length)
                 setproductloading(false)
-                console.log(productsbc);
 
                 // }
 
@@ -239,7 +178,7 @@ const AuthProvider = ({ children }) => {
             console.log("fetching products - auth")
             setproductloading(true)
             setproductsbc([])
-            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products?page=' + pagecount, {
+            const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json', // corrected typo here,
@@ -310,17 +249,8 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    //handling auth functions 
-    const handlefetchFilterProducts = async () => {
-        if (localStorage.token) {
-            fetchFilterAuthProducts()
-        } else {
-            fetchFilterProducts()
-        }
-    }
 
     const handlefetchProducts = async () => {
-        console.log("handle fetch products", localStorage.token)
 
         if (localStorage.token) {
             fetchProductsAuth()
@@ -332,10 +262,44 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    // const firstRun = useRef(true);
-    useEffect(() => {
-        handlefetchProducts()
-    }, [pagecount])
+
+
+    // filter sub handlers
+    const handleFetchFilterProducts = async (filterData) => {
+        try {
+            setproductloading(true)
+            console.warn("fetching filter products", filterData)
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    search: filterData.search,
+                    category: filterData.gender,
+                    size: filterData.size,
+                    color: filterData.color,
+                    sub_category: filterData.category,
+                    fit: filterData.fit,
+                    sub_sub_category: filterData.subcategory,
+                    sleeve: filterData.sleeve,
+                    necktype: filterData.necktype
+                })
+            })
+            const data = await res.json()
+            console.warn(data)
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            setproductloading(false)
+            setproductsbc(data.products)
+            setproductcount(data.length)
+
+        } catch (error) {
+            setproductloading(false)
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         // effect
@@ -347,18 +311,14 @@ const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    useEffect(() => {
-        if (localStorage.token) {
-            console.log(import.meta.env.VITE_SERVER_URL, localStorage.token, isVerified)
-        }
-    }, [])
-
 
     // fetch cart and set count 
     const [cart, setCart] = useState([])
     const fetchCart = async () => {
         try {
-
+            if (!localStorage.getItem('token')) {
+                return
+            }
             const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
                 method: 'GET',
                 headers: {
@@ -370,19 +330,56 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json()
-            console.log(data);
             setCart(data)
 
         }
         catch (error) {
-            console.error('Fetch error:', error);
+            console.log('Fetch error:', error);
 
         }
     }
 
+
     useEffect(() => {
         fetchCart()
     }, [])
+
+
+    function mapIdsToNames(data) {
+        const idToNameMap = {};
+
+        function mapCategory(category) {
+            idToNameMap[category.id] = category.name;
+
+            if (category.subcategories) {
+                category.subcategories.forEach((subcategory) => {
+                    idToNameMap[subcategory.id] = subcategory.name;
+
+                    if (subcategory.subsubcategories) {
+                        subcategory.subsubcategories.forEach((subsubcategory) => {
+                            idToNameMap[subsubcategory.id] = subsubcategory.name;
+                        });
+                    }
+                });
+            }
+        }
+
+        if (data.categories) {
+            data.categories.forEach(mapCategory);
+        }
+
+        if (data.colorfamily) {
+            data.colorfamily.forEach((color) => {
+                idToNameMap[color.id] = color.name;
+            });
+        }
+
+        return idToNameMap;
+    }
+
+    const idToNameMap = mapIdsToNames(JSON.parse(localStorage.cat_list));
+
+
 
 
     return (
@@ -412,10 +409,6 @@ const AuthProvider = ({ children }) => {
 
                 fetchProductsAuth,
                 fetchProducts,
-                fetchFilterProducts,
-                fetchFilterAuthProducts,
-
-                handlefetchFilterProducts,
                 handlefetchProducts,
 
                 productsbc,
@@ -444,7 +437,11 @@ const AuthProvider = ({ children }) => {
 
 
                 pagecount,
-                setpagecount
+                setpagecount,
+                handleFetchFilterProducts,
+
+
+                idToNameMap
             }}
         >
             {children}
