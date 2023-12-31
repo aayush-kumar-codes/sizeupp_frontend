@@ -615,6 +615,66 @@ const ProductOverview = () => {
     setIconColors((prevColors) => ({ ...prevColors, [iconName]: color }));
   };
 
+  
+    const currentUrl = window.location.href;
+  
+  const shareFacebook = () => {
+      const facebookMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank');
+    };
+  
+    const shareInstagram = () => {
+      // Instagram doesn't provide a direct share API, so redirect to Instagram page
+      window.open('https://www.instagram.com/', '_blank');
+    };
+  
+  const shareWhatsApp = () => {
+    const whatsappMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+
+    // Check if the device is mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // Construct the WhatsApp share link based on the device
+    const whatsappLink = isMobile ? `https://wa.me/?text=${whatsappMessage}` : `https://web.whatsapp.com/send?text=${whatsappMessage}`;
+    
+    // window.open(`https://web.whatsapp.com/send?text=${whatsappMessage}`, '_blank');
+    window.open(whatsappLink, '_blank');
+
+    };
+  
+  const shareTwitter = () => {
+      const twitterMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+      window.open(`https://twitter.com/intent/tweet?url=${twitterMessage}`, '_blank');
+    };
+  
+    const copyUrlToClipboard = () => {
+      const currentUrl = window.location.href;
+  
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        alert('URL copied successfully!');
+      }).catch((error) => {
+        console.error('Unable to copy URL to clipboard', error);
+      });
+  };
+  
+  const shareViaEmail = () => {
+    // const currentUrl = window.location.href;
+    // const subject = encodeURIComponent('Check out this website!');
+    // const body = encodeURIComponent(`I thought you might be interested in this website: ${currentUrl}`);
+
+    // window.location.href = `mailto:?subject=${subject}&body=${body}`;
+
+    const currentUrl = encodeURIComponent(window.location.href);
+
+    // Construct the Gmail share link
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to&su=Check%20out%20this%20website&body=I%20thought%20you%20might%20be%20interested%20in%20this%20website:%20${currentUrl}`;
+
+    // Open Gmail in a new tab
+    window.open(gmailLink, '_blank');
+
+  };
+
+  
   //fetch data from server
   const [pincode, setPincode] = useState('')
 
@@ -1045,7 +1105,7 @@ const ProductOverview = () => {
                       <div className="py-1" role="none">
                         <ul className="list-none">
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="mailto:someone@example.com" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareViaEmail} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('email', 'gray')}
                               onMouseLeave={() => handleIconHover('email', '#212121')}
                             >
@@ -1053,10 +1113,10 @@ const ProductOverview = () => {
                               <span className="px-2 text-xs">
                                 Email
                               </span>
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="https://facebook.com/" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareFacebook} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('facebook', 'darkblue')}
                               onMouseLeave={() => handleIconHover('facebook', '#212121')}
                             >
@@ -1067,10 +1127,10 @@ const ProductOverview = () => {
                                 Facebook
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="https://instagram.com/" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareInstagram} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('instagram', '#E91E63')}
                               onMouseLeave={() => handleIconHover('instagram', '#212121')}
                             >
@@ -1082,10 +1142,10 @@ const ProductOverview = () => {
                                 Instagram
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="https://wa.link/5kvgga" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareWhatsApp} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('whatsapp', 'green')}
                               onMouseLeave={() => handleIconHover('whatsapp', '#212121')}
                             >
@@ -1096,10 +1156,10 @@ const ProductOverview = () => {
                                 Whatsapp
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareTwitter} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('twitter', '#03A9F4')}
                               onMouseLeave={() => handleIconHover('twitter', '#212121')}
                             >
@@ -1110,10 +1170,10 @@ const ProductOverview = () => {
                                 Twitter
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={copyUrlToClipboard} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('copyLink', 'black')}
                               onMouseLeave={() => handleIconHover('copyLink', '#212121')}
                             >
@@ -1122,7 +1182,7 @@ const ProductOverview = () => {
                                 Copy Link
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                         </ul>
                       </div>
