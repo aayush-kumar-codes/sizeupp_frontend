@@ -615,6 +615,66 @@ const ProductOverview = () => {
     setIconColors((prevColors) => ({ ...prevColors, [iconName]: color }));
   };
 
+  
+    const currentUrl = window.location.href;
+  
+  const shareFacebook = () => {
+      const facebookMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank');
+    };
+  
+    const shareInstagram = () => {
+      // Instagram doesn't provide a direct share API, so redirect to Instagram page
+      window.open('https://www.instagram.com/', '_blank');
+    };
+  
+  const shareWhatsApp = () => {
+    const whatsappMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+
+    // Check if the device is mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // Construct the WhatsApp share link based on the device
+    const whatsappLink = isMobile ? `https://wa.me/?text=${whatsappMessage}` : `https://web.whatsapp.com/send?text=${whatsappMessage}`;
+    
+    // window.open(`https://web.whatsapp.com/send?text=${whatsappMessage}`, '_blank');
+    window.open(whatsappLink, '_blank');
+
+    };
+  
+  const shareTwitter = () => {
+      const twitterMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+      window.open(`https://twitter.com/intent/tweet?url=${twitterMessage}`, '_blank');
+    };
+  
+    const copyUrlToClipboard = () => {
+      const currentUrl = window.location.href;
+  
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        alert('URL copied successfully!');
+      }).catch((error) => {
+        console.error('Unable to copy URL to clipboard', error);
+      });
+  };
+  
+  const shareViaEmail = () => {
+    // const currentUrl = window.location.href;
+    // const subject = encodeURIComponent('Check out this website!');
+    // const body = encodeURIComponent(`I thought you might be interested in this website: ${currentUrl}`);
+
+    // window.location.href = `mailto:?subject=${subject}&body=${body}`;
+
+    const currentUrl = encodeURIComponent(window.location.href);
+
+    // Construct the Gmail share link
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to&su=Check%20out%20this%20website&body=I%20thought%20you%20might%20be%20interested%20in%20this%20website:%20${currentUrl}`;
+
+    // Open Gmail in a new tab
+    window.open(gmailLink, '_blank');
+
+  };
+
+  
   //fetch data from server
   const [pincode, setPincode] = useState('')
 
@@ -785,6 +845,8 @@ const ProductOverview = () => {
           title: 'Success!',
           text: 'Product Updated in Cart',
           icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
         })
       }
       console.log(data);
@@ -793,6 +855,8 @@ const ProductOverview = () => {
         title: 'Success!',
         text: 'Product Updated in Cart',
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
       })
 
     } catch (error) {
@@ -801,7 +865,8 @@ const ProductOverview = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1500
       });
     }
   }
@@ -939,7 +1004,7 @@ const ProductOverview = () => {
     setActiveButton(sizeType);
   };
 
-
+  
   return (
     <div className={`${styles.padding}`}>
 
@@ -1040,7 +1105,7 @@ const ProductOverview = () => {
                       <div className="py-1" role="none">
                         <ul className="list-none">
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="mailto:someone@example.com" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareViaEmail} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('email', 'gray')}
                               onMouseLeave={() => handleIconHover('email', '#212121')}
                             >
@@ -1048,10 +1113,10 @@ const ProductOverview = () => {
                               <span className="px-2 text-xs">
                                 Email
                               </span>
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="https://facebook.com/" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareFacebook} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('facebook', 'darkblue')}
                               onMouseLeave={() => handleIconHover('facebook', '#212121')}
                             >
@@ -1062,10 +1127,10 @@ const ProductOverview = () => {
                                 Facebook
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="https://instagram.com/" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareInstagram} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('instagram', '#E91E63')}
                               onMouseLeave={() => handleIconHover('instagram', '#212121')}
                             >
@@ -1077,10 +1142,10 @@ const ProductOverview = () => {
                                 Instagram
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="https://wa.link/5kvgga" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareWhatsApp} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('whatsapp', 'green')}
                               onMouseLeave={() => handleIconHover('whatsapp', '#212121')}
                             >
@@ -1091,10 +1156,10 @@ const ProductOverview = () => {
                                 Whatsapp
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="*" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={shareTwitter} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('twitter', '#03A9F4')}
                               onMouseLeave={() => handleIconHover('twitter', '#212121')}
                             >
@@ -1105,10 +1170,10 @@ const ProductOverview = () => {
                                 Twitter
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
-                            <Link to="" className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
+                            <button onClick={copyUrlToClipboard} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('copyLink', 'black')}
                               onMouseLeave={() => handleIconHover('copyLink', '#212121')}
                             >
@@ -1117,7 +1182,7 @@ const ProductOverview = () => {
                                 Copy Link
                               </span>
 
-                            </Link>
+                            </button>
                           </li>
                         </ul>
                       </div>
@@ -1126,12 +1191,13 @@ const ProductOverview = () => {
                 </div>
               </div>
             </div>
-            <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-
-              <div dangerouslySetInnerHTML={{ __html: demo.product?.fabric_detail }} />
-            </p>
-            <p className="text-sm text-gray-800/80 font-semibold">{demo.product?.model_size}</p>
-            <p className="text-base text-gray-800/80 font-semibold">MADE IN INDIA</p>
+            <div className="mb-4 ">
+              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
+                color : {demo.product?.color}
+              </h3>
+              
+            </div>
+            
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
                 ₹ {demo.product?.discounted_price ? demo.product?.discounted_price : demo.product?.mrp}
@@ -1151,7 +1217,7 @@ const ProductOverview = () => {
           </div>
 
           <div className="border-b border-c-gray-300 pb-3  ">
-            <div className="flex w-full">
+            <div className="flex w-full flex-col">
               <div className="mb-4">
                 <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
                   size
@@ -1256,21 +1322,7 @@ const ProductOverview = () => {
                 </div>
               </div>
             </div>
-            <div className="mb-4 ">
-              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                color : {demo.product?.color}
-              </h3>
-              {/* <ul className="colors -mr-3 flex flex-wrap">
-                {['bg-[#B2AC88]'].map((color) => (
-                  <li
-                    key={color}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm"
-                  >
-                    <span className={`block h-full w-full rounded ${color}`} />
-                  </li>
-                ))}
-              </ul> */}
-            </div>
+            
           </div>
           <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-c-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
 
@@ -1291,6 +1343,7 @@ const ProductOverview = () => {
                 +
               </button>
             </div>
+            
             <button
               type="button"
               onClick={() => { handleAddToCart() }}
@@ -1298,6 +1351,13 @@ const ProductOverview = () => {
             >
               Buy Now
             </button>
+            {/* <button
+              type="button"
+              onClick={() => { navigate("/products/cart") }}
+              className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            >
+              Proceed to cart
+            </button> */}
           </div>
           <div className="py-6 border-b-gray-500">
             <label htmlFor="pincode" className="flex items-center text-lg font-medium  uppercase ">

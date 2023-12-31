@@ -22,7 +22,7 @@ const Slider = () => {
     <>
       <div className=" bg-[#0B1121]/90 py-12">
         {/* <div className="w-full h-full bg-white/10 absolute backdrop-blur "></div> */}
-        <h1 className="heading font-normal tracking-wider text-white font-serif">Product collection</h1>
+        <p className="text-center font-normal text-[1.8rem] lg:text-[2.8rem] tracking-wider text-white font-serif py-2">Product collection</p>
         <Swiper
           effect={'coverflow'}
           grabCursor={true}
@@ -51,33 +51,45 @@ const Slider = () => {
 
         >
           <SwiperSlide>
-            <Link to="/products">
+            <Link to="/products/10020175919">
               <img src={col1} className='w-80' alt="slide_image" />
             </Link>
           </SwiperSlide>
 
           <SwiperSlide>
-            <img src={col2} alt="slide_image" />
+          <Link to="/products/10020653710">
+              <img src={col2} alt="slide_image" />
+              </Link>
           </SwiperSlide>
 
           <SwiperSlide>
-            <img src={col3} alt="slide_image" />
+          <Link to="/products/10021893511">
+              <img src={col3} alt="slide_image" />
+              </Link>  
           </SwiperSlide>
 
           <SwiperSlide>
-            <img src={col4} alt="slide_image" />
+          <Link to="/products/10025050707">
+              <img src={col4} alt="slide_image" />
+              </Link> 
           </SwiperSlide>
 
           <SwiperSlide>
-            <img src={col5} alt="slide_image" />
+          <Link to="/products/20021364437">
+              <img src={col5} alt="slide_image" />
+              </Link> 
           </SwiperSlide>
 
           <SwiperSlide>
-            <img src={col6} alt="slide_image" />
+          <Link to="/products/20022593402">
+              <img src={col6} alt="slide_image" />
+              </Link> 
           </SwiperSlide>
 
           <SwiperSlide>
+          <Link to="/products/200223101507">
             <img src={col7} alt="slide_image" />
+            </Link> 
           </SwiperSlide>
 
           <div className="slider-controler">
