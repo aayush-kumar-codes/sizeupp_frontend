@@ -347,14 +347,14 @@ const AuthProvider = ({ children }) => {
 
     function mapIdsToNames(data) {
         const idToNameMap = {};
-
+    
         function mapCategory(category) {
             idToNameMap[category.id] = category.name;
-
+    
             if (category.subcategories) {
                 category.subcategories.forEach((subcategory) => {
                     idToNameMap[subcategory.id] = subcategory.name;
-
+    
                     if (subcategory.subsubcategories) {
                         subcategory.subsubcategories.forEach((subsubcategory) => {
                             idToNameMap[subsubcategory.id] = subsubcategory.name;
@@ -363,22 +363,44 @@ const AuthProvider = ({ children }) => {
                 });
             }
         }
-
-        if (data.categories) {
+    
+        if (data && data.categories) {
             data.categories.forEach(mapCategory);
         }
-
-        if (data.colorfamily) {
+    
+        if (data && data.colorfamily) {
             data.colorfamily.forEach((color) => {
                 idToNameMap[color.id] = color.name;
             });
         }
-
+    
         return idToNameMap;
     }
+    
+    const catListFromLocalStorage = localStorage.getItem('cat_list');
+    const parsedCatList = catListFromLocalStorage ? JSON.parse(catListFromLocalStorage) : null;
+    const idToNameMap = mapIdsToNames(parsedCatList);
 
-    const idToNameMap = mapIdsToNames(JSON.parse(localStorage.cat_list));
 
+    const fetchCategory = async()=>{
+        try{
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/category-details',{
+                method:'GET',
+                headers:{
+                    'Content-type': 'application/json'
+                }
+            })
+
+            if(!res.ok){
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            localStorage.setItem('cat_list',JSON.stringify(data))
+    
+        }catch(err){
+            console.log(err)
+        }
+    }
 
 
 
@@ -405,6 +427,7 @@ const AuthProvider = ({ children }) => {
 
                 isFuncCall,
                 setIsFuncCall,
+                fetchCategory,
 
 
                 fetchProductsAuth,

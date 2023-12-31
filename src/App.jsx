@@ -36,9 +36,16 @@ import ShippingPolicy from "./constants/ShippingPolicy"
 import Faq from "./constants/Faq"
 import CancellationPolicy from "./constants/CancellationPolicy"
 import ProductLayout from "./pages/ProductLayout"
+import { useContext, useEffect } from "react"
+import { AuthContext } from "./context/AuthProvider"
 
 
 const App = () => {
+  const {fetchCategory} = useContext(AuthContext)
+  useEffect(() => { 
+    fetchCategory()
+  }
+  , []);
   return (
     <div className={` `}>
       <BrowserRouter>
