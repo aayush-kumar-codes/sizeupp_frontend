@@ -11,7 +11,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, idToNameMap, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
+  const { isFilterActive,catlist, idToNameMap, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
   let [searchParams, setSearchParams] = useSearchParams();
@@ -202,8 +202,6 @@ setIsFilterOpen((prev) => ({
     }));
 */}
 
-  const catlist = JSON.parse(localStorage.cat_list)
-
   console.log(filterdata.gender?.includes('51e84707-33e5-459a-b40d-a2a40d20b460'))
   return (
     <>
@@ -324,7 +322,7 @@ setIsFilterOpen((prev) => ({
                 </div>
                 {true && (
                   <ul className="mt-2">
-                    {catlist && catlist.categories.map((item) => (
+                    {catlist && catlist.categories?.map((item) => (
                       <li key={item.id} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                           <input
@@ -365,8 +363,8 @@ setIsFilterOpen((prev) => ({
                 </div>
                 {true && (
                   <ul className="mt-2">
-                    {catlist && catlist.categories.map((item) => (
-                      item.subcategories.map((subitem) => {
+                    {catlist && catlist.categories?.map((item) => (
+                      item.subcategories?.map((subitem) => {
                         if (!filterdata.gender?.includes(item.id)) {
                           return null
                         }

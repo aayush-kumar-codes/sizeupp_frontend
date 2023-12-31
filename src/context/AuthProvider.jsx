@@ -381,6 +381,8 @@ const AuthProvider = ({ children }) => {
     const parsedCatList = catListFromLocalStorage ? JSON.parse(catListFromLocalStorage) : null;
     const idToNameMap = mapIdsToNames(parsedCatList);
 
+    const [catlist,setcatlist] = useState([])
+
 
     const fetchCategory = async()=>{
         try{
@@ -396,6 +398,7 @@ const AuthProvider = ({ children }) => {
             }
             const data = await res.json()
             localStorage.setItem('cat_list',JSON.stringify(data))
+            setcatlist(data)
     
         }catch(err){
             console.log(err)
@@ -416,6 +419,7 @@ const AuthProvider = ({ children }) => {
 
 
                 search,
+                catlist,
                 navsearch,
                 navgender,
                 category,
