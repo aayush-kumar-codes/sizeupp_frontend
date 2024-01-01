@@ -33,7 +33,8 @@ export function Login() {
         })
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setloading(true);
         localStorage.clear()
         if (formData.email === "" || formData.password === "") {
@@ -105,6 +106,8 @@ export function Login() {
         }
     };
 
+    
+    
 
     useEffect(() => {
         // 👇️ scroll to top on page load
@@ -127,7 +130,7 @@ export function Login() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
                     <div className="relative">
-                        <div className="w-full max-w-xl xl:mx-auto xl:w-full xl:max-w-xl xl:pr-24">
+                        {/* <div className="w-full max-w-xl xl:mx-auto xl:w-full xl:max-w-xl xl:pr-24">
                             <h3 className="text-4xl font-bold text-white">
                                 Now you dont have to rely on your designer to create a new page
                             </h3>
@@ -201,7 +204,7 @@ export function Login() {
                                     <span className="text-lg font-medium text-white"> Design Files Included </span>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -216,7 +219,7 @@ export function Login() {
                                 Create a free account
                             </Link>
                         </p>
-                        <form action="#" method="POST" className="mt-8">
+                        <form className="mt-8" onSubmit={handleSubmit}>
                             <div className="space-y-5">
                                 <div>
                                     <label htmlFor="" className="text-base font-medium text-gray-900">
@@ -255,13 +258,15 @@ export function Login() {
                                             placeholder="Password"
                                             name="password"
                                             onChange={handleChange}
+                                            
+
                                         ></input>
                                     </div>
                                 </div>
                                 <div>
                                     <button
-                                        type="button"
-                                        onClick={handleSubmit}
+                                        type="submit"
+                                        // onClick={handleSubmit}
                                         disabled={loading ? true : false}
                                         className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                     >
