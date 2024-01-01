@@ -1192,10 +1192,10 @@ const ProductOverview = () => {
               </div>
             </div>
             <div className="mb-4 ">
-              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
+              <h3 className="text-heading mb-2.5 text-sm font-semibold capitalize md:text-lg">
                 color : {demo.product?.color}
               </h3>
-              
+              {demo.product?.model_size}
             </div>
             
             <div className="mt-5 flex items-center pb-2">

@@ -1,37 +1,16 @@
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthProvider'
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
+
 import { useSearchParams, useNavigate } from 'react-router-dom'
 const filters = [
   {
-    id: 'gender',
-    name: 'Gender',
-    options: [
-      { value: 'Men', label: 'Men' },
-      { value: 'Women', label: 'Women' },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'Casual Topwear', label: 'Casual Topwear' },
-      { value: 'Casual Bottomwear', label: 'Casual Bottomwear' },
-      { value: 'Women Topwear', label: 'Women Topwear' },
-      { value: 'Women Bottomwear', label: 'Women Bottomwear' },
-      { value: 'Ethnic Wear', label: 'Ethnic Wear' },
-      { value: 'Festive Wear', label: 'Festive Wear' },
-      { value: 'Formal Wear', label: 'Formal Wear' },
-      { value: 'Winter Wear', label: 'Winter Wear' },
-      { value: 'Evening Wear', label: 'Evening Wear' },
-
-
-    ],
-  },
-  {
     id: 'size',
     name: 'Sizes',
+    value: true,
     options: [
+      { value: '0', label: '0' },
       { value: '1', label: '1' },
       { value: '2', label: '2' },
       { value: '3', label: '3' },
@@ -41,27 +20,9 @@ const filters = [
     ],
   },
   {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'Black', label: 'Black' },
-      { value: 'Blue', label: 'Blue' },
-      { value: 'Brown', label: 'Brown' },
-      { value: 'Green', label: 'Green' },
-      { value: 'Grey', label: 'Grey' },
-      { value: 'Orange', label: 'Orange' },
-      { value: 'Pink', label: 'Pink' },
-      { value: 'Purple', label: 'Purple' },
-      { value: 'Red', label: 'Red' },
-      { value: 'Multi Color', label: 'Multi Color' },
-      { value: 'White', label: 'White' },
-      { value: 'Yellow', label: 'Yellow' },
-      { value: 'Cream', label: 'Cream' }
-    ],
-  },
-  {
     id: 'fit',
     name: 'Fit',
+    value: true,
     options: [
       { value: 'Regular Fit', label: 'Regular Fit' },
       { value: 'Straight Fit', label: 'Straight Fit' },
@@ -72,6 +33,7 @@ const filters = [
   {
     id: 'sleeve',
     name: 'Sleeve',
+    value: true,
     options: [
       { value: 'Full Sleeve', label: 'Full Sleeve' },
       { value: 'Half Sleeve', label: 'Half Sleeve' },
@@ -82,6 +44,7 @@ const filters = [
   {
     id: 'necktype',
     name: 'Neck Type',
+    value: true,
     options: [
       { value: 'Crew Neck', label: 'Crew Neck' },
       { value: 'Cuban Collar', label: 'Cuban Collar' },
@@ -101,7 +64,7 @@ const SideNav = (
   }
 ) => {
 
-  const { filterdata, setfilterdata } = useContext(AuthContext)
+  const { filterdata, setfilterdata,setSearch,catlist } = useContext(AuthContext)
 
   // useEffect(() => {
 
@@ -185,21 +148,52 @@ const SideNav = (
       urlSearchParams.delete(fieldName);
     });
 
-    navigate('/products', { replace: true })
-
-    // Clear the filters in the state
-    setfilterdata({
-      gender: [],
-      size: [],
-      color: [],
-      subcategory: '',
-      category: [],
-      fit: [],
-      sleeve: [],
-      necktype: [],
-      search: "All"
-    });
   };
+
+  const [activeSection, setActiveSection] = useState(null);
+  const toggleSection = (section) => {
+    setActiveSection(activeSection === section ? null : section);
+  }
+
+  const handleChangeFilter = (filterValue, headName) => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (searchParams.has('navsearch')) {
+      searchParams.delete('navsearch')
+      setSearch("")
+    }
+
+    // If the head is 'gender', remove all subheaders
+    if (headName === 'gender') {
+      const subheadersToRemove = ['subcategory', 'category', 'fit', 'size', 'color', 'design'];
+      subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
+    } else if (headName === 'category') {
+      const subheadersToRemove = ['subcategory', 'fit', 'size', 'color', 'design'];
+      subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
+    } else if (headName === 'subcategory') {
+      const subheadersToRemove = ['fit', 'size', 'color', 'design'];
+      subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
+    }
+
+
+    const existingValues = searchParams.getAll(headName);
+
+    // Check if the new value already exists, and remove it
+    if (existingValues.includes(filterValue)) {
+      const updatedValues = existingValues.filter(value => value !== filterValue);
+      searchParams.delete(headName);
+      updatedValues.forEach(value => searchParams.append(headName, value));
+    } else {
+      // Append the new value
+      searchParams.append(headName, filterValue);
+    }
+
+    // Update the URL
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+
+    // Use react-router-dom's navigate to update the URL without triggering a page reload
+    navigate(`${newUrl}`, { replace: true });
+  }
 
   return (
     <div className={`${display ? "fixed inset-0 z-50 bg-gray-800/20 w-auto h-screen" : "hidden"}`}>
@@ -210,59 +204,254 @@ const SideNav = (
         </span>
         <div className="space-y-6 divide-y col-span-2 ">
           <div onClick={() => { handleClearFilter() }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
-          {/* {filters.map((filter) => (
-            <div key={filter.id}>
-              <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
+          {/* Gender */}
+          <div>
+            <div className="flex justify-between">
+              <h3 className="text-lg font-semibold text-gray-900 py-2">Gender</h3>
+              <button onClick={() => toggleSection('Gender')}>
+                {activeSection === 'Gender' ? (
+                  <MinusIcon className="h-6 w-6 text-gray-800 p-1" />
+                ) : (
+                  <PlusIcon className="h-6 w-6 text-gray-800 p-1" />
+                )}
+              </button>
+            </div>
+            {true && (
               <ul className="mt-2">
-                {filter.options.map((option) => {
+                {catlist && catlist.categories?.map((item) => (
+                  <li key={item.id} className="flex items-center justify-between py-2">
+                    <div className="flex items-center">
+                      <input
+                        id={`${item.id}`}
+                        name={'gender'}
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                        value={item.name}
+                        checked={
+                          filterdata.gender?.includes(item.id)
+                        }
+                        onChange={() => {
+                          handleChangeFilter(item.id, 'gender')
+                        }}
+                      />
+                      <label htmlFor={`${item.id}`} className="ml-3 text-sm font-medium text-gray-900">
+                        {item.name}
+                      </label>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
+
+          {/* Category */}
+          <div>
+            <div className="flex justify-between">
+              <h3 className="text-lg font-semibold text-gray-900 py-2">Category</h3>
+              <button onClick={() => toggleSection('Gender')}>
+                {activeSection === 'Gender' ? (
+                  <MinusIcon className="h-6 w-6 text-gray-800 p-1" />
+                ) : (
+                  <PlusIcon className="h-6 w-6 text-gray-800 p-1" />
+                )}
+              </button>
+            </div>
+            {true && (
+              <ul className="mt-2">
+                {catlist && catlist.categories?.map((item) => (
+                  item.subcategories?.map((subitem) => {
+                    if ((!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id))) {
+                      return null
+                    }
+                    return (
+                      <li key={subitem.id} className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <input
+                            id={`${subitem.id}`}
+                            name={'gender'}
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                            value={subitem.name}
+                            checked={
+                              filterdata.category?.includes(subitem.id)
+                            }
+                            onChange={() => {
+                              handleChangeFilter(subitem.id, 'category')
+                            }}
+                          />
+                          <label htmlFor={`${subitem.id}`} className="ml-3 text-sm font-medium text-gray-900">
+                            {subitem.name}
+                          </label>
+                        </div>
+                      </li>
+                    )
+                  })
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Sub Category */}
+          <div>
+            <div className="flex justify-between">
+              <h3 className="text-lg font-semibold text-gray-900 py-2">Sub Category</h3>
+              <button onClick={() => toggleSection('subcategory')}>
+                {activeSection === 'subcategory' ? (
+                  <MinusIcon className="h-6 w-6 text-gray-800 p-1" />
+                ) : (
+                  <PlusIcon className="h-6 w-6 text-gray-800 p-1" />
+                )}
+              </button>
+            </div>
+            {true && (
+              <ul className="mt-2">
+                {catlist && catlist.categories?.map((item) => (
+                  item.subcategories?.map((subitem) => {
+                    return (subitem.subsubcategories.map((subsubitem) => {
+                      console.warn(subsubitem.name)
+                      if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
+                        return null
+                      }
+
+
+                      return (
+                        <li key={subsubitem.id} className="flex items-center justify-between py-2">
+                          <div className="flex items-center">
+                            <input
+                              id={`${subsubitem.id}`}
+                              name={'subcategory'}
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                              value={subsubitem.name}
+                              checked={
+                                filterdata.subcategory?.includes(subsubitem.id)
+                              }
+                              onChange={() => {
+                                handleChangeFilter(subsubitem.id, 'subcategory')
+                              }}
+                            />
+                            <label htmlFor={`${subsubitem.id}`} className="ml-3 text-sm font-medium text-gray-900">
+                              {subsubitem.name}
+                            </label>
+                          </div>
+                        </li>
+                      )
+                    })
+                    )
+                  })
+                ))}
+              </ul>
+            )}
+          </div>
+
+
+          {/* Color */}
+          <div>
+            <div className="flex justify-between">
+              <h3 className="text-lg font-semibold text-gray-900 py-2">Color</h3>
+              <button onClick={() => toggleSection('Color')}>
+                {activeSection === 'Color' ? (
+                  <MinusIcon className="h-6 w-6 text-gray-800 p-1" />
+                ) : (
+                  <PlusIcon className="h-6 w-6 text-gray-800 p-1" />
+                )}
+              </button>
+            </div>
+            {activeSection === 'Color' && (
+              <ul className="mt-2">
+                {catlist && catlist.colorfamily.map((item) => {
+                  if (item.name === "nan") {
+                    return null
+                  }
                   return (
-                    <li key={option.value} className="flex items-center justify-between py-2">
+                    <li key={item.id} className="flex items-center justify-between py-2">
                       <div className="flex items-center">
                         <input
-                          id={`${option.value}`}
-                          name={filter.id}
+                          id={`${item.id}`}
+                          name={'color'}
                           type="checkbox"
                           className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                          value={option.value}
+                          value={item.name}
                           checked={
-                            filter.id === 'gender' ?
-                              filterdata.gender?.includes(option.value)
-                              :
-                              filter.id === 'size' ?
-                                filterdata.size?.includes(option.value)
-                                :
-                                filter.id === 'category' ?
-                                  filterdata.category?.includes(option.value)
-                                  :
-                                  filter.id === 'fit' ?
-                                    filterdata.fit?.includes(option.value)
-                                    :
-                                    filter.id === 'sleeve' ?
-                                      filterdata.sleeve?.includes(option.value)
-                                      :
-                                      filter.id === 'necktype' ?
-                                        filterdata.necktype?.includes(option.value)
-                                        :
-                                        filter.id === 'color' ?
-                                          filterdata.color?.includes(option.value)
-                                          :
-                                          false
+                            filterdata.color?.includes(item.name)
                           }
-                          onChange={(e) => {
-                            handleChangeFilter(e)
+                          onChange={() => {
+                            handleChangeFilter(item.name, 'color')
                           }}
                         />
-                        <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
-                          {option.label}
+                        <label htmlFor={`${item.id}`} className="ml-3 text-sm font-medium text-gray-900">
+                          {item.name}
                         </label>
                       </div>
                     </li>
                   )
                 })}
               </ul>
+            )}
+          </div>
+
+
+
+
+
+          {filters.map((filter) => (
+            <div key={filter.id}>
+              <div className="flex justify-between">
+                <h3 className="text-lg font-semibold text-gray-900 py-2">{filter.name}</h3>
+                <button onClick={() => toggleSection(filter.name)}>
+                  {activeSection === filter.name ?
+                    (<MinusIcon className="h-6 w-6 text-gray-800 p-1" />)
+                    :
+                    (<PlusIcon className="h-6 w-6 text-gray-800 p-1" />)
+                  }
+                </button>
+              </div>
+              {activeSection === filter.name && (
+                <ul className="mt-2">
+                  {filter.options.map((option) => {
+
+                    return (
+                      <li key={option.value} className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <input
+                            id={`${option.value}`}
+                            name={filter.id}
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
+                            value={option.value}
+                            checked={
+
+                              filter.id === 'size' ?
+                                filterdata.size?.includes(option.value)
+                                :
+                                filter.id === 'fit' ?
+                                  filterdata.fit?.includes(option.value)
+                                  :
+                                  filter.id === 'sleeve' ?
+                                    filterdata.sleeve?.includes(option.value)
+                                    :
+                                    filter.id === 'necktype' ?
+                                      filterdata.necktype?.includes(option.value)
+                                      :
+                                      false
+                            }
+                            onChange={(e) => {
+                              handleChangeFilter(option.value, filter.id)
+                            }}
+                          />
+                          <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">
+                            {option.label}
+                          </label>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
-              ))} */}
+          ))}
+
 
         </div>
 

@@ -215,12 +215,12 @@ export function ProductCart() {
     }
 
     const [formData, setFormData] = useState({
-        addressLine1: '123 Main St',
+        addressLine1: '',
         addressLine2: '',
-        city: 'Anytown',
-        state: 'USA',
-        zipCode: '12345',
-        country: 'USA',
+        city: '',
+        state: '',
+        zipCode: '',
+        country: 'India',
     });
 
     const handleInputChange = (e) => {
@@ -442,7 +442,7 @@ export function ProductCart() {
 
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
-                                        Zip Code
+                                        Pin Code
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input type="text"
@@ -465,13 +465,13 @@ export function ProductCart() {
                                             placeholder="Enter country"
                                             required
                                             name="country"
+                                            disabled
                                             value={formData.country}
                                             onChange={handleInputChange} />
                                     </dd>
                                 </div>
 
                                 {/* Include other fields similarly */}
-
 
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <button type="button" onClick={handleAddAddress} className="rounded-lg bg-blue-500 text-white px-4 py-2">
