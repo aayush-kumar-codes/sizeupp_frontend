@@ -265,11 +265,12 @@ const AuthProvider = ({ children }) => {
 
 
     // filter sub handlers
-    const handleFetchFilterProducts = async (filterData) => {
+    const handleFetchFilterProducts = async (filterData,signal) => {
         try {
             setproductloading(true)
             console.warn("fetching filter products", filterData)
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
+                signal:signal,
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'

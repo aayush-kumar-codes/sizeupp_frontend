@@ -11,7 +11,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive,catlist, idToNameMap, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
+  const { isFilterActive, catlist, idToNameMap, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
   let [searchParams, setSearchParams] = useSearchParams();
@@ -32,7 +32,7 @@ const ProductLayout2 = () => {
 
     console.log(subcategory)
 
-    if (category || subcategory || fit || sleeve || necktype || color || size) {
+    if (category || subcategory || subsubcategory || fit || sleeve || necktype || color || size) {
       const updatedFilterData = {
         ...filterdata,
         search: search !== null ? search : [],
@@ -60,9 +60,15 @@ const ProductLayout2 = () => {
   }, [searchParams])
 
   useEffect(() => {
+    const abort = new AbortController();
+    const signal = abort.signal;
     // Check if filterdata is defined before calling handleFetchFilterProducts
     if (filterdata) {
-      handleFetchFilterProducts(filterdata);
+      handleFetchFilterProducts(filterdata,signal);
+    }
+
+    return ()=>{
+      abort.abort()
     }
   }, [filterdata]);
 
@@ -71,6 +77,20 @@ const ProductLayout2 = () => {
 
   const handleChangeFilter = (filterValue, headName) => {
     const searchParams = new URLSearchParams(window.location.search);
+
+    // If the head is 'gender', remove all subheaders
+    if (headName === 'gender') {
+      const subheadersToRemove = ['subcategory', 'category', 'fit', 'size', 'color', 'design'];
+      subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
+    }else if(headName === 'category'){
+      const subheadersToRemove = ['subcategory', 'fit', 'size', 'color', 'design'];
+      subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
+    }else if(headName === 'subcategory'){
+      const subheadersToRemove = ['fit', 'size', 'color', 'design'];
+      subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
+    }
+
+
     const existingValues = searchParams.getAll(headName);
 
     // Check if the new value already exists, and remove it
@@ -243,9 +263,9 @@ setIsFilterOpen((prev) => ({
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                       </svg>
 
-                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                      <Link to={`/products?gender=${filterdata?.gender.map((el) => el).join('&gender=')}`} className=" text-md text-c-gray-800 hover:font-bold ml-1">
                         {filterdata?.gender.map((el) => idToNameMap[el]).join(', ')}
-                      </a>
+                      </Link>
                     </div>
                   </li>
                 }
@@ -256,9 +276,9 @@ setIsFilterOpen((prev) => ({
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                       </svg>
 
-                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                      <Link to={`/products?category=${filterdata?.category.map((el) => el).join('&category=')}`} className=" text-md text-c-gray-800 hover:font-bold ml-1">
                         {filterdata.category.map((el) => idToNameMap[el]).join(', ')}
-                      </a>
+                      </Link>
                     </div>
                   </li>
                 }
@@ -269,7 +289,7 @@ setIsFilterOpen((prev) => ({
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                       </svg>
 
-                      <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
+                      <a href={`/products?subcategory=${filterdata?.subcategory.map((el) => el).join('&subcategory=')}`} className=" text-md text-c-gray-800 hover:font-bold ml-1">
                         {filterdata.subcategory.map((el) => idToNameMap[el]).join(', ')}
                       </a>
                     </div>
@@ -365,7 +385,7 @@ setIsFilterOpen((prev) => ({
                   <ul className="mt-2">
                     {catlist && catlist.categories?.map((item) => (
                       item.subcategories?.map((subitem) => {
-                        if (!filterdata.gender?.includes(item.id)) {
+                        if (!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id)) {
                           return null
                         }
                         return (
@@ -414,7 +434,7 @@ setIsFilterOpen((prev) => ({
                       item.subcategories?.map((subitem) => {
                         return (subitem.subsubcategories.map((subsubitem) => {
                           console.warn(subsubitem.name)
-                          if(!filterdata.category?.includes(subitem.id)){
+                          if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
                             return null
                           }
 
