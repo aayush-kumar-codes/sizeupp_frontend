@@ -3,7 +3,7 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/20/solid"
 import { FunnelIcon, ArrowsUpDownIcon } from "@heroicons/react/24/outline"
 import { styles } from "../../style"
 import PropTypes from 'prop-types'
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../../context/AuthProvider"
 import { useNavigate } from "react-router-dom"
 const Filter = ({
@@ -24,21 +24,22 @@ const Filter = ({
         setGrid(enums[index])
     }
 
-    const {handleFetchFilterProducts,filterdata,setIsFilterActive,setfilterdata} = useContext(AuthContext)
+    const { handleFetchFilterProducts, filterdata, setIsFilterActive, setfilterdata } = useContext(AuthContext)
 
 
 
     const handleSort = (e) => {
-        if(e === 'price_htl'){
-            setfilterdata((prev)=>{
-                return {...prev,price_htl:true,price_lth:false}
+        if (e === 'price_htl') {
+            setfilterdata((prev) => {
+                return { ...prev, price_htl: !filterdata.price_htl, price_lth: false }
             })
-        }else if(e === 'price_lth'){
-            setfilterdata((prev)=>{
-                return {...prev,price_htl:false,price_lth:true}
+        } else if (e === 'price_lth') {
+            setfilterdata((prev) => {
+                return { ...prev, price_htl: false, price_lth: !filterdata.price_lth}
             })
         }
     }
+
 
 
 
@@ -56,7 +57,7 @@ const Filter = ({
 
             <div className="flex items-center">
 
-               
+
 
                 {/* Sort */}
                 <div className="group">
@@ -70,20 +71,20 @@ const Filter = ({
                             <label htmlFor="popular" className="cursor-pointer text-base">Popularity: High to Low</label>
                             <input onChange={()=>handleSort('')} type="radio"  name="sort" id="popular" className="cursor-pointer  w-4 h-4" />
                         </div> */}
-                        <div onClick={()=>handleSort('price_lth')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
-                            <label htmlFor="plth" className="cursor-pointer text-base">Price: Low to High</label>
-                            <input onChange={()=>handleSort('price_lth')} type="radio" name="sort" id="plth"  className="cursor-pointer  w-4 h-4" />
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="plth" className=" text-base">Price: Low to High</label>
+                            <input checked={filterdata.price_lth == true} onChange={() => handleSort('price_lth')} type="radio" name="sort" id="plth" className="cursor-pointer  w-4 h-4" />
                         </div>
-                        <div onClick={()=>handleSort('price_htl')} className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
-                            <label htmlFor="phtl" className="cursor-pointer text-base">Price: High to Low</label>
-                            <input onChange={()=>handleSort('price_htl')} type="radio" name="sort" id="phtl"  className="cursor-pointer  w-4 h-4" />
+                        <div className="hover:bg-slate-800/10 rounded-lg px-2 py-1 flex items-center justify-between gap-2 my-1">
+                            <label htmlFor="phtl" className=" text-base">Price: High to Low</label>
+                            <input checked={filterdata.price_htl == true} onChange={() => handleSort('price_htl')} type="radio" name="sort" id="phtl" className="cursor-pointer  w-4 h-4" />
                         </div>
 
                     </div>
                 </div>
 
-                 {/* filter */}
-                 <div onClick={() => { setIsFilterActive(prev => !prev) }} className="lg:hidden flex mx-4 items-center cursor-pointer">
+                {/* filter */}
+                <div onClick={() => { setIsFilterActive(prev => !prev) }} className="lg:hidden flex mx-4 items-center cursor-pointer">
                     <div className="hover:underline ">Filter</div>
                     <FunnelIcon className='w-5 h-5 m-1' />
                 </div>

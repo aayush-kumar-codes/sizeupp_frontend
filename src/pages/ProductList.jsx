@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const {  fetchProductsAuth,fetchCart,isFilterActive,setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
+    const { fetchProductsAuth, fetchCart, isFilterActive, setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
 
 
 
@@ -61,7 +61,7 @@ const ProductList = ({
 
     const navigate = useNavigate()
 
- 
+
 
 
     useEffect(() => {
@@ -112,7 +112,7 @@ const ProductList = ({
                 }
                 const datas = await res.json()
                 console.log(datas);
-                
+
                 Swal.fire({
                     title: 'Success!',
                     text: 'Product Updated in Cart',
@@ -229,65 +229,71 @@ const ProductList = ({
                 ))}
                 </div> */}
             <div className='hidden xl:block'>
-                {grid ? <CustomGrid gridSize={grid}>
-                    {!productloading ? (productsbc.length > 0 ? productsbc.map((items, i) => {
-                        let imgs = []
-                        imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
-                        items.images.map((img) => {
-                            imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
-                        })
+                {grid ? (
+                    <CustomGrid gridSize={grid}>
+                        {!productloading ? (
+                            productsbc.length > 0 ? productsbc.map((items, i) => {
+                                let imgs = []
+                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
+                                items.images.map((img) => {
+                                    imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
+                                })
 
-                        if (items.images.length == 0) {
-                            // setproductcount(prev => prev - 1)
-                            return null
+                                if (items.images.length == 0) {
+                                    // setproductcount(prev => prev - 1)
+                                    return null
 
-                        }
-
-
-                        return (
+                                }
 
 
-                            <div key={i} className="mt-1 rounded-xl">
-                                <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
-                                <div className={`${grid == 5 && "hidden"} p-2 `}>
-                                    <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
-                                    <div className=' flex flex-wrap justify-between items-center'>
-                                        <div className='text-base text-accent flex items-center gap-2'>
-                                            <p>&#8377; {items.discounted_price ? items.discount_price : items.mrp}</p>
-                                            {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
-                                                <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
-                                                <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                return (
+
+
+                                    <div key={i} className="mt-1 rounded-xl">
+                                        <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
+                                        <div className={`${grid == 5 && "hidden"} p-2 `}>
+                                            <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
+                                            <div className=' flex flex-wrap justify-between items-center'>
+                                                <div className='text-base text-accent flex items-center gap-2'>
+                                                    <p>&#8377; {items.discounted_price ? items.discount_price : items.mrp}</p>
+                                                    {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                                        <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
+                                                        <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                                    </div>
+                                                    }
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
+                                                    className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                >
+                                                    Add to Cart
+                                                </button>
                                             </div>
-                                            }
                                         </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
-                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                        >
-                                            Add to Cart
-                                        </button>
                                     </div>
+                                ) }): (
+                                <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">
+                                    No products in this category
                                 </div>
-                            </div>
-                        )
-                    }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
-                        {
-                            Array(10).fill().map((_, i) => (
-                                <ProductSkullCard key={i} />
-                            ))
-                        }
-                    </>}
+                            )
+                        ) : (
+                            <>
+                                {Array(10).fill().map((_, i) => (
+                                    <ProductSkullCard key={i} />
+                                ))}
+                            </>
+                        )}
 
-                </CustomGrid>
-                    : <div>Loading ....</div>
+                    </CustomGrid>
+                ) : <div>Loading ....</div>
                 }
             </div>
 
             {/* Medium Desktop */}
             <div className='hidden xl:hidden md:block'>
                 {mgrid ? <CustomGrid gridSize={mgrid}>
-                    {!productloading ?( productsbc.length > 0 ? productsbc.map((items, i) => {
+                    {!productloading ? (productsbc.length > 0 ? productsbc.map((items, i) => {
                         let imgs = []
                         imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                         items.images.map((img) => {
@@ -325,7 +331,7 @@ const ProductList = ({
                                 </div>
                             </div>
                         )
-                    }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div> ): <>
+                    }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
                         {
                             Array(10).fill().map((_, i) => (
                                 <ProductSkullCard key={i} />

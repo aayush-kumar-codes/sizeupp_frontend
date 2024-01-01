@@ -11,7 +11,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, catlist, idToNameMap, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
+  const { isFilterActive,productloading, catlist, idToNameMap, setSearch, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
   let [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +19,6 @@ const ProductLayout2 = () => {
 
 
   useEffect(() => {
-
     let category = searchParams.getAll('gender')
     let subcategory = searchParams.getAll('category')
     let fit = searchParams.getAll('fit')
@@ -64,10 +63,14 @@ const ProductLayout2 = () => {
     const signal = abort.signal;
     // Check if filterdata is defined before calling handleFetchFilterProducts
     if (filterdata) {
-      handleFetchFilterProducts(filterdata,signal);
+      const fetchData = async () => {
+        await handleFetchFilterProducts(filterdata, signal);
+      };
+  
+      fetchData();
     }
 
-    return ()=>{
+    return () => {
       abort.abort()
     }
   }, [filterdata]);
@@ -78,14 +81,19 @@ const ProductLayout2 = () => {
   const handleChangeFilter = (filterValue, headName) => {
     const searchParams = new URLSearchParams(window.location.search);
 
+    if (searchParams.has('navsearch')) {
+      searchParams.delete('navsearch')
+      setSearch("")
+    }
+
     // If the head is 'gender', remove all subheaders
     if (headName === 'gender') {
       const subheadersToRemove = ['subcategory', 'category', 'fit', 'size', 'color', 'design'];
       subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
-    }else if(headName === 'category'){
+    } else if (headName === 'category') {
       const subheadersToRemove = ['subcategory', 'fit', 'size', 'color', 'design'];
       subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
-    }else if(headName === 'subcategory'){
+    } else if (headName === 'subcategory') {
       const subheadersToRemove = ['fit', 'size', 'color', 'design'];
       subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
     }
@@ -189,20 +197,6 @@ const ProductLayout2 = () => {
       urlSearchParams.delete(fieldName);
     });
 
-    navigate('/products', { replace: true })
-
-    // Clear the filters in the state
-    setfilterdata({
-      gender: [],
-      size: [],
-      color: [],
-      subcategory: [],
-      category: [],
-      fit: [],
-      sleeve: [],
-      necktype: [],
-      search: "All"
-    });
   };
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -325,7 +319,16 @@ setIsFilterOpen((prev) => ({
 
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
             <div className="hidden space-y-6 divide-y lg:col-span-2 lg:block">
-              <div onClick={() => { handleClearFilter() }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
+              <Link to="/products" onClick={() => {
+                handleClearFilter();
+                setfilterdata({
+                  gender: [],
+                  color: [],
+                  size: [],
+                  search: "",
+                  category: [],
+                })
+              }} className='cursor-pointer underline flex justify-end w-full '>Clear Filter</Link>
 
 
               {/* Gender */}

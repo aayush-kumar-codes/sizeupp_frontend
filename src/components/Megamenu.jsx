@@ -44,7 +44,7 @@ const Megamenu = () => {
                             color: [],
                             size: [],
                             search: "",
-                            category: ""
+                            category: [],
                         })
                     }} className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
                         All Products
