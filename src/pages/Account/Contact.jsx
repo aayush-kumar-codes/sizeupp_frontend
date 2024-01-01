@@ -42,6 +42,7 @@ const Contact = () => {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.token}`
                 },
                 body: JSON.stringify({
                     first_name : form.firstname,
