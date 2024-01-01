@@ -68,8 +68,8 @@ const AuthProvider = ({ children }) => {
         subcategory: [],
         sleeve: [],
         necktype: [],
-        price_lth : false,
-        price_htl : false,
+        price_lth: false,
+        price_htl: false,
         search: ""
     })
     // Function to filter data based on multiple criteria
@@ -118,52 +118,7 @@ const AuthProvider = ({ children }) => {
             } else {
                 const data = await response.json();
                 setProducts(data);
-                // localStorage.setItem("products", data);
-                // setProducts(data);
-                // if (sort.phtl === true) {
-                //     const sortedProducts = data.sort((a, b) => {
-                //         return b.mrp - a.mrp;
-                //     }
-                //     );
-                //     setproductsbc(sortedProducts)
-                //     setproductcount(sortedProducts.length)
-                //     setproductloading(false)
 
-                // }
-                // else if (sort.plth === true) {
-                //     const sortedProducts = data.sort((a, b) => {
-                //         return a.mrp - b.mrp;
-                //     }
-                //     );
-                //     setproductsbc(sortedProducts)
-                //     setproductcount(sortedProducts.length)
-                //     setproductloading(false)
-
-
-                // }
-                // else if (sort.dhtl === true) {
-                //     const sortedProducts = data.sort((a, b) => {
-                //         return b.discounted_price - a.discounted_price;
-                //     }
-                //     );
-                //     setproductsbc(sortedProducts)
-                //     setproductcount(sortedProducts.length)
-                //     setproductloading(false)
-
-
-                // }
-
-
-                // if (filterdata.search !== "" || search !== "" || filterdata.color.length > 0 || filterdata.size.length > 0 || filterdata.gender.length > 0) {
-                //     console.table(filterdata)
-                //     const filteredProducts = funcFilter(data, filterdata)
-
-                //     setproductsbc(filteredProducts)
-                //     setproductcount(filteredProducts.length)
-                //     setproductloading(false)
-
-
-                // } else {
                 setproductsbc(data);
                 for (const product of data.products) {
                     // Check if the 'images' key is present and not empty
@@ -173,7 +128,6 @@ const AuthProvider = ({ children }) => {
                 }
                 setproductloading(false)
 
-                // }
 
             }
         } catch (error) {
@@ -186,6 +140,7 @@ const AuthProvider = ({ children }) => {
             console.log("fetching products - auth")
             setproductloading(true)
             setproductsbc([])
+            setproductcount(0)
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
                 headers: {
@@ -199,57 +154,15 @@ const AuthProvider = ({ children }) => {
             } else {
                 const data = await response.json();
                 setProducts(data);
-                // localStorage.setItem("products", data);
-                // setProducts(data);
-                // if (sort.phtl === true) {
-                //     const sortedProducts = data.sort((a, b) => {
-                //         return b.mrp - a.mrp;
-                //     }
-                //     );
-                //     setproductsbc(sortedProducts);
-                //     setproductcount(sortedProducts.length);
-                //     setproductloading(false);
 
-                // }
-                // else if (sort.plth === true) {
-                //     const sortedProducts = data.sort((a, b) => {
-                //         return a.mrp - b.mrp;
-                //     }
-                //     );
-                //     setproductsbc(sortedProducts);
-                //     setproductcount(sortedProducts.length);
-                //     setproductloading(false);
-
-
-                // }
-                // else if (sort.dhtl === true) {
-                //     const sortedProducts = data.sort((a, b) => {
-                //         return b.discounted_price - a.discounted_price;
-                //     }
-                //     );
-                //     setproductsbc(sortedProducts);
-                //     setproductcount(sortedProducts.length);
-                //     setproductloading(false);
-
-
-                // }
-                // if (filterdata.gender.length > 0 || filterdata.size.length > 0 || filterdata.color.length > 0 || filterdata.search !== "" || search !== "" || category.length > 0 || navsearch !== "" || navgender !== "") {
-                //     console.table(filterdata);
-                //     const filteredProducts = funcFilter(data, filterdata);
-
-
-                //     setproductsbc(filteredProducts);
-                //     setproductcount(filteredProducts.length);
-                //     setproductloading(false);
-
-
-                // } else {
                 setproductsbc(data);
-                setproductcount(data.length);
-                setproductloading(false);
-
-
-                // }
+                for (const product of data.products) {
+                    // Check if the 'images' key is present and not empty
+                    if ('images' in product && product.images.length > 0) {
+                        setproductcount((prev) => prev + 1)
+                    }
+                }
+                setproductloading(false)
 
             }
         } catch (error) {
@@ -276,6 +189,7 @@ const AuthProvider = ({ children }) => {
     const handleFetchFilterProducts = async (filterData, signal) => {
         try {
             setproductloading(true)
+            setproductsbc([])
             setproductcount(0)
             console.warn("fetching filter products", filterData)
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
@@ -301,14 +215,33 @@ const AuthProvider = ({ children }) => {
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
-            setproductloading(false)
-            setproductsbc(data.products)
+            if (filterdata.price_htl === true) {
+                const sortedProducts = data.products.sort((a, b) => {
+                    return b.mrp - a.mrp;
+                }
+                );
+                setproductsbc(sortedProducts);
+
+            }
+            else if (filterdata.price_lth === true) {
+                const sortedProducts = data.products.sort((a, b) => {
+                    return a.mrp - b.mrp;
+                }
+                );
+                setproductsbc(sortedProducts);
+            } else {
+                setproductsbc(data.products)
+            }
+
             for (const product of data.products) {
                 // Check if the 'images' key is present and not empty
                 if ('images' in product && product.images.length > 0) {
                     setproductcount((prev) => prev + 1)
                 }
             }
+
+            setproductloading(false)
+
 
         } catch (error) {
             setproductloading(false)

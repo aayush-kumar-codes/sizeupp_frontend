@@ -64,10 +64,10 @@ const ProductLayout2 = () => {
     const signal = abort.signal;
     // Check if filterdata is defined before calling handleFetchFilterProducts
     if (filterdata) {
-      handleFetchFilterProducts(filterdata,signal);
+      handleFetchFilterProducts(filterdata, signal);
     }
 
-    return ()=>{
+    return () => {
       abort.abort()
     }
   }, [filterdata]);
@@ -82,10 +82,10 @@ const ProductLayout2 = () => {
     if (headName === 'gender') {
       const subheadersToRemove = ['subcategory', 'category', 'fit', 'size', 'color', 'design'];
       subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
-    }else if(headName === 'category'){
+    } else if (headName === 'category') {
       const subheadersToRemove = ['subcategory', 'fit', 'size', 'color', 'design'];
       subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
-    }else if(headName === 'subcategory'){
+    } else if (headName === 'subcategory') {
       const subheadersToRemove = ['fit', 'size', 'color', 'design'];
       subheadersToRemove.forEach(subheader => searchParams.delete(subheader));
     }
@@ -188,21 +188,15 @@ const ProductLayout2 = () => {
     filterFields.forEach((fieldName) => {
       urlSearchParams.delete(fieldName);
     });
-
-    navigate('/products', { replace: true })
-
-    // Clear the filters in the state
     setfilterdata({
       gender: [],
-      size: [],
       color: [],
-      subcategory: [],
+      size: [],
+      search: "",
       category: [],
-      fit: [],
-      sleeve: [],
-      necktype: [],
-      search: "All"
-    });
+    })
+
+    navigate('/products', { replace: true });
   };
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
