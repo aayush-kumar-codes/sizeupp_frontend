@@ -11,7 +11,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, catlist, idToNameMap, setSearch, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
+  const { isFilterActive,productloading, catlist, idToNameMap, setSearch, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
   let [searchParams, setSearchParams] = useSearchParams();
@@ -63,7 +63,11 @@ const ProductLayout2 = () => {
     const signal = abort.signal;
     // Check if filterdata is defined before calling handleFetchFilterProducts
     if (filterdata) {
-      handleFetchFilterProducts(filterdata, signal);
+      const fetchData = async () => {
+        await handleFetchFilterProducts(filterdata, signal);
+      };
+  
+      fetchData();
     }
 
     return () => {

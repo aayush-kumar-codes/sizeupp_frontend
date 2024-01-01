@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
 
     //products  // [products, setProducts]
     const [productsbc, setproductsbc] = useState([]);
-    const [productloading, setproductloading] = useState(false)
+    const [productloading, setproductloading] = useState(true)
     const [productcount, setproductcount] = useState(0)
 
     const [couponcode, setcouponcode] = useState("")
@@ -125,8 +125,6 @@ const AuthProvider = ({ children }) => {
                     }
                 }
                 setproductloading(false)
-
-
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -152,6 +150,7 @@ const AuthProvider = ({ children }) => {
             } else {
                 const data = await response.json();
 
+                setproductsbc(data);
                 for (const product of data.products) {
                     // Check if the 'images' key is present and not empty
                     if ('images' in product && product.images.length > 0) {
@@ -159,8 +158,6 @@ const AuthProvider = ({ children }) => {
                     }
                 }
                 setproductloading(false)
-                setproductsbc(data);
-
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -240,7 +237,6 @@ const AuthProvider = ({ children }) => {
 
 
         } catch (error) {
-            setproductloading(false)
             console.log(error)
         }
     }
