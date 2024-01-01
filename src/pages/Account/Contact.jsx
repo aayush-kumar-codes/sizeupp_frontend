@@ -58,6 +58,14 @@ const Contact = () => {
             }
             const data = await response.json()
             console.log(data)
+            setform({
+                firstname: '',
+                lastname: '',
+                email: '',
+                phone: '',
+                issue: '',
+                textarea: ''
+            })
 
             Swal.fire({
                 icon: 'success',
