@@ -239,14 +239,14 @@ setIsFilterOpen((prev) => ({
                     Products
                   </Link>
                 </li>
-                {search && <li>
+                {filterdata.search && <li>
                   <div className="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
 
                     <a href="#" className=" text-md text-c-gray-800 hover:font-bold ml-1">
-                      {search}
+                      {filterdata.search}
                     </a>
                   </div>
                 </li>}
