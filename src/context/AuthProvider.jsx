@@ -68,7 +68,9 @@ const AuthProvider = ({ children }) => {
         subcategory: [],
         sleeve: [],
         necktype: [],
-        search: []
+        price_lth : false,
+        price_htl : false,
+        search: ""
     })
     // Function to filter data based on multiple criteria
     // const funcFilter = (products, filter) => {

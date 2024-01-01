@@ -27,15 +27,15 @@ const ProductLayout2 = () => {
     let necktype = searchParams.getAll('necktype')
     let color = searchParams.getAll('color')
     let size = searchParams.getAll('size')
-    let search = searchParams.getAll('navsearch')
+    let search = searchParams.get('navsearch')
     let subsubcategory = searchParams.getAll('subcategory')
 
     console.log(subcategory)
 
-    if (category || subcategory || subsubcategory || fit || sleeve || necktype || color || size) {
+    if (category || search || subcategory || subsubcategory || fit || sleeve || necktype || color || size) {
       const updatedFilterData = {
         ...filterdata,
-        search: search !== null ? search : [],
+        search: search !== null ? search : "",
         subcategory: subsubcategory !== null ? subsubcategory : [],
         gender: category !== null ? category : [],
         color: color !== null ? color : [],
@@ -498,10 +498,10 @@ setIsFilterOpen((prev) => ({
                               className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                               value={item.name}
                               checked={
-                                filterdata.color?.includes(item.id)
+                                filterdata.color?.includes(item.name)
                               }
                               onChange={() => {
-                                handleChangeFilter(item.id, 'navsearch')
+                                handleChangeFilter(item.name, 'color')
                               }}
                             />
                             <label htmlFor={`${item.id}`} className="ml-3 text-sm font-medium text-gray-900">
@@ -561,7 +561,7 @@ setIsFilterOpen((prev) => ({
                                           false
                                 }
                                 onChange={(e) => {
-                                  handleChangeFilter(e)
+                                  handleChangeFilter(option.value, filter.id)
                                 }}
                               />
                               <label htmlFor={`${option.value}`} className="ml-3 text-sm font-medium text-gray-900">

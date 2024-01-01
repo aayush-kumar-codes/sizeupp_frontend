@@ -97,111 +97,42 @@ const Megamenu = () => {
                     </div>
                 ))} */}
 
-                {/* Man */}
-                <div className="group">
-
-                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                        Men
-                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                    </p>
-                    <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                        <div className={`hidden focus:hidden group-hover:grid grid-cols-3 gap-y-4 gap-x-10 justify-between absolute right-4 p-6 w-fit bg-secondary rounded-md drop-shadow-md`}>
-                            {/* <div className="col-span-1">
-                            <p className="text-base font-semibold">Men&apos;s Fashion Era</p>
-                            <p className="text-sm text-gray-500">New products</p>
-                            < img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            <Link to="/products">
-                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            </Link>
-                            <Link to="/terms-condition">
-                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
-                            </Link>
-                        </div> */}
-                            {data.men_category && data.men_category[0]?.subcategories.map((cat) => {
-                                return (
-                                    <div key={cat.id} className="col-span-1 ">
-                                        <h2 className="text-sm text-gray-800 font-semibold mb-2">{cat.name}</h2>
-                                        <ul className="grid grid-flow-row gap-2">
-                                            {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
-                                                return (
-                                                    <li onClick={() => handleSearch(items.name, 'Men', cat.name)} key={i} className="text-sm text-gray-800/80  hover:underline cursor-pointer">
-                                                        {items.name}
-                                                    </li>
-                                                )
-                                            })
-                                            }
-                                        </ul>
-                                    </div>)
-                            })
-                            }
-                            {/* <div className="col-span-1 ">
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Ethnic-Wear', 'Evening-Wear', 'Formal-Wear', 'Winter-Wear', 'Accessories'].map((items, i) => {
-                                    return (
-                                        <li key={i} className="text-base font-semibold hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div> */}
 
 
-                        </div>
-                    </div>
-                </div>
+                {data.categories && data.categories.map((gender, index) => {
+                    return (
+                        <div key={index} className="group">
 
-                {/* Woman */}
-                {<div className="group">
+                            <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
+                                {gender.name}
+                                <ChevronDownIcon className=" ml-2 w-4 font-bold" />
+                            </p>
+                            <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
+                                <div className={`hidden group-hover:grid grid-cols-${gender.subcategories.length/2} gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
 
-                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                        Women
-                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                    </p>
-                    <div className={`hidden ${megamenuhide ? 'hidden' : 'grid'} group-hover:grid grid-cols-2 gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
-                        {/* <div className="col-span-1">
-                            <p className="text-base font-semibold">Women&apos;s Fashion Era</p>
-                            <p className="text-sm text-gray-500">New products</p>
-                            < img src={WWhite1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            <Link to="/products">
-                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            </Link>
-                            <Link to="/terms-condition">
-                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
-                            </Link>
-                        </div> */}
-                        {data.women_category_data && data.women_category_data[0]?.subcategories.map((cat) => {
-                            return (
-                                <div key={cat.id} className="col-span-1 ">
-                                    <h2 className="text-sm text-gray-800 font-semibold mb-2">{cat.name}</h2>
-                                    <ul className="grid grid-flow-row gap-2">
-                                        {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((items, i) => {
-                                            return (
-                                                <li onClick={() => handleSearch(items.name, 'Women', cat.name)} key={i} className="text-sm text-gray-800/80 font-normal hover:underline cursor-pointer">
-                                                    {items.name}
-                                                </li>
-                                            )
-                                        })
-                                        }
-                                    </ul>
-                                </div>)
-                        })
-                        }
-                        {/* <div className="col-span-1 ">
-                            <ul className="grid grid-flow-row gap-4">
-                                {['Festive-Wear', 'Winter-Wear'].map((items, i) => {
-                                    return (
-                                        <li onClick={()=>handleSearch(items.name)} key={i} className="text-base font-semibold hover:underline cursor-pointer">
-                                            {items}
-                                        </li>
-                                    )
-                                })
-                                }
-                            </ul>
-                        </div> */}
-                    </div>
-                </div>}
+                                    {gender.subcategories && gender.subcategories.map((cat) => {
+                                        return (
+                                            <div key={cat.id} className="col-span-1 ">
+                                                <h2 className="text-sm text-gray-800 font-semibold mb-2">{cat.name}</h2>
+                                                <ul className="grid grid-flow-row gap-2">
+                                                    {cat.subsubcategories?.length > 0 && cat.subsubcategories?.map((subsubcat, i) => {
+                                                        return (
+                                                            <li onClick={() => handleSearch(subsubcat.id, gender.id, cat.id)} key={i} className="text-sm text-gray-800/80  hover:underline cursor-pointer">
+                                                                {subsubcat.name}
+                                                            </li>
+                                                        )
+                                                    })
+                                                    }
+                                                </ul>
+                                            </div>)
+                                    })
+                                    }
+
+                                </div>
+                            </div>
+                        </div>)
+                })}
+
 
                 {/* Festive Offers */}
                 {/* <div className="group">
