@@ -49,8 +49,7 @@ const AuthProvider = ({ children }) => {
         fetchProfileData()
     }, [])
 
-    //products 
-    const [products, setProducts] = useState([]); // [products, setProducts]
+    //products  // [products, setProducts]
     const [productsbc, setproductsbc] = useState([]);
     const [productloading, setproductloading] = useState(false)
     const [productcount, setproductcount] = useState(0)
@@ -117,7 +116,6 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-                setProducts(data);
 
                 setproductsbc(data);
                 for (const product of data.products) {
@@ -153,9 +151,7 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-                setProducts(data);
 
-                setproductsbc(data);
                 for (const product of data.products) {
                     // Check if the 'images' key is present and not empty
                     if ('images' in product && product.images.length > 0) {
@@ -163,6 +159,7 @@ const AuthProvider = ({ children }) => {
                     }
                 }
                 setproductloading(false)
+                setproductsbc(data);
 
             }
         } catch (error) {
@@ -172,13 +169,12 @@ const AuthProvider = ({ children }) => {
 
 
     const handlefetchProducts = async () => {
-
+        setproductloading(true)
         if (localStorage.token) {
+            
             fetchProductsAuth()
-            localStorage.setItem("count", localStorage.count + 1);
         } else {
             fetchProducts()
-            localStorage.setItem("count", localStorage.count + 1);
 
         }
     }

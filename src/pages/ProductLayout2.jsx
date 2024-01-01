@@ -11,7 +11,7 @@ const ProductLayout2 = () => {
   const [grid, setGrid] = useState(3)
   const [mgrid, setMGrid] = useState(2)
   const [sgrid, setSGrid] = useState(1)
-  const { isFilterActive, catlist, idToNameMap, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
+  const { isFilterActive, catlist, idToNameMap, setSearch, setIsFilterActive, handleFetchFilterProducts, handlefetchProducts, productcount, search } = useContext(AuthContext)
   const [filterActive, setFilterActive] = useState(false)
   const { filterdata, setfilterdata, category } = useContext(AuthContext)
   let [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +19,6 @@ const ProductLayout2 = () => {
 
 
   useEffect(() => {
-
     let category = searchParams.getAll('gender')
     let subcategory = searchParams.getAll('category')
     let fit = searchParams.getAll('fit')
@@ -77,6 +76,11 @@ const ProductLayout2 = () => {
 
   const handleChangeFilter = (filterValue, headName) => {
     const searchParams = new URLSearchParams(window.location.search);
+
+    if (searchParams.has('navsearch')) {
+      searchParams.delete('navsearch')
+      setSearch("")
+    }
 
     // If the head is 'gender', remove all subheaders
     if (headName === 'gender') {
@@ -188,15 +192,7 @@ const ProductLayout2 = () => {
     filterFields.forEach((fieldName) => {
       urlSearchParams.delete(fieldName);
     });
-    setfilterdata({
-      gender: [],
-      color: [],
-      size: [],
-      search: "",
-      category: [],
-    })
 
-    navigate('/products', { replace: true });
   };
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -319,7 +315,16 @@ setIsFilterOpen((prev) => ({
 
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-4">
             <div className="hidden space-y-6 divide-y lg:col-span-2 lg:block">
-              <div onClick={() => { handleClearFilter() }} className='cursor-pointer underline text-end w-full '>Clear Filter</div>
+              <Link to="/products" onClick={() => {
+                handleClearFilter();
+                setfilterdata({
+                  gender: [],
+                  color: [],
+                  size: [],
+                  search: "",
+                  category: [],
+                })
+              }} className='cursor-pointer underline flex justify-end w-full '>Clear Filter</Link>
 
 
               {/* Gender */}
