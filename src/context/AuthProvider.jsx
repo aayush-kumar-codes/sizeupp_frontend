@@ -102,6 +102,7 @@ const AuthProvider = ({ children }) => {
     const fetchProducts = async () => {
         try {
             setproductloading(true)
+            setproductcount(0)
             setproductsbc([])
             const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/all-products', {
                 method: 'GET',
@@ -162,7 +163,12 @@ const AuthProvider = ({ children }) => {
 
                 // } else {
                 setproductsbc(data);
-                setproductcount(data.length)
+                for (const product of data.products) {
+                    // Check if the 'images' key is present and not empty
+                    if ('images' in product && product.images.length > 0) {
+                        setproductcount((prev) => prev + 1)
+                    }
+                }
                 setproductloading(false)
 
                 // }
@@ -265,12 +271,13 @@ const AuthProvider = ({ children }) => {
 
 
     // filter sub handlers
-    const handleFetchFilterProducts = async (filterData,signal) => {
+    const handleFetchFilterProducts = async (filterData, signal) => {
         try {
             setproductloading(true)
+            setproductcount(0)
             console.warn("fetching filter products", filterData)
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
-                signal:signal,
+                signal: signal,
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -294,7 +301,12 @@ const AuthProvider = ({ children }) => {
             }
             setproductloading(false)
             setproductsbc(data.products)
-            setproductcount(data.length)
+            for (const product of data.products) {
+                // Check if the 'images' key is present and not empty
+                if ('images' in product && product.images.length > 0) {
+                    setproductcount((prev) => prev + 1)
+                }
+            }
 
         } catch (error) {
             setproductloading(false)
@@ -348,14 +360,14 @@ const AuthProvider = ({ children }) => {
 
     function mapIdsToNames(data) {
         const idToNameMap = {};
-    
+
         function mapCategory(category) {
             idToNameMap[category.id] = category.name;
-    
+
             if (category.subcategories) {
                 category.subcategories.forEach((subcategory) => {
                     idToNameMap[subcategory.id] = subcategory.name;
-    
+
                     if (subcategory.subsubcategories) {
                         subcategory.subsubcategories.forEach((subsubcategory) => {
                             idToNameMap[subsubcategory.id] = subsubcategory.name;
@@ -364,44 +376,44 @@ const AuthProvider = ({ children }) => {
                 });
             }
         }
-    
+
         if (data && data.categories) {
             data.categories.forEach(mapCategory);
         }
-    
+
         if (data && data.colorfamily) {
             data.colorfamily.forEach((color) => {
                 idToNameMap[color.id] = color.name;
             });
         }
-    
+
         return idToNameMap;
     }
-    
+
     const catListFromLocalStorage = localStorage.getItem('cat_list');
     const parsedCatList = catListFromLocalStorage ? JSON.parse(catListFromLocalStorage) : null;
     const idToNameMap = mapIdsToNames(parsedCatList);
 
-    const [catlist,setcatlist] = useState([])
+    const [catlist, setcatlist] = useState([])
 
 
-    const fetchCategory = async()=>{
-        try{
-            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/category-details',{
-                method:'GET',
-                headers:{
+    const fetchCategory = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/category-details', {
+                method: 'GET',
+                headers: {
                     'Content-type': 'application/json'
                 }
             })
 
-            if(!res.ok){
+            if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json()
-            localStorage.setItem('cat_list',JSON.stringify(data))
+            localStorage.setItem('cat_list', JSON.stringify(data))
             setcatlist(data)
-    
-        }catch(err){
+
+        } catch (err) {
             console.log(err)
         }
     }

@@ -385,7 +385,7 @@ setIsFilterOpen((prev) => ({
                   <ul className="mt-2">
                     {catlist && catlist.categories?.map((item) => (
                       item.subcategories?.map((subitem) => {
-                        if (!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id)) {
+                        if ((!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id))) {
                           return null
                         }
                         return (
