@@ -10,7 +10,7 @@ export default function ShopNow() {
         <Layout 
           Text="Latest Men's Collection"
                 Image={banner7}
-                smImg={mobile4}
+                smImg={mobile5}
                 Orientation={false}
                 href={`/products?gender=Men`}
         />
@@ -24,7 +24,7 @@ export default function ShopNow() {
         <Layout 
           Text="Latest Ethnic Wears"
                 Image={banner6}
-                smImg={mobile5}
+                smImg={mobile4}
                 Orientation={false}
                 href={`/products?navsearch=Kurta`}
         />
@@ -59,12 +59,12 @@ const Layout = ({ Text, Image,smImg, Orientation,href }) => {
           
         `}>
             <div className='w-full h-full absolute top-0 left-0'>
-                <img src={Image} className={`hidden lg:block w-full h-full object-cover ${SetImageOrientation()}`} alt="" />
+                <img src={Image} className={`hidden md:block w-full h-full object-cover ${SetImageOrientation()}`} alt="" />
                 <img src={smImg} className={`md:hidden block w-full h-full object-cover ${SetImageOrientation()}`} alt="" />
 
             </div>
-            <div className='w-2/3 h-full flex flex-col justify-center items-center text-center z-10 gap-10 p-16 sm:p-2'>
-                <h1 className="font-normal lg:text-5xl capitalize font-serif text-white text-5xl">{Text}</h1>
+            <div className='w-2/3 h-full flex flex-col md:justify-center justify-between items-center text-center z-10 gap-10 lg:p-0 py-16'>
+                <h1 className="font-normal lg:text-[3.8rem] capitalize font-serif text-white text-4xl">{Text}</h1>
                 <Link to={href}>
                 <button className="border-2 border-white text-white text-lg p-2">Shop Now</button>
 
