@@ -345,7 +345,7 @@ export function ProductCart() {
                     <h1 className="text-base font-bold tracking-tight text-c-gray-900 sm:text-2xl">
                         Shopping Cart
                     </h1>
-                    <button onClick={()=>{navigate('/products')}} className='animate-pulse rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'>
+                    <button onClick={()=>{navigate('/products')}} className='animate-pulse rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'>
                         Continue Shopping
                     </button>
                 </div>
