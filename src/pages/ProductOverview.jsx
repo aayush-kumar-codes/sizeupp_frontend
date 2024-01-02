@@ -1146,7 +1146,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?gender=${demo.product?.category.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.category.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-12 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :demo.product?.category.name}
               </Link>
             </div>
           </li>
@@ -1157,7 +1160,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?category=${demo.product?.subcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.subcategory.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :demo.product?.subcategory.name}
               </Link>
             </div>
           </li>
@@ -1168,7 +1174,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?subcategory=${demo.product?.subsubcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.subsubcategory.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :demo.product?.subsubcategory.name}
               </Link>
             </div>
           </li>
@@ -1178,7 +1187,11 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
               <span className="ml-1 text-xs md:text-base font-medium text-c-gray-800 md:ml-2">
-                {demo.product?.name}
+                {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :
+                  demo.product?.name}
               </span>
             </div>
           </li>
@@ -1196,7 +1209,11 @@ const ProductOverview = () => {
           <div className="mb-7 border-b border-c-gray-300 pb-2">
             <div className="flex justify-between items-center ">
               <p className=" mb-3.5 font-bold " style={{ fontSize: '1.3rem' }}>
-                {demo.product?.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-8 w-48 shrink-0 overflow-hidden rounded-md border"></div>
+                  </div> :
+                  demo.product?.name}
               </p>
               <div className="flex items-center gap-3">
                 <button className="hover:scale-110">
@@ -1309,8 +1326,11 @@ const ProductOverview = () => {
               </div>
             </div>
             <div className="mb-4 ">
-              <h3 className="text-heading mb-2.5 text-sm font-semibold capitalize md:text-lg">
-                color : {demo.product?.color}
+              <h3 className="text-heading mb-2.5 text-sm font-semibold capitalize md:text-lg flex">
+                color : {overviewloading ?
+                  <div className="animate-pulse flex">
+                  <div className="bg-gray-400 h-6 w-24 shrink-0 overflow-hidden rounded-md border mx-2"></div>
+                  </div> :demo.product?.color}
               </h3>
               {demo.product?.model_size}
             </div>
