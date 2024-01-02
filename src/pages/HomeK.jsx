@@ -108,7 +108,7 @@ const Megamenu = () => {
                                 <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                             </p>
                             <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                                <div className={`hidden group-hover:grid grid-cols-${gender.subcategories.length/2} gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
+                                <div className={`hidden group-hover:grid grid-cols-${gender.subcategories.length / 2} gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
 
                                     {gender.subcategories && gender.subcategories.map((cat) => {
                                         return (
@@ -489,6 +489,12 @@ function Navbar() {
     }, [])
 
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/products?navsearch=${search}`) 
+    }
+
+
     return (
         // container
         <div className={colorNav ? `px-10 text-white w-full sticky top-0 z-50` : `px-10 text-white w-full absolute top-0 z-50`}>
@@ -503,12 +509,12 @@ function Navbar() {
                 </div>
 
                 <div className="lg:flex hidden justify-end items-end w-2/5">
-                    <div className="flex rounded-full border focus-within:border-gray-300 px-6">
-                        <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full  focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-2" name="search" />
-                        <button type="button" onClick={() => { handlefetchProducts(); navigate(`/products?navsearch=${search}`) }} className="flex flex-row items-center justify-center px-2 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent my-1 h-[30px] -mr-3" >
+                    <form onSubmit={handleSubmit} className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
+                        <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search" />
+                        <button type="submit" className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
                             <MagnifyingGlassIcon className="h-4 w-4 text-white " />
                         </button>
-                    </div>
+                    </form>
                 </div>
 
 
