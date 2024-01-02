@@ -441,7 +441,8 @@ const PincodeForm = () => {
           title: 'Error!',
           text: data.data?.response?.message,
           icon: 'error',
-          confirmButtonText: 'OK'
+          showConfirmButton: false,
+          timer: 1200
         });
       }
 
@@ -451,6 +452,8 @@ const PincodeForm = () => {
         title: 'Success!',
         text: data.data?.response?.message,
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1200
       })
     }
     catch (error) {
@@ -459,7 +462,8 @@ const PincodeForm = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1200
       });
     }
   }
@@ -484,6 +488,8 @@ const PincodeForm = () => {
         title: 'Success!',
         text: 'Pincode Added',
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1200
       })
     }
     catch (error) {
@@ -492,7 +498,8 @@ const PincodeForm = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1200
       });
     }
   }
@@ -896,6 +903,8 @@ const ProductOverview = () => {
         title: 'Success!',
         text: 'Product Added to Wishlist',
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1200
       })
     }
     catch (error) {
@@ -904,7 +913,8 @@ const ProductOverview = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1200
       });
     }
   }
@@ -931,6 +941,8 @@ const ProductOverview = () => {
         title: 'Success!',
         text: 'Product Removed from Wishlist',
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1200
       })
     }
     catch (error) {
@@ -939,7 +951,8 @@ const ProductOverview = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1200
       });
     }
   }
@@ -1028,9 +1041,9 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
 
-              <a href={`/products?`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
+              <Link to={`/products?gender=${demo.product?.category.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
                 {demo.product?.category.name}
-              </a>
+              </Link>
             </div>
           </li>
           <li>
@@ -1039,9 +1052,9 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
 
-              <a href={`/products?`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
+              <Link to={`/products?category=${demo.product?.subcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
                 {demo.product?.subcategory.name}
-              </a>
+              </Link>
             </div>
           </li>
           <li>
@@ -1050,9 +1063,9 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
 
-              <a href={`/products?`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
+              <Link to={`/products?subcategory=${demo.product?.subsubcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
                 {demo.product?.subsubcategory.name}
-              </a>
+              </Link>
             </div>
           </li>
           <li aria-current="page">
@@ -1060,7 +1073,7 @@ const ProductOverview = () => {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
-              <span className="ml-1 text-xs md:text-base font-medium text-c-gray-800 hover:underline md:ml-2">
+              <span className="ml-1 text-xs md:text-base font-medium text-c-gray-800 md:ml-2">
                 {demo.product?.name}
               </span>
             </div>

@@ -38,6 +38,17 @@ const Otp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(otp)
+        if(otp[1] == "" || otp[2] == "" || otp[3] == "" || otp[4] == ""){
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill all the fields',
+                showConfirmButton: false,
+                timer: 1200
+                
+            })
+        }
+        
         const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
             method: 'POST',
             headers: {
@@ -53,7 +64,8 @@ const Otp = () => {
                 icon: 'error',
                 title: 'Oops...',
                 text: data.message,
-                confirmButtonText: 'Cool',
+                showConfirmButton: false,
+                timer: 1200
                 
             })
         }

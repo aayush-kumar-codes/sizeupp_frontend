@@ -102,7 +102,8 @@ export function ProductCart() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -134,7 +135,8 @@ export function ProductCart() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -167,7 +169,8 @@ export function ProductCart() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -319,7 +322,8 @@ export function ProductCart() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
