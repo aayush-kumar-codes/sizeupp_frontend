@@ -310,7 +310,6 @@ export function Navbar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handlefetchProducts();
         navigate(`/products?navsearch=${search}`) 
     }
 
