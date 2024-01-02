@@ -83,7 +83,7 @@ const TrackOrderPage = () => {
                                 className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
                                 2
                             </span>
-                            <h2 className="text-lg font-medium ">In Preparation</h2>
+                            <h2 className="text-lg font-medium ">Packed</h2>
                         </div>
                     </div>
                     <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 md:mb-0">
@@ -97,7 +97,7 @@ const TrackOrderPage = () => {
                                 className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
                                 3
                             </span>
-                            <h2 className="text-lg font-medium ">Shipping</h2>
+                            <h2 className="text-lg font-medium ">Shipped</h2>
                         </div>
                     </div>
                     <div className="relative w-full px-4 md:w-1/2 lg:w-1/4">
