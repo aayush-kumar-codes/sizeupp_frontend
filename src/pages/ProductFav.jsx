@@ -36,7 +36,8 @@ export const ProductFav = () => {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -69,7 +70,8 @@ export const ProductFav = () => {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -117,15 +119,7 @@ export const ProductFav = () => {
         if (localStorage.token) {
             fetchData()
         }
-        else {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please login to view your wishlist.',
-                icon: 'error',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        }
+       
     }, [])
 
     return (

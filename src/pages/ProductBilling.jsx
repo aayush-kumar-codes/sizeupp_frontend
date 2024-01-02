@@ -71,7 +71,8 @@ export function ProductBilling() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -111,7 +112,8 @@ export function ProductBilling() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -212,7 +214,8 @@ export function ProductBilling() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -289,7 +292,8 @@ export function ProductBilling() {
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }

@@ -117,6 +117,8 @@ const ProductList = ({
                     title: 'Success!',
                     text: 'Product Updated in Cart',
                     icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1200
                 })
             }
             console.log(data);
@@ -125,6 +127,8 @@ const ProductList = ({
                 title: 'Success!',
                 text: 'Product Updated in Cart',
                 icon: 'success',
+                showConfirmButton: false,
+                timer: 1200
             })
 
         } catch (error) {
@@ -133,6 +137,8 @@ const ProductList = ({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -162,6 +168,8 @@ const ProductList = ({
                 title: 'Success!',
                 text: 'Product Added to Wishlist',
                 icon: 'success',
+                showConfirmButton: false,
+                timer: 1200
             })
         }
         catch (error) {
@@ -170,6 +178,8 @@ const ProductList = ({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }
@@ -196,6 +206,8 @@ const ProductList = ({
                 title: 'Success!',
                 text: 'Product Removed from Wishlist',
                 icon: 'success',
+                showConfirmButton: false,
+                timer: 1200
             })
         }
         catch (error) {
@@ -204,7 +216,8 @@ const ProductList = ({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
                 icon: 'error',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 1200
             });
         }
     }

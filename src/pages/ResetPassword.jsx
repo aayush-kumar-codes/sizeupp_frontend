@@ -36,7 +36,9 @@ const ResetPassword = () => {
             Swal.fire({
                 icon: "success",
                 title: "Success",
-                text: data.message
+                text: data.message,
+                showConfirmButton: false,
+                timer: 1200
             })
 
             navigate("/login")
@@ -70,7 +72,7 @@ const ResetPassword = () => {
         confirm_password: ""
     })
 
-   
+
 
     return (
         <>
@@ -119,7 +121,7 @@ const ResetPassword = () => {
                                         <div className="flex flex-col space-y-5">
                                             <div className="flex flex-row items-center justify-center space-x-1 text-center text-sm font-medium text-gray-500">
                                                 <p> Didnt recieve code?</p>
-                                                <div onClick={()=>navigate('/forgot')} className="cursor-pointer flex flex-row items-center text-blue-600" href="/otp" rel="noopener noreferrer">Resend</div>
+                                                <div onClick={() => navigate('/forgot')} className="cursor-pointer flex flex-row items-center text-blue-600" href="/otp" rel="noopener noreferrer">Resend</div>
                                             </div>
                                         </div>
                                     </div>

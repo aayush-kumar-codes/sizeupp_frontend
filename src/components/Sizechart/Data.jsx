@@ -1,91 +1,92 @@
-import { CasualBottom_boxer, CasualBottom_chinos, CasualBottom_jeans_regular, CasualBottom_jeans_slim, CasualBottom_jeans_anti,
-    CasualBottom_joggers_men, CasualBottom_knittedShorts, CasualBottom_pajama_men, CasualBottom_trackpants_men,
-    
-    CasualTopwear_casualShirt, CasualTopwear_sweatshirt_men, CasualTopwear_tshirt_men, CasualTopwear_waistcoat_men,
-    EthnicWear_kurta, EveningWear_casualshirt,FormalWear_formalShirt,FormalWear_formalTrouser,
-    WomenBottomwear_cm,WomenBottomwear_inch,WomenTopwear_cm,WomenTopwear_inch } from "../../assets/sizechart"
+import { CasualBottomwear_boxer,CasualBottomwear_chinos,CasualBottomwear_jeans,CasualBottomwear_joggers,CasualBottomwear_knittedshorts,CasualBottomwear_pajama,CasualBottomwear_trackpants,
+  Eveningwear_shirt,
+  CasualTopwear_casualshirt,CasualTopwear_sweatshirt,CasualTopwear_tshirt,CasualTopwear_waistcoat,
+  Ethnicwear_kurta,
+  Formalwear_shirt,Formalwear_trousers,
+
+  bottom_cm,bottom_inch,top_cm,top_inches } from "../../assets/sizechart"
 
 export const Images = [
       {
         name : 'Casual Shirts',
-        url: CasualTopwear_casualShirt
+        url: CasualTopwear_casualshirt
   },
   {
     name: 'T-Shirts',
-    url:CasualTopwear_tshirt_men,
+    url:CasualTopwear_tshirt,
   },
   {
     name: 'Core Tee',
-    url:CasualTopwear_tshirt_men,
+    url:CasualTopwear_tshirt,
   },
   {
     name: 'Polo T-Shirts',
-    url:CasualTopwear_tshirt_men,
+    url:CasualTopwear_tshirt,
   },
   {
     name: 'Evening wear Shirts',
-    url:EveningWear_casualshirt,
+    url:CasualTopwear_casualshirt,
   },
   {
     name: 'Ethnic Kurta',
-    url:EthnicWear_kurta,
+    url:Ethnicwear_kurta,
   },
   {
     name: 'Sweatshirts',
-    url:CasualTopwear_sweatshirt_men
+    url:CasualTopwear_sweatshirt
   },
   {
     name: 'Formal Shirts',
-    url:FormalWear_formalShirt,
+    url:Formalwear_shirt,
 },
   {
     name: 'Formal Trouser',
-    url:FormalWear_formalTrouser,
+    url:Formalwear_trousers,
   },
   {
     name: 'Joggers',
-    url:CasualBottom_joggers_men
+    url:CasualBottomwear_joggers
   },
   {
     name: 'Track Pants',
-    url:CasualBottom_trackpants_men
+    url:CasualBottomwear_trackpants
   },
   {
     name: 'Pyjama',
-    url:CasualBottom_pajama_men
+    url:CasualBottomwear_pajama
   },
   {
     name: 'Waist Coat',
-    url:CasualTopwear_waistcoat_men
+    url:CasualTopwear_waistcoat
   },
   {
     name: 'Jeans',
-    url:CasualBottom_jeans_regular
+    url:CasualBottomwear_jeans
   },
   {
     name : 'Chino',
-    url: CasualBottom_chinos
+    url: CasualBottomwear_chinos
   },
   {
     name: 'Boxers',
-    url: CasualBottom_boxer
+    url: CasualBottomwear_boxer
   },
   {
     name: 'Women Topwear',
-    url:[WomenTopwear_cm,WomenTopwear_inch]
+    url:[top_cm,top_inches]
   },
   {
     name: 'Women Bottomwear',
-    url:[WomenBottomwear_cm,WomenBottomwear_inch]
+    url:[bottom_cm,bottom_inch]
     
   },
   {
     name : 'Festive Wear',
-    url : [WomenBottomwear_cm,WomenBottomwear_inch]
+    url : [bottom_cm,bottom_inch]
   },
   {
     name : 'Winter Wear',
-    url : [CasualTopwear_sweatshirt_men]
+    url : [CasualTopwear_sweatshirt]
   }
 ]
 
