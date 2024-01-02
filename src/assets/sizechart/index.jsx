@@ -1,35 +1,35 @@
-import CasualBottom_boxer from './men/Casual Bottomwear/boxer_men.jpg'
-import CasualBottom_chinos from './men/Casual Bottomwear/chinos_men.jpg'
-import CasualBottom_jeans_regular from './men/Casual Bottomwear/jeans_men.jpg'
-import CasualBottom_jeans_slim from './men/Casual Bottomwear/jeans_men_slim.jpg'
-import CasualBottom_jeans_anti from './men/Casual Bottomwear/jeans_men_anti.jpg'
-import CasualBottom_joggers_men from './men/Casual Bottomwear/joggers_men.jpg'
-import CasualBottom_knittedShorts from './men/Casual Bottomwear/knittedShorts_men.jpg'
-import CasualBottom_pajama_men from './men/Casual Bottomwear/pajama_men.jpg'
-import CasualBottom_trackpants_men from './men/Casual Bottomwear/trackpants_men.jpg'
-// 
-import CasualTopwear_casualShirt from './men/Casual Topwear/casualShirt_men.jpg'
-import CasualTopwear_sweatshirt_men from './men/Casual Topwear/sweatshirt_men.jpg'
-import CasualTopwear_tshirt_men from './men/Casual Topwear/Tshirt_men.jpg'
-import CasualTopwear_waistcoat_men from './men/Casual Topwear/waistcoat_men.jpg'
-// 
-import EthnicWear_kurta from './men/Ethnic Wear/kurta_men.jpg'
-// 
-import EveningWear_casualshirt from './men/Evening wear/casualShirt_men.jpg'
-// 
-import FormalWear_formalShirt from './men/Formal wear/formalShirt_men.jpg'
-import FormalWear_formalTrouser from './men/Formal wear/formalTrouser_men.jpg'
-// 
-import WomenBottomwear_cm from './women/bottomwear_cm_women.jpg'
-import WomenBottomwear_inch from './women/bottomwear_inches_women.jpg'
-import WomenTopwear_cm from './women/topwear_women_cm.jpg'
-import WomenTopwear_inch from './women/topwear_women_inches.jpg'
+import CasualBottomwear_boxer from './men/Casual Bottomwear/boxermen.jpeg'
+import CasualBottomwear_chinos from './men/Casual Bottomwear/chinosmen.jpeg'
+import CasualBottomwear_jeans from './men/Casual Bottomwear/jeansmen.jpeg'
+import CasualBottomwear_joggers from './men/Casual Bottomwear/joggersmen.jpeg'
+import CasualBottomwear_knittedshorts from './men/Casual Bottomwear/knittedshortsmen.jpeg'
+import CasualBottomwear_pajama from './men/Casual Bottomwear/pajamamen.jpeg'
+import CasualBottomwear_trackpants from './men/Casual Bottomwear/trackpantsmen.jpeg'
+
+import Eveningwear_shirt from './men/Evening wear/casualshirt.jpeg'
+
+import CasualTopwear_casualshirt from './men/Casual Topwear/casualshirt.jpeg'
+import CasualTopwear_sweatshirt from './men/Casual Topwear/sweatshirtmen.jpeg'
+import CasualTopwear_tshirt from './men/Casual Topwear/tshirtmen.jpeg'
+import CasualTopwear_waistcoat from './men/Casual Topwear/waistcoatmen.jpeg'
+
+import Ethnicwear_kurta from './men/Ethnic Wear/kurtamen.jpeg'
+
+import Formalwear_shirt from './men/Formal wear/formalshirt.jpeg'
+import Formalwear_trousers from './men/Formal wear/formaltrouser.jpeg'
+
+import bottom_cm from './women/bottom_cm.jpeg'
+import bottom_inch from './women/bottom_inches.jpeg'
+import top_cm from './women/top_cm.jpeg'
+import top_inches from './women/top_inches.jpeg'
 
 export {
-    CasualBottom_boxer, CasualBottom_chinos, CasualBottom_jeans_regular, CasualBottom_jeans_slim, CasualBottom_jeans_anti,
-    CasualBottom_joggers_men, CasualBottom_knittedShorts, CasualBottom_pajama_men, CasualBottom_trackpants_men,
-    
-    CasualTopwear_casualShirt, CasualTopwear_sweatshirt_men, CasualTopwear_tshirt_men, CasualTopwear_waistcoat_men,
-    EthnicWear_kurta, EveningWear_casualshirt,FormalWear_formalShirt,FormalWear_formalTrouser,
-    WomenBottomwear_cm,WomenBottomwear_inch,WomenTopwear_cm,WomenTopwear_inch
+    CasualBottomwear_boxer,CasualBottomwear_chinos,CasualBottomwear_jeans,CasualBottomwear_joggers,CasualBottomwear_knittedshorts,CasualBottomwear_pajama,CasualBottomwear_trackpants,
+    Eveningwear_shirt,
+    CasualTopwear_casualshirt,CasualTopwear_sweatshirt,CasualTopwear_tshirt,CasualTopwear_waistcoat,
+    Ethnicwear_kurta,
+    Formalwear_shirt,Formalwear_trousers,
+
+    bottom_cm,bottom_inch,top_cm,top_inches
+
 }
