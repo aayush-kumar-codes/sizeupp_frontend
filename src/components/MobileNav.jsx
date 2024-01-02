@@ -24,11 +24,14 @@ const ScrollButton = () =>{
            in place of 'smooth' */
       }); 
     }; 
-    
+    const isMobileView = window.innerWidth <= 640;
+
     window.addEventListener('scroll', toggleVisible); 
     
     return ( 
-      <button className="bg-orange-800 fixed bottom-16 rounded-full right-2 z-50" onClick={scrollToTop} style={{display: visible ? 'inline' : 'none'}} > 
+      <button className={`bg-orange-800 fixed bottom-16 rounded-full right-2 z-50 ${
+        isMobileView ? 'block' : 'hidden ' // Show in mobile view, hide in desktop view
+      }`} onClick={scrollToTop} style={{display: visible ? 'inline' : 'none'}} > 
        <ChevronUpIcon className='h-8 w-8 p-1 text-white' 
         /> 
       </button> 
@@ -37,7 +40,7 @@ const ScrollButton = () =>{
 const MobileNav = () => {
   return (
     <>
-    <ScrollButton/>
+    {/* <ScrollButton/> */}
 
 {/* <!-- fixed nav --> */}
     <div className="md:hidden z-50 fixed bottom-0 inset-x-0 bg-yellow-300 flex justify-between text-xs  uppercase font-mono">
