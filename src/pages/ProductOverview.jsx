@@ -11,7 +11,7 @@ import { LinkIcon } from "@heroicons/react/20/solid";
 import RelatedProducts from "../components/ProductOverview/RelatedProducts";
 import ReviewProduct from "../components/ProductOverview/ReviewProduct";
 import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOverviewCar";
-import { CasualBottom_boxer } from "../assets/sizechart";
+
 import { Images } from "../components/Sizechart/Data";
 
 export const Modal = ({ children, onClose }) => {
@@ -1246,7 +1246,7 @@ const ProductOverview = () => {
 
                             </button>
                           </li>
-                          <li className="hover:bg-gray-200/30 pl-2">
+                          {/* <li className="hover:bg-gray-200/30 pl-2">
                             <button onClick={shareInstagram} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('instagram', '#E91E63')}
                               onMouseLeave={() => handleIconHover('instagram', '#212121')}
@@ -1260,7 +1260,7 @@ const ProductOverview = () => {
                               </span>
 
                             </button>
-                          </li>
+                          </li> */}
                           <li className="hover:bg-gray-200/30 pl-2">
                             <button onClick={shareWhatsApp} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('whatsapp', 'green')}
