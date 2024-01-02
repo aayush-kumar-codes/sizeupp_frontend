@@ -340,9 +340,15 @@ export function ProductCart() {
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-                <h1 className="text-base font-bold tracking-tight text-c-gray-900 sm:text-2xl">
-                    Shopping Cart
-                </h1>
+                <div className='flex justify-between items-center'>
+
+                    <h1 className="text-base font-bold tracking-tight text-c-gray-900 sm:text-2xl">
+                        Shopping Cart
+                    </h1>
+                    <button onClick={()=>{navigate('/products')}} className='animate-pulse rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'>
+                        Continue Shopping
+                    </button>
+                </div>
 
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-y-4 lg:gap-x-12 xl:gap-x-16">
                     <section className=' lg:col-span-8'>
