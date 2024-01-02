@@ -47,7 +47,7 @@ const products = [
 export function ProductCart() {
     const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
-    const { couponcode, setcouponcode,fetchCart,cart,setCart } = useContext(AuthContext)
+    const { couponcode, setcouponcode, fetchCart, cart, setCart } = useContext(AuthContext)
     const [pincode, setPincode] = useState('')
 
     const updateCart = (id, sqpActive, count) => {
@@ -107,7 +107,7 @@ export function ProductCart() {
         }
     }
 
-    
+
 
     const handleRemoveCart = async (id) => {
         try {
@@ -325,11 +325,11 @@ export function ProductCart() {
     }
 
     const [AlertModal, SetAlertModal] = useState(false)
-    
+
     const handleDeleteAlert = () => {
         SetAlertModal(true);
     }
-   
+
     const handleDeleteClose = () => {
         SetAlertModal(false);
     }
@@ -342,7 +342,7 @@ export function ProductCart() {
 
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-y-4 lg:gap-x-12 xl:gap-x-16">
                     <section className=' lg:col-span-8'>
-                        {(profile.addresses?.length > 0 && !changeAdr ) ?
+                        {(profile.addresses?.length > 0 && !changeAdr) ?
                             <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
                                 <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
                                     Delivery & Services :
@@ -477,7 +477,7 @@ export function ProductCart() {
                                     <button type="button" onClick={handleAddAddress} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                         Save
                                     </button>
-                                    <button type="button" onClick={()=>{setChangeAdr(false)}} className="rounded-lg bg-red-500 text-white px-4 py-2">
+                                    <button type="button" onClick={() => { setChangeAdr(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2">
                                         Close
                                     </button>
                                 </div>
@@ -498,7 +498,7 @@ export function ProductCart() {
                                     <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
                                         <div className='col-span-1'>
                                             <img
-                                                onClick={()=>{navigate(`/products/${info.product?.id}`)}}
+                                                onClick={() => { navigate(`/products/${info.product?.id}`) }}
                                                 src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                                 alt={info.product?.name}
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
@@ -581,7 +581,7 @@ export function ProductCart() {
                                             </button>
 
                                         </div>
-                                            {/* {AlertModal &&
+                                        {/* {AlertModal &&
                                             
                                                 <div  className="absolute top-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                                                                 <div className=" p-4 w-full max-w-md h-full md:h-auto">
@@ -703,65 +703,13 @@ export function ProductCart() {
                         </section>
                     </section>
 
+
+
                     {/* Price Detaiks */}
                     <section
                         aria-labelledby="summary-heading"
-                        className="mt-16 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-0"
+                        className="bg-white lg:col-span-4 lg:mt-0"
                     >
-                        <h2
-                            id="summary-heading"
-                            className=" border-b border-c-gray-200 px-4 py-3 text-lg font-medium text-c-gray-900 sm:p-4"
-                        >
-                            Price Details
-                        </h2>
-                        <div>
-                            <dl className=" space-y-1 px-2 py-4">
-                                <div className="flex items-center justify-between">
-                                    <dt className="text-sm text-c-gray-800">Price </dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.mrp_price || 0}</dd>
-                                </div>
-                                <div className="flex items-center justify-between pt-4">
-                                    <dt className="flex items-center text-sm text-c-gray-800">
-                                        <span>Coupon Discount</span>
-                                    </dt>
-                                    <dd className="text-sm font-medium text-green-700">- ₹ {cart.cupon_discount ? cart.cupon_discount : 0}</dd>
-                                </div>
-                                <div className="flex items-center justify-between pt-4">
-                                    <dt className="flex items-center text-sm text-c-gray-800">
-                                        <span>Discount on MRP</span>
-                                    </dt>
-                                    <dd className="text-sm font-medium text-green-700">- ₹ {cart.discount_on_price || 0}</dd>
-                                </div>
-
-                                <div className="flex items-center justify-between border-b border-dashed py-4 ">
-                                    <dt className="text-sm font-medium text-c-gray-900">Sub Total</dt>
-                                    <dd className="text-sm font-medium text-c-gray-900">₹ {cart.sub_total || 0}</dd>
-                                </div>
-                                {<div className="flex items-center justify-between py-4">
-                                    <dt className="flex text-sm text-c-gray-800">
-                                        <span>Delivery Charges</span>
-                                    </dt>
-                                    <dd className="text-sm font-medium text-green-700">FREE</dd>
-                                </div>}
-
-                                <div className="flex items-center justify-between border-b border-dashed py-4 ">
-                                    <dt className="text-sm font-medium text-c-gray-900">Total Price</dt>
-                                    <dd className="text-base font-semibold text-c-gray-900">₹ {cart.total_price || 0}</dd>
-                                </div>
-                            </dl>
-                            {cart.sub_sub_total ? <div className="px-2 pb-4 font-medium text-green-700">
-                                You will save ₹ {parseInt(cart.cupon_discount)} on this order
-                            </div> : null}
-                            <button
-                                type="button"
-                                onClick={() => { navigate('/products/billing') }}
-                                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                            >
-                                Proceed
-                            </button>
-
-
-                        </div>
                         {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                             <form action="#" className="mt-6">
                                 <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
@@ -791,6 +739,63 @@ export function ProductCart() {
                                 <div className='text-base text-center font-semibold'>You Saved ₹ {parseInt(cart.cupon_discount)}</div>
                             </section>
                         }
+                        <div className="shadow-md rounded-lg mt-8 px-4 py-3">
+                            <h2
+                                id="summary-heading"
+                                className=" border-b border-c-gray-200 px-4 py-3 text-lg font-medium text-c-gray-900 sm:p-4"
+                            >
+                                Price Details
+                            </h2>
+                            <div>
+                                <dl className=" space-y-1 px-2 py-4">
+                                    <div className="flex items-center justify-between">
+                                        <dt className="text-sm text-c-gray-800">Price </dt>
+                                        <dd className="text-sm font-medium text-c-gray-900">₹ {cart.mrp_price || 0}</dd>
+                                    </div>
+                                    <div className="flex items-center justify-between pt-4">
+                                        <dt className="flex items-center text-sm text-c-gray-800">
+                                            <span>Coupon Discount</span>
+                                        </dt>
+                                        <dd className="text-sm font-medium text-green-700">- ₹ {cart.cupon_discount ? cart.cupon_discount : 0}</dd>
+                                    </div>
+                                    <div className="flex items-center justify-between pt-4">
+                                        <dt className="flex items-center text-sm text-c-gray-800">
+                                            <span>Discount on MRP</span>
+                                        </dt>
+                                        <dd className="text-sm font-medium text-green-700">- ₹ {cart.discount_on_price || 0}</dd>
+                                    </div>
+
+                                    <div className="flex items-center justify-between border-b border-dashed py-4 ">
+                                        <dt className="text-sm font-medium text-c-gray-900">Sub Total</dt>
+                                        <dd className="text-sm font-medium text-c-gray-900">₹ {cart.sub_total || 0}</dd>
+                                    </div>
+                                    {<div className="flex items-center justify-between py-4">
+                                        <dt className="flex text-sm text-c-gray-800">
+                                            <span>Delivery Charges</span>
+                                        </dt>
+                                        <dd className="text-sm font-medium text-green-700">FREE</dd>
+                                    </div>}
+
+                                    <div className="flex items-center justify-between border-b border-dashed py-4 ">
+                                        <dt className="text-sm font-medium text-c-gray-900">Total Price</dt>
+                                        <dd className="text-base font-semibold text-c-gray-900">₹ {cart.total_price || 0}</dd>
+                                    </div>
+                                </dl>
+                                {cart.sub_sub_total ? <div className="px-2 pb-4 font-medium text-green-700">
+                                    You will save ₹ {parseInt(cart.cupon_discount)} on this order
+                                </div> : null}
+                                <button
+                                    type="button"
+                                    onClick={() => { navigate('/products/billing') }}
+                                    className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                >
+                                    Proceed
+                                </button>
+
+
+                            </div>
+                        </div>
+
                     </section>
 
 
