@@ -38,6 +38,7 @@ import CancellationPolicy from "./constants/CancellationPolicy"
 import ProductLayout from "./pages/ProductLayout"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "./context/AuthProvider"
+import CancellReturnForm from "./pages/Account/CancellReturnForm"
 
 
 const App = () => {
@@ -74,6 +75,7 @@ const App = () => {
               <Route path="track-order/:id" element={<TrackOrder />} />
               <Route path="invoice" element={<Invoice />} />
               <Route path="order-details/:id" element={<OrderDetail />} />
+              <Route path="cancel-return/:id" element={<CancellReturnForm />} />
               <Route path="contact" element={<Contact />} />
               <Route path="account-settings" element={<ManageAccount />} />
               <Route path="manage-address" element={<ManageAddress />} />
