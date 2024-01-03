@@ -268,8 +268,8 @@ const ProductList = ({
                                             <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
                                             <div className=' flex flex-wrap justify-between items-center'>
                                                 <div className='text-base text-accent flex items-center gap-2'>
-                                                    <p>&#8377; {items.discounted_price ? items.discount_price : items.mrp}</p>
-                                                    {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                                    <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
+                                                    {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
                                                         <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
                                                         <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
                                                     </div>

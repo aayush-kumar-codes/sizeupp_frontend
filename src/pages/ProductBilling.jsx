@@ -371,13 +371,13 @@ export function ProductBilling() {
                                             }
                                             <div className="mt-1 flex items-end">
                                                 <p className="text-sm font-medium text-c-gray-900">
-                                                    ₹ {info?.discounted_price ? info?.discounted_price : info?.mrp}
+                                                    ₹ {info.product?.discounted_price ? info.product?.discounted_price : info?.mrp}
                                                 </p>
                                                 {info?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
                                                     <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                        ₹ {info?.mrp}
+                                                        ₹ {info.product?.mrp}
                                                     </p>
-                                                    <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+                                                    <p className="text-sm ml-2 font-medium text-green-500">{info.product?.discount_percentage}%</p>
                                                 </div>}
                                             </div>
                                             <div className={`${info.product?.sqp.map((size, index) => {
@@ -412,7 +412,7 @@ export function ProductBilling() {
                                         />
                                     </div>
                                     <div className='col-span-1 flex justify-center items-center'>
-                                        <div className=''>₹ {parseInt(info.sub_total)}</div>
+                                        <div className=''>₹ {(info.total_price)}</div>
                                     </div>
 
                                 </div>

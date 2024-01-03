@@ -536,14 +536,14 @@ export function ProductCart() {
                                                 }
                                                 <div className="mt-1 flex items-end">
                                                     <p className="text-sm font-medium text-c-gray-900">
-                                                        ₹ {info?.discounted_price ? info?.discounted_price : info?.mrp}
+                                                        ₹ {info.product?.discounted_price ? info.product?.discounted_price : info.product?.mrp}
                                                     </p>
 
-                                                    {info?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
+                                                    {info.product?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
                                                         <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                            ₹ {info?.mrp}
+                                                            ₹ {info.product?.mrp}
                                                         </p>
-                                                        <p className="text-sm ml-2 font-medium text-green-500">{info?.discount_percentage}%</p>
+                                                        <p className="text-sm ml-2 font-medium text-green-500">{info.product?.discount_percentage}%</p>
                                                     </div>}
                                                 </div>
                                                 <div className={`${info.product?.sqp.map((size, index) => {
@@ -583,7 +583,7 @@ export function ProductCart() {
                                             </button>
                                         </div>
                                         <div className='col-span-1 flex justify-center items-center'>
-                                            <div className=''>₹ {parseInt(info.discounted_price ? info.discounted_on_price * info.quantity : info.mrp * info.quantity)}</div>
+                                            <div className=''>₹ {(info?.total_price)}</div>
                                         </div>
                                         <div className='col-span-1 flex justify-center items-center'>
                                             <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
