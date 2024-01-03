@@ -373,7 +373,7 @@ export function ProductBilling() {
                                                 <p className="text-sm font-medium text-c-gray-900">
                                                     ₹ {info.product?.discounted_price ? info.product?.discounted_price : info?.mrp}
                                                 </p>
-                                                {info?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
+                                                {info.product?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
                                                     <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
                                                         ₹ {info.product?.mrp}
                                                     </p>

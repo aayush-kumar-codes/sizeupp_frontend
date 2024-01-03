@@ -340,8 +340,8 @@ const NewAddress = () => {
                   className="form-input px-2 py-1"
                   placeholder="Enter Zip code"
                   required
-                  name="zipCode"
-                  value={formData.postal_cde}
+                  name="pinCode"
+                  value={formData.pinCode}
                   onChange={handleInputChange} />
               </dd>
             </div>
