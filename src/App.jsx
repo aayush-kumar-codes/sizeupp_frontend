@@ -42,9 +42,10 @@ import CancellReturnForm from "./pages/Account/CancellReturnForm"
 
 
 const App = () => {
-  const {fetchCategory} = useContext(AuthContext)
+  const {fetchCategory,handleValidateToken} = useContext(AuthContext)
   useEffect(() => { 
     fetchCategory()
+    handleValidateToken()
   }
   , []);
   return (

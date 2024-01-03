@@ -749,7 +749,7 @@ const ProductOverview = () => {
   const [demo, setdemo] = useState([])
   const [relatedProducts, setRelatedProducts] = useState([])
   const [images, setImages] = useState([])
-  const { fetchCart } = useContext(AuthContext)
+  const { fetchCart,fetchWishlist } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const [iconColors, setIconColors] = useState({
@@ -1042,6 +1042,7 @@ const ProductOverview = () => {
       const data = await res.json()
       console.log(data);
       fetchDataAuth(id)
+      fetchWishlist()
       Swal.fire({
         title: 'Success!',
         text: 'Product Added to Wishlist',
@@ -1080,6 +1081,7 @@ const ProductOverview = () => {
       const data = await res.json()
       console.log(data);
       fetchDataAuth(id)
+      fetchWishlist()
       Swal.fire({
         title: 'Success!',
         text: 'Product Removed from Wishlist',
@@ -1595,7 +1597,7 @@ const ProductOverview = () => {
               }
             />
             <AccordionItem
-              title="Additional Information"
+              title="Care Guide"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
 

@@ -164,11 +164,32 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const handleValidateToken = async () => {
+        if (localStorage.token) {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/validate-token', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: localStorage.getItem('token')
+                })
+            })
+
+            if (!res.ok) {
+                localStorage.clear()
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data)
+        }
+    }
+
 
     const handlefetchProducts = async () => {
         setproductloading(true)
         if (localStorage.token) {
-            
+
             fetchProductsAuth()
         } else {
             fetchProducts()
@@ -252,6 +273,32 @@ const AuthProvider = ({ children }) => {
     }, []);
 
 
+    // fetch wishlist and set count 
+    const [wishlist, setWishlist] = useState([])
+    const fetchWishlist = async () => {
+        try {
+            setWishlist([])
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/wishlist', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            setWishlist(data.wishlist)
+            console.log(data.wishlist);
+
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            
+        }
+    }
+
     // fetch cart and set count 
     const [cart, setCart] = useState([])
     const fetchCart = async () => {
@@ -282,6 +329,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         fetchCart()
+        fetchWishlist()
     }, [])
 
 
@@ -357,6 +405,7 @@ const AuthProvider = ({ children }) => {
                 isFilterActive,
                 setIsFilterActive,
 
+                handleValidateToken,
 
                 search,
                 catlist,
@@ -402,6 +451,9 @@ const AuthProvider = ({ children }) => {
                 setCart,
                 fetchCart,
 
+                wishlist,
+                setWishlist,
+                fetchWishlist,
 
                 pagecount,
                 setpagecount,

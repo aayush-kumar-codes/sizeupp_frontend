@@ -15,7 +15,7 @@ const CancellationPolicy = () => {
       </p>
 
       <ul className="list-disc ml-6 mt-2">
-        <li>Log into your Sizeupp Store account and go to the 'My Orders' page</li>
+        <li>Log into your Sizeupp Online Store account and go to the 'My Orders' page</li>
         <li>Identify the item you want to cancel and click on the corresponding 'View Details' link</li>
         <li>In the detailed order page, you will see 'Cancel' links against each of the items in that order</li>
         <li>Click on the 'Cancel' link, indicate the reason for cancellation, choose a mode of refund, and confirm cancellation</li>
@@ -38,7 +38,7 @@ const CancellationPolicy = () => {
 
       <p className="mt-4">
         The refund mode will be back to the source (same debited account), and the amount will reflect in your account within 6-7 business days.
-        Please get in touch with the banks directly in case of any delays post confirmation of cancellation/refund by Sizeupp Store.
+        Please get in touch with the banks directly in case of any delays post confirmation of cancellation/refund by Sizeupp Online Store.
       </p>
 
       <p className="mt-6">
@@ -60,7 +60,7 @@ const CancellationPolicy = () => {
       </ul>
 
       <p className="mt-4">
-        Once you have requested the cancellation of item(s) in your order, Sizeupp Store will complete the cancellation and initiate the refund, depending on your preference.
+        Once you have requested the cancellation of item(s) in your order, Sizeupp Online Store will complete the cancellation and initiate the refund, depending on your preference.
       </p>
     </div>
   );
