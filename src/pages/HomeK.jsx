@@ -491,10 +491,23 @@ function Navbar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/products?navsearch=${search}`) 
+        navigate(`/products?navsearch=${search}`)
     }
 
 
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        }).then(res => res.json().then(data => {
+            setData(data)
+            localStorage.setItem("cat_list", JSON.stringify(data))
+        }
+        ))
+    }, [])
     return (
         // container
         <div className={colorNav ? `px-10 text-white w-full sticky top-0 z-50` : `px-10 text-white w-full absolute top-0 z-50`}>
@@ -679,65 +692,43 @@ function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        {mobileMenuItems.map((item) => {
-                                            return (
-                                                <>
-                                                    {item.dropdown ?
-                                                        <AccordionItem
-                                                            key={item.name}
-                                                            title={item.name}
-                                                            content={
-                                                                item.category.map((subitem) => {
-                                                                    return (
-                                                                        subitem.dropdown ?
-                                                                            <div className='px-4'>
-                                                                                <AccordionItem
-                                                                                    key={subitem.name}
-                                                                                    title={subitem.name}
-                                                                                    content={
-                                                                                        subitem.category.map((subsubitem) => {
-                                                                                            return (
-                                                                                                <Link
-                                                                                                    key={subsubitem.name}
-                                                                                                    to={subsubitem.href}
-                                                                                                    onClick={toggleMenu}
-                                                                                                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
-                                                                                                >
-                                                                                                    {subsubitem.name}
-                                                                                                </Link>
-                                                                                            )
-                                                                                        })
-                                                                                    }
-                                                                                />
-
+                                        <Link to="/profile" className='text-sm font-semibold border-t border-c-gray-300 py-5' > Profile</Link>
+                                        <Link to="/products" className='text-sm font-semibold border-t border-c-gray-300 py-5'>All Products</Link>
+                                        {
+                                            data.categories && data.categories?.map((cat) => {
+                                                return <AccordionItem
+                                                    key={cat.name}
+                                                    title={cat.name}
+                                                    content={
+                                                        <div className='grid grid-cols-1 gap-y-2 pl-4'>
+                                                            {cat.subcategories && cat.subcategories?.map((subcat) => {
+                                                                return (
+                                                                    <AccordionItem
+                                                                        key={subcat.name}
+                                                                        title={subcat.name}
+                                                                        content={
+                                                                            <div className='grid grid-cols-1 gap-y-2'>
+                                                                                {
+                                                                                    subcat.subsubcategories.map((subsubcat) => {
+                                                                                        return (
+                                                                                            <Link className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?category=${subsubcat.id}`}>
+                                                                                                {subsubcat.name}
+                                                                                            </Link>
+                                                                                        )
+                                                                                    })
+                                                                                }
                                                                             </div>
-                                                                            :
-                                                                            <Link
-                                                                                key={subitem.name}
-                                                                                to={subitem.href}
-                                                                                onClick={toggleMenu}
-                                                                                className="py-3 px-4 font-bold flex items-center rounded-md hover:bg-gray-50"
-                                                                            >
-                                                                                {subitem.name}
-                                                                            </Link>
-                                                                    )
-                                                                })
-                                                            }
-                                                        />
-                                                        :
-                                                        <Link
-                                                            key={item.name}
-                                                            to={item.href}
-                                                            onClick={toggleMenu}
-                                                            className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
-                                                        >
-                                                            {item.name}
-                                                        </Link>
-                                                    }
-                                                </>
-                                            )
-                                        })}
+                                                                        }
+                                                                    />
+                                                                )
+                                                            })}
+                                                        </div>
 
+                                                    }
+                                                />
+                                            }
+                                            )
+                                        }
                                     </nav>
                                 </div>
 
