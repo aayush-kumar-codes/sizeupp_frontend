@@ -307,7 +307,7 @@ export function ProductBilling() {
     
 
     return (
-        <div className={`${styles.padding} mx-10 my-6`}>
+        <div className={`my-10 lg:mx-6 mx-2`}>
             {/* Nav menu- Breadcrumb */}
             <ol className={`inline-flex items-center space-x-1 md:space-x-3 mb-6`}>
                 <li className="inline-flex items-center">
