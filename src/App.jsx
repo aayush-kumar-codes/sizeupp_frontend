@@ -41,9 +41,10 @@ import { AuthContext } from "./context/AuthProvider"
 
 
 const App = () => {
-  const {fetchCategory} = useContext(AuthContext)
+  const {fetchCategory,handleValidateToken} = useContext(AuthContext)
   useEffect(() => { 
     fetchCategory()
+    handleValidateToken()
   }
   , []);
   return (

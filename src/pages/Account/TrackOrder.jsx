@@ -82,7 +82,7 @@ const TrackOrderPage = () => {
                             <span className="text-sm">{Date(order.created_at).slice(0,16)}</span>
                         </div>
                     </div>
-                    <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 lg:mb-0">
+                    {<div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 lg:mb-0">
                         <div className="absolute hidden top-5 lg:block left-1/2 ">
                             <span
                                 className="mb-3 border-b-2 border-r border-gray-300 w-72 md:block left-1/2 dark:border-gray-600 inset-px">
@@ -97,34 +97,8 @@ const TrackOrderPage = () => {
                             <span className="text-sm">pending</span>
 
                         </div>
-                    </div>
-                    <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 md:mb-0">
-                        <div className="absolute hidden top-5 lg:block left-1/2 ">
-                            <span
-                                className="mb-3 border-b-2 border-r border-gray-300 w-72 md:block left-1/2 dark:border-gray-600 inset-px">
-                            </span>
-                        </div>
-                        <div className="relative text-center">
-                            <span
-                                className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
-                                3
-                            </span>
-                            <h2 className="text-lg font-medium ">Shipped</h2>
-                            <span className="text-sm">pending</span>
-
-                        </div>
-                    </div>
-                    <div className="relative w-full px-4 md:w-1/2 lg:w-1/4">
-                        <div className="relative text-center">
-                            <span
-                                className="inline-flex items-center justify-center w-10 h-10 mb-8 text-gray-700 bg-gray-200 rounded-full shadow-md  ">
-                                4
-                            </span>
-                            <h2 className="text-lg font-medium ">Delivered</h2>
-                            <span className="text-sm">pending</span>
-
-                        </div>
-                    </div>
+                    </div>}
+                    
                 </div>
                 <div className="w-full max-w-3xl mx-auto md:hidden block">
 

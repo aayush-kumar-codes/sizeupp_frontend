@@ -164,11 +164,29 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const handleValidateToken = async() => {
+        if (localStorage.token) {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/validate-token', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            })
+
+            if (!res.ok) {
+                localStorage.clear()
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data)
+        }
+    }
+
 
     const handlefetchProducts = async () => {
         setproductloading(true)
         if (localStorage.token) {
-            
+
             fetchProductsAuth()
         } else {
             fetchProducts()
@@ -357,6 +375,7 @@ const AuthProvider = ({ children }) => {
                 isFilterActive,
                 setIsFilterActive,
 
+                handleValidateToken,
 
                 search,
                 catlist,
