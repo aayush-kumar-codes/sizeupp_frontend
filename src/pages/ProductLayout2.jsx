@@ -388,9 +388,9 @@ setIsFilterOpen((prev) => ({
                   <ul className="mt-2">
                     {catlist && catlist.categories?.map((item) => (
                       item.subcategories?.map((subitem) => {
-                        if ((!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id))) {
-                          return null
-                        }
+                        // if ((!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id))) {
+                        //   return null
+                        // }
                         return (
                           <li key={subitem.id} className="flex items-center justify-between py-2">
                             <div className="flex items-center">
@@ -437,9 +437,9 @@ setIsFilterOpen((prev) => ({
                       item.subcategories?.map((subitem) => {
                         return (subitem.subsubcategories.map((subsubitem) => {
                           console.warn(subsubitem.name)
-                          if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
-                            return null
-                          }
+                          // if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
+                          //   return null
+                          // }
 
 
                           return (

@@ -82,7 +82,8 @@ const NewAddress = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1500
       });
     }
   }
@@ -132,6 +133,8 @@ const NewAddress = () => {
           icon: 'success',
           title: 'Success',
           text: 'Address Deleted Successfully',
+          showConfirmButton: false,
+          timer: 1500
         })
         fetchProfileData()
       } else {
@@ -139,6 +142,8 @@ const NewAddress = () => {
           icon: 'error',
           title: 'Oops...',
           text: 'Something went wrong!',
+          showConfirmButton: false,
+          timer: 1500
         })
       }
     } catch (error) {
@@ -147,6 +152,8 @@ const NewAddress = () => {
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
+        showConfirmButton: false,
+        timer: 1500
       })
     }
   }
@@ -188,6 +195,8 @@ const NewAddress = () => {
           icon: 'success',
           title: 'Success',
           text: 'Address Updated Successfully',
+          showConfirmButton: false,
+          timer: 1500
         })
         fetchProfileData()
       } else {

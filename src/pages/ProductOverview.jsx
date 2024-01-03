@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { styles } from "../style"
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { chevronDownIcon } from "../assets/icons";
 import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon, StarIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2';
@@ -13,6 +13,7 @@ import ReviewProduct from "../components/ProductOverview/ReviewProduct";
 import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOverviewCar";
 // import { CasualBottom_boxer } from "../assets/sizechart";
 import { Images } from "../components/Sizechart/Data";
+import { AuthContext } from "../context/AuthProvider";
 
 export const Modal = ({ children, onClose }) => {
   const handleOverlayClick = (e) => {
@@ -69,7 +70,7 @@ const ProductImageView = ({
     setCurrentImageIndex(index);
   };
 
-  
+
 
   const ImageMagnifier = ({ imgSrc, imgAlt, zoomStrength }) => {
     const [isGlassVisible, setIsGlassVisible] = useState(false);
@@ -77,23 +78,23 @@ const ProductImageView = ({
       const magnify = (imgID, zoom) => {
         const img = document.getElementById(imgID);
         let glass, w, h, bw;
-        
+
         /* Create magnifier glass: */
         glass = document.createElement("div");
         glass.setAttribute("class", "img-magnifier-glass");
-        
+
         /* Insert magnifier glass: */
         img.parentElement.insertBefore(glass, img);
-        
+
         /* Set background properties for the magnifier glass: */
         glass.style.backgroundImage = `url('${img.src}')`;
         glass.style.backgroundRepeat = "no-repeat";
         glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
-        
+
         bw = 3;
         w = glass.offsetWidth / 2;
         h = glass.offsetHeight / 2;
-        
+
         /* Execute a function when someone moves the magnifier glass over the image: */
         const moveMagnifier = (e) => {
           e.preventDefault();
@@ -101,59 +102,59 @@ const ProductImageView = ({
           /* Get the cursor's x and y positions: */
           const pos = getCursorPos(e);
           let x = pos.x;
-          let y = pos.y;  
-          
+          let y = pos.y;
+
           /* Prevent the magnifier glass from being positioned outside the image: */
           if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
           if (x < w / zoom) { x = w / zoom; }
           if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
           if (y < h / zoom) { y = h / zoom; }
-          
+
           /* Set the position of the magnifier glass: */
           glass.style.left = `${x - w}px`;
           glass.style.top = `${y - h}px`;
-          
+
           /* Display what the magnifier glass "sees": */
           glass.style.backgroundPosition = `-${x * zoom - w + bw}px -${y * zoom - h + bw}px`;
         };
-        
+
         /* Add event listeners for mousemove and touchmove: */
         glass.addEventListener("mousemove", moveMagnifier);
         img.addEventListener("mousemove", moveMagnifier);
         // glass.addEventListener("touchmove", moveMagnifier);
         // img.addEventListener("touchmove", moveMagnifier);
-        
+
         const getCursorPos = (e) => {
           let x = 0, y = 0;
           e = e || window.event;
-          
+
           /* Get the x and y positions of the image: */
           const a = img.getBoundingClientRect();
-          
+
           /* Calculate the cursor's x and y coordinates, relative to the image: */
           x = e.pageX - a.left;
           y = e.pageY - a.top;
-          
+
           /* Consider any page scrolling: */
           x = x - window.scrollX;
           y = y - window.scrollY;
-          
+
           return { x, y };
         };
       };
-      
+
       /* Initiate Magnify Function with the id of the image and the strength of the magnifier glass: */
       magnify("myimage", zoomStrength);
     }, [zoomStrength]);
-  
+
     return (
       <div>
-        
+
         <div className="img-magnifier-container relative cursor-pointer">
           <img id="myimage" src={imgSrc} alt={imgAlt} width="600" height="400" onClick={handleOpenModal} />
         </div>
         <style>
-        {`
+          {`
           .img-magnifier-glass {
             position: absolute;
             border: 0px solid #000;
@@ -165,11 +166,11 @@ const ProductImageView = ({
             display: ${isGlassVisible ? 'block' : 'none'}; 
           }
         `}
-      </style>
+        </style>
       </div>
     );
   };
-  
+
   // const handleMouseMove = (e) => {
   //   const img = document.getElementById("magnify-img");
   //   const preview = document.querySelector(".zoom-preview2");
@@ -368,7 +369,7 @@ const ProductImageView = ({
                     {arrayImages.map((image, index) => (
                       <div key={index} className="w-full h-full">
                         <img
-                          src={import.meta.env.VITE_SERVER_URL + (image.img + "").slice(6)}
+                          src={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)}
                           alt={`Image ${index + 1}`}
                           className="w-full h-full object-contain"
                         />
@@ -450,7 +451,8 @@ const PincodeForm = () => {
 
   const navigate = useNavigate()
 
-  const handleChangeClick = () => {
+  const handleChangeClick = (e) => {
+    e.preventDefault()
     // Reset the pincode and delivery status when changing
     setPincode('');
     setIsDeliveryValid(false);
@@ -567,15 +569,23 @@ const PincodeForm = () => {
         text: 'Fetch error: ' + error,
         icon: 'error',
         showConfirmButton: false,
-        timer: 1200
+        timer: 1500
       });
     }
   }
 
-  const handleApplyPincode = async () => {
+  const handleApplyPincode = async (e) => {
+    e.preventDefault()
     try {
-      if (!localStorage.token) {
-        return navigate('/login')
+      if (pincode.length !== 6) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Please enter valid pincode',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        return
       }
       const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/validate-pincode/` + pincode, {
         method: 'GET',
@@ -588,12 +598,23 @@ const PincodeForm = () => {
       }
       const data = await res.json()
       console.log(data);
+      if (data.message == 'PINCODE NOT SERVICEABLE') {
+        setIsDeliveryValid(false)
+        return Swal.fire({
+          title: 'Error!',
+          text: data.message,
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+      setIsDeliveryValid(true)
       Swal.fire({
         title: 'Success!',
-        text: 'Pincode Added',
+        text: data.message,
         icon: 'success',
         showConfirmButton: false,
-        timer: 1200
+        timer: 1500
       })
     }
     catch (error) {
@@ -603,7 +624,7 @@ const PincodeForm = () => {
         text: 'Fetch error: ' + error,
         icon: 'error',
         showConfirmButton: false,
-        timer: 1200
+        timer: 1500
       });
     }
   }
@@ -611,7 +632,13 @@ const PincodeForm = () => {
 
   return (
     <>
-      <form autoComplete="off" className="flex">
+      <form onSubmit={(e) => {
+        if (isDeliveryValid) {
+          handleChangeClick(e)
+        } else {
+          handleApplyPincode(e)
+        }
+      }} autoComplete="off" className="flex">
         <input
           type="text"
           placeholder="Enter pincode"
@@ -622,19 +649,21 @@ const PincodeForm = () => {
           disabled={isDeliveryValid}
         />
 
-        <input
-          type="button"
+        <button
+          type="submit"
           className="cursor-pointer relative right-14 pt-2 -mx-2 text-orange-500 hover:font-bold"
           value={isDeliveryValid ? 'Change' : 'Check'}
           onClick={() => {
             if (isDeliveryValid) {
               handleChangeClick()
             } else {
-              handleCheckClick()
+              handleApplyPincode()
             }
           }}
 
-        />
+        >
+          {isDeliveryValid ? 'Change' : 'Check'}
+        </button>
         {isDeliveryValid && (
           <div className="ok relative right-7 top-10 transform -translate-y-1/2">
             <CheckIcon className="h-6 w-6 relative text-white rounded-full bg-green-600 p-1" />
@@ -711,6 +740,7 @@ const ProductOverview = () => {
   const [demo, setdemo] = useState([])
   const [relatedProducts, setRelatedProducts] = useState([])
   const [images, setImages] = useState([])
+  const { fetchCart } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const [iconColors, setIconColors] = useState({
@@ -726,18 +756,18 @@ const ProductOverview = () => {
     setIconColors((prevColors) => ({ ...prevColors, [iconName]: color }));
   };
 
-  
-    const currentUrl = window.location.href;
-  
+
+  const currentUrl = window.location.href;
+
   const shareFacebook = () => {
-      const facebookMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank');
-    };
-  
-    const shareInstagram = () => {
-      // Instagram doesn't provide a direct share API, so redirect to Instagram page
-      window.open('https://www.instagram.com/', '_blank');
-    };
+    const facebookMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank');
+  };
+
+  const shareInstagram = () => {
+    // Instagram doesn't provide a direct share API, so redirect to Instagram page
+    window.open('https://www.instagram.com/', '_blank');
+  };
 
   const shareWhatsApp = () => {
     const whatsappMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
@@ -747,27 +777,27 @@ const ProductOverview = () => {
 
     // Construct the WhatsApp share link based on the device
     const whatsappLink = isMobile ? `https://wa.me/?text=${whatsappMessage}` : `https://web.whatsapp.com/send?text=${whatsappMessage}`;
-    
+
     // window.open(`https://web.whatsapp.com/send?text=${whatsappMessage}`, '_blank');
     window.open(whatsappLink, '_blank');
 
-    };
-  
-  const shareTwitter = () => {
-      const twitterMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
-      window.open(`https://twitter.com/intent/tweet?url=${twitterMessage}`, '_blank');
-    };
-  
-    const copyUrlToClipboard = () => {
-      const currentUrl = window.location.href;
-  
-      navigator.clipboard.writeText(currentUrl).then(() => {
-        alert('URL copied successfully!');
-      }).catch((error) => {
-        console.error('Unable to copy URL to clipboard', error);
-      });
   };
-  
+
+  const shareTwitter = () => {
+    const twitterMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
+    window.open(`https://twitter.com/intent/tweet?url=${twitterMessage}`, '_blank');
+  };
+
+  const copyUrlToClipboard = () => {
+    const currentUrl = window.location.href;
+
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      alert('URL copied successfully!');
+    }).catch((error) => {
+      console.error('Unable to copy URL to clipboard', error);
+    });
+  };
+
   const shareViaEmail = () => {
     // const currentUrl = window.location.href;
     // const subject = encodeURIComponent('Check out this website!');
@@ -785,7 +815,7 @@ const ProductOverview = () => {
 
   };
 
-  
+
   //fetch data from server
   const [pincode, setPincode] = useState('')
 
@@ -961,7 +991,7 @@ const ProductOverview = () => {
         })
       }
       console.log(data);
-
+      fetchCart()
       Swal.fire({
         title: 'Success!',
         text: 'Product Updated in Cart',
@@ -1121,7 +1151,7 @@ const ProductOverview = () => {
     setActiveButton(sizeType);
   };
 
-  
+
   return (
     <div className={`${styles.padding}`}>
 
@@ -1146,10 +1176,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?gender=${demo.product?.category.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-              {overviewloading ?
+                {overviewloading ?
                   <div className="animate-pulse">
-                  <div className="bg-gray-400 h-6 w-12 shrink-0 overflow-hidden rounded-md border"></div>
-                </div> :demo.product?.category.name}
+                    <div className="bg-gray-400 h-6 w-12 shrink-0 overflow-hidden rounded-md border"></div>
+                  </div> : demo.product?.category.name}
               </Link>
             </div>
           </li>
@@ -1160,10 +1190,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?category=${demo.product?.subcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-              {overviewloading ?
+                {overviewloading ?
                   <div className="animate-pulse">
-                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
-                </div> :demo.product?.subcategory.name}
+                    <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                  </div> : demo.product?.subcategory.name}
               </Link>
             </div>
           </li>
@@ -1174,10 +1204,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?subcategory=${demo.product?.subsubcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-              {overviewloading ?
+                {overviewloading ?
                   <div className="animate-pulse">
-                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
-                </div> :demo.product?.subsubcategory.name}
+                    <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                  </div> : demo.product?.subsubcategory.name}
               </Link>
             </div>
           </li>
@@ -1189,8 +1219,8 @@ const ProductOverview = () => {
               <span className="ml-1 text-xs md:text-base font-medium text-c-gray-800 md:ml-2">
                 {overviewloading ?
                   <div className="animate-pulse">
-                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
-                </div> :
+                    <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                  </div> :
                   demo.product?.name}
               </span>
             </div>
@@ -1209,9 +1239,9 @@ const ProductOverview = () => {
           <div className="mb-7 border-b border-c-gray-300 pb-2">
             <div className="flex justify-between items-center ">
               <p className=" mb-3.5 font-bold " style={{ fontSize: '1.3rem' }}>
-              {overviewloading ?
+                {overviewloading ?
                   <div className="animate-pulse">
-                  <div className="bg-gray-400 h-8 w-48 shrink-0 overflow-hidden rounded-md border"></div>
+                    <div className="bg-gray-400 h-8 w-48 shrink-0 overflow-hidden rounded-md border"></div>
                   </div> :
                   demo.product?.name}
               </p>
@@ -1329,12 +1359,12 @@ const ProductOverview = () => {
               <h3 className="text-heading mb-2.5 text-sm font-semibold capitalize md:text-lg flex">
                 color : {overviewloading ?
                   <div className="animate-pulse flex">
-                  <div className="bg-gray-400 h-6 w-24 shrink-0 overflow-hidden rounded-md border mx-2"></div>
-                  </div> :demo.product?.color}
+                    <div className="bg-gray-400 h-6 w-24 shrink-0 overflow-hidden rounded-md border mx-2"></div>
+                  </div> : demo.product?.color}
               </h3>
               {demo.product?.model_size}
             </div>
-            
+
             <div className="mt-5 flex items-center pb-2">
               <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
                 ₹ {demo.product?.discounted_price ? demo.product?.discounted_price : demo.product?.mrp}
@@ -1381,72 +1411,72 @@ const ProductOverview = () => {
                   {/* Aside bar */}
                   {isAsideOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <button
+                      <button
                         className="absolute top-4 right-0 text-black p-2 rounded-full bg-gray-200 shadow mx-2"
                         onClick={closeAside}
                       >
                         <XMarkIcon className="h-6 w-6" />
                       </button>
                       <div className="px-3 bg-white rounded-md">
-                      <div className="w-full h-full flex flex-col items-center justify-center">
-                        <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in cm and inches</h1>
-                        {/* {demo.product?.subsubcategory.name == Images[i].name} 
+                        <div className="w-full h-full flex flex-col items-center justify-center">
+                          <h1 className={`${isAsideOpen ? 'text-2xl' : 'text-0 '} font-bold`}>Size Chart in cm and inches</h1>
+                          {/* {demo.product?.subsubcategory.name == Images[i].name} 
                         <img src={CasualBottom_boxer} className="w-fit m-2" /> */}
-                        {/* {demo.product?.category.name == "Men" ?() :()}  */}
-                        {demo.product?.category?.name === 'Men' &&
+                          {/* {demo.product?.category.name == "Men" ?() :()}  */}
+                          {demo.product?.category?.name === 'Men' &&
 
-                          filteredImages.map((image, index) => (
-                            <div key={index} className='p-3'>
-                              {/* You can customize the img tag based on your requirements */}
-                              <img src={image.url} alt={image.name} />
-                            </div>
-                          ))
+                            filteredImages.map((image, index) => (
+                              <div key={index} className='p-3'>
+                                {/* You can customize the img tag based on your requirements */}
+                                <img src={image.url} alt={image.name} />
+                              </div>
+                            ))
 
-                        }
-                        {demo.product?.category?.name === 'Women' &&
+                          }
+                          {demo.product?.category?.name === 'Women' &&
 
-                          filterWomen.map((image, index) => (
-                            <div key={index} className="flex flex-col  lg:gap-5 my-4">
-                              <div className="w-full text-center">
-                              <button
+                            filterWomen.map((image, index) => (
+                              <div key={index} className="flex flex-col  lg:gap-5 my-4">
+                                <div className="w-full text-center">
+                                  <button
                                     className={`p-2 rounded-lg border m-2 ${activeButton === 'cms' ? 'bg-gray-800 text-white' : ''}`}
                                     onClick={() => handletoggleActive('cms')}
                                   >
                                     size in cms
-                                </button>
-                                <button
+                                  </button>
+                                  <button
                                     className={`p-2 rounded-lg border ${activeButton === 'inches' ? 'bg-gray-800 text-white' : ''}`}
                                     onClick={() => handletoggleActive('inches')}
                                   >
                                     size in inches
-                                </button>
-                              </div>
-                              {activeButton === 'cms' && (
-                                    <img className=" w-fit mx-auto md:p-6" src={image.url[0]} alt={image.name} />
-                                   
-                                  )}
-                          {activeButton === 'inches' && (
-                                
-                              image.url[1] && <>
-                                  
-                                  <img className="w-fit mx-auto md:p-6" src={image.url[1]} alt={image.name} />
-                                </>
-                                
+                                  </button>
+                                </div>
+                                {activeButton === 'cms' && (
+                                  <img className=" w-fit mx-auto md:p-6" src={image.url[0]} alt={image.name} />
+
+                                )}
+                                {activeButton === 'inches' && (
+
+                                  image.url[1] && <>
+
+                                    <img className="w-fit mx-auto md:p-6" src={image.url[1]} alt={image.name} />
+                                  </>
+
                                 )}
 
-                            </div>
-                          ))
+                              </div>
+                            ))
 
-                        }
+                          }
 
 
+                        </div>
                       </div>
-                      </div>
-                      </div>
+                    </div>
 
                   )}
-                  
-                  
+
+
                   {/* <aside
                     className={`fixed z-50 right-0 top-0 h-full bg-gray-100 ${isAsideOpen ? 'w-[50vw]' : 'hidden'} shadow-2xl transition-all duration-300 ease-in-out`}
                   >
@@ -1459,7 +1489,7 @@ const ProductOverview = () => {
                 </div>
               </div>
             </div>
-            
+
           </div>
           <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-c-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
 
@@ -1480,7 +1510,7 @@ const ProductOverview = () => {
                 +
               </button>
             </div>
-            
+
             <button
               type="button"
               onClick={() => { handleAddToCart() }}

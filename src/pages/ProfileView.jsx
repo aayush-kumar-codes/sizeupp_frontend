@@ -76,7 +76,8 @@ const Profileview = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1500
       });
     }
   }
