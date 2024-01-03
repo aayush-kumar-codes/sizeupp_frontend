@@ -143,6 +143,11 @@ const ProductList = ({
         }
     }
 
+    useEffect(() => {
+        // 👇️ scroll to top on page load
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
+
     const handleAddWishlist = async (id) => {
         try {
             if (!localStorage.token) {
@@ -285,7 +290,8 @@ const ProductList = ({
                                             </div>
                                         </div>
                                     </div>
-                                ) }): (
+                                )
+                            }) : (
                                 <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">
                                     No products in this category
                                 </div>
