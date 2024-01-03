@@ -44,7 +44,7 @@ const App = () => {
   const {fetchCategory,handleValidateToken} = useContext(AuthContext)
   useEffect(() => { 
     fetchCategory()
-    handleValidateToken()
+    // handleValidateToken()
   }
   , []);
   return (
