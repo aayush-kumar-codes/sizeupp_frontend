@@ -326,6 +326,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         fetchCart()
+        fetchWishlist()
     }, [])
 
 
