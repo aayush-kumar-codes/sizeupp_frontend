@@ -76,12 +76,12 @@ const BannerCarousel = () => {
             <div className="flex flex-col w-full justify-start md:ml-24 ml-16">
               
                         <h1 className="text-[2.8rem] lg:text-[4rem] font-serif font-bold drop-shadow-xl">{banner.title}</h1>
-                        <h2 className="md:text-4xl text-3xl font-[Times-new-roman] italic">{banner.subtitle}</h2>
-                        <p className="text-[3rem] font-serif">{banner.description}</p>
+                        <h2 className="md:text-4xl text-3xl font-[Times-new-roman] italic drop-shadow-xl" >{banner.subtitle}</h2>
+                        <p className="text-[3rem] font-serif drop-shadow-xl">{banner.description}</p>
             </div>
             
                         <Link to="/products" >
-                          <button className="border-2 border-white bg-gray-400 bg-opacity-50 mt-12 m-0 md:ml-24 text-white p-2 text-md lg:text-lg cursor-pointer ">Shop Now</button>
+                          <button className="border-2 border-white bg-black bg-opacity-20 mt-12 m-0 md:ml-24 text-white p-2 px-3 text-xl cursor-pointer ">Shop Now</button>
                         </Link>
           </div>
           
