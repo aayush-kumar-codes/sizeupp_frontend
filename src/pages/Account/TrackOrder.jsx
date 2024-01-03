@@ -70,6 +70,7 @@ const TrackOrderPage = () => {
                                 </svg>
                             </span>
                             <h2 className="text-lg font-medium  ">Order Processing</h2>
+                            <span className="text-sm">{Date(order.created_at).slice(0,16)}</span>
                         </div>
                     </div>
                     <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 lg:mb-0">
@@ -84,6 +85,8 @@ const TrackOrderPage = () => {
                                 2
                             </span>
                             <h2 className="text-lg font-medium ">Packed</h2>
+                            <span className="text-sm">pending</span>
+
                         </div>
                     </div>
                     <div className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/4 md:mb-0">
@@ -98,6 +101,8 @@ const TrackOrderPage = () => {
                                 3
                             </span>
                             <h2 className="text-lg font-medium ">Shipped</h2>
+                            <span className="text-sm">pending</span>
+
                         </div>
                     </div>
                     <div className="relative w-full px-4 md:w-1/2 lg:w-1/4">
@@ -107,6 +112,8 @@ const TrackOrderPage = () => {
                                 4
                             </span>
                             <h2 className="text-lg font-medium ">Delivered</h2>
+                            <span className="text-sm">pending</span>
+
                         </div>
                     </div>
                 </div>
