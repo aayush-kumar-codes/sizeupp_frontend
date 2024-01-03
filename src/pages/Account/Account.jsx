@@ -93,9 +93,9 @@ const Account = () => {
         addressLine1: '123 Main St',
         addressLine2: '',
         city: 'Anytown',
-        state: 'USA',
-        zipCode: '12345',
-        country: 'USA',
+        state: 'MA',
+        zipCode: '400084',
+        country: 'India',
     });
 
     const handleEditClick = () => {
@@ -176,10 +176,10 @@ const Account = () => {
         <>
 
             <div
-                className="grid w-full  grid-cols-1 gap-3 px-5 pb-10 "
+                className="grid w-full  grid-cols-1 gap-3 md:px-5 px-0  pb-10 "
             >
-                <div className="mx-16">
-                    <div className="bg-white overflow-hidden shadow rounded-lg border">
+                <div className="md:mx-16 mx-2">
+                    <div className="bg-white overflow-hidden shadow rounded-lg border" >
                         <div className="px-4 py-5 sm:px-6">
                             <h3 className="text-lg leading-6 font-medium text-gray-900">
                                 User Profile
@@ -220,7 +220,7 @@ const Account = () => {
                     </div>
                 </div>
 
-                <div className="mx-16">
+                <div className="md:mx-16 mx-2">
                     <div className="border py-5 shadow-md rounded-xl">
                         {profiledata.addresses?.length > 0 && profiledata.addresses?.map((adrs, i) => {
                             if (!adrs.is_default) return null
