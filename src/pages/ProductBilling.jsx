@@ -210,6 +210,7 @@ export function ProductBilling() {
         }
         catch (error) {
             console.error('Fetch error:', error);
+            setPayload(false)
             Swal.fire({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
