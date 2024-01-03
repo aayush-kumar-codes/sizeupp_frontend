@@ -656,7 +656,7 @@ function Navbar() {
 
                 {/* Mobile/small-Tab Menu */}
                 <div className="lg:hidden">
-                    <Bars3BottomLeftIcon onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
+                    <Bars3BottomLeftIcon onClick={toggleMenu} className="h-8 w-8 cursor-pointer" />
                 </div>
 
                 {isMenuOpen && (
