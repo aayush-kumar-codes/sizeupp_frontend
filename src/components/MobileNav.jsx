@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { HomeIcon,ShoppingCartIcon,HeartIcon,UserIcon   } from "@heroicons/react/24/outline";
-import {ChevronUpIcon} from "@heroicons/react/24/outline";
+import {ArrowUpIcon } from "@heroicons/react/24/outline";
 
 const ScrollButton = () =>{ 
   
@@ -29,10 +29,10 @@ const ScrollButton = () =>{
     window.addEventListener('scroll', toggleVisible); 
     
     return ( 
-      <button className={`bg-orange-800 fixed bottom-16 rounded-full right-2 z-50 ${
+      <button className={`bg-black fixed bottom-16 rounded-full right-2 z-50 ${
         isMobileView ? 'block' : 'hidden ' // Show in mobile view, hide in desktop view
       }`} onClick={scrollToTop} style={{display: visible ? 'inline' : 'none'}} > 
-       <ChevronUpIcon className='h-8 w-8 p-1 text-white' 
+       <ArrowUpIcon  className='lg:h-12 lg:w-12 w-10 h-10 p-2 text-white' 
         /> 
       </button> 
     ); 
@@ -40,7 +40,7 @@ const ScrollButton = () =>{
 const MobileNav = () => {
   return (
     <>
-    {/* <ScrollButton/> */}
+    <ScrollButton/>
 
 {/* <!-- fixed nav --> */}
     <div className="md:hidden z-50 fixed bottom-0 inset-x-0 bg-yellow-300 flex justify-between text-xs  uppercase font-mono">
