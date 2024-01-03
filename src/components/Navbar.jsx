@@ -28,25 +28,26 @@ export function Navbar() {
     const mobileMenuItems = [
         {
             dropdown: true,
-            name: 'Account',
-            category: [
-                {
-                    name: 'Profile',
-                    href: '/profile',
-                },
-                {
-                    name: 'My Orders',
-                    href: '/profile/my-orders'
-                },
-                {
-                    name: 'Wishlist',
-                    href: '/products/favourite'
-                },
-                {
-                    name: 'Cart',
-                    href: '/products/cart'
-                },
-            ]
+            name: 'All Products',
+            href: '/products',
+            // category: [
+            //     {
+            //         name: 'Profile',
+            //         href: '/profile',
+            //     },
+            //     {
+            //         name: 'My Orders',
+            //         href: '/profile/my-orders'
+            //     },
+            //     {
+            //         name: 'Wishlist',
+            //         href: '/products/favourite'
+            //     },
+            //     {
+            //         name: 'Cart',
+            //         href: '/products/cart'
+            //     },
+            // ]
         },
         {
             dropdown: true,
