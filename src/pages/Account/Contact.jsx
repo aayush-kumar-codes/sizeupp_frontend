@@ -90,7 +90,7 @@ const Contact = () => {
                     <div className="mb-4">
                         <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
                             <p className="text-base font-semibold uppercase tracking-wide text-blue-600">
-                                Support Tiket
+                                Support Ticket
                             </p>
                             <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900 text-3xl sm:text-5xl">
                                 Get in Touch
@@ -196,7 +196,7 @@ const Contact = () => {
                                         </div>
                                         <div className="ml-4 mb-4">
                                             <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Contact</h3>
-                                            {/* <p className="text-gray-600">Mobile: +1 (123) 456-7890</p> */}
+                                            <p className="text-gray-600">Mobile: 88655255488</p>
                                             <p className="text-gray-600">Mail: customercare@sizeupp.com</p>
                                         </div>
                                     </li>
