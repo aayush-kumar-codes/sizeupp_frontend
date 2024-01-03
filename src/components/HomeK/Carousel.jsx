@@ -33,16 +33,34 @@ export default function Carousel() {
   return (
     <div className="overflow-hidden relative w-full min-w-screen h-full flex ">
       <div 
-        className={`-z-10 flex transition ease-out duration-40 w-full sm:h-full sm:object-fill"`}
+        className={`-z-10 flex transition ease-out duration-40 w-full hidden lg:block  sm:h-full sm:object-fill"`}
         style={{
           transform: `translateX(-${current *100}%)`,
         }}
       >
         {BannerData.map((s,i) => {
-          return <img className="sm:h-full sm:object-cover" src={s.img} key={i}/>;
+          return (
+          <>
+              <img className="" src={s.img} key={i} />
+              {/* <img className="lg:hidden block " src={s.smimg} key={i}/> */}
+              
+          </>  
+          );
         })}
       </div>
-
+    {/* New Banner for SM View */}
+    <div 
+        className={`-z-10 flex transition ease-out duration-40 w-full block lg:hidden sm:h-full sm:object-fill"`}
+        style={{
+          transform: `translateX(-${current * 100}%)`,
+        }}
+      >
+        {BannerData.map((s, i) => (
+          <div key={i} className="w-full">
+            <img className="" src={s.smimg} alt={`SM Banner ${i + 1}`} />
+          </div>
+        ))}
+      </div>
       <div className="absolute top-0 h-full justify-center  flex flex-col text-white px-12 z-10 items-center lg:gap-4 gap-0">
         <div className="min-w-[30%] h-[70%] flex flex-col items-center justify-center lg:gap-6 lg:mx-12 gap-2
         ">

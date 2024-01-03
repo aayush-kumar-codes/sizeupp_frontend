@@ -53,7 +53,7 @@ const ProductImageView = ({
   arrayImages = []
 }) => {
 
-  const [isZoomPreviewVisible, setZoomPreviewVisible] = useState(false);
+  // const [isZoomPreviewVisible, setZoomPreviewVisible] = useState(false);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -69,34 +69,134 @@ const ProductImageView = ({
     setCurrentImageIndex(index);
   };
 
+  
 
-  const handleMouseMove = (e) => {
-    const img = document.getElementById("magnify-img");
-    const preview = document.querySelector(".zoom-preview2");
-    setZoomPreviewVisible(true); // Show the zoom preview
-
-    // calculating the ratio
-    const x = preview?.offsetWidth / 180;
-    const y = preview?.offsetHeight / 180;
-
-    if (preview && preview.style) {
-      preview.style.backgroundImage = `url(${import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)})`;
-      preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
-    }
-
-    const posX = e.nativeEvent?.offsetX;
-    const posY = e.nativeEvent?.offsetY;
-
-    preview.style.backgroundPosition = `-${posX * x}px -${posY * y}px`;
-
+  const ImageMagnifier = ({ imgSrc, imgAlt, zoomStrength }) => {
+    const [isGlassVisible, setIsGlassVisible] = useState(false);
+    useEffect(() => {
+      const magnify = (imgID, zoom) => {
+        const img = document.getElementById(imgID);
+        let glass, w, h, bw;
+        
+        /* Create magnifier glass: */
+        glass = document.createElement("div");
+        glass.setAttribute("class", "img-magnifier-glass");
+        
+        /* Insert magnifier glass: */
+        img.parentElement.insertBefore(glass, img);
+        
+        /* Set background properties for the magnifier glass: */
+        glass.style.backgroundImage = `url('${img.src}')`;
+        glass.style.backgroundRepeat = "no-repeat";
+        glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+        
+        bw = 3;
+        w = glass.offsetWidth / 2;
+        h = glass.offsetHeight / 2;
+        
+        /* Execute a function when someone moves the magnifier glass over the image: */
+        const moveMagnifier = (e) => {
+          e.preventDefault();
+          setIsGlassVisible(true);
+          /* Get the cursor's x and y positions: */
+          const pos = getCursorPos(e);
+          let x = pos.x;
+          let y = pos.y;  
+          
+          /* Prevent the magnifier glass from being positioned outside the image: */
+          if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
+          if (x < w / zoom) { x = w / zoom; }
+          if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
+          if (y < h / zoom) { y = h / zoom; }
+          
+          /* Set the position of the magnifier glass: */
+          glass.style.left = `${x - w}px`;
+          glass.style.top = `${y - h}px`;
+          
+          /* Display what the magnifier glass "sees": */
+          glass.style.backgroundPosition = `-${x * zoom - w + bw}px -${y * zoom - h + bw}px`;
+        };
+        
+        /* Add event listeners for mousemove and touchmove: */
+        glass.addEventListener("mousemove", moveMagnifier);
+        img.addEventListener("mousemove", moveMagnifier);
+        // glass.addEventListener("touchmove", moveMagnifier);
+        // img.addEventListener("touchmove", moveMagnifier);
+        
+        const getCursorPos = (e) => {
+          let x = 0, y = 0;
+          e = e || window.event;
+          
+          /* Get the x and y positions of the image: */
+          const a = img.getBoundingClientRect();
+          
+          /* Calculate the cursor's x and y coordinates, relative to the image: */
+          x = e.pageX - a.left;
+          y = e.pageY - a.top;
+          
+          /* Consider any page scrolling: */
+          x = x - window.scrollX;
+          y = y - window.scrollY;
+          
+          return { x, y };
+        };
+      };
+      
+      /* Initiate Magnify Function with the id of the image and the strength of the magnifier glass: */
+      magnify("myimage", zoomStrength);
+    }, [zoomStrength]);
+  
+    return (
+      <div>
+        
+        <div className="img-magnifier-container relative cursor-pointer">
+          <img id="myimage" src={imgSrc} alt={imgAlt} width="600" height="400" onClick={handleOpenModal} />
+        </div>
+        <style>
+        {`
+          .img-magnifier-glass {
+            position: absolute;
+            border: 0px solid #000;
+            border-radius: 50%;
+            cursor: none;
+            /* Set the size of the magnifier glass: */
+            width: 200px;
+            height: 200px;
+            display: ${isGlassVisible ? 'block' : 'none'}; 
+          }
+        `}
+      </style>
+      </div>
+    );
   };
+  
+  // const handleMouseMove = (e) => {
+  //   const img = document.getElementById("magnify-img");
+  //   const preview = document.querySelector(".zoom-preview2");
+  //   setZoomPreviewVisible(true); // Show the zoom preview
 
-  const handleMouseOut = () => {
-    const preview = document.querySelector(".zoom-preview2");
-    preview.style.backgroundImage = "none";
-    setZoomPreviewVisible(false); // Hide the zoom preview
+  //   // calculating the ratio
+  //   const x = preview?.offsetWidth / 180;
+  //   const y = preview?.offsetHeight / 180;
 
-  };
+  //   if (preview && preview.style) {
+  //     preview.style.backgroundImage = `url(${import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)})`;
+  //     preview.style.backgroundSize = `${img.width * x}px ${img.height * y}px`;
+  //   }
+
+  //   const posX = e.nativeEvent?.offsetX;
+  //   const posY = e.nativeEvent?.offsetY;
+
+  //   preview.style.backgroundPosition = `-${posX * x}px -${posY * y}px`;
+
+  // };
+
+  // const handleMouseOut = () => {
+  //   const preview = document.querySelector(".zoom-preview2");
+  //   preview.style.backgroundImage = "none";
+  //   setZoomPreviewVisible(false); // Hide the zoom preview
+
+  // };
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -173,7 +273,7 @@ const ProductImageView = ({
             <div className="relative mb-2.5 w-full shrink-0 overflow-hidden rounded-md border md:mb-3 xl:w-[480px] 2xl:w-[600px]">
               <div className="flex justify-center mx-auto items-center ">
                 {/* Image Current */}
-                <img
+                {/* <img
                   alt={`Product gallery ${currentImageIndex + 1}`}
                   src={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)}
                   id="magnify-img"
@@ -183,6 +283,10 @@ const ProductImageView = ({
                   className="rounded-lg object-cover md:h-[550px] md:w-full lg:h-full cursor-pointer md:cursor-pointer"
                   onMouseMove={handleMouseMove}
                   onMouseOut={handleMouseOut}
+                /> */}
+                <ImageMagnifier imgSrc={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)} zoom={2}
+                  imgAlt={`Product gallery ${currentImageIndex + 1}`}
+                  zoomStrength={2}
                 />
               </div>
 
@@ -280,7 +384,7 @@ const ProductImageView = ({
         </div>
         {/*  Zoom Preview */}
         {/* {isZoomPreviewVisible && (
-          <div className="zoom-preview2 overflow-hidden absolute top-[50%] right-28 h-[30rem] w-[30rem] z-50"></div>
+          <div className="zoom-preview2 overflow-hidden absolute top-[40%] right-28 h-[30rem] w-[30rem] z-50"></div>
         )} */}
       </div>
     </>
@@ -1042,7 +1146,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?gender=${demo.product?.category.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.category.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-12 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :demo.product?.category.name}
               </Link>
             </div>
           </li>
@@ -1053,7 +1160,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?category=${demo.product?.subcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.subcategory.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :demo.product?.subcategory.name}
               </Link>
             </div>
           </li>
@@ -1064,7 +1174,10 @@ const ProductOverview = () => {
               </svg>
 
               <Link to={`/products?subcategory=${demo.product?.subsubcategory.id}`} className="ml-1 text-xs md:text-base text-c-gray-800 hover:underline md:ml-2">
-                {demo.product?.subsubcategory.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :demo.product?.subsubcategory.name}
               </Link>
             </div>
           </li>
@@ -1074,7 +1187,11 @@ const ProductOverview = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
               <span className="ml-1 text-xs md:text-base font-medium text-c-gray-800 md:ml-2">
-                {demo.product?.name}
+                {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-6 w-32 shrink-0 overflow-hidden rounded-md border"></div>
+                </div> :
+                  demo.product?.name}
               </span>
             </div>
           </li>
@@ -1092,7 +1209,11 @@ const ProductOverview = () => {
           <div className="mb-7 border-b border-c-gray-300 pb-2">
             <div className="flex justify-between items-center ">
               <p className=" mb-3.5 font-bold " style={{ fontSize: '1.3rem' }}>
-                {demo.product?.name}
+              {overviewloading ?
+                  <div className="animate-pulse">
+                  <div className="bg-gray-400 h-8 w-48 shrink-0 overflow-hidden rounded-md border"></div>
+                  </div> :
+                  demo.product?.name}
               </p>
               <div className="flex items-center gap-3">
                 <button className="hover:scale-110">
@@ -1142,7 +1263,7 @@ const ProductOverview = () => {
 
                             </button>
                           </li>
-                          <li className="hover:bg-gray-200/30 pl-2">
+                          {/* <li className="hover:bg-gray-200/30 pl-2">
                             <button onClick={shareInstagram} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('instagram', '#E91E63')}
                               onMouseLeave={() => handleIconHover('instagram', '#212121')}
@@ -1156,7 +1277,7 @@ const ProductOverview = () => {
                               </span>
 
                             </button>
-                          </li>
+                          </li> */}
                           <li className="hover:bg-gray-200/30 pl-2">
                             <button onClick={shareWhatsApp} className="hover:scale-110 ease-in duration-200 flex items-center text-gray-700 block px-4 py-2 text-sm"
                               onMouseEnter={() => handleIconHover('whatsapp', 'green')}
@@ -1205,8 +1326,11 @@ const ProductOverview = () => {
               </div>
             </div>
             <div className="mb-4 ">
-              <h3 className="text-heading mb-2.5 text-sm font-semibold capitalize md:text-lg">
-                color : {demo.product?.color}
+              <h3 className="text-heading mb-2.5 text-sm font-semibold capitalize md:text-lg flex">
+                color : {overviewloading ?
+                  <div className="animate-pulse flex">
+                  <div className="bg-gray-400 h-6 w-24 shrink-0 overflow-hidden rounded-md border mx-2"></div>
+                  </div> :demo.product?.color}
               </h3>
               {demo.product?.model_size}
             </div>

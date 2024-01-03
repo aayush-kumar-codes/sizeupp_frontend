@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { banner1, banner2, banner3 } from "../../assets/banners";
 import { Link } from 'react-router-dom';
-
+import { mobile1,mobile2,mobile3 } from '../../assets/banners/mobile';
 const BannerData = [
   {
     id: 1,
     img: banner1,
+    smimg: mobile1,
     title: 'Live Your Dance',
     subtitle: 'Create',
     description: 'Memories',
@@ -13,6 +14,7 @@ const BannerData = [
   {
     id: 2,
     img: banner2,
+    smimg: mobile2,
     title: 'Explore Your Creativity',
     subtitle: 'Innovate',
     description: 'Imagination',
@@ -20,6 +22,7 @@ const BannerData = [
   {
     id: 3,
     img: banner3,
+    smimg: mobile3,
     title: 'Embrace Adventure',
     subtitle: 'Discover',
     description: 'New Horizons',
@@ -55,7 +58,15 @@ const BannerCarousel = () => {
           <img
             src={banner.img}
             alt={`Banner ${banner.id}`}
-            className={`object-cover w-full h-full ${
+            className={`object-cover hidden md:block w-full h-full ${
+                index === currentBanner ? '' : ''
+              }`}
+  
+          />
+          <img
+            src={banner.smimg}
+            alt={`Banner ${banner.id}`}
+            className={`object-cover md:hidden block w-full h-full ${
                 index === currentBanner ? '' : ''
               }`}
   
