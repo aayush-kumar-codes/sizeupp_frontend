@@ -167,10 +167,13 @@ const AuthProvider = ({ children }) => {
     const handleValidateToken = async () => {
         if (localStorage.token) {
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/validate-token', {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-                }
+                },
+                body: JSON.stringify({
+                    token: localStorage.getItem('token')
+                })
             })
 
             if (!res.ok) {

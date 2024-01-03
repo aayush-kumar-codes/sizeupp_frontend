@@ -96,7 +96,7 @@ export function Login() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
+                    text: 'Email and password does not match',
                     showConfirmButton: false,
                     timer: 1200
                 });
