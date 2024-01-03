@@ -125,7 +125,6 @@ const Register = () => {
                     newsletter: false
                 });
                 setIsAuth(true);
-                setIsVerfied(data.user_verified);
             } else {
                 Swal.fire({
                     icon: 'error',

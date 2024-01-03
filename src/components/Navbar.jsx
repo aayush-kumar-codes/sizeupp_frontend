@@ -557,20 +557,37 @@ export function Navbar() {
                                                 </>
                                             )
                                         })} */}
-
+                                        <Link to="/products" className='text-sm font-semibold'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {
-                                                <AccordionItem
+                                                return <AccordionItem
                                                     key={cat.name}
                                                     title={cat.name}
                                                     content={
-                                                        cat.subcategories && cat.subcategories?.map((subcat) => {
-                                                            return (
-                                                                <Link key={subcat.id} to={`/products?category=${subcat.id}`}>
-                                                                    {subcat.name}
-                                                                </Link>
-                                                            )
-                                                        })
+                                                        <div className='grid grid-cols-1 gap-y-2 pl-4'>
+                                                            {cat.subcategories && cat.subcategories?.map((subcat) => {
+                                                                return (
+                                                                    <AccordionItem
+                                                                        key={subcat.name}
+                                                                        title={subcat.name}
+                                                                        content={
+                                                                            <div className='grid grid-cols-1 gap-y-2'>
+                                                                                {
+                                                                                    subcat.subsubcategories.map((subsubcat) => {
+                                                                                        return (
+                                                                                            <Link className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?category=${subsubcat.id}`}>
+                                                                                                {subsubcat.name}
+                                                                                            </Link>
+                                                                                        )
+                                                                                    })
+                                                                                }
+                                                                            </div>
+                                                                        }
+                                                                        />
+                                                                )
+                                                            })}
+                                                        </div>
+
                                                     }
                                                 />
                                             }
