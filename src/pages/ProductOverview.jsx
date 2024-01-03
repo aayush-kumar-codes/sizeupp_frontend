@@ -11,7 +11,7 @@ import { LinkIcon } from "@heroicons/react/20/solid";
 import RelatedProducts from "../components/ProductOverview/RelatedProducts";
 import ReviewProduct from "../components/ProductOverview/ReviewProduct";
 import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOverviewCar";
-import { CasualBottom_boxer } from "../assets/sizechart";
+// import { CasualBottom_boxer } from "../assets/sizechart";
 import { Images } from "../components/Sizechart/Data";
 
 export const Modal = ({ children, onClose }) => {
