@@ -30,6 +30,7 @@ const Megamenu = () => {
         setMegamenuhide(true)
         navigate(`/products?gender=${gender}&category=${cat}&subcategory=${id}`)
         setMegamenuhide(false)
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
     return (
         <div className={`${styles.paddingX} hidden md:block py-2 w-full sticky top-16 bg-white shadow z-40 `}>

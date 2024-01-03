@@ -574,9 +574,15 @@ const PincodeForm = () => {
     }
   }
 
+  const [payload,setpayload] = useState(false)
+
   const handleApplyPincode = async (e) => {
     e.preventDefault()
+    if(payload) {
+      return
+    }
     try {
+      setpayload(true)
       if (pincode.length !== 6) {
         Swal.fire({
           title: 'Error!',
@@ -600,6 +606,7 @@ const PincodeForm = () => {
       console.log(data);
       if (data.message == 'PINCODE NOT SERVICEABLE') {
         setIsDeliveryValid(false)
+        setpayload(false)
         return Swal.fire({
           title: 'Error!',
           text: data.message,
@@ -609,6 +616,7 @@ const PincodeForm = () => {
         });
       }
       setIsDeliveryValid(true)
+      setpayload(false)
       Swal.fire({
         title: 'Success!',
         text: data.message,
@@ -619,6 +627,7 @@ const PincodeForm = () => {
     }
     catch (error) {
       console.error('Fetch error:', error);
+      setpayload(false)
       Swal.fire({
         title: 'Error!',
         text: 'Fetch error: ' + error,
