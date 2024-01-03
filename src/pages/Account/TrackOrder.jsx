@@ -43,6 +43,15 @@ const TrackOrderPage = () => {
         }
     }, [id])
 
+    const Status = [
+        'Order Processing',
+        'In Packed',
+        'Shipped',
+        'In-Transit',
+        'Delivered',
+        'Cancel'
+    ]
+
     return (
         <div className="container mx-auto mt-8 p-4">
             <div className="mb-8">

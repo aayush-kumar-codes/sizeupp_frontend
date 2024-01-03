@@ -73,7 +73,7 @@ const BannerCarousel = () => {
           />
           {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
               <div className="absolute inset-0 flex flex-col md:justify-center justify-between md:p-0 py-24 md:items-start items-center text-white z-50">
-            <div className="flex flex-col w-full justify-start md:ml-24 ml-16">
+            <div className="flex flex-col w-fit justify-start md:ml-24 ml-12">
               
                         <h1 className="text-[2.8rem] lg:text-[4rem] font-serif font-bold drop-shadow-xl">{banner.title}</h1>
                         <h2 className="md:text-4xl text-3xl font-[Times-new-roman] italic drop-shadow-xl" >{banner.subtitle}</h2>
