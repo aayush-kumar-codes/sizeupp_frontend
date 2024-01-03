@@ -7,7 +7,7 @@ import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 import { PhoneIcon } from "@heroicons/react/24/outline";
 import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
 import { AuthContext } from '../context/AuthProvider';
-
+import {logo} from '../assets/banners'
 
 
 
@@ -126,11 +126,11 @@ const Profileview = () => {
                     height="40px"
                     className="rounded-full object-cover"
                     src="https://cdn2.iconfinder.com/data/icons/web-solid/32/user-512.png"
-                    alt="Red woman portrait"
+                    alt="profile"
                   />
                   <div className="ml-5">
                     <p className="font-medium text-gray-500">Hello,</p>
-                    <p className="font-bold">{profiledata.user_info?.first_name + profiledata.user_info?.last_name}</p>
+                    <p className="font-bold">{profiledata.user_info?.first_name +" " + profiledata.user_info?.last_name}</p>
                   </div>
                 </div>
               </div>
@@ -303,12 +303,12 @@ const Profileview = () => {
                       width="40px"
                       height="40px"
                       className="rounded-full object-cover"
-                      src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                      alt="Red woman portrait"
+                      src="https://cdn2.iconfinder.com/data/icons/web-solid/32/user-512.png"
+                      alt="profile"
                     />
                     <div className="ml-5">
                       <p className="font-medium text-gray-500">Hello,</p>
-                      <p className="font-bold">{profiledata.user_info?.first_name + profiledata.user_info?.last_name}</p>
+                      <p className="font-bold">{profiledata.user_info?.first_name +" " + profiledata.user_info?.last_name}</p>
                     </div>
                   </div>
 
@@ -336,7 +336,7 @@ const Profileview = () => {
                   className="fixed left-0 top-0 transform shadow-md h-full  w-64 bg-white border p-4 z-50 pt-24 translate-x-0 ease-in">
                   {/* Add your sidebar content here */}
                   
-                   <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+                   {/* <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
@@ -360,6 +360,18 @@ const Profileview = () => {
                               </svg>
 
                           Account Settings
+                        </Link>
+                      </div>
+                    </div>
+                  </div> */}
+                  <div className="flex  p-4 rounded-lg ">
+                    <div className="flex w-full">
+                      <div className="flex flex-col ">
+                        <Link
+                          to="/"
+                          className="flex items-center gap-2 font-medium active:text-violet-900"
+                        >
+                         <img src={logo} className='w-72'/>
                         </Link>
                       </div>
                     </div>
@@ -408,7 +420,7 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+                  {/* <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
@@ -422,7 +434,7 @@ const Profileview = () => {
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex border p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
