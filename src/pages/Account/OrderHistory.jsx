@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1, Navy1 } from '../../assets/images/men';
 import Swal from 'sweetalert2'
 import { AuthContext } from '../../context/AuthProvider';
+
+
 const DeliveryHistoryTable = () => {
     const navigate = useNavigate();
     const deliveryHistoryData = [
@@ -92,7 +94,7 @@ const DeliveryHistoryTable = () => {
                                 <th className="px-6 py-3 text-left">Payment</th>
                                 <th className="px-6 py-3 text-left">Status</th>
                                 <th className="px-6 py-3 text-left">ACTION</th>
-                                <th className="px-6 py-3 text-left">Query</th>
+                                <th className="px-6 py-3 text-left">Cancel / Reurn</th>
 
 
                             </tr>
@@ -113,7 +115,11 @@ const DeliveryHistoryTable = () => {
                                         </Link>
                                     </td>
                                     
-                                    <td className="px-6 py-4">Generte Query</td>
+                                    <td className="px-6 py-4">
+                                        <Link to={`/profile/cancel-return/${item.id}`}>
+                                            <button className="text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md">Cancel or Return</button>
+                                            </Link>
+                                    </td>
 
                                 </tr>
                             ))}
