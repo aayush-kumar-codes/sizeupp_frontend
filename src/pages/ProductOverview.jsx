@@ -1595,7 +1595,7 @@ const ProductOverview = () => {
               }
             />
             <AccordionItem
-              title="Additional Information"
+              title="Care Guide"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
 
