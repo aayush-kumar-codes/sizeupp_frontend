@@ -17,7 +17,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { fetchProductsAuth, fetchCart, isFilterActive, setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
+    const { fetchProductsAuth, fetchCart, fetchWishlist, isFilterActive, setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
 
 
 
@@ -169,6 +169,7 @@ const ProductList = ({
             const data = await res.json()
             console.log(data);
             fetchProductsAuth()
+            fetchWishlist()
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Added to Wishlist',
@@ -332,8 +333,9 @@ const ProductList = ({
                                     <div className='truncate text-base text-accent'>{items.name}</div>
 
                                     <div className=' flex flex-wrap justify-between items-center'>
-                                        <div className='text-sm text-accent flex items-center gap-2'><p>&#8377; {items.discount_price ? items.discount_price : items.mrp}</p>
-                                            {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                        <div className='text-sm text-accent flex items-center gap-2'>
+                                            <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
+                                            {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
                                                 <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
                                                 <p className="text-sm font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
                                             </div>
@@ -341,8 +343,8 @@ const ProductList = ({
                                         </div>
                                         <button
                                             type="button"
-                                            onClick={() => { navigate(`/products/cart`) }}
-                                            className="rounded-md my-2 bg-black px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
+                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                         >
                                             Add to Cart
                                         </button>
@@ -385,8 +387,8 @@ const ProductList = ({
                                     <p className='truncate text-base text-accent'>{items.name}</p>
                                     <div className='flex flex-wrap justify-between items-center'>
                                         <div className='text-lg text-accent flex items-center gap-2'>
-                                            <p>&#8377; {items.mrp}</p>
-                                            {items.discount_price && <div className='flex flex-wrap justify-center items-center'>
+                                            <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
+                                            {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
                                                 <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
                                                 <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
                                             </div>
@@ -394,8 +396,8 @@ const ProductList = ({
                                         </div>
                                         <button
                                             type="button"
-                                            onClick={() => { navigate(`/products/cart`) }}
-                                            className="rounded-md my-2 bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                            onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
+                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                         >
                                             Add to Cart
                                         </button>

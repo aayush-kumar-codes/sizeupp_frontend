@@ -9,7 +9,7 @@ import Swal from "sweetalert2"
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])
 
-    const { isAuth } = useContext(AuthContext);
+    const { isAuth,fetchWishlist } = useContext(AuthContext);
 
     // fetch data from server
     const fetchData = async () => {
@@ -58,6 +58,7 @@ export const ProductFav = () => {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json()
+            fetchWishlist()
             console.log(data);
             if (data.wishlist) {
                 setFavData(data.wishlist)
@@ -118,6 +119,7 @@ export const ProductFav = () => {
     useEffect(() => {
         if (localStorage.token) {
             fetchData()
+            fetchWishlist()
         }
        
     }, [])

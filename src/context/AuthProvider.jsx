@@ -164,7 +164,7 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    const handleValidateToken = async() => {
+    const handleValidateToken = async () => {
         if (localStorage.token) {
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/validate-token', {
                 method: 'GET',
@@ -269,6 +269,32 @@ const AuthProvider = ({ children }) => {
         }
     }, []);
 
+
+    // fetch wishlist and set count 
+    const [wishlist, setWishlist] = useState([])
+    const fetchWishlist = async () => {
+        try {
+            setWishlist([])
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/wishlist', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            setWishlist(data.wishlist)
+            console.log(data.wishlist);
+
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            
+        }
+    }
 
     // fetch cart and set count 
     const [cart, setCart] = useState([])
@@ -421,6 +447,9 @@ const AuthProvider = ({ children }) => {
                 setCart,
                 fetchCart,
 
+                wishlist,
+                setWishlist,
+                fetchWishlist,
 
                 pagecount,
                 setpagecount,

@@ -218,7 +218,7 @@ export function Navbar() {
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     // const [isInputFocused, setIsInputFocused] = useState(false);
-    const { search, setSearch, setfilterdata, filterdata, handlefetchProducts, cart } = useContext(AuthContext)
+    const { search, setSearch, setfilterdata, filterdata, handlefetchProducts, cart,wishlist } = useContext(AuthContext)
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
@@ -371,6 +371,23 @@ export function Navbar() {
                             <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
                                 <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
                                     <HeartIcon className='w-6 h-6 stroke-2' />
+                                    <span className='text-xs font-medium '>Wishlist</span>
+                                </Link>
+                            </li>
+
+                            <li >
+                                <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
+
+                                    {wishlist?.length > 0 ?
+                                        <div className="relative">
+                                            <div className=" absolute -top-2 left-3">
+                                                <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{wishlist?.length}</p>
+                                            </div>
+                                            <HeartIcon className='w-6 h-6 stroke-2 ' />
+
+                                        </div>
+                                        : <HeartIcon className='w-6 h-6 stroke-2 ' />
+                                    }
                                     <span className='text-xs font-medium '>Wishlist</span>
                                 </Link>
                             </li>
