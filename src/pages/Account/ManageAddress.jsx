@@ -289,7 +289,7 @@ const NewAddress = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="px-4 bg-white">
+          <div className="px-4 bg-white" style={{minWidth:'280px'}}>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Address Line 1
