@@ -130,12 +130,12 @@ const Account = () => {
     const handleEdit = async () => {
         try {
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/update-profile', {
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json',
-                    'Authorization' : 'token ' + localStorage.getItem('token')
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + localStorage.getItem('token')
                 },
-                body : JSON.stringify({
+                body: JSON.stringify({
                     address_line_1: formData.addressLine1,
                     address_line_2: formData.addressLine2,
                     city: formData.city,
@@ -148,7 +148,7 @@ const Account = () => {
 
             const data = await res.json()
 
-            if(!data.ok){
+            if (!data.ok) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -228,13 +228,13 @@ const Account = () => {
                                 <div key={adrs.id} className='px-4'>
                                     <div className="flex justify-between px-4 pb-5">
                                         <p className="font-bold text-lg">Default Shipping Address </p>
-                                        <button
+                                        {/* <button
                                             className="text-sm text-violet-900"
                                             onClick={handleEditClick}
                                             disabled={editMode}
                                         >
                                             Edit
-                                        </button>
+                                        </button> */}
                                     </div>
 
                                     <form onSubmit={handleSubmit}>
@@ -339,7 +339,7 @@ const Account = () => {
 
                                             {editMode && (
                                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                    <button type="button" onClick={()=>{handleEdit()}} className="rounded-lg bg-blue-500 text-white px-4 py-2">
+                                                    <button type="button" onClick={() => { handleEdit() }} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                                         Save
                                                     </button>
                                                 </div>
