@@ -218,7 +218,7 @@ export function Navbar() {
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     // const [isInputFocused, setIsInputFocused] = useState(false);
-    const { search, setSearch, setfilterdata, filterdata, handlefetchProducts, cart,wishlist } = useContext(AuthContext)
+    const { search, setSearch, setfilterdata, filterdata, handlefetchProducts, cart, wishlist } = useContext(AuthContext)
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
@@ -310,7 +310,7 @@ export function Navbar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/products?navsearch=${search}`) 
+        navigate(`/products?navsearch=${search}`)
     }
 
     return (
@@ -358,7 +358,7 @@ export function Navbar() {
                         </div> */}
                         <form onSubmit={handleSubmit} className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
                             <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search" />
-                            <button type="submit"  className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
+                            <button type="submit" className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
                                 <MagnifyingGlassIcon className="h-4 w-4 text-white " />
                             </button>
                         </form>
