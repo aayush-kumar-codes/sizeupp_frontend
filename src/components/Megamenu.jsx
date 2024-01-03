@@ -63,7 +63,7 @@ const Megamenu = () => {
                             <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
                                 <div className={`hidden focus:hidden group-hover:grid grid-cols-${gender.subcategories.length / 2} gap-10 justify-between absolute p-6 w-fit border bg-secondary rounded-md drop-shadow-md`}>
 
-                                    {gender.subcategories && gender.subcategories.map((cat) => {
+                                    {gender.subcategories && gender?.subcategories.map((cat) => {
                                         return (
                                             <div key={cat.id} className="col-span-1 ">
                                                 <h2 className="text-base font-semibold mb-2">{cat.name}</h2>

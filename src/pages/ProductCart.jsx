@@ -162,6 +162,14 @@ export function ProductCart() {
             const data = await res.json()
             console.log(data);
             setCart(data)
+
+            Swal.fire({
+                title : 'Info!',
+                text : data.coupon_message,
+                icon : 'info',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
         catch (error) {
             console.error('Fetch error:', error);

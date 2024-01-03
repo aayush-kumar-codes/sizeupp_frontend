@@ -218,7 +218,7 @@ export function Navbar() {
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     // const [isInputFocused, setIsInputFocused] = useState(false);
-    const { search, setSearch, setfilterdata, filterdata, handlefetchProducts, cart, wishlist } = useContext(AuthContext)
+    const { search, setSearch, catlist, setfilterdata, filterdata, handlefetchProducts, cart, wishlist } = useContext(AuthContext)
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
@@ -312,6 +312,21 @@ export function Navbar() {
         e.preventDefault();
         navigate(`/products?navsearch=${search}`)
     }
+
+
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        }).then(res => res.json().then(data => {
+            setData(data)
+            localStorage.setItem("cat_list", JSON.stringify(data))
+        }
+        ))
+    }, [])
 
     return (
         // container
@@ -483,7 +498,7 @@ export function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        {mobileMenuItems.map((item) => {
+                                        {/* {mobileMenuItems.map((item) => {
                                             return (
                                                 <>
 
@@ -541,7 +556,26 @@ export function Navbar() {
                                                     }
                                                 </>
                                             )
-                                        })}
+                                        })} */}
+
+                                        {
+                                            data.categories && data.categories?.map((cat) => {
+                                                <AccordionItem
+                                                    key={cat.name}
+                                                    title={cat.name}
+                                                    content={
+                                                        cat.subcategories && cat.subcategories?.map((subcat) => {
+                                                            return (
+                                                                <Link key={subcat.id} to={`/products?category=${subcat.id}`}>
+                                                                    {subcat.name}
+                                                                </Link>
+                                                            )
+                                                        })
+                                                    }
+                                                />
+                                            }
+                                            )
+                                        }
 
                                     </nav>
                                 </div>
