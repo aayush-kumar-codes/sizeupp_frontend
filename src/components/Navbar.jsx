@@ -368,12 +368,6 @@ export function Navbar() {
 
                     <div className='hidden lg:block'>
                         <ul className="inline-flex space-x-10">
-                            <li className='flex  gap-1 cursor-pointer' onClick={() => { navigate("/products/favourite") }}>
-                                <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
-                                    <HeartIcon className='w-6 h-6 stroke-2' />
-                                    <span className='text-xs font-medium '>Wishlist</span>
-                                </Link>
-                            </li>
 
                             <li >
                                 <Link to="/products/favourite" className='flex flex-col items-center hover:scale-110 ease-in duration-200'>
