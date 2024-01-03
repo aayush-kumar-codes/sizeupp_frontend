@@ -234,7 +234,7 @@ const ProductImageView = ({
 
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     autoplay: true,
     slidesToShow: 1,
@@ -247,7 +247,7 @@ const ProductImageView = ({
       {
         breakpoint: 576,
         settings: {
-          dots: true,
+          dots: false,
           appendDots: (dots) => (
             <div
               style={{
@@ -1166,11 +1166,11 @@ const ProductOverview = () => {
 
       <div className="flex items-center">
         {/* Nav menu- Breadcrumb */}
-        <ol className={`inline-flex items-center space-x-1 md:space-x-3`}>
+        <ol className={`hidden md:inline-flex items-center space-x-1 md:space-x-3`}>
           <li className="inline-flex items-center">
             <Link
               to="/products"
-              className=" inline-flex text-xs md:text-base text-c-gray-800 hover:underline md:ml-2"
+              className="inline-flex text-xs md:text-base text-c-gray-800 hover:underline md:ml-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />

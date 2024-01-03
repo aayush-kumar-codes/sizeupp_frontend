@@ -43,7 +43,7 @@ const MobileNav = () => {
     <ScrollButton/>
 
 {/* <!-- fixed nav --> */}
-    <div className="md:hidden z-50 fixed bottom-0 inset-x-0 bg-yellow-300 flex justify-between text-xs  uppercase font-mono">
+    <div className="md:hidden z-50 fixed bottom-0 inset-x-0 bg-[#FFAE00] flex justify-between text-xs  uppercase font-mono">
 
     <a href="/" className="w-full flex flex-col  py-2 px-3 text-center hover:bg-yellow-200 hover:text-yellow-800 transition duration-300">
             <HomeIcon className="h-5 w-5 mx-auto text-yellow-800" />
