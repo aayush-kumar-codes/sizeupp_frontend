@@ -7,7 +7,7 @@ const TermsCondition = () => {
             <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
 
             <p>
-                Access to and use of Sizeupp.com and the products and service available through the website are subject to the following terms, conditions, and notices (“Terms of Service”). By browsing through these Terms of Service and using the services provided by our website (<a href="https://www.sizeupp.com" className="text-blue-500">www.sizeupp.com</a>), you agree to all Terms of Service along with the Privacy Policy on our website, which may be updated by us from time to time. Please check this page regularly to take notice of any changes we may have made to the Terms of Service.
+                Access to and use of sizeupp.com and the products and service available through the website are subject to the following terms, conditions, and notices (“Terms of Service”). By browsing through these Terms of Service and using the services provided by our website (<a href="https://www.sizeupp.com" className="text-blue-500">www.sizeupp.com</a>), you agree to all Terms of Service along with the Privacy Policy on our website, which may be updated by us from time to time. Please check this page regularly to take notice of any changes we may have made to the Terms of Service.
             </p>
 
             <p className="mt-4">
@@ -22,7 +22,7 @@ const TermsCondition = () => {
             <h2 className="text-2xl font-bold mt-6">	Services</h2>
 
               <p>
-                  Sizeupp.com is an online retailer of apparel and lifestyle products offered at great values to the consumer. Membership allows customers to purchase a variety of products. Upon placing an order, Sizeupp.com shall ship the product to you and be entitle to its payment for the service.
+                sizeupp.com is an online retailer of apparel and lifestyle products offered at great values to the consumer. Membership allows customers to purchase a variety of products. Upon placing an order, Sizeupp.com shall ship the product to you and be entitle to its payment for the service.
                 <br/>
                 Additionally, we may provide you with information about other services, we consider similar to those that you are either already using, or have enquired about, or that may interest you or any combination thereof. Upon registering with us, we may contact you by electronic means (i.e., either e-mail or SMS or telephone or any combination thereof) to inform about these services
 
