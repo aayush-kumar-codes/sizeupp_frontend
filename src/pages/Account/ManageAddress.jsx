@@ -341,7 +341,7 @@ const NewAddress = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="px-4 bg-white" style={{ minWidth: '280px' }}>
+          <div className="px-4 bg-white w-11/12 rounded-md md:w-1/2">
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Address Line 1
@@ -422,7 +422,7 @@ const NewAddress = () => {
             {/* Include other fields similarly */}
 
 
-            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-5 grid grid-cols-3 gap-4 px-6">
 
               <button type="button" onClick={(e) => { handleSubmit(e); setIsEdit(false); }} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                 Save
@@ -442,27 +442,27 @@ const NewAddress = () => {
           className="flex flex-col lg:flex-row w-full justify-evenly items-center"
         >
           <div className="text-xl font-bold">Address {index + 1}</div>
-          <div className="lg:w-2/5 max-w-xl h-auto rounded-lg bg-white border my-6 p-5">
+          <section className="w-11/12 lg:w-2/5 max-w-xl h-auto rounded-lg bg-white border my-6 p-5">
 
             <div className="flex">
-              <span>Address Line 1   :</span>
-              <p className="text-base">{address.address_line_1}</p>
+              <span className='font-semibold'>Address Line 1   :</span>
+              <p className="ml-4 ">{address.address_line_1}</p>
             </div>
             <div className="flex">
-              <span>Address Line 2   :</span>
-              <p>{address.address_line_2}</p>
+              <span className='font-semibold'>Address Line 2   :</span>
+              <p className="ml-4">{address.address_line_2}</p>
             </div>
             <div className="flex">
-              <span>City   : </span>
-              <p>{address.city}</p>
+              <span className='font-semibold'>City   : </span>
+              <p className="ml-4">{address.city}</p>
             </div>
             <div className="flex">
-              <span>Pin code :</span>
-              <p>{address.postal_code}</p>
+              <span className='font-semibold'>Pin code :</span>
+              <p className="ml-4">{address.postal_code}</p>
             </div>
             <div className="flex">
-              <span>Country</span>
-              <p>{address.country}</p>
+              <span className='font-semibold'>Country :</span>
+              <p className="ml-4">{address.country}</p>
             </div>
             <div className="flex justify-end w-full gap-4">
               <div className=''>
@@ -494,7 +494,7 @@ const NewAddress = () => {
               <button onClick={() => { handleDeleteAddress(address.id); }} className='bg-red-700 rounded p-1 px-2 text-white'>Delete</button>
 
             </div>
-          </div>
+          </section>
         </div>
       ))}
     </div>
