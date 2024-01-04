@@ -692,8 +692,8 @@ function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        <Link to="/profile" className='text-sm font-semibold border-t border-c-gray-300 py-5' > Profile</Link>
-                                        <Link to="/products" className='text-sm font-semibold border-t border-c-gray-300 py-5'>All Products</Link>
+                                        <Link to="/profile" onClick={()=>{setIsMenuOpen(false)}} className='text-sm font-semibold border-t border-c-gray-300 py-5' > Profile</Link>
+                                        <Link to="/products" onClick={()=>{setIsMenuOpen(false)}} className='text-sm font-semibold border-t border-c-gray-300 py-5'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {
                                                 return <AccordionItem
@@ -711,7 +711,7 @@ function Navbar() {
                                                                                 {
                                                                                     subcat.subsubcategories.map((subsubcat) => {
                                                                                         return (
-                                                                                            <Link className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?category=${subsubcat.id}`}>
+                                                                                            <Link onClick={()=>{setIsMenuOpen(false)}} className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?gender=${cat.id}&category=${subcat.id}&subcategory=${subsubcat.id}`}>
                                                                                                 {subsubcat.name}
                                                                                             </Link>
                                                                                         )
