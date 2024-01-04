@@ -296,7 +296,6 @@ export function ProductCart() {
                 city: '',
                 state: '',
                 zipCode: '',
-                country: '',
             })
             setChangeAdr(false)
             fetchUserProfile()
@@ -568,7 +567,7 @@ export function ProductCart() {
                                             required
                                             name="country"
                                             disabled
-                                            value={formData.country}
+                                            value={'India'}
                                             onChange={handleInputChange} />
                                     </dd>
                                 </div>
