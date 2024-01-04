@@ -27,7 +27,6 @@ export const Modal = ({ children, onClose }) => {
       if (e.key === 'Escape') {
         onClose();
       }
-
     };
 
     document.addEventListener('keydown', handleEscapeKey);
@@ -40,7 +39,7 @@ export const Modal = ({ children, onClose }) => {
     <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-80 bg-gray-900" onClick={handleOverlayClick}>
       <div className=" p-8 rounded-md max-w-screen-sm w-full h-auto overflow-auto">
         {children}
-        <button className="absolute top-[8rem] right-[4rem]  bg-black rounded-full p-1 md:top-[6rem] md:right-[26rem] text-gray-100" onClick={onClose}>
+        <button className="absolute top-[8rem] right-[4rem] bg-black rounded-full p-1 md:top-[6rem] md:right-[26rem] text-gray-100" onClick={onClose}>
           <XMarkIcon className="h-8 w-8 text-gray-100" />
         </button>
       </div>
