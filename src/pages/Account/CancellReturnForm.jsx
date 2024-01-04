@@ -9,11 +9,6 @@ const CancellReturnForm = () => {
     const { id } = useParams()
     const navigate = useNavigate();
 
-    const handleFindOrder = () => {
-        const order = profiledata.orders.filter((order) => order.id === id)
-        console.log(order[0])
-        setorder(order[0])
-    }
 
     const fetchProfileData = async (id) => {
         try {
@@ -100,7 +95,8 @@ const CancellReturnForm = () => {
                     </div>
                 
                     <div className="col-span-full">
-                        <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Cancel / Return Order</button>
+                        {order.delivery_status != "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Cancel</button>}
+                        {order.delivery_status != "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Cancel</button>}
                         
                     </div>
                     
