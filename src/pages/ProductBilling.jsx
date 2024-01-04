@@ -354,7 +354,7 @@ export function ProductBilling() {
                 addressLine2: '',
                 city: '',
                 state: "",
-                country: '',
+                country: 'India',
                 pinCode: '',
                 mobile: '',
                 is_deafult: false
@@ -459,9 +459,10 @@ export function ProductBilling() {
                         {cart.products?.length > 0 ? cart.products?.map((product, i) => {
                             let info = product.cart
                             return (
-                                <div key={i} className='grid gap-2 py-4 drop-shadow-md lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
+                                <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 grid-cols-3'>
                                     <div className='col-span-1 justify-center items-center'>
                                         <img
+                                            onClick={() => { navigate(`/products/${info.product?.id}`) }}
                                             src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                             alt={info.product?.name}
                                             className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
@@ -474,6 +475,8 @@ export function ProductBilling() {
                                                     {info.product.name}
                                                 </Link>
                                             </h3>
+
+                                            {/* Sizes */}
                                             {
                                                 info.product?.sqp.map((size, index) => {
                                                     if (info.size_quantity_price != size.id) {
@@ -486,24 +489,30 @@ export function ProductBilling() {
                                                     )
                                                 })
                                             }
-                                            <div className="mt-1 col-span-1 flex justify-center items-center">
+
+                                            {/* Price */}
+                                            <div className="mt-2 col-span-1 flex justify-center items-center">
                                                 <p className="text-sm font-medium text-c-gray-900">
-                                                    ₹ {info.product?.discounted_price ? info.product?.discounted_price : info?.mrp}
+                                                    ₹ {info.product?.discounted_price ? info.product?.discounted_price : info.product?.mrp}
                                                 </p>
-                                                {info.product?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
-                                                    <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                        ₹ {info.product?.mrp}
-                                                    </p>
-                                                    <p className="text-sm ml-2 font-medium text-green-500">{info.product?.discount_percentage}%</p>
-                                                </div>}
+
+                                                {info.product?.discounted_price &&
+                                                    <div className='flex justify-center items-center flex-wrap'>
+                                                        <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
+                                                            ₹ {info.product?.mrp}
+                                                        </p>
+                                                        <p className="text-sm ml-2 font-medium text-green-500">{info.product?.discount_percentage}%</p>
+                                                    </div>}
                                             </div>
+
+                                            {/* stock */}
                                             <div className={`${info.product?.sqp.map((size, index) => {
                                                 if (info.size_quantity_price != size.id) {
                                                     return null
                                                 }
 
                                                 return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
-                                            })} font-normal col-span-1 flex justify-center items-center text-base py-2`}>
+                                            })} col-span-1 flex justify-center items-center font-normal text-sm py-2`}>
                                                 {
                                                     info.product?.sqp.map((size, index) => {
                                                         if (info.size_quantity_price != size.id) {
@@ -511,29 +520,30 @@ export function ProductBilling() {
                                                         }
 
                                                         return (
-
                                                             parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
                                                         )
                                                     })
                                                 }
                                             </div>
+                                            {/* Qty Update buttons */}
                                             <div className='col-span-1 flex justify-center items-center'>
 
                                                 <input
                                                     type="text"
                                                     className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                    value={product?.qty || 0}
                                                     disabled
+                                                    value={product.qty}
                                                 />
                                             </div>
+                                            {/* Total Price */}
                                             <div className='col-span-1 flex justify-center items-center'>
-                                                {'  '}
+                                                <div className=''>₹ {(info?.total_price)}</div>
                                             </div>
-                                            <div className='col-span-1 flex justify-center items-center'>
-                                                <div className=''>₹ {(info.total_price)}</div>
-                                            </div>
+
+                                            
                                         </div>
                                     </div>
+
 
                                 </div>
                             )
@@ -730,8 +740,7 @@ export function ProductBilling() {
                                                                     required
                                                                     name="country"
                                                                     disabled
-                                                                    value={formData.country}
-                                                                    onChange={handleInputChange} />
+                                                                    value={'India'} />
                                                             </dd>
                                                         </div>
 
