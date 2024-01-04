@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2'
 const CancellReturnForm = () => {
 
     const [order, setorder] = useState({})
@@ -11,9 +11,83 @@ const CancellReturnForm = () => {
 
 
     const [formdata, setformdata] = useState({
+        id: id,
+        products: [],
+        issue: '',
+        feedback: ''
 
     })
 
+
+    const toggleCheckbox = (productId) => {
+        setformdata((prevFormData) => {
+            const isSelected = prevFormData.products.some((product) => product.id === productId);
+
+            if (isSelected) {
+                // If the product is already selected, remove it
+                const updatedProducts = prevFormData.products.filter((product) => product.id !== productId);
+
+                return {
+                    ...prevFormData,
+                    products: updatedProducts
+                };
+            } else {
+                // If the product is not selected, add the entire product object
+                const selectedProduct = order.order_items.find((item) => item.product.id === productId);
+
+                return {
+                    ...prevFormData,
+                    products: [...prevFormData.products, selectedProduct.product]
+                };
+            }
+        });
+    };
+
+    console.log(formdata)
+
+    const handleSubmit = async (e) => { 
+        e.preventDefault()
+        if(formdata.products.length === 0){
+            Swal.fire({
+                icon: 'error',
+                title: 'Cancel/Return Failed',
+                text: 'Please select atleast one product to cancel!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return
+        }
+        try{
+
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/return-product`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.token}`
+                },
+                body: JSON.stringify(formdata)
+            })
+            const data = await response.json()
+            console.log(data)
+            Swal.fire({
+                icon: 'success',
+                title: 'Cancel/Return Successful',
+                text: 'Your request has been submitted successfully!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            navigate('/account/orders')
+        }catch(error){
+            console.log(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Cancel/Return Failed',
+                text: 'Something went wrong!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    }
 
     const fetchProfileData = async (id) => {
         try {
@@ -50,7 +124,7 @@ const CancellReturnForm = () => {
 
             </div>
 
-            <form onSubmit=''>
+            <form onSubmit={handleSubmit}>
 
                 <section className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mx-auto  w-10/12 md:w-3/5">
                     <div className="sm:col-span-3">
@@ -65,20 +139,14 @@ const CancellReturnForm = () => {
                         <label htmlFor="items" className="block text-lg font-medium leading-6 text-gray-900">Products</label>
                         <div className="mt-2">
 
-                            {/* <select  id="feedback" name="feedback" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >
-                            {order.order_items?.length > 0 && order.order_items?.map((item) => (
-                                <>
-                                    <option value={item.product.id}>{ item.product.name || ''}</option>
-                                    
-                                </>
-                                    ))}
-                            </select> */}
+
                         </div>
                         <div className="grid grid-cols-1 justify-center items-center mb-4">
                             {order.order_items?.length > 0 && order.order_items?.map((item) => (
                                 <div key={item.id} className="col-span-1">
-                                    <input id="default-checkbox" type="checkbox" value={item.product.id} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
-                                    <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-gray-900 ">{item.product.name || ''}</label>
+                                    <input id={`checkbox-${item.product.id}`} type="checkbox" value={item.product.id} onChange={() => toggleCheckbox(item.product.id)}
+                                        checked={formdata.products.some((selectedItem) => selectedItem.id === item.product.id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
+                                    <label htmlFor={`checkbox-${item.product.id}`} className="ms-2 text-sm font-medium text-gray-900 ">{item.product.name || ''}</label>
                                 </div>
                             ))}
                         </div>
@@ -87,20 +155,20 @@ const CancellReturnForm = () => {
                     <div className="col-span-full">
                         <label htmlFor="issue" className="block text-lg font-medium leading-6 text-gray-900">Issue</label>
                         <div className="mt-2">
-                            <textarea id="about" name="about" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
+                            <textarea id="about" onChange={(e) => { setformdata({ ...formdata, issue: e.target.value }) }} name="about" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Any issues.</p>
                     </div>
                     <div className="col-span-full">
                         <label htmlFor="issue" className="block text-lg font-medium leading-6 text-gray-900">Feedback</label>
                         <div className="mt-2">
-                            <textarea id="about" name="about" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                            <textarea id="about" name="about" onChange={(e) => { setformdata({ ...formdata, feedback: e.target.value }) }} rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Write a feedback.</p>
                     </div>
 
                     <div className="col-span-full">
-                        {order.delivery_status != "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Cancel</button>}
+                        {order.delivery_status != "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Cancel Order</button>}
                         {order.delivery_status === "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Return Order</button>}
 
                     </div>
