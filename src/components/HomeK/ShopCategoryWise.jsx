@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import {
-  dress,
-  dress2,
-  dress3,
-  dress4
+  dress4,
+  dress5,
+  dress6
 } from '../../assets/images'
 import {
-  Link,useNavigate
+  useNavigate
 } from 'react-router-dom';
 import { WBlue1 } from '../../assets/images/women';
 import { Wine1 } from '../../assets/images/men';
@@ -27,7 +26,7 @@ export const Categories = [
     title: "Women's Kurta",
     cat: "Women Topwear",
     name: "Kurta",
-    img: WBlue1,
+    img: dress5,
   },
   {
     id: 3,
@@ -35,7 +34,7 @@ export const Categories = [
     gender : "Men",
     cat : "Casual Topwear",
     name: "T-Shirts",
-    img: dress4,
+    img: dress6,
   },
 ]
 

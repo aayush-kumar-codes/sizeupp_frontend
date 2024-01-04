@@ -1,32 +1,26 @@
 import {banner1,
     banner2,
-    banner3,banner4,banner5,banner6,banner7} from '../../assets/banners'
+    banner3,banner4,banner5,banner6,banner7, banner8} from '../../assets/banners'
 import { Link,useNavigate} from 'react-router-dom'
-import { mobile1,mobile2,mobile3,mobile4,mobile5 } from "../../assets/banners/mobile";
+import { mobile1,mobile2,mobile3,mobile4,mobile5, mobile6 } from "../../assets/banners/mobile";
 
 export default function ShopNow() {
     return (
       <>
+        
         <Layout 
-          Text="Latest Men's Collection"
-                Image={banner7}
-                smImg={mobile5}
-                Orientation={false}
-                href={`/products?gender=Men`}
-        />
-        <Layout 
-          Text="Latest Women's Collection"
-                Image={banner2}
-                smImg={mobile2}
-                Orientation={true}
-                href={`/products?gender=Women`}
-        />
-        <Layout 
-          Text="Latest Ethnic Wears"
+          Text="Men`s Ethnic Wears"
                 Image={banner6}
                 smImg={mobile4}
                 Orientation={false}
                 href={`/products?navsearch=Kurta`}
+        />
+        <Layout 
+          Text="Women`s Formal Wear"
+                Image={banner8}
+                smImg={mobile6}
+                Orientation={false}
+                href={`/products?navsearch=Formal%20Wear`}
         />
       </>
     )
@@ -66,7 +60,7 @@ const Layout = ({ Text, Image,smImg, Orientation,href }) => {
             <div className='w-2/3 h-full flex flex-col md:justify-center justify-between items-center text-center z-10 gap-10 lg:p-0 py-16'>
                 <h1 className="font-normal lg:text-[3.8rem] capitalize font-serif text-white text-4xl">{Text}</h1>
                 <Link to={href}>
-                <button className="border-2 border-white text-white text-lg p-2">Shop Now</button>
+                <button className="border-2 border-white text-white w-48 h-16 text-2xl md:w-36 md:h-12 md:text-lg sm:w-28 sm:h-8 sm:text-base">Shop Now</button>
 
                 </Link>
             </div>
