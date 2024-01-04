@@ -9,7 +9,7 @@ import Swal from "sweetalert2"
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])
 
-    const { isAuth,fetchWishlist } = useContext(AuthContext);
+    const { isAuth, fetchWishlist } = useContext(AuthContext);
 
     // fetch data from server
     const fetchData = async () => {
@@ -121,7 +121,7 @@ export const ProductFav = () => {
             fetchData()
             fetchWishlist()
         }
-       
+
     }, [])
 
     return (
@@ -162,49 +162,37 @@ export const ProductFav = () => {
                 {
                     favData.length > 0 ?
                         favData?.map((item, index) => {
-                            if(item.id == favData[index-1]?.id) {
+                            if (item.id == favData[index - 1]?.id) {
                                 return null
-                            } 
+                            }
                             let img = item.product?.images[0]
                             return (
-                                <div key={index} className="mx-auto my-2 flex flex-wrap items-center lg:w-4/5">
-                                    <img
-                                        alt="dress"
-                                        className="h-64 w-full rounded-md object-contain lg:h-96 lg:w-1/2"
-                                        src={import.meta.env.VITE_SERVER_URL + (img.img).slice(6)}
-                                    />
-                                    <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
+                                <div key={index} className="my-2 grid grid-cols-2 gap-x-4 lg:gap-x-0 items-center ">
+                                    <div className="aspect-[4/5] col-span-1 lg:aspect-[3/1]">
+                                        <img
+                                            alt="dress"
+                                            className=" h-full w-full rounded-md object-contain"
+                                            src={import.meta.env.VITE_SERVER_URL + (img.img).slice(6)}
+                                        />
+                                    </div>
+                                    <div className="col-span-1 flex flex-col w-full h-full lg:mt-0 lg:w-1/2">
                                         {/* <div className="text-orange-600 font-normal text-lg">
                                             Only 4 left in stock -Order soon
                                         </div> */}
-                                        <h2 className="my-4 text-3xl font-semibold text-black">{item.product.name}</h2>
-                                        <div className="my-4 flex items-center">
+                                        <h2 className="my-4 text-md lg:text-2xl font-semibold text-black">{item.product.name}</h2>
+                                        {/* <div className="my-4 flex items-center">
                                             <span className="flex items-center space-x-1">
                                                 {[...Array(5)].map((_, i) => (
                                                     <StarIcon key={i} className="w-6 text-yellow-500" />
                                                 ))}
                                                 <span className="ml-3 inline-block text-xs font-semibold">4 Reviews</span>
                                             </span>
-                                        </div>
+                                        </div> */}
                                         <p className="leading-relaxed">
                                             {item.product.care_instructions}
                                         </p>
-                                        {/* <div className="mt-2 text-sm">
-                                            <p className="text-sm text-c-gray-500 mb-2">{item?.color}</p>
-                                            {item?.sqp ? (
-                                                <ul className="colors -mr-3 flex flex-wrap">
-                                                    {item.sqp.map((size, i) => (
-                                                        <li
-                                                            key={size.id}
-                                                            className={`text-heading ${item.size_quantity_price == size?.id && 'border-black'} mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-8 md:w-8 md:text-sm`}
-                                                        >
-                                                            {size.size}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            ) : null}
-                                        </div> */}
-                                        <div className="flex mt-4 items-center justify-between">
+                                        
+                                        <div className="flex flex-wrap gap-2 mt-4 items-center justify-between">
                                             <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.product.mrp}</span>
                                             <div className="flex gap-2">
                                                 <button
