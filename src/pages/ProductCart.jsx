@@ -232,6 +232,7 @@ export function ProductCart() {
         state: '',
         zipCode: '',
         country: 'India',
+        is_deafult : false
     });
 
     const handleInputChange = (e) => {
@@ -302,6 +303,59 @@ export function ProductCart() {
     }
 
 
+    const handleToggleDefault = async (id) => {
+        try {
+          const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'token ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+              address_line_1: formData.addressLine1,
+              address_line_2: formData.addressLine2,
+              city: formData.city,
+              postal_code: formData.pinCode,
+              country: formData.country,
+              state: formData.state,
+              is_default: !formData.is_deafult ? 'on' : 'off'
+            }),
+          });
+          const data = await res.json();
+          console.log(data);
+          setFormData({
+            addressid: "",
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            state: "",
+            country: '',
+            pinCode: '',
+            mobile: '',
+            is_deafult: false
+          })
+          if (res.ok) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'Address Updated Successfully',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            fetchUserProfile()
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+          }
+        } catch(error){
+          console.log(error)
+        }
+      }
+
+
     const handleUpdateCart = async (prodid, status) => {
         try {
             if (!localStorage.token) {
@@ -336,6 +390,8 @@ export function ProductCart() {
         }
     }
 
+    const [isOpen, setIsOpen] = useState(false);
+
 
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
@@ -352,6 +408,7 @@ export function ProductCart() {
 
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-y-4 lg:gap-x-12 xl:gap-x-16">
                     <section className=' lg:col-span-8'>
+
                         {(profile.addresses?.length > 0 && !changeAdr) ?
                             <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
                                 <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
@@ -374,6 +431,13 @@ export function ProductCart() {
                                     type="button"
                                     onClick={() => { setChangeAdr(true) }}
                                     className="truncate inline-flex md:w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm md:font-semibold leading-7 text-white hover:bg-black/80"
+                                >
+                                    Add Address
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => { setIsOpen(true) }}
+                                    className="truncate inline-flex ml-2 md:w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm md:font-semibold leading-7 text-white hover:bg-black/80"
                                 >
                                     Change Address
                                 </button>
@@ -473,8 +537,6 @@ export function ProductCart() {
                                     </dd>
                                 </div>
 
-                                {/* Include other fields similarly */}
-
                                 <div className="py-5 grid grid-cols-3 gap-4 px-6">
                                     <button type="button" onClick={handleAddAddress} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                         Save
@@ -486,6 +548,49 @@ export function ProductCart() {
 
                             </div>
                         }
+
+
+                        {isOpen && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <section className="px-4 bg-white w-11/12  rounded-md md:w-1/2">
+
+                                    <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Change Default Address</h2>
+                                    <div className='max-h-[30rem] overflow-y-auto'>
+                                    {
+                                        profile.addresses?.map((address, index) => {
+                                            return (
+                                                <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
+                                                    <h3 className='font-semibold my-4'>Address {index + 1}</h3>
+                                                    <div className='flex gap-4'>
+                                                        <input type='checkbox' onChange={(e)=>{
+                                                            handleToggleDefault(address.id);
+                                                            setFormData({
+                                                                addressid: address.id,
+                                                                addressLine1: address.address_line_1,
+                                                                addressLine2: address.address_line_2,
+                                                                city: address.city,
+                                                                zipCode: address.postal_code,
+                                                                mobile: address.mobile,
+                                                                country: address.country,
+                                                                state: address.state,
+                                                                is_deafult : address.is_default
+                                                              }); 
+                                                        }} name='address' checked={address.is_default} />
+                                                        <div className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    </div>
+
+                                    <button type="button" onClick={() => { setIsOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2 m-4">
+                                        Close
+                                    </button>
+                                </section>
+                            </div>
+                        )}
+
 
 
                         <section aria-labelledby="cart-heading" className="rounded-lg drop-shadow-md px-2 py-4 bg-white md:mt-10">
@@ -585,7 +690,7 @@ export function ProductCart() {
                                             <div className=''>₹ {(info?.total_price)}</div>
                                         </div>
 
-                                        {/* Tracsh Icon to delete product */}
+                                        {/* Trash Icon to delete product */}
                                         <div className='col-span-1 flex justify-center items-center'>
                                             <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
                                                 <TrashIcon className='w-4' />
@@ -597,92 +702,7 @@ export function ProductCart() {
                             }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Please add few products to cart.</div>}
 
 
-                            {/* <ul role="list" className="divide-y divide-c-gray-200">
-                            {cart.products?.length > 0 ? cart.products?.map((product, i) => {
-                                let info = product.cart
-                                return (
-                                    <div key={info?.id} className="">
-                                        <li className="flex py-6 sm:py-6 ">
-                                            <div className="flex-shrink-0">
-                                                <img
-                                                    src={import.meta.env.VITE_SERVER_URL + info.product?.img}
-                                                    alt={info.product?.name}
-                                                    className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
-                                                />
-                                            </div>
 
-
-                                            <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                                                <div className="relative pr-9 sm:grid sm:grid-cols-1 sm:gap-x-6 sm:pr-0">
-                                                    <div className=''>
-                                                        <div className="flex justify-between ">
-                                                            <h3 className="text-base font-semibold">
-                                                                <Link to={`/products/${info.product?.id}`} className="text-black">
-                                                                    {info.product.name}
-                                                                </Link>
-                                                            </h3>
-                                                        </div>
-                                                        <div className="mt-2 text-sm">
-                                                            <p className="text-sm text-c-gray-500 mb-2">{product.color}</p>
-                                                            {info.product?.sqp ? (
-                                                                <ul className="colors -mr-3 flex flex-wrap">
-                                                                    {info.product.sqp.map((size, index) => (
-                                                                        <li
-                                                                            key={size.id}
-                                                                            onClick={() => { updateCart(i, size.id, info.quantity) }}
-                                                                            className={`text-heading ${info.size_quantity_price == size?.id && 'border-black'} mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-8 md:w-8 md:text-sm`}
-                                                                        >
-                                                                            {size.size}
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
-                                                            ) : null}
-                                                        </div>
-                                                        <div className="mt-1 flex items-end">
-                                                            <p className="text-xs font-medium text-c-gray-500 line-through">
-                                                                ₹ {info?.price}
-                                                            </p>
-                                                            <p className="text-sm font-medium text-c-gray-900">
-                                                                &nbsp;&nbsp; ₹ {info?.discount_price}
-                                                            </p>
-                                                            &nbsp;&nbsp;
-                                                            <p className="text-sm font-medium text-green-500">{info?.discount_percentage}%</p>
-                                                        </div>
-                                                        <div className={`${i == 2 ? 'text-red-600' : 'text-green-600'} font-normal text-base py-2`}>
-                                                            {i == 2 ? "Out of Stock" : "In Stock"}
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div className="mb-2 flex-col justify-between flex">
-                                                    <div className="min-w-24 flex">
-                                                        <button onClick={() => decrement(i, info.size_quantity_price)} type="button" className="h-7 w-7">
-                                                            -
-                                                        </button>
-                                                        <input
-                                                            type="text"
-                                                            className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                            defaultValue={product.qty}
-                                                        />
-                                                        <button onClick={() => increment(i, info.size_quantity_price)} type="button" className="flex h-7 w-7 items-center justify-center">
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                    <div className="ml-6 flex text-sm">
-                                                        <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className="flex items-center space-x-1 px-2 py-1 pl-0">
-                                                            <TrashIcon className='w-6' />
-                                                            <span className="text-xs font-medium text-red-500">Remove</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </div>
-                                )
-                            }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Please add few products to cart.</div>}
-                        </ul> */}
                         </section>
                     </section>
 

@@ -349,7 +349,7 @@ const NewAddress = () => {
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   type="text"
-                  className="form-input px-2 py-1"
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                   placeholder="Enter Address Line 1"
                   required
                   name="addressLine1"
@@ -365,7 +365,7 @@ const NewAddress = () => {
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input type="text"
-                  className="form-input px-2 py-1"
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                   placeholder="Enter Address Line 2"
                   name="addressLine2"
                   value={formData.addressLine2}
@@ -379,7 +379,7 @@ const NewAddress = () => {
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input type="text"
-                  className="form-input px-2 py-1"
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                   placeholder="Enter City"
                   required
                   name="city"
@@ -394,7 +394,7 @@ const NewAddress = () => {
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input type="text"
-                  className="form-input px-2 py-1"
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                   placeholder="Enter State"
                   required
                   name="state"
@@ -409,7 +409,7 @@ const NewAddress = () => {
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input type="text"
-                  className="form-input px-2 py-1"
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                   placeholder="Enter Zip code"
                   required
                   name="pinCode"
