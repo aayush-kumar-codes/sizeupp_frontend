@@ -21,8 +21,10 @@ const NewAddress = () => {
     addressLine1: '',
     addressLine2: '',
     city: '',
+    country: 'India',
     pinCode: '',
     mobile: '',
+    is_deafult : false
   });
   const [addresses, setAddresses] = useState([]);
 
@@ -35,7 +37,7 @@ const NewAddress = () => {
   };
 
   const handleAddAddress = async () => {
-    if(!formData.addressLine1 || !formData.city || !formData.state || !formData.country || !formData.pinCode){
+    if (!formData.addressLine1 || !formData.city || !formData.state || !formData.country || !formData.pinCode) {
       Swal.fire({
         title: 'Error!',
         text: 'Please fill all the fields',
@@ -45,7 +47,7 @@ const NewAddress = () => {
       })
       return
     }
-    
+
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/address`, {
         method: 'POST',
@@ -57,7 +59,7 @@ const NewAddress = () => {
           address_line_1: formData.addressLine1,
           address_line_2: formData.addressLine2,
           city: formData.city,
-          postal_code: formData.zipCode,
+          postal_code: formData.pinCode,
           country: formData.country,
           state: formData.state,
           is_default: 'on'
@@ -68,7 +70,6 @@ const NewAddress = () => {
       }
       const data = await res.json()
       console.log(data);
-      fetchProfileData()
       Swal.fire({
         title: 'Success!',
         text: 'Address Added',
@@ -84,8 +85,6 @@ const NewAddress = () => {
         zipCode: '',
         country: '',
       })
-
-
 
     } catch (error) {
       console.error('Fetch error:', error);
@@ -198,7 +197,7 @@ const NewAddress = () => {
         country: '',
         pinCode: '',
         mobile: '',
-        
+
       })
       setIsEdit(false)
       if (res.ok) {
@@ -242,6 +241,59 @@ const NewAddress = () => {
   useEffect(() => {
     fetchProfileData()
   }, [])
+
+  const handleToggleDefault = async (id) => {
+    try {
+      const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + localStorage.getItem('token')
+        },
+        body: JSON.stringify({
+          address_line_1: formData.addressLine1,
+          address_line_2: formData.addressLine2,
+          city: formData.city,
+          postal_code: formData.pinCode,
+          country: formData.country,
+          state: formData.state,
+          is_default: !formData.is_deafult ? 'on' : 'off'
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      setFormData({
+        addressid: "",
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: "",
+        country: '',
+        pinCode: '',
+        mobile: '',
+
+      })
+      setIsEdit(false)
+      if (res.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Address Updated Successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        fetchProfileData()
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      }
+    } catch(error){
+      console.log(error)
+    }
+  }
 
   const [isEdit, setIsEdit] = useState(false)
   return (
@@ -289,7 +341,7 @@ const NewAddress = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="px-4 bg-white" style={{minWidth:'280px'}}>
+          <div className="px-4 bg-white" style={{ minWidth: '280px' }}>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Address Line 1
@@ -366,26 +418,13 @@ const NewAddress = () => {
               </dd>
             </div>
 
-            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Country
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="text"
-                  className="form-input px-2 py-1"
-                  placeholder="Enter country"
-                  required
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange} />
-              </dd>
-            </div>
 
             {/* Include other fields similarly */}
 
 
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <button type="button" onClick={handleSubmit} className="rounded-lg bg-blue-500 text-white px-4 py-2">
+
+              <button type="button" onClick={(e) => { handleSubmit(e); setIsEdit(false); }} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                 Save
               </button>
               <button type="button" onClick={() => { setIsOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2">
@@ -426,6 +465,20 @@ const NewAddress = () => {
               <p>{address.country}</p>
             </div>
             <div className="flex justify-end w-full gap-4">
+              <div className=''>
+                <input type="checkbox" name="is_default" onClick={(e) => {handleToggleDefault(address.id);setFormData({
+                  addressid: address.id,
+                  addressLine1: address.address_line_1,
+                  addressLine2: address.address_line_2,
+                  city: address.city,
+                  pinCode: address.postal_code,
+                  mobile: address.mobile,
+                  country: address.country,
+                  state: address.state,
+                  is_deafult : address.is_default
+                }); }} checked={address.is_default} />
+                <label className="ml-2">Default</label>
+              </div>
               <button onClick={() => {
                 OpenForm(); setIsEdit(true); setFormData({
                   addressid: address.id,
