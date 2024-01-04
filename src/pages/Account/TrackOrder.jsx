@@ -137,7 +137,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Order Placed</div>
                                     <time className="font-caveat font-medium text-indigo-500">{Date(order.created_at)}</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -155,7 +155,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Order Shipped</div>
                                     <time className="font-caveat font-medium text-indigo-500">09/06/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -173,7 +173,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">In Transit</div>
                                     <time className="font-caveat font-medium text-indigo-500">10/06/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -191,7 +191,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Out of Delivery</div>
                                     <time className="font-caveat font-medium text-indigo-500">12/06/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -209,7 +209,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Delivered</div>
                                     <time className="font-caveat font-medium text-amber-500">Exp. 12/08/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
