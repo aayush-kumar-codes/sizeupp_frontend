@@ -44,8 +44,13 @@ const CancellReturnForm = () => {
     
   return (
       <>
+          <div className='w-full text-center text-xl my-8'>
+              <h1>Cancel Return Form</h1>
+              <p className='text-xs text-gray-500'>Please check <a href="/cancellation-policy" className='text-blue-400'>cancellation</a> and <a href="/return-policy" className='text-blue-400'>return</a> policies before submitting form</p>  
+              
+          </div>
           
-          <form >
+          <form onSubmit=''>
               
             <section className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mx-auto  w-10/12 md:w-3/5">
                     <div className="sm:col-span-3">
