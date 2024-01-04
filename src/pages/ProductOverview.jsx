@@ -1607,6 +1607,14 @@ const ProductOverview = () => {
                 </div>
               }
             />
+            <AccordionItem
+              title="Disclaimers"
+              content={
+                <div className="text-base font-semibold text-gray-800/80">
+                  <div dangerouslySetInnerHTML={{ __html: "Product Colour May Slightly Vary Due to Photographic Lighting Sources or Your Device Screen Settings" }}></div>
+                </div>
+              }
+            />
             {/* <AccordionItem
               title="Customer Reviews"
               content={
