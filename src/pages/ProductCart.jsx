@@ -186,6 +186,7 @@ export function ProductCart() {
     useEffect(() => {
         fetchCart()
         fetchUserProfile()
+        fetchCoupons()
     }, [])
 
     const handleApplyPincode = async () => {
@@ -392,6 +393,30 @@ export function ProductCart() {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const [coupons, setCoupons] = useState([]);
+    const [isOpenCoupon, setIsCouponOpen] = useState(false)
+
+    const fetchCoupons = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/discount-coupons', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const data = await res.json();
+            console.log(data);
+            setCoupons(data.events);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
@@ -591,6 +616,33 @@ export function ProductCart() {
                             </div>
                         )}
 
+                        {isOpenCoupon && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <section className="px-4 bg-white w-11/12  rounded-md md:w-1/2">
+
+                                    <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Active Coupons</h2>
+                                    <div className='max-h-[30rem] overflow-y-auto'>
+                                        {
+                                            coupons?.map((coupon, index) => {
+                                                return (
+                                                    <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
+                                                        <h3 className='font-semibold my-4'>{coupon.code}</h3>
+                                                        <div className='flex gap-4'>
+                                                            <div className='text-sm text-gray-800/80 font-semibold'>{' First Login Discount Coupon '} </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+
+                                    <button type="button" onClick={() => { setIsCouponOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2 m-4">
+                                        Close
+                                    </button>
+                                </section>
+                            </div>
+                        )}
+
 
 
                         <section aria-labelledby="cart-heading" className="rounded-lg drop-shadow-md px-2 py-4 bg-white md:mt-10">
@@ -716,6 +768,7 @@ export function ProductCart() {
                     >
                         {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                             <form action="#" className="mt-6">
+                                <div onClick={()=>setIsCouponOpen((prev) => !prev)} className='text-sm text-end cursor-pointer underline font-semibold text-gray-800/80'>Want a coupon?</div>
                                 <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
                                 <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
                                     <div className="flex-grow">
@@ -791,14 +844,14 @@ export function ProductCart() {
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        if(cart){
+                                        if (cart) {
                                             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                                             return navigate('/products')
                                         }
-                                        else{
-                                            navigate('/products/billing') 
+                                        else {
+                                            navigate('/products/billing')
                                         }
-                                        }}
+                                    }}
                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                 >
                                     Proceed
