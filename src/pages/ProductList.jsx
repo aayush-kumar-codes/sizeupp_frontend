@@ -384,7 +384,7 @@ const ProductList = ({
                             <div key={i} className="">
                                 <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
                                 <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
-                                    <p className='truncate text-base text-accent'>{items.name}</p>
+                                    <p className=' text-base text-accent'>{items.name}</p>
                                     <div className='flex flex-wrap justify-between items-center'>
                                         <div className='text-lg text-accent flex items-center gap-2'>
                                             <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>

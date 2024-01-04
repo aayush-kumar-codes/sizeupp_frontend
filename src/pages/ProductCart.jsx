@@ -247,10 +247,21 @@ export function ProductCart() {
     const [changeAdr, setChangeAdr] = useState(false)
 
     const handleAddAddress = async () => {
+        if (!formData.addressLine1 || !formData.city || !formData.state || !formData.country || !formData.pinCode) {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Please fill all the fields',
+              icon: 'error',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            return
+          }
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
+            
             const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/address`, {
                 method: 'POST',
                 headers: {
