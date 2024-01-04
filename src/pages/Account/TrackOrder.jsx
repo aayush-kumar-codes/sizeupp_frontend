@@ -92,7 +92,7 @@ const TrackOrderPage = () => {
                                 <div className="relative text-center">
                                 {order.delivery_status == item ? 
                                 (<span
-                                    className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-100 bg-blue-600 rounded-full shadow-md ">
+                                    className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-100 bg-green-600 rounded-full shadow-md ">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         className="w-6 h-6 bi bi-check-lg" viewBox="0 0 16 16">
                                         <path
@@ -135,7 +135,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Order Placed</div>
                                     <time className="font-caveat font-medium text-indigo-500">{Date(order.created_at)}</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -153,7 +153,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Order Shipped</div>
                                     <time className="font-caveat font-medium text-indigo-500">09/06/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -171,7 +171,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">In Transit</div>
                                     <time className="font-caveat font-medium text-indigo-500">10/06/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -189,7 +189,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Out of Delivery</div>
                                     <time className="font-caveat font-medium text-indigo-500">12/06/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
@@ -207,7 +207,7 @@ const TrackOrderPage = () => {
                                     <div className="font-bold text-slate-900">Delivered</div>
                                     <time className="font-caveat font-medium text-amber-500">Exp. 12/08/2023</time>
                                 </div>
-                                <div className="text-slate-500">Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.</div>
+                                <div className="text-slate-500"></div>
                             </div>
                         </div>
 
