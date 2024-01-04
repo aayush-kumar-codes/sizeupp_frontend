@@ -184,7 +184,7 @@ const NewAddress = () => {
           postal_code: formData.pinCode,
           country: formData.country,
           state: formData.state,
-          is_default: true
+          is_default: 'on'
         }),
       });
       const data = await res.json();

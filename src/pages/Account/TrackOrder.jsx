@@ -49,7 +49,7 @@ const TrackOrderPage = () => {
         'Shipped',
         'In-Transit',
         'Delivered',
-        
+
     ]
 
     return (
@@ -82,39 +82,40 @@ const TrackOrderPage = () => {
                             <span className="text-sm">{Date(order.created_at).slice(0,16)}</span>
                         </div>
                     </div> */}
-                    {Status.map((item,index)=>{
+                    {Status.map((item, index) => {
+                        console.log()
                         return (
-                            
-                            <div key={ index } className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/5 lg:mb-0">
+
+                            <div key={index} className="relative w-full px-4 mb-16 md:w-1/2 lg:w-1/5 lg:mb-0">
                                 <div className="absolute hidden top-5 lg:block left-1/2 ">
-                                    
-                            </div>
-                                <div className="relative text-center">
-                                {order.delivery_status == item ? 
-                                (<span
-                                    className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-100 bg-blue-600 rounded-full shadow-md ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        className="w-6 h-6 bi bi-check-lg" viewBox="0 0 16 16">
-                                        <path
-                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
-                                    </svg>
-                                            </span>) : (
+
+                                </div>
+                                <section className="relative text-center">
+                                    {
+                                        <span
+                                            className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-100 bg-blue-600 rounded-full shadow-md ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                className="w-6 h-6 bi bi-check-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                            </svg>
+
                                             <span
-                                            className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
-                                           {index + 1}
+                                                className="inline-flex items-center justify-center w-10 h-10 mb-8 text-lg text-gray-700 bg-gray-200 rounded-full shadow-md  ">
+                                                {index + 1}
+                                            </span>
                                         </span>
-                            )
-                        }
-                                
-                                <h2 className="text-lg font-medium ">{item}</h2>
-                                    <span className="text-sm"> {order.delivery_status == item ? Date(order.created_at).slice(0,16) : 'pending'}</span>
-    
+                                    }
+
+                                    <h2 className="text-lg font-medium ">{item}</h2>
+                                    <span className="text-sm"> {order.delivery_status == item ? Date(order.created_at).slice(0, 16) : 'pending'}</span>
+
+                                </section>
                             </div>
-                        </div>
                         )
                     })
-                        }
-                    
+                    }
+
                 </div>
                 <div className="w-full max-w-3xl mx-auto md:hidden block">
 
