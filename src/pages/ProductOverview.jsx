@@ -36,10 +36,11 @@ export const Modal = ({ children, onClose }) => {
     };
   }, [onClose]);
   return ReactDOM.createPortal(
-    <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-50 bg-gray-900" onClick={handleOverlayClick}>
+    <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-80 bg-gray-900" onClick={handleOverlayClick}>
       <div className=" p-8 rounded-md max-w-screen-sm w-full h-auto overflow-auto">
         {children}
-        <button className="absolute top-4 right-6 text-gray-100" onClick={onClose}>
+        <button className="absolute 
+        top-[9rem] right-[4rem] bg-black rounded-full p-1 md:top-[7rem] md:right-[26rem] text-gray-100" onClick={onClose}>
           <XMarkIcon className="h-8 w-8 text-gray-100" />
         </button>
       </div>
@@ -574,11 +575,11 @@ const PincodeForm = () => {
     }
   }
 
-  const [payload,setpayload] = useState(false)
+  const [payload, setpayload] = useState(false)
 
   const handleApplyPincode = async (e) => {
     e.preventDefault()
-    if(payload) {
+    if (payload) {
       return
     }
     try {
@@ -749,7 +750,7 @@ const ProductOverview = () => {
   const [demo, setdemo] = useState([])
   const [relatedProducts, setRelatedProducts] = useState([])
   const [images, setImages] = useState([])
-  const { fetchCart,fetchWishlist } = useContext(AuthContext)
+  const { fetchCart, fetchWishlist } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const [iconColors, setIconColors] = useState({
@@ -1603,6 +1604,14 @@ const ProductOverview = () => {
 
                   <div dangerouslySetInnerHTML={{ __html: demo.product?.Washcare }} />
 
+                </div>
+              }
+            />
+            <AccordionItem
+              title="Color Disclaimer"
+              content={
+                <div className="text-base font-semibold text-gray-800/80">
+                  <div dangerouslySetInnerHTML={{ __html: "Product Colour May Slightly Vary Due to Photographic Lighting Sources or Your Device Screen Settings" }}></div>
                 </div>
               }
             />

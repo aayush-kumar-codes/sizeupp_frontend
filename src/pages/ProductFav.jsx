@@ -193,19 +193,19 @@ export const ProductFav = () => {
                                         </p>
                                         
                                         <div className="flex flex-wrap gap-2 mt-4 items-center justify-between">
-                                            <span className="title-font text-xl font-bold text-c-gray-900">₹ {item.product.mrp}</span>
+                                            <span className="title-font text-xl font-semibold md:font-bold text-c-gray-900">₹ {item.product.mrp}</span>
                                             <div className="flex gap-2">
                                                 <button
                                                     type="button"
                                                     onClick={() => navigate("/products/" + item.product.id)}
-                                                    className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    className="rounded-md bg-black px-3 py-2 truncate text-sm md:font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
                                                     View More
                                                 </button>
                                                 <button
                                                     type="button"
                                                     onClick={() => { handleRemoveWishlist(item.product.id) }}
-                                                    className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    className="rounded-md bg-red-500 px-3 py-2 text-sm md:font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
                                                     Remove
                                                 </button>

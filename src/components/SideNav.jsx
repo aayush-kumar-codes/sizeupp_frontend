@@ -190,7 +190,7 @@ const SideNav = (
 
     // Update the URL
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-
+    setDisplay(false)
     // Use react-router-dom's navigate to update the URL without triggering a page reload
     navigate(`${newUrl}`, { replace: true });
   }
@@ -231,7 +231,7 @@ const SideNav = (
                           filterdata.gender?.includes(item.id)
                         }
                         onChange={() => {
-                          handleChangeFilter(item.id, 'gender')
+                          handleChangeFilter(item.id, 'gender');
                         }}
                       />
                       <label htmlFor={`${item.id}`} className="ml-3 text-sm font-medium text-gray-900">
@@ -261,9 +261,9 @@ const SideNav = (
               <ul className="mt-2">
                 {catlist && catlist.categories?.map((item) => (
                   item.subcategories?.map((subitem) => {
-                    if ((!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id))) {
-                      return null
-                    }
+                    // if ((!filterdata.gender?.includes(item.id) && !filterdata.category?.includes(subitem.id))) {
+                    //   return null
+                    // }
                     return (
                       <li key={subitem.id} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
@@ -310,11 +310,9 @@ const SideNav = (
                   item.subcategories?.map((subitem) => {
                     return (subitem.subsubcategories.map((subsubitem) => {
                       console.warn(subsubitem.name)
-                      if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
-                        return null
-                      }
-
-
+                      // if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
+                      //   return null
+                      // }
                       return (
                         <li key={subsubitem.id} className="flex items-center justify-between py-2">
                           <div className="flex items-center">

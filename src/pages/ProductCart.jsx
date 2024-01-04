@@ -164,9 +164,9 @@ export function ProductCart() {
             setCart(data)
 
             Swal.fire({
-                title : 'Info!',
-                text : data.coupon_message,
-                icon : 'info',
+                title: 'Info!',
+                text: data.coupon_message,
+                icon: 'info',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -186,6 +186,7 @@ export function ProductCart() {
     useEffect(() => {
         fetchCart()
         fetchUserProfile()
+        fetchCoupons()
     }, [])
 
     const handleApplyPincode = async () => {
@@ -232,6 +233,7 @@ export function ProductCart() {
         state: '',
         zipCode: '',
         country: 'India',
+        is_deafult: false
     });
 
     const handleInputChange = (e) => {
@@ -245,10 +247,21 @@ export function ProductCart() {
     const [changeAdr, setChangeAdr] = useState(false)
 
     const handleAddAddress = async () => {
+        if (!formData.addressLine1 || !formData.city || !formData.state || !formData.country || !formData.pinCode) {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Please fill all the fields',
+              icon: 'error',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            return
+          }
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
+            
             const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/address`, {
                 method: 'POST',
                 headers: {
@@ -283,7 +296,6 @@ export function ProductCart() {
                 city: '',
                 state: '',
                 zipCode: '',
-                country: '',
             })
             setChangeAdr(false)
             fetchUserProfile()
@@ -298,6 +310,59 @@ export function ProductCart() {
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
+        }
+    }
+
+
+    const handleToggleDefault = async (id) => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    address_line_1: formData.addressLine1,
+                    address_line_2: formData.addressLine2,
+                    city: formData.city,
+                    postal_code: formData.pinCode,
+                    country: formData.country,
+                    state: formData.state,
+                    is_default: !formData.is_deafult ? 'on' : 'off'
+                }),
+            });
+            const data = await res.json();
+            console.log(data);
+            setFormData({
+                addressid: "",
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                state: "",
+                country: '',
+                pinCode: '',
+                mobile: '',
+                is_deafult: false
+            })
+            if (res.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Address Updated Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                fetchUserProfile()
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -336,15 +401,33 @@ export function ProductCart() {
         }
     }
 
-    const [AlertModal, SetAlertModal] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
-    const handleDeleteAlert = () => {
-        SetAlertModal(true);
+    const [coupons, setCoupons] = useState([]);
+    const [isOpenCoupon, setIsCouponOpen] = useState(false)
+
+    const fetchCoupons = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/discount-coupons', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const data = await res.json();
+            console.log(data);
+            setCoupons(data.events);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    const handleDeleteClose = () => {
-        SetAlertModal(false);
-    }
+
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
@@ -353,13 +436,14 @@ export function ProductCart() {
                     <h1 className="text-base font-bold tracking-tight text-c-gray-900 sm:text-2xl">
                         Shopping Cart
                     </h1>
-                    <button onClick={()=>{navigate('/products')}} className='animate-pulse rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'>
+                    <button onClick={() => { navigate('/products') }} className='animate-pulse rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'>
                         Continue Shopping
                     </button>
                 </div>
 
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-y-4 lg:gap-x-12 xl:gap-x-16">
                     <section className=' lg:col-span-8'>
+
                         {(profile.addresses?.length > 0 && !changeAdr) ?
                             <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
                                 <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
@@ -377,26 +461,25 @@ export function ProductCart() {
                                     }
                                 </div>
 
-                                {/* <input
-                        type="text"
-                        id="pincode"
-                        placeholder="Enter PinCode"
-                        name="pincode"
-                        defaultValue={pincode}
-                        onChange={(e) => { handlePincodeChange(e) }}
-                        className="flex w-2/3 ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    /> */}
+
                                 <button
                                     type="button"
                                     onClick={() => { setChangeAdr(true) }}
-                                    className="inline-flex w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm font-semibold leading-7 text-white hover:bg-black/80"
+                                    className="truncate inline-flex md:w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm md:font-semibold leading-7 text-white hover:bg-black/80"
+                                >
+                                    Add Address
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => { setIsOpen(true) }}
+                                    className="truncate inline-flex ml-2 md:w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm md:font-semibold leading-7 text-white hover:bg-black/80"
                                 >
                                     Change Address
                                 </button>
                             </div>
 
                             :
-                            <div className="px-4 ">
+                            <div className="px-4 border rounded-md">
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                         Address Line 1
@@ -404,7 +487,7 @@ export function ProductCart() {
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input
                                             type="text"
-                                            className="form-input"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter Address Line 1"
                                             required
                                             name="addressLine1"
@@ -420,7 +503,7 @@ export function ProductCart() {
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input type="text"
-                                            className="form-input"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter Address Line 2"
                                             name="addressLine2"
                                             value={formData.addressLine2}
@@ -434,7 +517,7 @@ export function ProductCart() {
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input type="text"
-                                            className="form-input"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter City"
                                             required
                                             name="city"
@@ -449,7 +532,7 @@ export function ProductCart() {
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input type="text"
-                                            className="form-input"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter State"
                                             required
                                             name="state"
@@ -464,7 +547,7 @@ export function ProductCart() {
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input type="text"
-                                            className="form-input"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter Zip code"
                                             required
                                             name="zipCode"
@@ -479,19 +562,17 @@ export function ProductCart() {
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         <input type="text"
-                                            className="form-input"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter country"
                                             required
                                             name="country"
                                             disabled
-                                            value={formData.country}
+                                            value={'India'}
                                             onChange={handleInputChange} />
                                     </dd>
                                 </div>
 
-                                {/* Include other fields similarly */}
-
-                                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div className="py-5 grid grid-cols-3 gap-4 px-6">
                                     <button type="button" onClick={handleAddAddress} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                         Save
                                     </button>
@@ -504,6 +585,76 @@ export function ProductCart() {
                         }
 
 
+                        {isOpen && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <section className="px-4 bg-white w-11/12  rounded-md md:w-1/2">
+
+                                    <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Change Default Address</h2>
+                                    <div className='max-h-[30rem] overflow-y-auto'>
+                                        {
+                                            profile.addresses?.map((address, index) => {
+                                                return (
+                                                    <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
+                                                        <h3 className='font-semibold my-4'>Address {index + 1}</h3>
+                                                        <div className='flex gap-4'>
+                                                            <input type='checkbox' onChange={(e) => {
+                                                                handleToggleDefault(address.id);
+                                                                setFormData({
+                                                                    addressid: address.id,
+                                                                    addressLine1: address.address_line_1,
+                                                                    addressLine2: address.address_line_2,
+                                                                    city: address.city,
+                                                                    zipCode: address.postal_code,
+                                                                    mobile: address.mobile,
+                                                                    country: address.country,
+                                                                    state: address.state,
+                                                                    is_deafult: address.is_default
+                                                                });
+                                                            }} name='address' checked={address.is_default} />
+                                                            <div className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+
+                                    <button type="button" onClick={() => { setIsOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2 m-4">
+                                        Close
+                                    </button>
+                                </section>
+                            </div>
+                        )}
+
+                        {isOpenCoupon && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <section className="px-4 bg-white w-11/12  rounded-md md:w-1/2">
+
+                                    <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Active Coupons</h2>
+                                    <div className='max-h-[30rem] overflow-y-auto'>
+                                        {
+                                            coupons?.map((coupon, index) => {
+                                                return (
+                                                    <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
+                                                        <h3 className='font-semibold my-4'>{coupon.code}</h3>
+                                                        <div className='flex gap-4'>
+                                                            <div className='text-sm text-gray-800/80 font-semibold'>{' First Login Discount Coupon '} </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+
+                                    <button type="button" onClick={() => { setIsCouponOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2 m-4">
+                                        Close
+                                    </button>
+                                </section>
+                            </div>
+                        )}
+
+
+
                         <section aria-labelledby="cart-heading" className="rounded-lg drop-shadow-md px-2 py-4 bg-white md:mt-10">
                             <h2 id="cart-heading" className="sr-only">
                                 Items in your shopping cart
@@ -513,8 +664,8 @@ export function ProductCart() {
                                 let info = product.cart
 
                                 return (
-                                    <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
-                                        <div className='col-span-1'>
+                                    <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 grid-cols-3'>
+                                        <div className='col-span-1 justify-center items-center'>
                                             <img
                                                 onClick={() => { navigate(`/products/${info.product?.id}`) }}
                                                 src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
@@ -522,45 +673,51 @@ export function ProductCart() {
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                             />
                                         </div>
-                                        <div className='col-span-2'>
-                                            <div className='flex flex-col'>
-                                                <h3 className="text-base font-semibold">
+                                        <div className='col-span-2 md:col-span-3'>
+                                            <div className='grid grid-cols-3 gap-2 justify-center items-center'>
+                                                <h3 className="text-base col-span-3 font-semibold">
                                                     <Link to={`/products/${info.product?.id}`} className="text-black">
                                                         {info.product.name}
                                                     </Link>
                                                 </h3>
+
+                                                {/* Sizes */}
                                                 {
                                                     info.product?.sqp.map((size, index) => {
                                                         if (info.size_quantity_price != size.id) {
                                                             return null
                                                         }
-
                                                         return (
-                                                            <div key={index} className="mt-2 text-sm">
+                                                            <div key={index} className="mt-2 text-sm col-span-1 flex justify-center items-center">
                                                                 <p className="text-sm text-c-gray-500 mb-2"> Size: {size.size}</p>
                                                             </div>
                                                         )
                                                     })
                                                 }
-                                                <div className="mt-1 flex items-end">
+
+                                                {/* Price */}
+                                                <div className="mt-2 col-span-1 flex justify-center items-center">
                                                     <p className="text-sm font-medium text-c-gray-900">
                                                         ₹ {info.product?.discounted_price ? info.product?.discounted_price : info.product?.mrp}
                                                     </p>
 
-                                                    {info.product?.discounted_price && <div className='flex justify-center items-center flex-wrap'>
-                                                        <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
-                                                            ₹ {info.product?.mrp}
-                                                        </p>
-                                                        <p className="text-sm ml-2 font-medium text-green-500">{info.product?.discount_percentage}%</p>
-                                                    </div>}
+                                                    {info.product?.discounted_price &&
+                                                        <div className='flex justify-center items-center flex-wrap'>
+                                                            <p className="text-sm ml-2 font-medium text-c-gray-500 line-through">
+                                                                ₹ {info.product?.mrp}
+                                                            </p>
+                                                            <p className="text-sm ml-2 font-medium text-green-500">{info.product?.discount_percentage}%</p>
+                                                        </div>}
                                                 </div>
+
+                                                {/* stock */}
                                                 <div className={`${info.product?.sqp.map((size, index) => {
                                                     if (info.size_quantity_price != size.id) {
                                                         return null
                                                     }
 
                                                     return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
-                                                })} font-normal text-base py-2`}>
+                                                })} col-span-1 flex justify-center items-center font-normal text-sm py-2`}>
                                                     {
                                                         info.product?.sqp.map((size, index) => {
                                                             if (info.size_quantity_price != size.id) {
@@ -568,156 +725,47 @@ export function ProductCart() {
                                                             }
 
                                                             return (
-
                                                                 parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
                                                             )
                                                         })
                                                     }
                                                 </div>
+                                                {/* Qty Update buttons */}
+                                                <div className='col-span-1 flex justify-center items-center'>
+
+                                                    <button onClick={() => handleUpdateCart(info.product.id, 'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
+                                                        -
+                                                    </button>
+                                                    <input
+                                                        type="text"
+                                                        className="mx-1 h-7 w-9 rounded-md border text-center"
+                                                        value={product.qty}
+                                                    />
+                                                    <button onClick={() => handleUpdateCart(info.product.id, 'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
+                                                        +
+                                                    </button>
+                                                </div>
+                                                {/* Total Price */}
+                                                <div className='col-span-1 flex justify-center items-center'>
+                                                    <div className=''>₹ {(info?.total_price)}</div>
+                                                </div>
+
+                                                {/* Trash Icon to delete product */}
+                                                <div className='col-span-1 flex justify-center items-center'>
+                                                    <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
+                                                        <TrashIcon className='w-4' />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className='col-span-1 flex justify-center items-center'>
 
-                                            <button onClick={() => handleUpdateCart(info.product.id, 'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
-                                                -
-                                            </button>
-                                            <input
-                                                type="text"
-                                                className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                value={product.qty}
-                                            />
-                                            <button onClick={() => handleUpdateCart(info.product.id, 'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
-                                                +
-                                            </button>
-                                        </div>
-                                        <div className='col-span-1 flex justify-center items-center'>
-                                            <div className=''>₹ {(info?.total_price)}</div>
-                                        </div>
-                                        <div className='col-span-1 flex justify-center items-center'>
-                                            <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
-                                                <TrashIcon className='w-4' />
-                                            </button>
 
-                                        </div>
-                                        {/* {AlertModal &&
-                                            
-                                                <div  className="absolute top-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                                                                <div className=" p-4 w-full max-w-md h-full md:h-auto">
-                                                                    
-                                                                    <div className="relative p-4 text-center bg-white rounded-lg shadow sm:p-5">
-                                                                        <button onClick={handleDeleteClose} type="button" className="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                                                                            <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path>
-                                                                            </svg>
-                                                                            <span className="sr-only">Close modal</span>
-                                                                        </button>
-                                                                        <svg className="text-gray-400 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                                            <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path>
-                                                                        </svg>
-                                                                        <p className="mb-4 text-gray-500">Are you sure you want to delete this item?</p>
-                                                                        <div className="flex justify-center items-center space-x-4">
-                                                                            <button onClick={handleDeleteClose} type="button" className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900">
-                                                                                No, cancel
-                                                                            </button>
-                                                                            <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300">
-                                                                                Yes, I'm sure
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                        } */}
                                     </div>
                                 )
                             }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Please add few products to cart.</div>}
 
 
-                            {/* <ul role="list" className="divide-y divide-c-gray-200">
-                            {cart.products?.length > 0 ? cart.products?.map((product, i) => {
-                                let info = product.cart
-                                return (
-                                    <div key={info?.id} className="">
-                                        <li className="flex py-6 sm:py-6 ">
-                                            <div className="flex-shrink-0">
-                                                <img
-                                                    src={import.meta.env.VITE_SERVER_URL + info.product?.img}
-                                                    alt={info.product?.name}
-                                                    className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
-                                                />
-                                            </div>
 
-
-                                            <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                                                <div className="relative pr-9 sm:grid sm:grid-cols-1 sm:gap-x-6 sm:pr-0">
-                                                    <div className=''>
-                                                        <div className="flex justify-between ">
-                                                            <h3 className="text-base font-semibold">
-                                                                <Link to={`/products/${info.product?.id}`} className="text-black">
-                                                                    {info.product.name}
-                                                                </Link>
-                                                            </h3>
-                                                        </div>
-                                                        <div className="mt-2 text-sm">
-                                                            <p className="text-sm text-c-gray-500 mb-2">{product.color}</p>
-                                                            {info.product?.sqp ? (
-                                                                <ul className="colors -mr-3 flex flex-wrap">
-                                                                    {info.product.sqp.map((size, index) => (
-                                                                        <li
-                                                                            key={size.id}
-                                                                            onClick={() => { updateCart(i, size.id, info.quantity) }}
-                                                                            className={`text-heading ${info.size_quantity_price == size?.id && 'border-black'} mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-c-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-8 md:w-8 md:text-sm`}
-                                                                        >
-                                                                            {size.size}
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
-                                                            ) : null}
-                                                        </div>
-                                                        <div className="mt-1 flex items-end">
-                                                            <p className="text-xs font-medium text-c-gray-500 line-through">
-                                                                ₹ {info?.price}
-                                                            </p>
-                                                            <p className="text-sm font-medium text-c-gray-900">
-                                                                &nbsp;&nbsp; ₹ {info?.discount_price}
-                                                            </p>
-                                                            &nbsp;&nbsp;
-                                                            <p className="text-sm font-medium text-green-500">{info?.discount_percentage}%</p>
-                                                        </div>
-                                                        <div className={`${i == 2 ? 'text-red-600' : 'text-green-600'} font-normal text-base py-2`}>
-                                                            {i == 2 ? "Out of Stock" : "In Stock"}
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div className="mb-2 flex-col justify-between flex">
-                                                    <div className="min-w-24 flex">
-                                                        <button onClick={() => decrement(i, info.size_quantity_price)} type="button" className="h-7 w-7">
-                                                            -
-                                                        </button>
-                                                        <input
-                                                            type="text"
-                                                            className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                            defaultValue={product.qty}
-                                                        />
-                                                        <button onClick={() => increment(i, info.size_quantity_price)} type="button" className="flex h-7 w-7 items-center justify-center">
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                    <div className="ml-6 flex text-sm">
-                                                        <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className="flex items-center space-x-1 px-2 py-1 pl-0">
-                                                            <TrashIcon className='w-6' />
-                                                            <span className="text-xs font-medium text-red-500">Remove</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </div>
-                                )
-                            }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">Please add few products to cart.</div>}
-                        </ul> */}
                         </section>
                     </section>
 
@@ -730,6 +778,7 @@ export function ProductCart() {
                     >
                         {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                             <form action="#" className="mt-6">
+                                <div onClick={()=>setIsCouponOpen((prev) => !prev)} className='text-sm text-end cursor-pointer underline font-semibold text-gray-800/80'>View coupons?</div>
                                 <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
                                 <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
                                     <div className="flex-grow">
@@ -804,7 +853,11 @@ export function ProductCart() {
                                 </div> : null}
                                 <button
                                     type="button"
-                                    onClick={() => { navigate('/products/billing') }}
+                                    onClick={() => {
+                                        
+                                            navigate('/products/billing')
+                                        
+                                    }}
                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                 >
                                     Proceed

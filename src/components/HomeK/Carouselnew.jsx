@@ -7,26 +7,18 @@ const BannerData = [
     id: 1,
     img: banner1,
     smimg: mobile1,
-    title: 'Live Your Dance',
-    subtitle: 'Create',
-    description: 'Memories',
+    title: 'Shop Latest',
+    subtitle: 'Men`s',
+    description: 'Collection',
   },
   {
     id: 2,
     img: banner2,
     smimg: mobile2,
-    title: 'Explore Your Creativity',
-    subtitle: 'Innovate',
-    description: 'Imagination',
-  },
-  {
-    id: 3,
-    img: banner3,
-    smimg: mobile3,
-    title: 'Embrace Adventure',
-    subtitle: 'Discover',
-    description: 'New Horizons',
-  },
+    title: 'Shop Latest',
+    subtitle: 'Women`s',
+    description: 'Collection',
+  }
 ];
 
 const BannerCarousel = () => {

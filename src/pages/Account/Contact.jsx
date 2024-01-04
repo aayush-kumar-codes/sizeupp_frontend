@@ -196,7 +196,7 @@ const Contact = () => {
                                         </div>
                                         <div className="ml-4 mb-4">
                                             <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Contact</h3>
-                                            <p className="text-gray-600">Mobile: 88655255488</p>
+                                            <p className="text-gray-600">Mobile: 8655255488</p>
                                             <p className="text-gray-600">Mail: customercare@sizeupp.com</p>
                                         </div>
                                     </li>

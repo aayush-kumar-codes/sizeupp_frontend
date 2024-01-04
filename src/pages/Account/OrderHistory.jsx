@@ -89,7 +89,7 @@ const DeliveryHistoryTable = () => {
                         <thead className="h-16 bg-neutral-100">
                             <tr>
                                 <th className="px-6 py-3 text-left">Order Id</th>
-                                <th className="px-6 py-3 text-left">Qty</th>
+                                <th className="px-6 py-3 text-left">Products</th>
                                 <th className="px-6 py-3 text-left">Price</th>
                                 <th className="px-6 py-3 text-left">Payment</th>
                                 <th className="px-6 py-3 text-left">Status</th>

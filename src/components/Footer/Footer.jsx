@@ -35,7 +35,7 @@ const Footer = () => {
                 <li className="p-1">
                   <a href="/products" className="text-gray-400 hover:text-white">Women</a>
                 </li>
-                <li className="p-1">
+                {/* <li className="p-1">
                   <a href="/products" className="text-gray-400 hover:text-white">Accessories</a>
                 </li>
                 <li className="p-1">
@@ -43,7 +43,7 @@ const Footer = () => {
                 </li>
                 <li className="p-1">
                   <a href="/products" className="text-gray-400 hover:text-white">Seasonal Sale</a>
-                </li>
+                </li> */}
               </nav>
             </div>
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">

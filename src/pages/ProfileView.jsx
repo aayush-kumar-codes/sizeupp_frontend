@@ -377,11 +377,12 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border my-2 p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
                           to="manage-address"
+                          onClick={handleToggleSidebar}
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
                          <BuildingOffice2Icon className="h-6 w-6 " />
@@ -392,12 +393,13 @@ const Profileview = () => {
                     </div>
                   </div>
 
-                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border my-2 p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
 
                         <Link
                           to="/profile/my-orders"
+                          onClick={handleToggleSidebar}
                           className="flex items-center gap-2 font-medium active:text-violet-900 "
                         >
                           <svg
@@ -436,11 +438,12 @@ const Profileview = () => {
                       </div>
                     </div>
                   </div> */}
-                  <div className="flex border p-4 rounded-lg hover:bg-gray-200">
+                  <div className="flex border my-2 p-4 rounded-lg hover:bg-gray-200">
                     <div className="flex w-full">
                       <div className="flex flex-col ">
                         <Link
                           to="contact"
+                          onClick={handleToggleSidebar}
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
                           <PhoneIcon className="h-6 w-6 " />

@@ -557,7 +557,7 @@ export function Navbar() {
                                                 </>
                                             )
                                         })} */}
-                                        <Link to="/products" className='text-sm font-semibold'>All Products</Link>
+                                        <Link to="/products" onClick={()=>{setIsMenuOpen(false)}} className='text-sm font-semibold'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {
                                                 return <AccordionItem
@@ -575,7 +575,7 @@ export function Navbar() {
                                                                                 {
                                                                                     subcat.subsubcategories.map((subsubcat) => {
                                                                                         return (
-                                                                                            <Link className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?category=${subsubcat.id}`}>
+                                                                                            <Link onClick={()=>setIsMenuOpen(false)} className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?gender=${cat.id}&category=${subcat.id}&subcategory=${subsubcat.id}`}>
                                                                                                 {subsubcat.name}
                                                                                             </Link>
                                                                                         )
