@@ -232,7 +232,7 @@ export function ProductCart() {
         state: '',
         zipCode: '',
         country: 'India',
-        is_deafult : false
+        is_deafult: false
     });
 
     const handleInputChange = (e) => {
@@ -305,55 +305,55 @@ export function ProductCart() {
 
     const handleToggleDefault = async (id) => {
         try {
-          const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'token ' + localStorage.getItem('token')
-            },
-            body: JSON.stringify({
-              address_line_1: formData.addressLine1,
-              address_line_2: formData.addressLine2,
-              city: formData.city,
-              postal_code: formData.pinCode,
-              country: formData.country,
-              state: formData.state,
-              is_default: !formData.is_deafult ? 'on' : 'off'
-            }),
-          });
-          const data = await res.json();
-          console.log(data);
-          setFormData({
-            addressid: "",
-            addressLine1: '',
-            addressLine2: '',
-            city: '',
-            state: "",
-            country: '',
-            pinCode: '',
-            mobile: '',
-            is_deafult: false
-          })
-          if (res.ok) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: 'Address Updated Successfully',
-              showConfirmButton: false,
-              timer: 1500
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    address_line_1: formData.addressLine1,
+                    address_line_2: formData.addressLine2,
+                    city: formData.city,
+                    postal_code: formData.pinCode,
+                    country: formData.country,
+                    state: formData.state,
+                    is_default: !formData.is_deafult ? 'on' : 'off'
+                }),
+            });
+            const data = await res.json();
+            console.log(data);
+            setFormData({
+                addressid: "",
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                state: "",
+                country: '',
+                pinCode: '',
+                mobile: '',
+                is_deafult: false
             })
-            fetchUserProfile()
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-            })
-          }
-        } catch(error){
-          console.log(error)
+            if (res.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Address Updated Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                fetchUserProfile()
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+        } catch (error) {
+            console.log(error)
         }
-      }
+    }
 
 
     const handleUpdateCart = async (prodid, status) => {
@@ -556,32 +556,32 @@ export function ProductCart() {
 
                                     <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Change Default Address</h2>
                                     <div className='max-h-[30rem] overflow-y-auto'>
-                                    {
-                                        profile.addresses?.map((address, index) => {
-                                            return (
-                                                <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
-                                                    <h3 className='font-semibold my-4'>Address {index + 1}</h3>
-                                                    <div className='flex gap-4'>
-                                                        <input type='checkbox' onChange={(e)=>{
-                                                            handleToggleDefault(address.id);
-                                                            setFormData({
-                                                                addressid: address.id,
-                                                                addressLine1: address.address_line_1,
-                                                                addressLine2: address.address_line_2,
-                                                                city: address.city,
-                                                                zipCode: address.postal_code,
-                                                                mobile: address.mobile,
-                                                                country: address.country,
-                                                                state: address.state,
-                                                                is_deafult : address.is_default
-                                                              }); 
-                                                        }} name='address' checked={address.is_default} />
-                                                        <div className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</div>
+                                        {
+                                            profile.addresses?.map((address, index) => {
+                                                return (
+                                                    <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
+                                                        <h3 className='font-semibold my-4'>Address {index + 1}</h3>
+                                                        <div className='flex gap-4'>
+                                                            <input type='checkbox' onChange={(e) => {
+                                                                handleToggleDefault(address.id);
+                                                                setFormData({
+                                                                    addressid: address.id,
+                                                                    addressLine1: address.address_line_1,
+                                                                    addressLine2: address.address_line_2,
+                                                                    city: address.city,
+                                                                    zipCode: address.postal_code,
+                                                                    mobile: address.mobile,
+                                                                    country: address.country,
+                                                                    state: address.state,
+                                                                    is_deafult: address.is_default
+                                                                });
+                                                            }} name='address' checked={address.is_default} />
+                                                            <div className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
+                                                )
+                                            })
+                                        }
                                     </div>
 
                                     <button type="button" onClick={() => { setIsOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2 m-4">
@@ -602,8 +602,8 @@ export function ProductCart() {
                                 let info = product.cart
 
                                 return (
-                                    <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
-                                        <div className='col-span-1'>
+                                    <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 grid-cols-3'>
+                                        <div className='col-span-1 justify-center items-center'>
                                             <img
                                                 onClick={() => { navigate(`/products/${info.product?.id}`) }}
                                                 src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
@@ -611,8 +611,8 @@ export function ProductCart() {
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                             />
                                         </div>
-                                        <div className='col-span-2'>
-                                            <div className='grid grid-cols-3 md:flex md:flex-col'>
+                                        <div className='col-span-2 md:col-span-3'>
+                                            <div className='grid grid-cols-3 gap-2 justify-center items-center'>
                                                 <h3 className="text-base col-span-3 font-semibold">
                                                     <Link to={`/products/${info.product?.id}`} className="text-black">
                                                         {info.product.name}
@@ -626,7 +626,7 @@ export function ProductCart() {
                                                             return null
                                                         }
                                                         return (
-                                                            <div key={index} className="mt-2 text-sm">
+                                                            <div key={index} className="mt-2 text-sm col-span-1 flex justify-center items-center">
                                                                 <p className="text-sm text-c-gray-500 mb-2"> Size: {size.size}</p>
                                                             </div>
                                                         )
@@ -634,7 +634,7 @@ export function ProductCart() {
                                                 }
 
                                                 {/* Price */}
-                                                <div className="mt-2">
+                                                <div className="mt-2 col-span-1 flex justify-center items-center">
                                                     <p className="text-sm font-medium text-c-gray-900">
                                                         ₹ {info.product?.discounted_price ? info.product?.discounted_price : info.product?.mrp}
                                                     </p>
@@ -655,7 +655,7 @@ export function ProductCart() {
                                                     }
 
                                                     return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
-                                                })}  font-normal text-sm py-2`}>
+                                                })} col-span-1 flex justify-center items-center font-normal text-sm py-2`}>
                                                     {
                                                         info.product?.sqp.map((size, index) => {
                                                             if (info.size_quantity_price != size.id) {
@@ -668,34 +668,35 @@ export function ProductCart() {
                                                         })
                                                     }
                                                 </div>
+                                                {/* Qty Update buttons */}
+                                                <div className='col-span-1 flex justify-center items-center'>
+
+                                                    <button onClick={() => handleUpdateCart(info.product.id, 'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
+                                                        -
+                                                    </button>
+                                                    <input
+                                                        type="text"
+                                                        className="mx-1 h-7 w-9 rounded-md border text-center"
+                                                        value={product.qty}
+                                                    />
+                                                    <button onClick={() => handleUpdateCart(info.product.id, 'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
+                                                        +
+                                                    </button>
+                                                </div>
+                                                {/* Total Price */}
+                                                <div className='col-span-1 flex justify-center items-center'>
+                                                    <div className=''>₹ {(info?.total_price)}</div>
+                                                </div>
+
+                                                {/* Trash Icon to delete product */}
+                                                <div className='col-span-1 flex justify-center items-center'>
+                                                    <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
+                                                        <TrashIcon className='w-4' />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        {/* Qty Update buttons */}
-                                        <div className='col-span-1 flex justify-center items-center'>
 
-                                            <button onClick={() => handleUpdateCart(info.product.id, 'subtract')} type="button" className="h-7 w-7 border-2 flex items-center justify-center rounded-full">
-                                                -
-                                            </button>
-                                            <input
-                                                type="text"
-                                                className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                value={product.qty}
-                                            />
-                                            <button onClick={() => handleUpdateCart(info.product.id, 'add')} type="button" className="flex h-7 w-7 rounded-full border-2 items-center justify-center">
-                                                +
-                                            </button>
-                                        </div>
-                                        {/* Total Price */}
-                                        <div className='col-span-1 flex justify-center items-center'>
-                                            <div className=''>₹ {(info?.total_price)}</div>
-                                        </div>
-
-                                        {/* Trash Icon to delete product */}
-                                        <div className='col-span-1 flex justify-center items-center'>
-                                            <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
-                                                <TrashIcon className='w-4' />
-                                            </button>
-                                        </div>
 
                                     </div>
                                 )
@@ -789,7 +790,15 @@ export function ProductCart() {
                                 </div> : null}
                                 <button
                                     type="button"
-                                    onClick={() => { navigate('/products/billing') }}
+                                    onClick={() => {
+                                        if(cart){
+                                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                                            return navigate('/products')
+                                        }
+                                        else{
+                                            navigate('/products/billing') 
+                                        }
+                                        }}
                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                 >
                                     Proceed

@@ -1,5 +1,5 @@
 
-import { Link, useNavigate,Navigate } from 'react-router-dom'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { styles } from '../style'
 import { useContext, useEffect, useState } from 'react'
@@ -12,7 +12,7 @@ export function ProductBilling() {
     const [profile, setProfile] = useState({})
     const [pincode, setPincode] = useState('')
     const [changeAddress, setChangeAddress] = useState(false)
-    const { couponcode, setcouponcode,fetchCart,cart,setCart } = useContext(AuthContext)
+    const { couponcode, setcouponcode, fetchCart, cart, setCart } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
         addressLine1: '',
@@ -104,7 +104,7 @@ export function ProductBilling() {
                 }
             })
             localStorage.setItem("address_id", adressid)
-            setPincode(adressid)	
+            setPincode(adressid)
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -167,6 +167,27 @@ export function ProductBilling() {
             if (!localStorage.token) {
                 return navigate('/login')
             }
+            if (cart.products?.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Cart Empty',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                return navigate('/products/cart')
+            }
+
+            if (localStorage.address_id === "") {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Address Not Selected',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                return navigate('/products/cart')
+            }
             console.log({
                 mrp_price: form.mrp_price,
                 sub_total: form.sub_total,
@@ -198,6 +219,7 @@ export function ProductBilling() {
             const data = await res.json()
             console.log(data);
             fetchCart()
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
             Swal.fire({
                 title: 'Success!',
                 text: 'Order Placed Successfully',
@@ -304,7 +326,60 @@ export function ProductBilling() {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
-    
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleToggleDefault = async (id) => {
+        try {
+            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/address/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    address_line_1: formData.addressLine1,
+                    address_line_2: formData.addressLine2,
+                    city: formData.city,
+                    postal_code: formData.pinCode,
+                    country: formData.country,
+                    state: formData.state,
+                    is_default: !formData.is_deafult ? 'on' : 'off'
+                }),
+            });
+            const data = await res.json();
+            console.log(data);
+            setFormData({
+                addressid: "",
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                state: "",
+                country: '',
+                pinCode: '',
+                mobile: '',
+                is_deafult: false
+            })
+            if (res.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Address Updated Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                fetchUserProfile()
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <div className={`my-10 lg:mx-6 mx-2`}>
@@ -334,6 +409,47 @@ export function ProductBilling() {
                     </div>
                 </li>
             </ol>
+
+            {isOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <section className="px-4 bg-white w-11/12 absolute rounded-md md:w-1/2">
+
+                        <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Change Default Address</h2>
+                        <div className='max-h-[30rem] overflow-y-auto'>
+                            {
+                                profile.addresses?.map((address, index) => {
+                                    return (
+                                        <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
+                                            <h3 className='font-semibold my-4'>Address {index + 1}</h3>
+                                            <div className='flex gap-4'>
+                                                <input type='checkbox' onChange={(e) => {
+                                                    handleToggleDefault(address.id);
+                                                    setFormData({
+                                                        addressid: address.id,
+                                                        addressLine1: address.address_line_1,
+                                                        addressLine2: address.address_line_2,
+                                                        city: address.city,
+                                                        zipCode: address.postal_code,
+                                                        mobile: address.mobile,
+                                                        country: address.country,
+                                                        state: address.state,
+                                                        is_deafult: address.is_default
+                                                    });
+                                                }} name='address' checked={address.is_default} />
+                                                <div className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+
+                        <button type="button" onClick={() => { setIsOpen(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2 m-4">
+                            Close
+                        </button>
+                    </section>
+                </div>
+            )}
             <div className="overflow-hidden  rounded-xl shadow-lg">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Product List */}
@@ -344,16 +460,16 @@ export function ProductBilling() {
                             let info = product.cart
                             return (
                                 <div key={i} className='grid gap-2 py-4 drop-shadow-md lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3'>
-                                    <div className='col-span-1'>
+                                    <div className='col-span-1 justify-center items-center'>
                                         <img
                                             src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                             alt={info.product?.name}
                                             className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                         />
                                     </div>
-                                    <div className='col-span-2'>
-                                        <div className='flex flex-col'>
-                                            <h3 className="text-base font-semibold">
+                                    <div className='col-span-2 md:col-span-3'>
+                                        <div className='grid grid-cols-3 gap-2 justify-center items-center'>
+                                            <h3 className="text-base col-span-3 font-semibold">
                                                 <Link to={`/products/${info.product?.id}`} className="text-black">
                                                     {info.product.name}
                                                 </Link>
@@ -364,13 +480,13 @@ export function ProductBilling() {
                                                         return null
                                                     }
                                                     return (
-                                                        <div key={index} className="mt-2 text-sm">
+                                                        <div key={index} className="mt-2 text-sm col-span-1 flex justify-center items-center">
                                                             <p className="text-sm text-c-gray-500 mb-2"> Size: {size.size}</p>
                                                         </div>
                                                     )
                                                 })
                                             }
-                                            <div className="mt-1 flex items-end">
+                                            <div className="mt-1 col-span-1 flex justify-center items-center">
                                                 <p className="text-sm font-medium text-c-gray-900">
                                                     ₹ {info.product?.discounted_price ? info.product?.discounted_price : info?.mrp}
                                                 </p>
@@ -387,7 +503,7 @@ export function ProductBilling() {
                                                 }
 
                                                 return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
-                                            })} font-normal text-base py-2`}>
+                                            })} font-normal col-span-1 flex justify-center items-center text-base py-2`}>
                                                 {
                                                     info.product?.sqp.map((size, index) => {
                                                         if (info.size_quantity_price != size.id) {
@@ -401,19 +517,22 @@ export function ProductBilling() {
                                                     })
                                                 }
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className='col-span-1 flex justify-center items-center'>
+                                            <div className='col-span-1 flex justify-center items-center'>
 
-                                        <input
-                                            type="text"
-                                            className="mx-1 h-7 w-9 rounded-md border text-center"
-                                            value={product?.qty || 0}
-                                            disabled
-                                        />
-                                    </div>
-                                    <div className='col-span-1 flex justify-center items-center'>
-                                        <div className=''>₹ {(info.total_price)}</div>
+                                                <input
+                                                    type="text"
+                                                    className="mx-1 h-7 w-9 rounded-md border text-center"
+                                                    value={product?.qty || 0}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <div className='col-span-1 flex justify-center items-center'>
+                                                {'  '}
+                                            </div>
+                                            <div className='col-span-1 flex justify-center items-center'>
+                                                <div className=''>₹ {(info.total_price)}</div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -431,7 +550,7 @@ export function ProductBilling() {
                             <div className="-my-6 divide-y divide-gray-200">
                                 <div className="py-6">
                                     <form>
-                                        <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
+                                        <div className="md:mx-auto md:max-w-2xl px-4 lg:max-w-none lg:px-0">
 
                                             <section
                                                 aria-labelledby="summary-heading"
@@ -488,20 +607,16 @@ export function ProductBilling() {
 
 
                                             <section className='rounded-lg drop-shadow-md bg-white lg:col-span-4 mt-2 pt-2' aria-labelledby="dilvery_address">
-                                                {profile.addresses?.length > 0 && changeAddress === false ?
+                                                {(profile.addresses?.length > 0 && !changeAddress) ?
                                                     <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
-                                                        <h2
-                                                            id="delivery-heading"
-                                                            className=" border-b border-c-gray-200 px-4 py-3 text-lg font-medium text-c-gray-900 sm:p-4"
-                                                        >
-                                                            Delivery And Services
-                                                        </h2>
+                                                        <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
+                                                            Delivery & Services :
+                                                        </label>
                                                         <div className='text-sm text-gray-800/80 font-semibold'>
                                                             {profile.addresses?.map((address, index) => {
                                                                 if (address.is_default != true) {
                                                                     return null
                                                                 }
-
                                                                 return (
                                                                     <p key={index} className='text-sm text-gray-800/80 font-semibold'>{address.address_line_1 + ", " + address.address_line_2 + ", " + address.city + ", " + address.state + ", " + address.postal_code}</p>
                                                                 )
@@ -513,122 +628,128 @@ export function ProductBilling() {
                                                         <button
                                                             type="button"
                                                             onClick={() => { setChangeAddress(true) }}
-                                                            className="inline-flex w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm font-semibold leading-7 text-white hover:bg-black/80"
+                                                            className="truncate inline-flex md:w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm md:font-semibold leading-7 text-white hover:bg-black/80"
+                                                        >
+                                                            Add Address
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => { setIsOpen(true) }}
+                                                            className="truncate inline-flex ml-2 md:w-1/4 my-4 items-center justify-center rounded-md bg-black px-3 py-1 text-sm md:font-semibold leading-7 text-white hover:bg-black/80"
                                                         >
                                                             Change Address
                                                         </button>
                                                     </div>
 
                                                     :
-                                                    <div className="px-4 mt-2 rounded-md border-b-gray-500 shadow-md">
-                                                        <h2
-                                                            id="delivery-heading"
-                                                            className=" border-b border-c-gray-200 px-4 py-3 text-lg font-medium text-c-gray-900 sm:p-4"
-                                                        >
-                                                            Delivery And Services
-                                                        </h2>
+                                                    <div className="px-4 border rounded-md">
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                            <dt className="text-sm  text-c-gray-900">
+                                                            <dt className="text-sm font-medium text-gray-500">
                                                                 Address Line 1
                                                             </dt>
                                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                                 <input
                                                                     type="text"
-                                                                    className="form-input border rounded-md px-2 py-1"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                                                     placeholder="Enter Address Line 1"
                                                                     required
                                                                     name="addressLine1"
-                                                                    defaultValue={formData.addressLine1}
+                                                                    value={formData.addressLine1}
                                                                     onChange={handleInputChange}
                                                                 />
                                                             </dd>
                                                         </div>
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                            <dt className="text-sm  text-c-gray-900">
+                                                            <dt className="text-sm font-medium text-gray-500">
                                                                 Address Line 2
                                                             </dt>
                                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                                 <input type="text"
-                                                                    className="form-input border rounded-md px-2 py-1"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                                                     placeholder="Enter Address Line 2"
                                                                     name="addressLine2"
-                                                                    defaultValue={formData.addressLine2}
+                                                                    value={formData.addressLine2}
                                                                     onChange={handleInputChange} />
                                                             </dd>
                                                         </div>
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                            <dt className="text-sm  text-c-gray-900">
+                                                            <dt className="text-sm font-medium text-gray-500">
                                                                 City
                                                             </dt>
                                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                                 <input type="text"
-                                                                    className="form-input border rounded-md px-2 py-1"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                                                     placeholder="Enter City"
                                                                     required
                                                                     name="city"
-                                                                    defaultValue={formData.city}
+                                                                    value={formData.city}
                                                                     onChange={handleInputChange} />
                                                             </dd>
                                                         </div>
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                            <dt className="text-sm  text-c-gray-900">
+                                                            <dt className="text-sm font-medium text-gray-500">
                                                                 State
                                                             </dt>
                                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                                 <input type="text"
-                                                                    className="form-input border rounded-md px-2 py-1"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                                                     placeholder="Enter State"
                                                                     required
                                                                     name="state"
-                                                                    defaultValue={formData.state}
+                                                                    value={formData.state}
                                                                     onChange={handleInputChange} />
                                                             </dd>
                                                         </div>
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                            <dt className="text-sm  text-c-gray-900">
-                                                                Zip Code
+                                                            <dt className="text-sm font-medium text-gray-500">
+                                                                Pin Code
                                                             </dt>
                                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                                 <input type="text"
-                                                                    className="form-input border rounded-md px-2 py-1"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                                                     placeholder="Enter Zip code"
                                                                     required
                                                                     name="zipCode"
-                                                                    defaultValue={formData.zipCode}
+                                                                    value={formData.zipCode}
                                                                     onChange={handleInputChange} />
                                                             </dd>
                                                         </div>
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                            <dt className="text-sm  text-c-gray-900">
+                                                            <dt className="text-sm font-medium text-gray-500">
                                                                 Country
                                                             </dt>
                                                             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                                 <input type="text"
-                                                                    className="form-input border rounded-md px-2 py-1"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                                                     placeholder="Enter country"
                                                                     required
                                                                     name="country"
-                                                                    defaultValue={formData.country}
+                                                                    disabled
+                                                                    value={formData.country}
                                                                     onChange={handleInputChange} />
                                                             </dd>
                                                         </div>
 
-                                                        {/* Include other fields similarly */}
-
-
-                                                        <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                        <div className="py-5 grid grid-cols-3 gap-4 px-6">
                                                             <button type="button" onClick={handleAddAddress} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                                                                 Save
+                                                            </button>
+                                                            <button type="button" onClick={() => { setChangeAddress(false) }} className="rounded-lg bg-red-500 text-white px-4 py-2">
+                                                                Close
                                                             </button>
                                                         </div>
 
                                                     </div>
                                                 }
+
+
+
+
                                             </section>
 
                                             {/* <hr className="my-8" /> */}
@@ -786,7 +907,7 @@ export function ProductBilling() {
                                                     onClick={handlePlaceOrder}
                                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
-                                                   {!payload ?  "Make payment" : "Processing .."}
+                                                    {!payload ? "Make payment" : "Processing .."}
                                                 </button>
                                             </div>
                                         </div>
