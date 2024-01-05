@@ -196,7 +196,7 @@ const Register = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Fields Mismatch!',
+                text: error,
                 showConfirmButton: false,
                 timer: 1200
             });
