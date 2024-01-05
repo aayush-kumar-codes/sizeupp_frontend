@@ -58,10 +58,10 @@ const MobileNav = () => {
               <div className=" absolute -top-2 left-6">
                 <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{cart.products?.length}</p>
               </div>
-              <ShoppingCartIcon className='w-5 h-5 mx-auto stroke-2 ' />
+              <ShoppingCartIcon className='w-5 h-5 text-yellow-800 mx-auto stroke-2 ' />
 
             </div>
-            : <ShoppingCartIcon className='w-5 h-5 mx-auto stroke-2 ' />
+            : <ShoppingCartIcon className='w-5 h-5 text-yellow-800 mx-auto stroke-2 ' />
           }
           Cart
         </Link>
@@ -72,10 +72,10 @@ const MobileNav = () => {
               <div className=" absolute -top-2 left-6">
                 <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{wishlist?.length}</p>
               </div>
-              <HeartIcon className='w-5 h-5 mx-auto stroke-2 ' />
+              <HeartIcon className='w-5 h-5 text-yellow-800 mx-auto stroke-2 ' />
 
             </div>
-            : <HeartIcon className='w-5 h-5 mx-auto stroke-2 ' />
+            : <HeartIcon className='w-5 h-5 text-yellow-800 mx-auto stroke-2 ' />
           }
           Wishlist
         </Link>
