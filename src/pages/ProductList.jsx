@@ -138,7 +138,7 @@ const ProductList = ({
                 text: error,
                 icon: 'error',
                 showConfirmButton: false,
-                timer: 1200
+                timer: 1500
             });
         }
     }
