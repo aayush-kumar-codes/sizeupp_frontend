@@ -110,7 +110,7 @@ const ProductList = ({
                 const datas = await res.json()
                 console.log(datas);
                 if (!res.ok) {
-                    throw new Error(`${datas.message ? datas.message : 'HTTP error! status: ' + res.status}`);
+                    throw new Error(`${datas.message ?"Default Size is" + datas.message : 'HTTP error! status: ' + res.status}`);
                 }
 
                 Swal.fire({
