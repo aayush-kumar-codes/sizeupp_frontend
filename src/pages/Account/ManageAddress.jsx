@@ -65,10 +65,10 @@ const NewAddress = () => {
           is_default: 'on'
         })
       })
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
       const data = await res.json()
+      if (!res.ok) {
+        throw new Error(`${data.message ? data.message : 'Unable to add address'}`);
+      }
       console.log(data);
       Swal.fire({
         title: 'Success!',
@@ -96,7 +96,7 @@ const NewAddress = () => {
       })
       Swal.fire({
         title: 'Error!',
-        text: 'Fetch error: ' + error,
+        text: error,
         icon: 'error',
         showConfirmButton: false,
         timer: 1500

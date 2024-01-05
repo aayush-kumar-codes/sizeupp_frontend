@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom"
-import Error from "../components/Alerts/Error"
 import Success from "../components/Alerts/Success"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"

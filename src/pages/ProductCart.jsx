@@ -278,14 +278,14 @@ export function ProductCart() {
                     is_default: 'on'
                 })
             })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
             const data = await res.json()
+            if (!res.ok) {
+                throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
+            }
             console.log(data);
             Swal.fire({
                 title: 'Success!',
-                text: 'Address Added',
+                text: data.message,
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 1500
@@ -316,7 +316,7 @@ export function ProductCart() {
             })
             Swal.fire({
                 title: 'Error!',
-                text: 'Fetch error: ' + error,
+                text: error,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });

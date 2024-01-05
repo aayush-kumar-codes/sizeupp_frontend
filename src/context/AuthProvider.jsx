@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
                 })
                 const data = await response.json()
                 setProfileData(data)
+                localStorage.setItem('user_verified', data.is_verified)
             }
         } catch (error) {
             console.log(error)
