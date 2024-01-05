@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { styles } from "../style"
 import { useState, useEffect, useRef, useContext } from 'react';
 import { chevronDownIcon } from "../assets/icons";
-import { HeartIcon, ArrowsPointingOutIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon, StarIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon, StarIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2';
 import ReactDOM from 'react-dom';
 import Slider from "react-slick";
@@ -39,8 +39,7 @@ export const Modal = ({ children, onClose }) => {
     <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-80 bg-gray-900" onClick={handleOverlayClick}>
       <div className=" p-8 rounded-md max-w-screen-sm w-full h-auto overflow-auto">
         {children}
-        <button className="absolute 
-        top-[9rem] right-[4rem] bg-black rounded-full p-1 md:top-[7rem] md:right-[26rem] text-gray-100" onClick={onClose}>
+        <button className="absolute top-[9rem] right-[4rem] bg-black rounded-full p-1 md:top-[7rem] md:right-[26rem] text-gray-100" onClick={onClose}>
           <XMarkIcon className="h-8 w-8 text-gray-100" />
         </button>
       </div>
@@ -972,7 +971,7 @@ const ProductOverview = () => {
       if (!res.ok) {
         throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
       }
-      
+
       if (data.Message == 'Already In Cart') {
 
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${id}`, {
@@ -1414,7 +1413,7 @@ const ProductOverview = () => {
               <div className="mb-4">
                 {demo.product?.sqp.map((sizes) => (
                   <h3 key={sizes.id} className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                    {sizes.id == sqpActive && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock` }</span> : <span className="text-green-500">In Stock</span>)}
+                    {sizes.id == sqpActive && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock`}</span> : <span className="text-green-500">In Stock</span>)}
                   </h3>
                 ))}
               </div>
