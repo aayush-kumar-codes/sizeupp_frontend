@@ -375,7 +375,7 @@ setIsFilterOpen((prev) => ({
               <div>
                 <div className="flex justify-between">
                   <h3 className="text-lg font-semibold text-gray-900 py-2">Category</h3>
-                  <button onClick={() => toggleSection('Gender')}>
+                  <button onClick={() => toggleSection('category')}>
                     {activeSection === 'Gender' ? (
                       <MinusIcon className="h-6 w-6 text-gray-800 p-1" />
                     ) : (
@@ -383,7 +383,7 @@ setIsFilterOpen((prev) => ({
                     )}
                   </button>
                 </div>
-                {true && (
+                {activeSection === "category" && (
                   <ul className="mt-2">
                     {catlist && catlist.categories?.map((item) => (
                       item.subcategories?.map((subitem) => {
@@ -430,7 +430,7 @@ setIsFilterOpen((prev) => ({
                     )}
                   </button>
                 </div>
-                {true && (
+                {activeSection === "subcategory" && (
                   <ul className="mt-2">
                     {catlist && catlist.categories?.map((item) => (
                       item.subcategories?.map((subitem) => {
