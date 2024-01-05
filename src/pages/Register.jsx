@@ -142,11 +142,11 @@ const Register = () => {
                 body: JSON.stringify(form)
             });
 
+            const data = await res.json();
             if (!res.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`${data.message ? data.message : 'Could not register'}`);
             }
 
-            const data = await res.json();
 
             if (data.token) {
                 localStorage.setItem("token", data.token);
