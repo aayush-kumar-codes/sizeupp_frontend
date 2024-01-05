@@ -13,14 +13,14 @@ export default function ShopNow() {
                 Image={banner6}
                 smImg={mobile4}
                 Orientation={false}
-                href={`/products?navsearch=Kurta`}
+                href={`/products?gender=51e84707-33e5-459a-b40d-a2a40d20b460&category=7b6d1c5c-9e78-4126-b43f-8b99e6595099&subcategory=3ed51171-6e63-4a91-8616-e0fb98ce8384`}
         />
         <Layout 
           Text="Women`s Formal Wear"
                 Image={banner8}
                 smImg={mobile6}
                 Orientation={false}
-                href={`/products?navsearch=Formal%20Wear`}
+                href={`/products?gender=dbff8ffa-0aa0-4802-bae4-baa4baf12406&category=3dab348e-e6a2-4c20-b281-990c189723d0&subcategory=8c8e316c-d36e-4ab6-88fb-ef6563807e6b`}
         />
       </>
     )
