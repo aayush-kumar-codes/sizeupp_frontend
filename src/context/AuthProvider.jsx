@@ -166,22 +166,26 @@ const AuthProvider = ({ children }) => {
 
     const handleValidateToken = async () => {
         if (localStorage.token) {
-            const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/validate-token', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    token: localStorage.getItem('token')
+            try {
+                const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/validate-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token: localStorage.getItem('token')
+                    })
                 })
-            })
 
-            if (!res.ok) {
-                localStorage.clear()
-                throw new Error(`HTTP error! status: ${res.status}`);
+                if (!res.ok) {
+                    localStorage.clear()
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const data = await res.json()
+                console.log(data)
+            } catch(error) {
+                console.log(error)
             }
-            const data = await res.json()
-            console.log(data)
         }
     }
 
@@ -295,7 +299,7 @@ const AuthProvider = ({ children }) => {
         }
         catch (error) {
             console.error('Fetch error:', error);
-            
+
         }
     }
 

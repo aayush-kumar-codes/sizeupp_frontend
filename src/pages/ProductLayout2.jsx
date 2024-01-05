@@ -407,7 +407,7 @@ setIsFilterOpen((prev) => ({
                                 }}
                               />
                               <label htmlFor={`${subitem.id}`} className="ml-3 text-sm font-medium text-gray-900">
-                                {item.name + " " + subitem.name}
+                                {subitem.name}
                               </label>
                             </div>
                           </li>
@@ -458,7 +458,7 @@ setIsFilterOpen((prev) => ({
                                   }}
                                 />
                                 <label htmlFor={`${subsubitem.id}`} className="ml-3 text-sm font-medium text-gray-900">
-                                   {item.name + " " + subsubitem.name}
+                                   { subsubitem.name}
                                 </label>
                               </div>
                             </li>
