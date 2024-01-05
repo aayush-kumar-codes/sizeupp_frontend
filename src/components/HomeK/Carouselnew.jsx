@@ -10,6 +10,7 @@ const BannerData = [
     title: 'Shop Latest',
     subtitle: 'Men`s',
     description: 'Collection',
+    href:"/products?gender=51e84707-33e5-459a-b40d-a2a40d20b460"
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const BannerData = [
     title: 'Shop Latest',
     subtitle: 'Women`s',
     description: 'Collection',
+    href:"/products?gender=dbff8ffa-0aa0-4802-bae4-baa4baf12406"
   }
 ];
 
@@ -72,7 +74,7 @@ const BannerCarousel = () => {
                         <p className="text-[3rem] font-serif drop-shadow-xl">{banner.description}</p>
             </div>
             
-                        <Link to="/products" >
+                        <Link to={banner.href}>
                           <button className="border-2 border-white bg-black bg-opacity-20 mt-12 m-0 md:ml-24 text-white p-2 px-3 text-xl cursor-pointer ">Shop Now</button>
                         </Link>
           </div>

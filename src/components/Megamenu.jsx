@@ -61,7 +61,7 @@ const Megamenu = () => {
                                 <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                             </p>
                             <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                                <div className={`hidden focus:hidden group-hover:grid grid-cols-${gender.subcategories.length / 2} gap-10 justify-between absolute p-6 w-fit border bg-secondary rounded-md drop-shadow-md`}>
+                                <div className={`hidden focus:hidden group-hover:grid grid-cols-${gender.subcategories.length == 3 ? '2' : gender.subcategories.length/2 } gap-10 justify-between absolute p-6 w-fit border bg-secondary rounded-md drop-shadow-md`}>
 
                                     {gender.subcategories && gender?.subcategories.map((cat) => {
                                         return (
