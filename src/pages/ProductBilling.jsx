@@ -453,24 +453,24 @@ export function ProductBilling() {
             <div className="overflow-hidden  rounded-xl shadow-lg">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Product List */}
-                    <section aria-labelledby="cart-heading" className="rounded-lg px-2 py-4 bg-white md:mt-10">
+                    <section aria-labelledby="cart-heading" className="rounded-lg mx-5 py-4 bg-white md:mt-10 border ">
 
 
                         {cart.products?.length > 0 ? cart.products?.map((product, i) => {
                             let info = product.cart
                             return (
-                                <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 grid-cols-3'>
-                                    <div className='col-span-1 justify-center items-center'>
+                                <div key={i} className='grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 grid-cols-3 '>
+                                    <div className='col-span-1 justify-center items-center '>
                                         <img
                                             onClick={() => { navigate(`/products/${info.product?.id}`) }}
                                             src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
                                             alt={info.product?.name}
-                                            className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
+                                            className="sm:h-38 sm:w-38 h-32 w-32 rounded-lg object-contain object-center cursor-pointer"
                                         />
                                     </div>
                                     <div className='col-span-2 md:col-span-3'>
                                         <div className='grid grid-cols-3 gap-2 justify-center items-center'>
-                                            <h3 className="text-base col-span-3 font-semibold">
+                                            <h3 className="text-base col-span-3 font-semibold px-3">
                                                 <Link to={`/products/${info.product?.id}`} className="text-black">
                                                     {info.product.name}
                                                 </Link>
@@ -564,7 +564,7 @@ export function ProductBilling() {
 
                                             <section
                                                 aria-labelledby="summary-heading"
-                                                className="mt-16 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-0"
+                                                className="mt-16 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-0 border"
                                             >
                                                 <h2
                                                     id="summary-heading"
@@ -616,7 +616,7 @@ export function ProductBilling() {
                                             </section>
 
 
-                                            <section className='rounded-lg drop-shadow-md bg-white lg:col-span-4 mt-2 pt-2' aria-labelledby="dilvery_address">
+                                            <section className='rounded-lg shadow-sm bg-white lg:col-span-4 mt-2 pt-2 border' aria-labelledby="dilvery_address">
                                                 {(profile.addresses?.length > 0 && !changeAddress) ?
                                                     <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
                                                         <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
