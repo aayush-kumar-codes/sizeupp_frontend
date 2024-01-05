@@ -184,6 +184,15 @@ const Register = () => {
             }
         } catch (error) {
             console.log(error);
+            setForm({
+                email: "",
+                password: "",
+                last_name: "",
+                first_name : "",
+                phone : "",
+                password_confirmation:"",
+                newsletter: false
+            });
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
