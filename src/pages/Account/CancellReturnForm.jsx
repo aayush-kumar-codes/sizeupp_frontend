@@ -47,11 +47,11 @@ const CancellReturnForm = () => {
 
     const handleSubmit = async (e) => { 
         e.preventDefault()
-        if(formdata.products.length === 0){
+        if(formdata.issue === '' || formdata.feedback === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Cancel/Return Failed',
-                text: 'Please select atleast one product to cancel!',
+                text: 'Please fill all the fields!',
                 showConfirmButton: false,
                 timer: 1500
             })
