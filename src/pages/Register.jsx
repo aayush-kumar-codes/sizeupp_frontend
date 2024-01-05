@@ -30,7 +30,7 @@ const Register = () => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-
+    console.log(form);
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (form.first_name === '' || form.last_name === '' || form.email === '' || form.password === '' || form.password_confirmation === '' || form.phone === '') {
