@@ -263,6 +263,7 @@ const Register = () => {
                                     id="FirstName"
                                     placeholder="Enter First Name"
                                     name="first_name"
+                                    value={form.first_name} 
                                     onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
@@ -278,6 +279,7 @@ const Register = () => {
                                     id="LastName"
                                     placeholder="Your Last Name"
                                     name="last_name"
+                                    value={form.last_name}
                                     onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
@@ -291,6 +293,7 @@ const Register = () => {
                                     placeholder="Enter your Email address"
                                     id="Email"
                                     name="email"
+                                    value={form.email}
                                     onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
@@ -306,6 +309,7 @@ const Register = () => {
                                     id="Phone Number"
                                     placeholder="Your Mobile Number"
                                     name="phone"
+                                    value={form.phone}
                                     onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
@@ -319,6 +323,7 @@ const Register = () => {
                                     id="Password"
                                     placeholder="Enter your Password"
                                     name="password"
+                                    value={form.password}
                                     onChange={handleChange}
                                     className="mt-1 w-full ring-1 ring-link rounded-xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
@@ -334,6 +339,7 @@ const Register = () => {
                                     id="PasswordConfirmation"
                                     placeholder="Confirm your Password"
                                     name="password_confirmation"
+                                    value={form.password_confirmation}
                                     onChange={handleChange}
                                     className="mt-1 w-full ring-1 ring-link rounded-xl bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />
