@@ -107,11 +107,11 @@ const ProductList = ({
                         qty: 1
                     })
                 })
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
                 const datas = await res.json()
                 console.log(datas);
+                if (!res.ok) {
+                    throw new Error(`${datas.message ? datas.message : 'HTTP error! status: ' + res.status}`);
+                }
 
                 Swal.fire({
                     title: 'Success!',
@@ -135,7 +135,7 @@ const ProductList = ({
             console.error('Fetch error:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'Fetch error: ' + error,
+                text: error,
                 icon: 'error',
                 showConfirmButton: false,
                 timer: 1200
