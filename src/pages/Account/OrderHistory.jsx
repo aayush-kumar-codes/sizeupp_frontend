@@ -43,7 +43,7 @@ const DeliveryHistoryTable = () => {
         // Add more delivery history data as needed
     ];
 
-    const getStatusBadge = (status,id) => {
+    const getStatusBadge = (status, id) => {
         let colorClass = '';
         switch (status.toLowerCase()) {
             case 'delivered':
@@ -62,7 +62,7 @@ const DeliveryHistoryTable = () => {
                 colorClass = 'gray';
         }
         const handletrack = () => {
-            navigate('/profile/track-order/'+id)
+            navigate('/profile/track-order/' + id)
         }
         return (
             <div onClick={handletrack} className={`border border-${colorClass}-500 px-2 py-1 text-${colorClass}-500 rounded-full text-md cursor-pointer`}>
@@ -72,11 +72,11 @@ const DeliveryHistoryTable = () => {
     };
 
 
-    const {profiledata,fetchProfileData} = React.useContext(AuthContext)
-    
-    React.useEffect(()=>{
+    const { profiledata, fetchProfileData } = React.useContext(AuthContext)
+
+    React.useEffect(() => {
         fetchProfileData()
-    },[])
+    }, [])
 
 
     console.log(profiledata)
@@ -108,17 +108,23 @@ const DeliveryHistoryTable = () => {
                                     <td className="px-6 py-4">{item.order_items?.length || 0}</td>
                                     <td className="px-6 py-4">{item.mrp_price || 0}</td>
                                     <td className="px-6 py-4">{(item.payment_status + ' (' + item.payment_type + ')') || "Ship deight"}</td>
-                                    <td className="px-6 py-4 text-center">{getStatusBadge(item.delivery_status,item.id)}</td>
+                                    <td className="px-6 py-4 text-center">{getStatusBadge(item.delivery_status, item.id)}</td>
                                     <td className="px-6 py-4">
                                         <Link to={`/profile/order-details/${item.id}`}>
                                             <button className="text-blue-500 text-md hover:scale-110 hover:text-blue-800 ease-in-out">View</button>
                                         </Link>
                                     </td>
-                                    
+
                                     <td className="px-6 py-4">
-                                        <Link to={`/profile/cancel-return/${item.id}`}>
-                                            <button className="text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md">Cancel or Return</button>
-                                            </Link>
+                                        {
+                                            (item.order_return || item.order_cancel) ?
+                                                <div className='text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md'>{item.order_cancel ? 'Cancelling Order' : 'Returning Order'}</div>
+
+                                                :
+                                                <Link to={`/profile/cancel-return/${item.id}`}>
+                                                    <button className="text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md">Cancel / Order</button>
+                                                </Link>
+                                        }
                                     </td>
 
                                 </tr>
