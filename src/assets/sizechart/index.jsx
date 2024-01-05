@@ -23,6 +23,8 @@ import bottom_inch from './women/bottom_inches.jpeg'
 import top_cm from './women/top_cm.jpeg'
 import top_inches from './women/top_inches.jpeg'
 
+import sizeguide from './diagram/size-guide.jpg'
+
 export {
     CasualBottomwear_boxer,CasualBottomwear_chinos,CasualBottomwear_jeans,CasualBottomwear_joggers,CasualBottomwear_knittedshorts,CasualBottomwear_pajama,CasualBottomwear_trackpants,
     Eveningwear_shirt,
@@ -30,6 +32,7 @@ export {
     Ethnicwear_kurta,
     Formalwear_shirt,Formalwear_trousers,
 
-    bottom_cm,bottom_inch,top_cm,top_inches
+    bottom_cm,bottom_inch,top_cm,top_inches,
+    sizeguide
 
 }

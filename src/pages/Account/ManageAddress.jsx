@@ -83,11 +83,17 @@ const NewAddress = () => {
         city: '',
         state: '',
         zipCode: '',
-        country: '',
       })
 
     } catch (error) {
       console.error('Fetch error:', error);
+      setFormData({
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      })
       Swal.fire({
         title: 'Error!',
         text: 'Fetch error: ' + error,
@@ -166,6 +172,13 @@ const NewAddress = () => {
         timer: 1500
       })
     }
+    setFormData({
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    })
   }
 
   const handleUpdateAdddress = async (id) => {
@@ -225,6 +238,13 @@ const NewAddress = () => {
 
       })
     }
+    setFormData({
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    })
   }
 
 
@@ -292,7 +312,15 @@ const NewAddress = () => {
       }
     } catch(error){
       console.log(error)
+      setFormData({
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      })
     }
+
   }
 
   const [isEdit, setIsEdit] = useState(false)

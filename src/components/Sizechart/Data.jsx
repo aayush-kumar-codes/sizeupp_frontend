@@ -4,7 +4,8 @@ import { CasualBottomwear_boxer,CasualBottomwear_chinos,CasualBottomwear_jeans,C
   Ethnicwear_kurta,
   Formalwear_shirt,Formalwear_trousers,
 
-  bottom_cm,bottom_inch,top_cm,top_inches } from "../../assets/sizechart"
+  bottom_cm,bottom_inch,top_cm,top_inches, 
+  sizeguide} from "../../assets/sizechart"
 
 export const Images = [
       {
@@ -72,17 +73,17 @@ export const Images = [
     url: CasualBottomwear_boxer
   },
   {
-    name: 'Women Topwear',
-    url:[top_cm,top_inches]
+    name: 'Topwear',
+    url:[top_cm,top_inches,sizeguide]
   },
   {
-    name: 'Women Bottomwear',
-    url:[bottom_cm,bottom_inch]
+    name: 'Bottomwear',
+    url:[bottom_cm,bottom_inch,sizeguide]
     
   },
   {
-    name : 'Festive Wear',
-    url : [bottom_cm,bottom_inch]
+    name : 'Ethnic Wear',
+    url : [top_cm,top_inches,sizeguide]
   },
   {
     name : 'Winter Wear',

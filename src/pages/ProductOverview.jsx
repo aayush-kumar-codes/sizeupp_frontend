@@ -39,7 +39,7 @@ export const Modal = ({ children, onClose }) => {
     <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-80 bg-gray-900" onClick={handleOverlayClick}>
       <div className=" p-8 rounded-md max-w-screen-sm w-full h-auto overflow-auto">
         {children}
-        <button className="absolute top-[9rem] right-[4rem] bg-black rounded-full p-1 md:top-[7rem] md:right-[26rem] text-gray-100" onClick={onClose}>
+        <button className="absolute top-[6rem] right-[4rem] md:top-[6rem] md:right-[2rem] lg:top-[6rem] lg:right-[22rem] bg-black rounded-full p-1 text-gray-100" onClick={onClose}>
           <XMarkIcon className="h-8 w-8 text-gray-100" />
         </button>
       </div>
@@ -1427,7 +1427,7 @@ const ProductOverview = () => {
                   {isAsideOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                       <button
-                        className="absolute top-4 right-0 text-black p-2 rounded-full bg-gray-200 shadow mx-2"
+                        className="absolute top-[14rem] right-[2rem] md:top-[10rem] md:right-[22rem] text-black p-2 rounded-full bg-gray-200 shadow mx-2"
                         onClick={closeAside}
                       >
                         <XMarkIcon className="h-6 w-6" />
@@ -1465,6 +1465,12 @@ const ProductOverview = () => {
                                   >
                                     size in inches
                                   </button>
+                                  <button
+                                    className={`p-2 rounded-lg border m-2 ${activeButton === 'guide' ? 'bg-gray-800 text-white' : ''}`}
+                                    onClick={() => handletoggleActive('guide')}
+                                  >
+                                    Size Guide
+                                  </button>
                                 </div>
                                 {activeButton === 'cms' && (
                                   <img className=" w-fit mx-auto md:p-6" src={image.url[0]} alt={image.name} />
@@ -1478,7 +1484,14 @@ const ProductOverview = () => {
                                   </>
 
                                 )}
+                                {activeButton === 'guide' && (
 
+                                  image.url[2] && <>
+
+                                    <img className="w-1/3 h-auto mx-auto md:p-6 object-fit" src={image.url[2]} alt={image.name} />
+                                  </>
+
+                                )}
                               </div>
                             ))
 

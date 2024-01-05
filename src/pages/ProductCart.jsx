@@ -304,6 +304,16 @@ export function ProductCart() {
 
         } catch (error) {
             console.error('Fetch error:', error);
+            setFormData({
+                addressid: "",
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                state: "",
+                pinCode: '',
+                mobile: '',
+                is_deafult: false
+            })
             Swal.fire({
                 title: 'Error!',
                 text: 'Fetch error: ' + error,
@@ -340,7 +350,6 @@ export function ProductCart() {
                 addressLine2: '',
                 city: '',
                 state: "",
-                country: '',
                 pinCode: '',
                 mobile: '',
                 is_deafult: false
@@ -363,6 +372,16 @@ export function ProductCart() {
             }
         } catch (error) {
             console.log(error)
+            setFormData({
+                addressid: "",
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                state: "",
+                pinCode: '',
+                mobile: '',
+                is_deafult: false
+            })
         }
     }
 
