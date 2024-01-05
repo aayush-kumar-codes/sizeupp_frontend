@@ -342,12 +342,8 @@ const ProductList = ({
                                             </div>
                                             }
                                         </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
-                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                        >
-                                            Add to Cart
+                                        <button type="button" className="hover:scale-110">
+                                            {items.wishlist ? <HeartIcon onClick={(e) => { handleRemoveWishlist(e, items.id) }} className="h-7 fill-current text-orange-500 w-7" /> : <HeartIcon onClick={(e) => handleAddWishlist(e, items.id)} className="h-7 w-7" />}
                                         </button>
                                     </div>
                                 </div>
@@ -396,12 +392,8 @@ const ProductList = ({
                                                 </div>
                                                 }
                                             </div>
-                                            <button
-                                                type="button"
-                                                onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
-                                                className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                            >
-                                                Add to Cart
+                                            <button type="button" className="hover:scale-110">
+                                                {items.wishlist ? <HeartIcon onClick={(e) => { handleRemoveWishlist(e, items.id) }} className="h-7 fill-current text-orange-500 w-7" /> : <HeartIcon onClick={(e) => handleAddWishlist(e, items.id)} className="h-7 w-7" />}
                                             </button>
                                         </div>
                                     </div>
