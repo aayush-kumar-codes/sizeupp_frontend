@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
+import { State, City } from 'country-state-city';
 
 const products = [
     {
@@ -167,6 +168,7 @@ export function ProductCart() {
         state: '',
         zipCode: '',
         country: 'India',
+        stateCode:'',
         is_deafult: false
     });
 
@@ -382,6 +384,15 @@ export function ProductCart() {
         }
     }
 
+    const stateData = State.getStatesOfCountry('IN').map(state => ({
+        name: state.name,
+        code: state.isoCode,
+    }))
+    const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
+        name: city,
+    }))
+
+    console.log(cityData);
 
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
@@ -466,36 +477,58 @@ export function ProductCart() {
                                     </dd>
                                 </div>
 
+                                
+                                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                            State
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <select
+                                                className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                                value={formData.state}
+                                                onChange={(e) => {
+                                                    const selectedState = e.target.value;
+                                                    const selectedStateCode = stateData.find((item) => item.name === selectedState)?.code;
+                                                    setFormData({ ...formData, state: selectedState, stateCode: selectedStateCode });
+                                                }}
+                                            >
+                                                <option value='' disabled>Select State</option>
+                                                {stateData.map((item) => (
+                                                    <option key={item.name} value={item.name}>
+                                                        {item.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </dd>
+                                    </div>
+
+                                
+
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                         City
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        <input type="text"
+                                        {/* <input type="text"
                                             className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             placeholder="Enter City"
                                             required
                                             name="city"
                                             value={formData.city}
-                                            onChange={handleInputChange} />
+                                            onChange={handleInputChange} /> */}
+                                        <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
+                                            <option value='' disabled>Select City</option>
+                                            {City.getCitiesOfState('IN', formData.stateCode).map(city => {
+                                                        return (
+
+                                                            <option key={city.name} value={city.name} >{city.name} </option>
+                                                            
+                                                        )
+                                                    })}
+
+                                        </select>
                                     </dd>
                                 </div>
-
-                                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-medium text-gray-500">
-                                        State
-                                    </dt>
-                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        <input type="text"
-                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                                            placeholder="Enter State"
-                                            required
-                                            name="state"
-                                            value={formData.state}
-                                            onChange={handleInputChange} />
-                                    </dd>
-                                </div>
-
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                         Pin Code
