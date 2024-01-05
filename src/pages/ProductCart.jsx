@@ -249,19 +249,19 @@ export function ProductCart() {
     const handleAddAddress = async () => {
         if (!formData.addressLine1 || !formData.city || !formData.state || !formData.country || !formData.pinCode) {
             Swal.fire({
-              title: 'Error!',
-              text: 'Please fill all the fields',
-              icon: 'error',
-              showConfirmButton: false,
-              timer: 1500
+                title: 'Error!',
+                text: 'Please fill all the fields',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1500
             })
             return
-          }
+        }
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            
+
             const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/address`, {
                 method: 'POST',
                 headers: {
@@ -382,18 +382,17 @@ export function ProductCart() {
                     status: status
                 })
             })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
             const data = await res.json()
             console.log(data);
+            if (!res.ok) {
+                throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
+            }
             fetchCart();
         }
         catch (error) {
             console.error('Fetch error:', error);
             Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
+                title: error,
                 icon: 'error',
                 showConfirmButton: false,
                 timer: 1200
@@ -630,7 +629,7 @@ export function ProductCart() {
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                                 <section className="px-4 bg-white w-11/12  rounded-md md:w-1/2">
 
-                                    <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Active Coupons</h2>
+                                    <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>All Coupons</h2>
                                     <div className='max-h-[30rem] overflow-y-auto'>
                                         {
                                             coupons?.map((coupon, index) => {
@@ -638,7 +637,7 @@ export function ProductCart() {
                                                     <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
                                                         <h3 className='font-semibold my-4'>{coupon.code}</h3>
                                                         <div className='flex gap-4'>
-                                                            <div className='text-sm text-gray-800/80 font-semibold'>{' First Login Discount Coupon '} </div>
+                                                            <div className='text-sm tracking-wider text-gray-800/80 font-semibold'>{`Get flat`} <span className='text-green-800/80 underline'>{coupon.percentage}% OFF</span> on First order</div>
                                                         </div>
                                                     </div>
                                                 )
@@ -711,23 +710,12 @@ export function ProductCart() {
                                                 </div>
 
                                                 {/* stock */}
-                                                <div className={`${info.product?.sqp.map((size, index) => {
-                                                    if (info.size_quantity_price != size.id) {
-                                                        return null
-                                                    }
-
-                                                    return (parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? 'text-red-600' : 'text-green-600')
-                                                })} col-span-1 flex justify-center items-center font-normal text-sm py-2`}>
+                                                <div className={`col-span-1 flex justify-center items-center font-normal text-sm py-2`}>
                                                     {
-                                                        info.product?.sqp.map((size, index) => {
-                                                            if (info.size_quantity_price != size.id) {
-                                                                return null
-                                                            }
-
-                                                            return (
-                                                                parseInt(size.quantity) > (parseInt(size.quantity) - parseInt(product.qty)) ? "In Stock" : "Out of Stock"
-                                                            )
-                                                        })
+                                                        info.product?.sqp.map((sizes) => (
+                                                             sizes.id == info.size_quantity_price && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock`}</span> : <span className="text-green-500">In Stock</span>) 
+                                                        )
+                                                        )
                                                     }
                                                 </div>
                                                 {/* Qty Update buttons */}
@@ -778,7 +766,7 @@ export function ProductCart() {
                     >
                         {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                             <form action="#" className="mt-6">
-                                <div onClick={()=>setIsCouponOpen((prev) => !prev)} className='text-sm text-end cursor-pointer underline font-semibold text-gray-800/80'>View coupons?</div>
+                                <div onClick={() => setIsCouponOpen((prev) => !prev)} className='text-sm text-end cursor-pointer underline font-semibold text-gray-800/80'>View coupons?</div>
                                 <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
                                 <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
                                     <div className="flex-grow">
@@ -854,9 +842,9 @@ export function ProductCart() {
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        
-                                            navigate('/products/billing')
-                                        
+
+                                        navigate('/products/billing')
+
                                     }}
                                     className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                 >

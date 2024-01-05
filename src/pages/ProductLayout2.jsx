@@ -4,7 +4,7 @@ import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
-
+import {Helmet} from 'react-helmet'
 
 const ProductLayout2 = () => {
 
@@ -29,7 +29,7 @@ const ProductLayout2 = () => {
     let search = searchParams.get('navsearch')
     let subsubcategory = searchParams.getAll('subcategory')
 
-    console.log(subcategory)
+
 
     if (category || search || subcategory || subsubcategory || fit || sleeve || necktype || color || size) {
       const updatedFilterData = {
@@ -46,8 +46,7 @@ const ProductLayout2 = () => {
       };
 
 
-      console.log(idToNameMap[category], idToNameMap[subcategory], idToNameMap[subsubcategory], idToNameMap[color], idToNameMap[size], idToNameMap[fit], idToNameMap[sleeve], idToNameMap[necktype])
-
+    
       // Use the callback function of setState to ensure the state is updated before calling the filtering function
       setfilterdata(updatedFilterData);
 
@@ -75,8 +74,6 @@ const ProductLayout2 = () => {
     }
   }, [filterdata]);
 
-
-  console.log(filterdata)
 
   const handleChangeFilter = (filterValue, headName) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -216,7 +213,6 @@ setIsFilterOpen((prev) => ({
     }));
 */}
 
-  console.log(filterdata.gender?.includes('51e84707-33e5-459a-b40d-a2a40d20b460'))
   return (
     <>
       <section className="w-full">
@@ -224,6 +220,9 @@ setIsFilterOpen((prev) => ({
           <div className="md:flex md:flex-row md:items-start md:justify-between justify-center">
             <div className="px-12">
               {/* Nav menu- Breadcrumb */}
+              <Helmet>
+
+              </Helmet>
 
               <ol className={`inline-flex items-center  py-4`}>
                 <li className="inline-flex items-center">
@@ -264,7 +263,7 @@ setIsFilterOpen((prev) => ({
                   </li>
                 }
                 {!search && filterdata.category?.length > 0 &&
-                  <li>
+                  <li className='hidden md:block'>
                     <div className="flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

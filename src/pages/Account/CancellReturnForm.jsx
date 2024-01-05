@@ -58,7 +58,9 @@ const CancellReturnForm = () => {
             return
         }
         try{
-
+            if(order.delivery_status != "Delivered"){
+                setformdata({...formdata, products: order.order_items.map((item) => item.product)})
+            }
             const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/return-product`, {
                 method: 'POST',
                 headers: {
@@ -76,7 +78,7 @@ const CancellReturnForm = () => {
                 showConfirmButton: false,
                 timer: 1500
             })
-            navigate('/account/orders')
+            navigate('/profile/my-orders')
         }catch(error){
             console.log(error)
             Swal.fire({
@@ -142,7 +144,7 @@ const CancellReturnForm = () => {
 
                         </div>
                         <div className="grid grid-cols-1 justify-center items-center mb-4">
-                            {order.order_items?.length > 0 && order.order_items?.map((item) => (
+                            {order.delivery_status == "Delivered" && order.order_items?.length > 0 && order.order_items?.map((item) => (
                                 <div key={item.id} className="col-span-1">
                                     <input id={`checkbox-${item.product.id}`} type="checkbox" value={item.product.id} onChange={() => toggleCheckbox(item.product.id)}
                                         checked={formdata.products.some((selectedItem) => selectedItem.id === item.product.id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />

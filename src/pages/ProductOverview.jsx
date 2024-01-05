@@ -968,10 +968,11 @@ const ProductOverview = () => {
           qty: count
         })
       })
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
       const data = await res.json()
+      if (!res.ok) {
+        throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
+      }
+      
       if (data.Message == 'Already In Cart') {
 
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${id}`, {
@@ -987,11 +988,12 @@ const ProductOverview = () => {
             qty: count
           })
         })
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
         const datas = await res.json()
+
         console.log(datas);
+        if (!res.ok) {
+          throw new Error(`${datas.message ? datas.message : 'HTTP error! status: ' + res.status}`);
+        }
         Swal.fire({
           title: 'Success!',
           text: 'Product Updated in Cart',
@@ -1011,10 +1013,9 @@ const ProductOverview = () => {
       })
 
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.log(error);
       Swal.fire({
-        title: 'Error!',
-        text: 'Fetch error: ' + error,
+        title: error,
         icon: 'error',
         showConfirmButton: false,
         timer: 1500
@@ -1055,8 +1056,8 @@ const ProductOverview = () => {
     catch (error) {
       console.error('Fetch error:', error);
       Swal.fire({
-        title: 'Error!',
-        text: 'Fetch error: ' + error,
+        title: error,
+        text: error,
         icon: 'error',
         showConfirmButton: false,
         timer: 1200
@@ -1389,10 +1390,6 @@ const ProductOverview = () => {
                   {demo.product?.discount_percentage}%</p>
               </div>}
             </div>
-
-            <div className="text-green-600 font-normal text-lg py-2">
-              In Stock
-            </div>
           </div>
 
           <div className="border-b border-c-gray-300 pb-3  ">
@@ -1413,6 +1410,13 @@ const ProductOverview = () => {
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className="mb-4">
+                {demo.product?.sqp.map((sizes) => (
+                  <h3 key={sizes.id} className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
+                    {sizes.id == sqpActive && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock` }</span> : <span className="text-green-500">In Stock</span>)}
+                  </h3>
+                ))}
               </div>
               <div className="p-2">
                 <div className="relative">
@@ -1507,6 +1511,7 @@ const ProductOverview = () => {
 
             <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-c-gray-300 md:h-12">
               <button
+
                 className="text-xl hover:bg-gray-200/30 flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
                 onClick={decrement}
               >
