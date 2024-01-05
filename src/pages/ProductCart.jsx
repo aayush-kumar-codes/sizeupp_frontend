@@ -282,6 +282,10 @@ export function ProductCart() {
             if (!res.ok) {
                 throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
             }
+            if(!data.user_verified){
+                throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
+            }
+            
             console.log(data);
             Swal.fire({
                 title: 'Success!',
