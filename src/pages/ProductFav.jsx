@@ -9,7 +9,7 @@ import Swal from "sweetalert2"
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])
 
-    const { isAuth, fetchWishlist } = useContext(AuthContext);
+    const { isAuth, fetchWishlist, fetchCart } = useContext(AuthContext);
 
     // fetch data from server
     const fetchData = async () => {
@@ -124,8 +124,188 @@ export const ProductFav = () => {
 
     }, [])
 
+
+    const [isModalCart, setIsModalCart] = useState(false)
+    const [modalSizes, setModalSizes] = useState([])
+    const [modalForm, setModalForm] = useState({
+        name: '',
+        color: '',
+        product_id: '',
+        size: '',
+        qty: 1
+    })
+
+    const increment = () => {
+        setModalForm((prev) => ({ ...prev, qty: prev.qty + 1 }))
+    };
+
+    const decrement = () => {
+        if (modalForm.qty > 1) {
+            setModalForm((prev) => ({ ...prev, qty: prev.qty - 1 }))
+        }
+    };
+
+    const handleAddToCart = async () => {
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            console.log(localStorage.token);
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add-to-cart/${modalForm.product_id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    sqp_id: modalForm.size,
+                    selected_color: 'black',
+                    qty: modalForm.qty
+                })
+            })
+            const data = await res.json()
+            if (!res.ok) {
+                throw new Error(`${data.message ? "Default Size is " + data.message : 'HTTP error! status: ' + res.status}`);
+            }
+            if (data.Message == 'Already In Cart') {
+
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${modalForm.product_id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': `token ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        sqp_id: modalForm.size,
+                        selected_color: 'black',
+                        qty: 1
+                    })
+                })
+                const datas = await res.json()
+                console.log(datas);
+                if (!res.ok) {
+                    throw new Error(`${datas.message ? "Default Size is " + datas.message : 'HTTP error! status: ' + res.status}`);
+                }
+                setModalForm({
+                    name: '',
+                    color: '',
+                    product_id: '',
+                    size: '',
+                    qty: 1
+                })
+
+                return Swal.fire({
+                    title: 'Success!',
+                    text: 'Product Updated in Cart',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1200
+                })
+            }
+            console.log(data);
+            fetchCart()
+            Swal.fire({
+                title: 'Success!',
+                text: 'Product Added in Cart',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1200
+            })
+            setModalForm({
+                name: '',
+                color: '',
+                product_id: '',
+                size: '',
+                qty: 1
+            })
+            setIsModalCart(false)
+        } catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+
     return (
         <section className={`overflow-hidden ${styles.padding}`}>
+
+            {isModalCart && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <section className="px-4 bg-white w-11/12  rounded-md md:w-1/3">
+
+                        <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Add To Cart</h2>
+                        <p className='my-4 text-base px-2'><span className='underline font-semibold'>Product</span> : {modalForm.name}</p>
+                        <p className='my-4 text-base px-2'><span className='underline font-semibold'>Color</span> : {modalForm.color}</p>
+
+                        <div className='max-h-[30rem] overflow-y-auto'>
+                            <div className='px-2'>
+                                <div className='text-base'>Size :</div>
+                                <select onChange={(e) => { setModalForm({ ...modalForm, size: e.target.value }) }} value={modalForm.size} className='text-sm py-2 w-fit mt-2 mx-4 px-4 rounded-md bg-gray-800/10'>
+                                    <option value="" disabled>Select Size</option>
+                                    {
+                                        modalSizes.map((size, i) => {
+                                            if (size.quantity == 0) {
+                                                return (
+                                                    <option key={i} className='line-through' value={size.id} disabled>{size.size}</option>
+                                                )
+                                            }
+                                            return (
+                                                <option key={i} value={size.id}>{size.size}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <div className={`flex items-center font-normal px-4 text-base py-2`}>
+                                    {
+                                        modalSizes.map((sizes) => (
+                                            sizes.id == modalForm.size && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock`}</span> : <span className="text-green-500">In Stock</span>)
+                                        )
+                                        )
+                                    }
+                                </div>
+                            </div>
+                            <div className='mt-4  px-2'>
+                                <div className='text-base '>Quantity :</div>
+                                <div className="group w-fit mt-2 mx-2 flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-c-gray-300 md:h-12">
+                                    <button
+                                        disabled={!modalForm.size}
+                                        className="text-xl hover:bg-gray-200/30 flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
+                                        onClick={() => { decrement() }}
+                                    >
+                                        -
+                                    </button>
+                                    <span className="duration-250 text-heading flex h-full w-12 flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out md:w-20 xl:w-24">
+                                        {modalForm.qty}
+                                    </span>
+                                    <button
+                                        disabled={!modalForm.size}
+                                        className="text-xl hover:bg-gray-200/30 flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
+                                        onClick={() => { increment() }}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className='grid grid-cols-2 gap-4 pr-6 mt-8'>
+                            <button type="button" disabled={!modalForm.size || !modalForm.qty} onClick={() => { handleAddToCart() }} className="rounded-lg bg-black text-white w-full px-4 py-2 m-4">
+                                Add
+                            </button>
+                            <button type="button" onClick={() => { setIsModalCart(false) }} className="rounded-lg bg-red-500 text-white w-full px-4 py-2 m-4">
+                                Cancel
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            )}
+
             {/* Nav menu- Breadcrumb */}
             <ol className={`inline-flex items-center space-x-1 md:space-x-3`}>
                 <li className="inline-flex items-center">
@@ -191,16 +371,16 @@ export const ProductFav = () => {
                                         <p className="leading-relaxed">
                                             {item.product.care_instructions}
                                         </p>
-                                        
+
                                         <div className="flex flex-wrap gap-2 mt-4 items-center justify-between">
                                             <span className="title-font text-xl font-semibold md:font-bold text-c-gray-900">₹ {item.product.mrp}</span>
                                             <div className="flex gap-2">
                                                 <button
                                                     type="button"
-                                                    onClick={() => navigate("/products/" + item.product.id)}
+                                                    onClick={() => { setIsModalCart(true); setModalSizes(item.product?.sqp); setModalForm((prev) => ({ ...prev, product_id: item.product.id, size: item.product?.sqp[0].id, color: item.product?.color_family.name, name: item.product?.name })) }}
                                                     className="rounded-md bg-black px-3 py-2 truncate text-sm md:font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                                 >
-                                                    View More
+                                                    Add to Cart
                                                 </button>
                                                 <button
                                                     type="button"

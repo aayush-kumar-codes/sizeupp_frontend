@@ -442,11 +442,7 @@ export function Navbar() {
                                                     Track order
                                                 </Link>
                                             </li> */}
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/account-settings" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    Settings
-                                                </Link>
-                                            </li>
+                                            
                                             {!localStorage.token && noAuthMenuItems.map((item) => (
                                                 <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
                                                     <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
