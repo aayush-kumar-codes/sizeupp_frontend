@@ -557,7 +557,15 @@ export function Navbar() {
                                                 </>
                                             )
                                         })} */}
-                                        <Link to="/products" onClick={()=>{setIsMenuOpen(false)}} className='text-sm font-semibold'>All Products</Link>
+                                        <div className="flex justify-end items-end border-t border-c-gray-300 py-5 w-full md:w-2/5">
+                                            <form onSubmit={handleSubmit} className="mx-auto  py-1 px-6 rounded-full border flex focus-within:border-gray-300">
+                                                <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search" />
+                                                <button type="submit" className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
+                                                    <MagnifyingGlassIcon className="h-4 w-4 text-white " />
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <Link to="/products" onClick={() => { setIsMenuOpen(false) }} className='text-sm border-t border-c-gray-300 py-5 font-semibold'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {
                                                 return <AccordionItem
@@ -575,7 +583,7 @@ export function Navbar() {
                                                                                 {
                                                                                     subcat.subsubcategories.map((subsubcat) => {
                                                                                         return (
-                                                                                            <Link onClick={()=>setIsMenuOpen(false)} className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?gender=${cat.id}&category=${subcat.id}&subcategory=${subsubcat.id}`}>
+                                                                                            <Link onClick={() => setIsMenuOpen(false)} className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?gender=${cat.id}&category=${subcat.id}&subcategory=${subsubcat.id}`}>
                                                                                                 {subsubcat.name}
                                                                                             </Link>
                                                                                         )
@@ -583,7 +591,7 @@ export function Navbar() {
                                                                                 }
                                                                             </div>
                                                                         }
-                                                                        />
+                                                                    />
                                                                 )
                                                             })}
                                                         </div>

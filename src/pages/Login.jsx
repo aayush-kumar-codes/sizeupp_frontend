@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 export function Login() {
 
-    const { isAuth, setIsVerified, setIsAuth } = useContext(AuthContext)
+    const { isAuth, setIsVerified, setIsAuth,fetchCart,fetchWishlist } = useContext(AuthContext)
     const [loading, setloading] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -78,6 +78,8 @@ export function Login() {
                         password: ""
                     });
                     setIsAuth(true);
+                    fetchCart()
+                    fetchWishlist()
                     setIsVerified(data.user_verified);
                 } else {
                     Swal.fire({
