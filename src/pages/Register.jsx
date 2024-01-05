@@ -33,106 +33,106 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (form.first_name === '' || form.last_name === '' || form.email === '' || form.password === '' || form.password_confirmation === '' || form.phone === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill all the fields',
+                showConfirmButton: false,
+                timer: 1200
+            });
+            setForm({
+                email: "",
+                password: "",
+                last_name: "",
+                first_name : "",
+                phone : "",
+                password_confirmation:"",
+                newsletter: false
+            });
+            return;
+        }
+
+        if (!form.email.includes('@') || !form.email.includes('.')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Email',
+                showConfirmButton: false,
+                timer: 1200
+            });
+            setForm({
+                email: "",
+                password: "",
+                last_name: "",
+                first_name : "",
+                phone : "",
+                password_confirmation:"",
+                newsletter: false
+            });
+            return;
+        }
+
+        if (form.phone.length !== 10) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Mobile number must be 10 digits long',
+                showConfirmButton: false,
+                timer: 1200
+            });
+            setForm({
+                email: "",
+                password: "",
+                last_name: "",
+                first_name : "",
+                phone : "",
+                password_confirmation:"",
+                newsletter: false
+            });
+            return;
+        }
+
+        if (form.password !== form.password_confirmation) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password and Confirm Password must be same',
+                showConfirmButton: false,
+                timer: 1200
+            });
+            setForm({
+                email: "",
+                password: "",
+                last_name: "",
+                first_name : "",
+                phone : "",
+                password_confirmation:"",
+                newsletter: false
+            });
+            return;
+        }
+
+        if (form.password.length < 8) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password must be atleast 8 characters long',
+                showConfirmButton: false,
+                timer: 1200
+            });
+            setForm({
+                email: "",
+                password: "",
+                last_name: "",
+                first_name : "",
+                phone : "",
+                password_confirmation:"",
+                newsletter: false
+            });
+            return;
+        }
         try {
-            if (form.first_name === '' || form.last_name === '' || form.email === '' || form.password === '' || form.password_confirmation === '' || form.phone === '') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Please fill all the fields',
-                    showConfirmButton: false,
-                    timer: 1200
-                });
-                setForm({
-                    email: "",
-                    password: "",
-                    last_name: "",
-                    first_name : "",
-                    phone : "",
-                    password_confirmation:"",
-                    newsletter: false
-                });
-                return;
-            }
-
-            if (!form.email.includes('@') || !form.email.includes('.')) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Invalid Email',
-                    showConfirmButton: false,
-                    timer: 1200
-                });
-                setForm({
-                    email: "",
-                    password: "",
-                    last_name: "",
-                    first_name : "",
-                    phone : "",
-                    password_confirmation:"",
-                    newsletter: false
-                });
-                return;
-            }
-
-            if (form.phone.length !== 10) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Mobile number must be 10 digits long',
-                    showConfirmButton: false,
-                    timer: 1200
-                });
-                setForm({
-                    email: "",
-                    password: "",
-                    last_name: "",
-                    first_name : "",
-                    phone : "",
-                    password_confirmation:"",
-                    newsletter: false
-                });
-                return;
-            }
-
-            if (form.password !== form.password_confirmation) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Password and Confirm Password must be same',
-                    showConfirmButton: false,
-                    timer: 1200
-                });
-                setForm({
-                    email: "",
-                    password: "",
-                    last_name: "",
-                    first_name : "",
-                    phone : "",
-                    password_confirmation:"",
-                    newsletter: false
-                });
-                return;
-            }
-
-            if (form.password.length < 8) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Password must be atleast 8 characters long',
-                    showConfirmButton: false,
-                    timer: 1200
-                });
-                setForm({
-                    email: "",
-                    password: "",
-                    last_name: "",
-                    first_name : "",
-                    phone : "",
-                    password_confirmation:"",
-                    newsletter: false
-                });
-                return;
-            }
 
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/auth/signup', {
                 method: 'POST',
