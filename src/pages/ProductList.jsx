@@ -89,10 +89,10 @@ const ProductList = ({
                     qty: 1
                 })
             })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
             const data = await res.json()
+            if (!res.ok) {
+                throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
+            }
             if (data.Message == 'Already In Cart') {
 
                 const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/update-cart/${id}`, {
