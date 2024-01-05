@@ -1,24 +1,11 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Error from "../components/Alerts/Error"
 import Swal from 'sweetalert2'
-import { useNavigate,Navigate } from "react-router-dom"
+import { useNavigate, Navigate } from "react-router-dom"
+import { AuthContext } from "../context/AuthProvider"
 
 const Otp = () => {
     const navigate = useNavigate()
-
-
-    useEffect(() => {
-        fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
-            method: 'GET',
-            headers: {
-                'Authorization': `token ${localStorage.token}`,
-                'Content-type': 'application/json'
-            }
-        }).then(res => res.json().then((data) => {
-            console.log(data)
-            localStorage.setItem("user_verified", data.user_verified)
-        }))
-    }, [])
 
     const [otp, setOtp] = useState({
         1: "",
@@ -38,17 +25,17 @@ const Otp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(otp)
-        if(otp[1] == "" || otp[2] == "" || otp[3] == "" || otp[4] == ""){
+        if (otp[1] == "" || otp[2] == "" || otp[3] == "" || otp[4] == "") {
             return Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Please fill all the fields',
                 showConfirmButton: false,
                 timer: 1200
-                
+
             })
         }
-        
+
         const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
             method: 'POST',
             headers: {
@@ -59,14 +46,14 @@ const Otp = () => {
         })
 
         const data = await res.json()
-        if(!res.ok){
+        if (!res.ok) {
             return Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: data.message,
                 showConfirmButton: false,
                 timer: 1200
-                
+
             })
         }
         if (data.message) {
@@ -75,24 +62,24 @@ const Otp = () => {
                 title: 'Success',
                 text: data.message,
                 confirmButtonText: 'Cool',
-                
+
             }).then((result) => {
                 if (result.isConfirmed) {
-                 navigate('/')
+                    navigate('/')
                 }
-              });
+            });
 
         }
         if (data.user_verified) {
-            localStorage.setItem("user_verified", true)
+            localStorage.setItem("user_verified", JSON.stringify(data.user_verified))
             navigate('/')
         }
         console.log(data)
     }
 
-    console.log(localStorage.user_verified == 'true')
-    if(localStorage.user_verified == 'true'){
-       
+    console.log(localStorage.user_verified == 'undefined')
+    if (localStorage.user_verified != 'undefined' ? JSON.parse(localStorage.getItem("user_verified")) : false) {
+
         return <Navigate to='/' replace />
     }
 

@@ -40,18 +40,19 @@ import CancellReturnForm from "./pages/Account/CancellReturnForm"
 
 
 const App = () => {
-  const {fetchCategory,handleValidateToken} = useContext(AuthContext)
-  useEffect(() => { 
+  const { fetchCategory, handleValidateToken, fetchProfileData } = useContext(AuthContext)
+  useEffect(() => {
     fetchCategory()
     handleValidateToken()
+    
   }
-  , []);
+    , []);
   return (
     <div className={` `}>
       <BrowserRouter>
 
         <Routes>
-            <Route index element={<HomeK />} />
+          <Route index element={<HomeK />} />
           <Route path="/" element={<LayoutAuth />} >
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
@@ -67,7 +68,7 @@ const App = () => {
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="faq" element={<Faq />} />
             <Route path="cancellation-policy" element={<CancellationPolicy />} />
-            
+
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />
               <Route path="my-orders" element={<OrderHistory />} />

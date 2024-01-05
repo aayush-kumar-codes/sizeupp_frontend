@@ -46,9 +46,8 @@ const products = [
 
 export function ProductCart() {
     const [qtyCart, setQtyCart] = useState([])
-    const [profile, setProfile] = useState({})
-    const { couponcode, setcouponcode, fetchCart, cart, setCart } = useContext(AuthContext)
-    const [pincode, setPincode] = useState('')
+    const { couponcode, setcouponcode,profiledata, fetchCart, cart, setCart,fetchProfileData } = useContext(AuthContext)
+
 
     const updateCart = (id, sqpActive, count) => {
         let newCart = cart
@@ -77,36 +76,7 @@ export function ProductCart() {
     }, []);
 
     //   Fetching data from server
-    const fetchUserProfile = async () => {
-        try {
-            if (!localStorage.token) {
-                return navigate('/login')
-            }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                }
-            })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json()
-            console.log(data);
-            setProfile(data)
-        }
-        catch (error) {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
-                icon: 'error',
-                showConfirmButton: false,
-                timer: 1200
-            });
-        }
-    }
+
 
 
 
@@ -185,46 +155,10 @@ export function ProductCart() {
 
     useEffect(() => {
         fetchCart()
-        fetchUserProfile()
+        fetchProfileData()
         fetchCoupons()
     }, [])
 
-    const handleApplyPincode = async () => {
-        try {
-            if (!localStorage.token) {
-                return navigate('/login')
-            }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `token ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    pincode: pincode
-                })
-            })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json()
-            console.log(data);
-            Swal.fire({
-                title: 'Success!',
-                text: 'Pincode Added',
-                icon: 'success',
-            })
-        }
-        catch (error) {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    }
 
     const [formData, setFormData] = useState({
         addressLine1: '',
@@ -247,7 +181,7 @@ export function ProductCart() {
     const [changeAdr, setChangeAdr] = useState(false)
 
     const handleAddAddress = async () => {
-        if (!formData.addressLine1 || !formData.city || !formData.state ||  !formData.zipCode) {
+        if (!formData.addressLine1 || !formData.city || !formData.state || !formData.zipCode) {
             Swal.fire({
                 title: 'Error!',
                 text: 'Please fill all the fields',
@@ -282,10 +216,10 @@ export function ProductCart() {
             if (!res.ok) {
                 throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
             }
-            if(!data.user_verified){
+            if (localStorage.user_verified == 'undefined' || localStorage.user_verified == 'false') {
                 throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
             }
-            
+
             console.log(data);
             Swal.fire({
                 title: 'Success!',
@@ -302,8 +236,7 @@ export function ProductCart() {
                 zipCode: '',
             })
             setChangeAdr(false)
-            fetchUserProfile()
-
+            fetchProfileData()
             navigate('/products/cart')
 
         } catch (error) {
@@ -314,7 +247,7 @@ export function ProductCart() {
                 addressLine2: '',
                 city: '',
                 state: "",
-                pinCode: '',
+                zipCode: '',
                 mobile: '',
                 is_deafult: false
             })
@@ -366,7 +299,7 @@ export function ProductCart() {
                     showConfirmButton: false,
                     timer: 1500
                 })
-                fetchUserProfile()
+                fetchProfileData()
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -466,13 +399,13 @@ export function ProductCart() {
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-y-4 lg:gap-x-12 xl:gap-x-16">
                     <section className=' lg:col-span-8'>
 
-                        {(profile.addresses?.length > 0 && !changeAdr) ?
+                        {(profiledata.addresses?.length > 0 && !changeAdr) ?
                             <div className="py-6 px-6  rounded-md border-b-gray-500 shadow-md mt-2">
                                 <label htmlFor="pincode" className="text-base font-medium text-gray-800/80">
                                     Delivery & Services :
                                 </label>
                                 <div className='text-sm text-gray-800/80 font-semibold'>
-                                    {profile.addresses?.map((address, index) => {
+                                    {profiledata.addresses?.map((address, index) => {
                                         if (address.is_default != true) {
                                             return null
                                         }
@@ -614,12 +547,12 @@ export function ProductCart() {
                                     <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Change Default Address</h2>
                                     <div className='max-h-[30rem] overflow-y-auto'>
                                         {
-                                            profile.addresses?.map((address, index) => {
+                                            profiledata.addresses?.map((address, index) => {
                                                 return (
                                                     <div key={index} className="py-4 px-2  justify-between items-center border-b border-gray-300">
                                                         <h3 className='font-semibold my-4'>Address {index + 1}</h3>
                                                         <div className='flex gap-4'>
-                                                            <input type='checkbox' onChange={(e) => {
+                                                            <input type='checkbox' onChange={() => {
                                                                 handleToggleDefault(address.id);
                                                                 setFormData({
                                                                     addressid: address.id,
@@ -736,7 +669,7 @@ export function ProductCart() {
                                                 <div className={`col-span-1 flex justify-center items-center font-normal text-sm py-2`}>
                                                     {
                                                         info.product?.sqp.map((sizes) => (
-                                                             sizes.id == info.size_quantity_price && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock`}</span> : <span className="text-green-500">In Stock</span>) 
+                                                            sizes.id == info.size_quantity_price && (sizes.quantity < 10 ? <span className="text-red-500">{sizes.quantity == 0 ? 'Out of Stock' : `Only ${sizes.quantity} left in Stock`}</span> : <span className="text-green-500">In Stock</span>)
                                                         )
                                                         )
                                                     }

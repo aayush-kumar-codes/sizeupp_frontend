@@ -28,17 +28,27 @@ const AuthProvider = ({ children }) => {
 
     const fetchProfileData = async () => {
         try {
+            console.warn(localStorage.token)
             if (localStorage.token) {
-                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': `token ${localStorage.token}`
+                try{
+
+                    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Authorization': `token ${localStorage.token}`
+                        }
+                    })
+                    const data = await response.json()
+                    if(!response.ok){
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                })
-                const data = await response.json()
-                setProfileData(data)
-                localStorage.setItem('user_verified', data.user_verified)
+                    setProfileData(data)
+                    console.log(data)
+                    localStorage.setItem('user_verified',  JSON.stringify(data.user_info.is_verified))
+                }catch(error){
+                    console.log(error)
+                }
             }
         } catch (error) {
             console.log(error)
@@ -187,6 +197,10 @@ const AuthProvider = ({ children }) => {
             } catch(error) {
                 console.log(error)
             }
+        }
+
+        if(localStorage.user_verified == 'undefined'){
+            localStorage.clear()
         }
     }
 
