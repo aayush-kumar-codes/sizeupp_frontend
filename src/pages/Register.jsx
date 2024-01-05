@@ -42,6 +42,15 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 1200
                 });
+                setForm({
+                    email: "",
+                    password: "",
+                    last_name: "",
+                    first_name : "",
+                    phone : "",
+                    password_confirmation:"",
+                    newsletter: false
+                });
                 return;
             }
 
@@ -52,6 +61,15 @@ const Register = () => {
                     text: 'Invalid Email',
                     showConfirmButton: false,
                     timer: 1200
+                });
+                setForm({
+                    email: "",
+                    password: "",
+                    last_name: "",
+                    first_name : "",
+                    phone : "",
+                    password_confirmation:"",
+                    newsletter: false
                 });
                 return;
             }
@@ -64,6 +82,15 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 1200
                 });
+                setForm({
+                    email: "",
+                    password: "",
+                    last_name: "",
+                    first_name : "",
+                    phone : "",
+                    password_confirmation:"",
+                    newsletter: false
+                });
                 return;
             }
 
@@ -75,6 +102,15 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 1200
                 });
+                setForm({
+                    email: "",
+                    password: "",
+                    last_name: "",
+                    first_name : "",
+                    phone : "",
+                    password_confirmation:"",
+                    newsletter: false
+                });
                 return;
             }
 
@@ -85,6 +121,15 @@ const Register = () => {
                     text: 'Password must be atleast 8 characters long',
                     showConfirmButton: false,
                     timer: 1200
+                });
+                setForm({
+                    email: "",
+                    password: "",
+                    last_name: "",
+                    first_name : "",
+                    phone : "",
+                    password_confirmation:"",
+                    newsletter: false
                 });
                 return;
             }
@@ -159,8 +204,8 @@ const Register = () => {
     return (
 
         <section className="bg-white">
-            {alert.type === false && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />}
-            {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} />}
+            {/* {alert.type === false && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />} */}
+            {/* {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} />} */}
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
                 <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
                     <img
