@@ -247,7 +247,7 @@ export function ProductCart() {
     const [changeAdr, setChangeAdr] = useState(false)
 
     const handleAddAddress = async () => {
-        if (!formData.addressLine1 || !formData.city || !formData.state ||  !formData.pinCode) {
+        if (!formData.addressLine1 || !formData.city || !formData.state ||  !formData.zipCode) {
             Swal.fire({
                 title: 'Error!',
                 text: 'Please fill all the fields',

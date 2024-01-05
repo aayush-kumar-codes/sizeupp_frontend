@@ -407,7 +407,7 @@ setIsFilterOpen((prev) => ({
                                 }}
                               />
                               <label htmlFor={`${subitem.id}`} className="ml-3 text-sm font-medium text-gray-900">
-                                {subitem.name}
+                                {item.name + " " +  subitem.name}
                               </label>
                             </div>
                           </li>
@@ -436,9 +436,9 @@ setIsFilterOpen((prev) => ({
                       item.subcategories?.map((subitem) => {
                         return (subitem.subsubcategories.map((subsubitem) => {
                           console.warn(subsubitem.name)
-                          // if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
-                          //   return null
-                          // }
+                          if (filterdata.gender.length > 0 && !filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
+                            return null
+                          }
 
 
                           return (
@@ -458,7 +458,7 @@ setIsFilterOpen((prev) => ({
                                   }}
                                 />
                                 <label htmlFor={`${subsubitem.id}`} className="ml-3 text-sm font-medium text-gray-900">
-                                   { subsubitem.name}
+                                   {item.name + " " +  subsubitem.name}
                                 </label>
                               </div>
                             </li>
