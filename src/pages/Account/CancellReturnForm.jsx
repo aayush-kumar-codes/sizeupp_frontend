@@ -58,9 +58,7 @@ const CancellReturnForm = () => {
             return
         }
         try{
-            if(order.delivery_status != "Delivered"){
-                setformdata({...formdata, products: order.order_items.map((item) => item.product)})
-            }
+            
             const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/return-product`, {
                 method: 'POST',
                 headers: {
