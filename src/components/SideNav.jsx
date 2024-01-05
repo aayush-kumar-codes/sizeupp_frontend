@@ -309,7 +309,7 @@ const SideNav = (
                 {catlist && catlist.categories?.map((item) => (
                   item.subcategories?.map((subitem) => {
                     return (subitem.subsubcategories.map((subsubitem) => {
-                      console.warn(subsubitem.name)
+                      
                       // if (!filterdata.category?.includes(subitem.id) && !filterdata.subcategory?.includes(subsubitem.id)) {
                       //   return null
                       // }

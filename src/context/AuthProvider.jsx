@@ -214,7 +214,8 @@ const AuthProvider = ({ children }) => {
                 signal: signal,
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Authorization' : `token ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
                     search: filterData.search,

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import PropTypes from 'prop-types'
 import ProductSkullCard from '../components/Skeleton/ProductList/ProductCard'
 import { AuthContext } from '../context/AuthProvider'
+import { HeartIcon } from '@heroicons/react/24/outline'
 
 const ProductList = ({
     grid,
@@ -17,7 +18,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { fetchProductsAuth, fetchCart, fetchWishlist, isFilterActive, setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
+    const { wishlist, handleFetchFilterProducts, filterdata, fetchCart, fetchWishlist, isFilterActive, setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
 
 
 
@@ -110,7 +111,7 @@ const ProductList = ({
                 const datas = await res.json()
                 console.log(datas);
                 if (!res.ok) {
-                    throw new Error(`${datas.message ?"Default Size is " + datas.message : 'HTTP error! status: ' + res.status}`);
+                    throw new Error(`${datas.message ? "Default Size is " + datas.message : 'HTTP error! status: ' + res.status}`);
                 }
 
                 Swal.fire({
@@ -148,7 +149,8 @@ const ProductList = ({
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
-    const handleAddWishlist = async (id) => {
+    const handleAddWishlist = async (e, id) => {
+        e.preventDefault()
         try {
             if (!localStorage.token) {
                 return navigate('/login')
@@ -168,8 +170,9 @@ const ProductList = ({
             }
             const data = await res.json()
             console.log(data);
-            fetchProductsAuth()
             fetchWishlist()
+            handleFetchFilterProducts(filterdata)
+
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Added to Wishlist',
@@ -181,8 +184,8 @@ const ProductList = ({
         catch (error) {
             console.error('Fetch error:', error);
             Swal.fire({
-                title: 'Error!',
-                text: 'Fetch error: ' + error,
+                title: error,
+                text: error,
                 icon: 'error',
                 showConfirmButton: false,
                 timer: 1200
@@ -190,7 +193,8 @@ const ProductList = ({
         }
     }
 
-    const handleRemoveWishlist = async (id) => {
+    const handleRemoveWishlist = async (e, id) => {
+        e.preventDefault()
         try {
             if (!localStorage.token) {
                 return navigate('/login')
@@ -207,7 +211,8 @@ const ProductList = ({
             }
             const data = await res.json()
             console.log(data);
-            fetchProductsAuth()
+            fetchWishlist()
+            handleFetchFilterProducts(filterdata)
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Removed from Wishlist',
@@ -281,12 +286,8 @@ const ProductList = ({
                                                     </div>
                                                     }
                                                 </div>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => { handleAddToCart(items.sqp[0].id, items.id) }}
-                                                    className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                                >
-                                                    Add to Cart
+                                                <button type="button" className="hover:scale-110">
+                                                    {items.wishlist ? <HeartIcon onClick={(e) => { handleRemoveWishlist(e, items.id) }} className="h-7 fill-current text-orange-500 w-7" /> : <HeartIcon onClick={(e) => handleAddWishlist(e, items.id)} className="h-7 w-7" />}
                                                 </button>
                                             </div>
                                         </div>
