@@ -177,7 +177,7 @@ const Contact = () => {
                                         </div>
                                         <div className="ml-4 mb-4">
                                             <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Our Address</h3>
-                                            <p className="text-gray-600">Sizeupp Brands Private Limited,F-434, Solaris 1 Indl Estate, Opp L & T Gate No.6, Saki Vihar Rd, Powai,</p>
+                                            <p className="text-gray-600">Sizeupp, F-434, Solaris 1 Indl Estate, Opp L & T Gate No.6, Saki Vihar Rd, Powai,</p>
                                             <p className="text-gray-600"> Andheri-East, Mumbai-400 072 India</p>
                                         </div>
                                     </li>
@@ -211,8 +211,8 @@ const Contact = () => {
                                         </div>
                                         <div className="ml-4 mb-4">
                                             <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Working hours</h3>
-                                            <p className="text-gray-600">Monday - Friday: 08:00 - 17:00</p>
-                                            <p className="text-gray-600">Saturday &amp; Sunday: 08:00 - 12:00</p>
+                                            <p className="text-gray-600">Monday - Friday: 10:30 - 6:30</p>
+                                            <p className="text-gray-600">Weekends - Off</p>
                                         </div>
                                     </li>
                                 </ul>

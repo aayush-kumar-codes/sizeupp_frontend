@@ -8,11 +8,10 @@ import { AuthContext } from '../context/AuthProvider'
 
 
 export function ProductBilling() {
-    const [qtyCart, setQtyCart] = useState([])
     const [profile, setProfile] = useState({})
     const [pincode, setPincode] = useState('')
     const [changeAddress, setChangeAddress] = useState(false)
-    const { couponcode, setcouponcode, fetchCart, cart, setCart } = useContext(AuthContext)
+    const { couponcode, cart, setCart } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
         addressLine1: '',
@@ -24,7 +23,7 @@ export function ProductBilling() {
     });
 
     const [form, setForm] = useState({
-        address_id: "",
+        address_id: localStorage.address_id,
         mrp_price: 0,
         sub_total: 0,
         cupon_discount: 0,
@@ -50,10 +49,20 @@ export function ProductBilling() {
                     code: couponcode
                 })
             })
+            const data = await res.json()
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
-            const data = await res.json()
+            if (data.message == "Empty Cart") {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Cart Empty',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                return navigate('/products/cart')
+            }
             console.log(data);
             setCart(data)
             setForm({
@@ -120,54 +129,56 @@ export function ProductBilling() {
 
     console.log(localStorage.address_id)
 
-    // const fetchCart = async () => {
-    //     try {
-    //         if (!localStorage.token) {
-    //             return navigate('/login')
-    //         }
-    //         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-type': 'application/json',
-    //                 'Authorization': `token ${localStorage.getItem('token')}`
-    //             }
-    //         })
-    //         if (!res.ok) {
-    //             throw new Error(`HTTP error! status: ${res.status}`);
-    //         }
-    //         const data = await res.json()
-    //         console.log(data);
-    //         setCart(data)
-    //         let fors = {
-    //             address_id: form.address_id,
-    //             mrp_price: data.mrp_price,
-    //             sub_total: data.sub_total,
-    //             cupon_discount: data.cupon_discount,
-    //             coupon: data.coupon,
-    //             total_price: data.total_price
-    //         }
-    //         setForm(fors)
-
-    //     }
-    //     catch (error) {
-    //         console.error('Fetch error:', error);
-    //         Swal.fire({
-    //             title: 'Error!',
-    //             text: 'Fetch error: ' + error,
-    //             icon: 'error',
-    //             confirmButtonText: 'OK'
-    //         });
-    //     }
-    // }
-
-
-    const handlePlaceOrder = async () => {
-        setPayload(true)
+    const fetchCart = async () => {
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            if (cart.products?.length === 0) {
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/my-cart`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `token ${localStorage.getItem('token')}`
+                }
+            })
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json()
+            console.log(data);
+            setCart(data)
+            let fors = {
+                address_id: form.address_id,
+                mrp_price: data.mrp_price,
+                sub_total: data.sub_total,
+                cupon_discount: data.cupon_discount,
+                coupon: data.coupon,
+                total_price: data.total_price
+            }
+            setForm(fors)
+
+        }
+        catch (error) {
+            console.error('Fetch error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Fetch error: ' + error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+
+    const handlePlaceOrder = async () => {
+        setPayload(true)
+
+        try {
+            if (!localStorage.token) {
+                return navigate('/login')
+            }
+            console.log(form.total_price == undefined && localStorage.address_id === "" && cart.products?.length == 0)
+            if (form.total_price == undefined && cart.products?.length == 0) {
                 Swal.fire({
                     title: 'Error!',
                     text: 'Cart Empty',
@@ -175,19 +186,10 @@ export function ProductBilling() {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                setPayload(false)
                 return navigate('/products/cart')
             }
 
-            if (localStorage.address_id === "") {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Address Not Selected',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                return navigate('/products/cart')
-            }
             console.log({
                 mrp_price: form.mrp_price,
                 sub_total: form.sub_total,
@@ -213,10 +215,10 @@ export function ProductBilling() {
                 })
             })
 
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
             const data = await res.json()
+            if (!res.ok) {
+                throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
+            }
             console.log(data);
             fetchCart()
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -540,7 +542,7 @@ export function ProductBilling() {
                                                 <div className=''>₹ {(info?.total_price)}</div>
                                             </div>
 
-                                            
+
                                         </div>
                                     </div>
 
