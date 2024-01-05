@@ -1592,7 +1592,7 @@ const ProductOverview = () => {
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Color Family</h3>
-                      <p className="text-[18px]">{demo.product?.cf != "nan" ? demo.product?.cf : "N/A"}</p>
+                      <p className="text-[18px]">{demo.product?.cf != "nan" ? demo.product?.color_family.name : "N/A"}</p>
                     </div>
                     <div className="row-span-1 px-2">
                       <h3 className="text-base text-gray-800/80 font-semibold">Style</h3>
