@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1, Navy1 } from '../../assets/images/men';
-import {Helmet} from 'react-helmet'
+// import {Helmet} from 'react-helmet'
 import { AuthContext } from '../../context/AuthProvider';
 
 

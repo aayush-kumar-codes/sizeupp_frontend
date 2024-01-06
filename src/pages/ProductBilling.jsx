@@ -5,7 +5,7 @@ import { styles } from '../style'
 import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
-import {Helmet} from "react-helmet";
+// import {Helmet} from "react-helmet";
 
 export function ProductBilling() {
     const [profile, setProfile] = useState({})

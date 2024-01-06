@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 import { State, City } from 'country-state-city';
-import {Helmet} from "react-helmet";
+// import {Helmet} from "react-helmet";
 const products = [
     {
         id: 1,

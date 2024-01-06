@@ -3,7 +3,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from '../../context/AuthProvider';
 
-import {Helmet} from "react-helmet";
+// import {Helmet} from "react-helmet";
 
 
 const Modal = ({ children, isOpen, onClose }) => {
