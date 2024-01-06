@@ -3,7 +3,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from '../../context/AuthProvider';
 
-
+import {Helmet} from "react-helmet";
 
 
 const Modal = ({ children, isOpen, onClose }) => {
@@ -39,6 +39,7 @@ const Modal = ({ children, isOpen, onClose }) => {
 
 const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
 
+
   const { profiledata, fetchProfileData } = useContext(AuthContext)
   console.log(profiledata.user_info);
   React.useEffect(() => {
@@ -72,6 +73,12 @@ const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
     
     return (
         <div className="w-full mx-16  mt-8">
+
+        <Helmet>
+          <title>Profile Settings</title>
+          <meta name="description" content="Profile Settings" />
+          <meta name="keywords" content="Profile Settings" />
+        </Helmet>
             <h2 className="text-2xl font-semibold mb-4 mx-8 border-b pb-4">Profile Settings</h2>
 
         <div className="max-w-lg  p-6 bg-white rounded-md border shadow">

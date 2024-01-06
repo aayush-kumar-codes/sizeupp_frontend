@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { GEGreen1, Maroon1, Navy1 } from '../../assets/images/men';
-import Swal from 'sweetalert2'
+import {Helmet} from 'react-helmet'
 import { AuthContext } from '../../context/AuthProvider';
 
 
@@ -82,6 +82,11 @@ const DeliveryHistoryTable = () => {
     console.log(profiledata)
     return (
         <>
+            <Helmet>
+                <title>Order History | SizeUpp</title>
+                <meta name="description" content="Access your complete order history with Sizeupp. Track past purchases, view details, and stay organized with our convenient Order History feature." />
+                <meta name="keywords" content=" Sizeupp order history, past purchases, track orders, order tracking, purchase history" />
+            </Helmet>
             <div>
                 <h1 className="font-semibold text-xl p-4">Order History List</h1>
                 <div className="overflow-x-auto mx-4 rounded-lg hidden lg:block">

@@ -3,7 +3,7 @@ import Success from "../components/Alerts/Success"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
 import Swal from 'sweetalert2';
-
+import { Helmet } from "react-helmet"
 const Register = () => {
     const [form, setForm] = useState({
         first_name: '',
@@ -45,9 +45,9 @@ const Register = () => {
                 email: "",
                 password: "",
                 last_name: "",
-                first_name : "",
-                phone : "",
-                password_confirmation:"",
+                first_name: "",
+                phone: "",
+                password_confirmation: "",
                 newsletter: false
             });
             return;
@@ -65,9 +65,9 @@ const Register = () => {
                 email: "",
                 password: "",
                 last_name: "",
-                first_name : "",
-                phone : "",
-                password_confirmation:"",
+                first_name: "",
+                phone: "",
+                password_confirmation: "",
                 newsletter: false
             });
             return;
@@ -85,9 +85,9 @@ const Register = () => {
                 email: "",
                 password: "",
                 last_name: "",
-                first_name : "",
-                phone : "",
-                password_confirmation:"",
+                first_name: "",
+                phone: "",
+                password_confirmation: "",
                 newsletter: false
             });
             return;
@@ -105,9 +105,9 @@ const Register = () => {
                 email: "",
                 password: "",
                 last_name: "",
-                first_name : "",
-                phone : "",
-                password_confirmation:"",
+                first_name: "",
+                phone: "",
+                password_confirmation: "",
                 newsletter: false
             });
             return;
@@ -125,9 +125,9 @@ const Register = () => {
                 email: "",
                 password: "",
                 last_name: "",
-                first_name : "",
-                phone : "",
-                password_confirmation:"",
+                first_name: "",
+                phone: "",
+                password_confirmation: "",
                 newsletter: false
             });
             return;
@@ -163,9 +163,9 @@ const Register = () => {
                     email: "",
                     password: "",
                     last_name: "",
-                    first_name : "",
-                    phone : "",
-                    password_confirmation:"",
+                    first_name: "",
+                    phone: "",
+                    password_confirmation: "",
                     newsletter: false
                 });
                 setIsAuth(true);
@@ -188,9 +188,9 @@ const Register = () => {
                 email: "",
                 password: "",
                 last_name: "",
-                first_name : "",
-                phone : "",
-                password_confirmation:"",
+                first_name: "",
+                phone: "",
+                password_confirmation: "",
                 newsletter: false
             });
             Swal.fire({
@@ -209,10 +209,15 @@ const Register = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
-    
+
     return (
 
         <section className="bg-white">
+            <Helmet >
+                <title>SizeUp | Register</title>
+                <meta name="description" content="Sizeupp defies fashion norms, celebrating you in all shapes and sizes. We offer trendy, quality clothing that fit you perfectly." />
+                <meta name="keywords" content="Sizeupp, Sizeup, sizeup, sizeupp, size up, size upp" />
+            </Helmet>
             {/* {alert.type === false && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />} */}
             {/* {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} />} */}
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -248,8 +253,7 @@ const Register = () => {
                         </h1>
 
                         <p className="mt-4 leading-relaxed text-c-gray-500">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-                            quibusdam aperiam voluptatum.
+                            Sizeupp defies fashion norms, celebrating you in all shapes and sizes. We offer trendy, quality clothing that fit you perfectly.
                         </p>
 
                         <form action="#" className="mt-8 grid grid-cols-6 gap-6">
@@ -263,7 +267,7 @@ const Register = () => {
                                     id="FirstName"
                                     placeholder="Enter First Name"
                                     name="first_name"
-                                    value={form.first_name} 
+                                    value={form.first_name}
                                     onChange={handleChange}
                                     className="flex w-full ring-1 ring-link rounded-xl mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 />

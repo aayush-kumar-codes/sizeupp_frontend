@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { styles } from "../style"
 import { useState, useEffect, useRef, useContext } from 'react';
 import { chevronDownIcon } from "../assets/icons";
-import { HeartIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon, StarIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2';
 import ReactDOM from 'react-dom';
 import Slider from "react-slick";
@@ -14,6 +14,7 @@ import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOv
 // import { CasualBottom_boxer } from "../assets/sizechart";
 import { Images } from "../components/Sizechart/Data";
 import { AuthContext } from "../context/AuthProvider";
+import { Helmet } from "react-helmet";
 
 export const Modal = ({ children, onClose }) => {
   const handleOverlayClick = (e) => {
@@ -1166,7 +1167,11 @@ const ProductOverview = () => {
 
   return (
     <div className={`${styles.padding}`}>
-
+      <Helmet>
+        <title>{demo.product?.name} | Sizeupp</title>
+        <meta name="description" content="Get comprehensive details about Sizeupp products. Explore specifications, features, and find the perfect item with our detailed product overviews." />
+        {/* <meta name="keywords" content={demo.product?.name} /> */}
+      </Helmet>
       <div className="flex items-center">
         {/* Nav menu- Breadcrumb */}
         <ol className={`hidden md:inline-flex items-center space-x-1 md:space-x-3`}>

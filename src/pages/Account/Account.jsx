@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2'
+import { Helmet } from 'react-helmet'
 
 const BillingAddress = () => {
     const [editBillingMode, setEditBillingMode] = useState(false);
@@ -174,7 +175,11 @@ const Account = () => {
 
     return (
         <>
-
+            <Helmet >
+                <title>Account | Sizeupp</title>
+                <meta name="description" content="Account | Sizeupp" />
+                <meta name="keywords" content="Sizeupp, Account" />
+            </Helmet>
             <div
                 className="grid w-full  grid-cols-1 gap-3 md:px-5 px-0  pb-10 "
             >

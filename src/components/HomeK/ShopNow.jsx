@@ -1,8 +1,6 @@
-import {banner1,
-    banner2,
-    banner3,banner4,banner5,banner6,banner7, banner8} from '../../assets/banners'
+import {banner6,banner8} from '../../assets/banners'
 import { Link,useNavigate} from 'react-router-dom'
-import { mobile1,mobile2,mobile3,mobile4,mobile5, mobile6 } from "../../assets/banners/mobile";
+import {mobile4, mobile6 } from "../../assets/banners/mobile";
 
 export default function ShopNow() {
     return (
@@ -13,22 +11,21 @@ export default function ShopNow() {
                 Image={banner6}
                 smImg={mobile4}
                 Orientation={false}
-                href={`/products?gender=51e84707-33e5-459a-b40d-a2a40d20b460&category=7b6d1c5c-9e78-4126-b43f-8b99e6595099&subcategory=3ed51171-6e63-4a91-8616-e0fb98ce8384`}
+                href={`/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27&category=db93ce20-7baf-4ebd-be17-89d1215a04c9&subcategory=7f342ad1-b316-40f0-841f-01ec0b31ffbb`}
         />
         <Layout 
           Text="Women`s Formal Wear"
                 Image={banner8}
                 smImg={mobile6}
                 Orientation={false}
-                href={`/products?gender=dbff8ffa-0aa0-4802-bae4-baa4baf12406&category=3dab348e-e6a2-4c20-b281-990c189723d0&subcategory=8c8e316c-d36e-4ab6-88fb-ef6563807e6b`}
+                href={`/products?gender=8303b897-48a5-491e-a763-eb19d275873f&category=89d81469-02e4-4a2c-a2ac-4080b7f141e3&subcategory=09665092-aad8-4169-afcd-b3ec0e389860`}
         />
       </>
     )
 }
   
 const Layout = ({ Text, Image,smImg, Orientation,href }) => {
-    
-    const navigate = useNavigate();
+
 
     function SetOrientation(){
         if(Orientation === false){

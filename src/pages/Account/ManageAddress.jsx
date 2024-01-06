@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2'
+import {Helmet} from 'react-helmet'
 const NewAddress = () => {
   const [UserAddress, setUserAddress] = useState({})
   const [changeAddress, setChangeAddress] = useState(false)
@@ -326,6 +327,13 @@ const NewAddress = () => {
   const [isEdit, setIsEdit] = useState(false)
   return (
     <div>
+
+      <Helmet>
+        <title>Manage Address | Sizeupp</title>
+        <meta name="description" content="Effortlessly manage your delivery addresses on Sizeupp. Add, edit, or remove addresses for a seamless shopping experience. Update your address book today" />
+        <meta name="keywords" content="Address management, delivery addresses, address book, update address, Sizeupp address" />
+      </Helmet>
+
       <div className="px-10 flex justify-between items-center border-b">
         <h2 className="text-2xl font-semibold pb-4">Saved address</h2>
         <button

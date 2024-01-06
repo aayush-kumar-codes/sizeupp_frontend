@@ -10,7 +10,7 @@ const BannerData = [
     title: 'Shop Latest',
     subtitle: 'Men`s',
     description: 'Collection',
-    href:"/products?gender=51e84707-33e5-459a-b40d-a2a40d20b460"
+    href:"/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27"
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const BannerData = [
     title: 'Shop Latest',
     subtitle: 'Women`s',
     description: 'Collection',
-    href:"/products?gender=dbff8ffa-0aa0-4802-bae4-baa4baf12406"
+    href:"/products?gender=8303b897-48a5-491e-a763-eb19d275873f"
   }
 ];
 

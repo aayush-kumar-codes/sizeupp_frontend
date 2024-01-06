@@ -1,10 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
-import { ChevronDownIcon, StarIcon } from "@heroicons/react/24/outline"
 import { styles } from "../style"
-import { GEGreen1 } from "../assets/images/men"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
 import Swal from "sweetalert2"
+import { Helmet } from "react-helmet";
 
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])
@@ -233,6 +232,12 @@ export const ProductFav = () => {
 
     return (
         <section className={`overflow-hidden ${styles.padding}`}>
+
+            <Helmet>
+                <title>Wishlist | Sizeupp</title>
+                <meta name="description" content="Build your Sizeupp wishlist and save your favorite items. Easily manage and revisit the products you desire for your next purchase" />
+                <meta name="keywords" content="Sizeupp wishlist, saved items, favorites, wishlist management, desired products" />
+            </Helmet>
 
             {isModalCart && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Success from "../components/Alerts/Success";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
-
+import { Helmet } from "react-helmet";
 export function Login() {
 
     const { isAuth, setIsVerified, setIsAuth,fetchCart,fetchWishlist } = useContext(AuthContext)
@@ -119,6 +119,11 @@ export function Login() {
 
     return (
         <section className="">
+            <Helmet>
+                <title>Login | Sizeupp</title>
+                <meta name="description" content="Login to your Sizeupp account securely. Access your user account to manage orders, track shipments, and explore our latest fashion items." />
+            </Helmet>
+
             {!alert.type && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
             {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
             <div className="grid grid-cols-1 lg:grid-cols-2 h-full">

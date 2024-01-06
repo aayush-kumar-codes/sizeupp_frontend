@@ -5,7 +5,7 @@ import { styles } from '../style'
 import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
-
+import {Helmet} from "react-helmet";
 
 export function ProductBilling() {
     const [profile, setProfile] = useState({})
@@ -385,6 +385,11 @@ export function ProductBilling() {
 
     return (
         <div className={`my-10 lg:mx-6 mx-2`}>
+            <Helmet>
+                <title>Checkout | Sizeupp</title>
+                <meta name="description" content="Experience secure billing and payment processing on Sizeupp. Complete your purchase with confidence, and explore our convenient and reliable payment options." />
+                <meta name="keywords" content="Sizeupp billing, secure payment, checkout process, online payment, purchase completion" />
+            </Helmet>
             {/* Nav menu- Breadcrumb */}
             <ol className={`inline-flex items-center space-x-1 md:space-x-3 mb-6`}>
                 <li className="inline-flex items-center">

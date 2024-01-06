@@ -221,7 +221,9 @@ setIsFilterOpen((prev) => ({
             <div className="px-12">
               {/* Nav menu- Breadcrumb */}
               <Helmet>
-
+                <title>Products | Sizeupp</title>
+                <meta name="description" content="Browse the extensive Sizeupp product catalog. Discover the latest fashion trends and find the perfect clothing and accessories for your style." />
+                <meta name="keywords" content="Sizeupp products, fashion catalog, clothing selection, trendy items, online shopping" />
               </Helmet>
 
               <ol className={`inline-flex items-center  py-4`}>

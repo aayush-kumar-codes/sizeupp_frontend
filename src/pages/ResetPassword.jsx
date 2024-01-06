@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { logo } from '../assets/banners'
 import { useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2'
-
+import { Helmet } from 'react-helmet'
 const ResetPassword = () => {
 
     const navigate = useNavigate()
@@ -77,6 +77,11 @@ const ResetPassword = () => {
     return (
         <>
             <section className="bg-gray-50 ">
+                <Helmet>
+                    <title>Reset Password | Sizeupp</title>
+                    <meta name="description" content="Reset Password | Sizeupp" />
+                    <meta name="keywords" content="Reset, Password, Sizeupp, sizeupp, reset, password, forgot, forget" />
+                </Helmet>
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
                         <img className="w-40 " src={logo} alt="logo" />

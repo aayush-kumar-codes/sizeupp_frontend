@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 import { State, City } from 'country-state-city';
-
+import {Helmet} from "react-helmet";
 const products = [
     {
         id: 1,
@@ -396,6 +396,12 @@ export function ProductCart() {
 
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
+            <Helmet>
+                <title>Cart | Sizeupp</title>
+                <meta name="description" content="View and manage items in your Sizeupp shopping cart. Securely proceed to checkout and complete your online shopping experience." />
+                <meta name="keywords" content="Sizeupp shopping cart, checkout, online shopping bag, cart items, secure checkout" />
+            </Helmet>
+
             <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
                 <div className='flex justify-between items-center'>
 

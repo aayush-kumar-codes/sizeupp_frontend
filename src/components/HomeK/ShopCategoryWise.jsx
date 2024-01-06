@@ -21,7 +21,7 @@ export const Categories = [
     name: "Casual Shirts",
     img: Wine1,
     smimg:Wine1,
-    href: "/products?gender=51e84707-33e5-459a-b40d-a2a40d20b460&category=7b6d1c5c-9e78-4126-b43f-8b99e6595099&subcategory=c5fd8c36-6520-4371-8797-19e1c213c242"
+    href: "/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27&category=db93ce20-7baf-4ebd-be17-89d1215a04c9&subcategory=bb47ee2b-fb8f-4c02-abdb-800d4aa0e327"
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ export const Categories = [
     name: "Kurta",
     smimg: dress5,
     img:cat2,
-    href: "/products?gender=dbff8ffa-0aa0-4802-bae4-baa4baf12406&category=8c28cbcc-0b48-4862-b3d8-8798be098db1&subcategory=28127897-e5d3-4a65-aa70-001f48fbcd31"
+    href: "/products?gender=8303b897-48a5-491e-a763-eb19d275873f&category=95153fbe-1ff6-462d-a637-89b642d6af6c&subcategory=a113aa09-c1ec-4d63-aea6-e40340975b80"
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ export const Categories = [
     name: "T-Shirts",
     smimg: dress6,
     img:cat3,
-    href: "/products?gender=51e84707-33e5-459a-b40d-a2a40d20b460&category=7b6d1c5c-9e78-4126-b43f-8b99e6595099&subcategory=16d5228c-e780-413b-a04b-52851840287c"
+    href: "/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27&category=db93ce20-7baf-4ebd-be17-89d1215a04c9&subcategory=479c2371-55b0-4e0e-8b19-54f59076f893"
   },
 ]
 

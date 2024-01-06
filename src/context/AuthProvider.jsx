@@ -224,14 +224,17 @@ const AuthProvider = ({ children }) => {
             setproductloading(true)
             setproductsbc([])
             setproductcount(0)
+            let heaeders = {  
+                'Content-type': 'application/json'
+            }
+            if(localStorage.getItem('token')){
+                heaeders['Authorization'] = `token ${localStorage.getItem('token')}`
+            }
             console.warn("fetching filter products", filterData)
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
                 signal: signal,
                 method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization' : `token ${localStorage.getItem('token')}`
-                },
+                headers: heaeders,
                 body: JSON.stringify({
                     search: filterData.search,
                     category: filterData.gender,
