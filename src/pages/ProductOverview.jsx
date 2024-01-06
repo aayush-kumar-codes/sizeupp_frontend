@@ -370,7 +370,7 @@ const ProductImageView = ({
                     {arrayImages.map((image, index) => (
                       <div key={index} className="w-full h-full">
                         <img
-                          src={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)}
+                          src={import.meta.env.VITE_SERVER_URL + (image.img + "").slice(6)}
                           alt={`Image ${index + 1}`}
                           className="w-full h-full object-contain"
                         />
