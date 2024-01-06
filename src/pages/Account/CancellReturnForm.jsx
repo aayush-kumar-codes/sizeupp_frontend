@@ -120,11 +120,11 @@ const CancellReturnForm = () => {
 
     return (
         <>
-        <Helmet>
+        {/* <Helmet>
                 <title>Cancel/Return | Sizeupp</title>
                 <meta name="description" content="Fill out the Sizeupp Cancel/Return Form to initiate the cancellation or return process. Our team will guide you through the steps for a hassle-free experience." />
                 <meta name="keywords" content="Order cancellation, return form, Sizeupp cancelation, return process, cancellation request" />
-        </Helmet>
+        </Helmet> */}
             <div className='w-full text-center text-xl my-8'>
                 <h1>Cancel Return Form</h1>
                 <p className='text-xs text-gray-500'>Please check <a href="/cancellation-policy" className='text-blue-400'>cancellation</a> and <a href="/return-policy" className='text-blue-400'>return</a> policies before submitting form</p>

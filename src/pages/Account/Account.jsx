@@ -175,11 +175,11 @@ const Account = () => {
 
     return (
         <>
-            <Helmet >
+            {/* <Helmet >
                 <title>Account | Sizeupp</title>
                 <meta name="description" content="Account | Sizeupp" />
                 <meta name="keywords" content="Sizeupp, Account" />
-            </Helmet>
+            </Helmet> */}
             <div
                 className="grid w-full  grid-cols-1 gap-3 md:px-5 px-0  pb-10 "
             >

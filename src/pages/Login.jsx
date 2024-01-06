@@ -119,10 +119,10 @@ export function Login() {
 
     return (
         <section className="">
-            <Helmet>
+            {/* <Helmet>
                 <title>Login | Sizeupp</title>
                 <meta name="description" content="Login to your Sizeupp account securely. Access your user account to manage orders, track shipments, and explore our latest fashion items." />
-            </Helmet>
+            </Helmet> */}
 
             {!alert.type && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}
             {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} onClose={alert.onClose} />}

@@ -74,11 +74,11 @@ const ProfileForm = ({ firstName, lastName, email, mobile, onSave }) => {
     return (
         <div className="w-full mx-16  mt-8">
 
-        <Helmet>
+        {/* <Helmet>
           <title>Profile Settings</title>
           <meta name="description" content="Profile Settings" />
           <meta name="keywords" content="Profile Settings" />
-        </Helmet>
+        </Helmet> */}
             <h2 className="text-2xl font-semibold mb-4 mx-8 border-b pb-4">Profile Settings</h2>
 
         <div className="max-w-lg  p-6 bg-white rounded-md border shadow">

@@ -52,12 +52,12 @@ const OrderDetail = () => {
     return (
         <>
                
-        <Helmet>
+        {/* <Helmet>
                 <title>Order Detail | Sizeupp</title>
                 <meta name="description" content="Get comprehensive details about your Sizeupp orders. Review product specifics, pricing, and shipment information in the Order Details section" />
                 <meta name="keywords" content="Sizeupp order details, order information, product specifics, pricing details, shipment information" />
 
-        </Helmet>
+        </Helmet> */}
             
             <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
                     <div className="flex justify-start item-start space-y-2 flex-col">

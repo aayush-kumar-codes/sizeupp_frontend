@@ -330,7 +330,7 @@ export function Navbar() {
 
     return (
         // container
-        <div className={`${styles.paddingX} inset-0 bg-white w-full sticky z-50 border border-gray-100`}>
+        <div className={`${styles.paddingX} py-1 inset-0 bg-white w-full sticky z-50 border border-gray-100`}>
             {/* layout prefixer */}
             <div className="flex  items-center justify-between py-2">
 

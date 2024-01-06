@@ -213,11 +213,11 @@ const Register = () => {
     return (
 
         <section className="bg-white">
-            <Helmet >
+            {/* <Helmet >
                 <title>SizeUp | Register</title>
                 <meta name="description" content="Sizeupp defies fashion norms, celebrating you in all shapes and sizes. We offer trendy, quality clothing that fit you perfectly." />
                 <meta name="keywords" content="Sizeupp, Sizeup, sizeup, sizeupp, size up, size upp" />
-            </Helmet>
+            </Helmet> */}
             {/* {alert.type === false && <Error display={altcls} setDisplay={setAltcls} error={alert.alertmsg} type={alert.type} />} */}
             {/* {alert.type && <Success display={altcls} setDisplay={setAltcls} message={alert.alertmsg} type={alert.type} />} */}
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">

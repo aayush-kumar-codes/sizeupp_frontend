@@ -82,11 +82,11 @@ const DeliveryHistoryTable = () => {
     console.log(profiledata)
     return (
         <>
-            <Helmet>
+            {/* <Helmet>
                 <title>Order History | SizeUpp</title>
                 <meta name="description" content="Access your complete order history with Sizeupp. Track past purchases, view details, and stay organized with our convenient Order History feature." />
                 <meta name="keywords" content=" Sizeupp order history, past purchases, track orders, order tracking, purchase history" />
-            </Helmet>
+            </Helmet> */}
             <div>
                 <h1 className="font-semibold text-xl p-4">Order History List</h1>
                 <div className="overflow-x-auto mx-4 rounded-lg hidden lg:block">

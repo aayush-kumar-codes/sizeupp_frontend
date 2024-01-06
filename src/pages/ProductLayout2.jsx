@@ -220,11 +220,11 @@ setIsFilterOpen((prev) => ({
           <div className="md:flex md:flex-row md:items-start md:justify-between justify-center">
             <div className="px-12">
               {/* Nav menu- Breadcrumb */}
-              <Helmet>
+              {/* <Helmet>
                 <title>Products | Sizeupp</title>
                 <meta name="description" content="Browse the extensive Sizeupp product catalog. Discover the latest fashion trends and find the perfect clothing and accessories for your style." />
                 <meta name="keywords" content="Sizeupp products, fashion catalog, clothing selection, trendy items, online shopping" />
-              </Helmet>
+              </Helmet> */}
 
               <ol className={`inline-flex items-center  py-4`}>
                 <li className="inline-flex items-center">
