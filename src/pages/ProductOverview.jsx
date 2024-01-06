@@ -1167,11 +1167,11 @@ const ProductOverview = () => {
 
   return (
     <div className={`${styles.padding}`}>
-      <Helmet>
+      {/* <Helmet>
         <title>{demo.product?.name} | Sizeupp</title>
-        <meta name="description" content="Get comprehensive details about Sizeupp products. Explore specifications, features, and find the perfect item with our detailed product overviews." />
+        <meta name="description" content="Get comprehensive details about Sizeupp products. Explore specifications, features, and find the perfect item with our detailed product overviews." /> */}
         {/* <meta name="keywords" content={demo.product?.name} /> */}
-      </Helmet>
+      {/* </Helmet> */}
       <div className="flex items-center">
         {/* Nav menu- Breadcrumb */}
         <ol className={`hidden md:inline-flex items-center space-x-1 md:space-x-3`}>
