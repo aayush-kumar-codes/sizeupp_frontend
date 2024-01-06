@@ -108,7 +108,48 @@ const Profileview = () => {
 
   console.log(localStorage.getItem("user_verified") == 'false' || localStorage.getItem("user_verified") === 'undefined')
 
+  const handleLogout = async () => {
+    try {
+        if (!localStorage.token) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You are not logged in!',
+                footer: '<a href="/login">Login</a>'
+            })
+        }
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `token ${localStorage.token}`
+            }
+        })
 
+        if (!res.ok) {
+            throw new Error('HTTP Error! status: ' + res.status)
+        }
+        const data = await res.json()
+        console.log(data)
+        Swal.fire({
+            icon: 'success',
+            title: 'Logged out successfully!',
+            showConfirmButton: false,
+            timer: 1200
+        })
+        localStorage.clear()
+        navigate('/')
+    } catch (error) {
+        console.log('Fetch Error :', error)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="/login">Login</a>'
+        })
+    }
+  }
+  
   return (
     <>
       <main className=" flex justify-between flex-col">
@@ -266,8 +307,8 @@ const Profileview = () => {
             <div className="flex py-12  ">
               <div className="flex w-full">
                 <div className="flex flex-col gap-2 border p-3 rounded-lg px-4 hover:bg-gray-200 hover:scale-x-105">
-                  <Link
-                    to="/"
+                  <button
+                    onClick={handleLogout}
                     className="flex items-center gap-2 font-medium active:text-violet-900"
                   >
                     <svg
@@ -286,7 +327,7 @@ const Profileview = () => {
                     </svg>
 
                     Log Out
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -471,8 +512,8 @@ const Profileview = () => {
                   <div className="flex py-12">
                     <div className="flex w-full">
                       <div className="flex flex-col gap-2">
-                        <Link
-                          to="/"
+                      <button
+                    onClick={handleLogout}
                           className="flex items-center gap-2 font-medium active:text-violet-900"
                         >
                           <svg
@@ -491,7 +532,7 @@ const Profileview = () => {
                           </svg>
 
                           Log Out
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
