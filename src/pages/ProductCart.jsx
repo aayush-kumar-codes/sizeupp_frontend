@@ -761,7 +761,7 @@ export function ProductCart() {
                     >
                         {cart.coupon != 'active' ? <section className='mt-16 lg:col-start-9 rounded-lg drop-shadow-md px-4 py-3 bg-white lg:col-span-4 lg:mt-8'>
                             <form action="#" className="mt-6">
-                                <div onClick={() => setIsCouponOpen((prev) => !prev)} className='text-sm text-end cursor-pointer underline font-semibold text-gray-800/80'>View coupons?</div>
+                                <div onClick={() => setIsCouponOpen((prev) => !prev)} className='text-sm text-end cursor-pointer underline font-semibold text-gray-800/80'>View coupons</div>
                                 <div className='text-sm font-semibold text-gray-800/80 px-1 py-1'> Enter coupon code for extra discount*</div>
                                 <div className="sm:flex sm:space-x-2.5 md:flex-col md:space-x-0 lg:flex-row lg:space-x-2.5">
                                     <div className="flex-grow">
