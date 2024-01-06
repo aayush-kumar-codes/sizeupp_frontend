@@ -230,7 +230,7 @@ export function ProductBilling() {
                 timer: 1500
             })
             setPayload(false)
-            navigate('/products')
+            navigate('/profile/my-orders')
         }
         catch (error) {
             console.error('Fetch error:', error);
