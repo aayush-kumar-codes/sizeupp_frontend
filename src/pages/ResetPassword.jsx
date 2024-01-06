@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { logo } from '../assets/banners'
 import { useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2'
-import { Helmet } from 'react-helmet'
+// import { Helmet } from 'react-helmet'
 const ResetPassword = () => {
 
     const navigate = useNavigate()

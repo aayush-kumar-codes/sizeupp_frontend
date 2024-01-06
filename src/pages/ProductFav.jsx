@@ -3,7 +3,7 @@ import { styles } from "../style"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
 import Swal from "sweetalert2"
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 
 export const ProductFav = () => {
     const [favData, setFavData] = useState([])

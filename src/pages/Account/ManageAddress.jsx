@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2'
-import { Helmet } from 'react-helmet'
+// import { Helmet } from 'react-helmet'
 
 import { State, City } from 'country-state-city';
 const NewAddress = () => {

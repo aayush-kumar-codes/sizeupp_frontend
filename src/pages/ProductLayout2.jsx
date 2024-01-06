@@ -4,7 +4,7 @@ import Filter from '../components/ProductList/Filter'
 import ProductList from './ProductList'
 import { AuthContext } from '../context/AuthProvider'
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
-import {Helmet} from 'react-helmet'
+// import {Helmet} from 'react-helmet'
 
 const ProductLayout2 = () => {
 

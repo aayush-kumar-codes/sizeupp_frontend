@@ -14,7 +14,7 @@ import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOv
 // import { CasualBottom_boxer } from "../assets/sizechart";
 import { Images } from "../components/Sizechart/Data";
 import { AuthContext } from "../context/AuthProvider";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 
 export const Modal = ({ children, onClose }) => {
   const handleOverlayClick = (e) => {

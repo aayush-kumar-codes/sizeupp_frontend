@@ -3,7 +3,7 @@ import Success from "../components/Alerts/Success"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthProvider"
 import Swal from 'sweetalert2';
-import { Helmet } from "react-helmet"
+// import { Helmet } from "react-helmet"
 const Register = () => {
     const [form, setForm] = useState({
         first_name: '',
