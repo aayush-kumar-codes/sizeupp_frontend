@@ -127,7 +127,7 @@ const DeliveryHistoryTable = () => {
 
                                                 :
                                                 <Link to={`/profile/cancel-return/${item.id}`}>
-                                                    <button className="text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md">Cancel / Order</button>
+                                                    <button className="text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md">Cancel / Return</button>
                                                 </Link>
                                         }
                                     </td>
