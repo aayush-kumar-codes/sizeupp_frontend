@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Success from "../components/Alerts/Success";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 export function Login() {
 
     const { isAuth, setIsVerified, setIsAuth,fetchCart,fetchWishlist } = useContext(AuthContext)
