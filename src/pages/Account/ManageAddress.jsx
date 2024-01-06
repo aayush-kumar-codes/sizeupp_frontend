@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2'
-import {Helmet} from 'react-helmet'
+import { Helmet } from 'react-helmet'
+
+import { State, City } from 'country-state-city';
 const NewAddress = () => {
   const [UserAddress, setUserAddress] = useState({})
   const [changeAddress, setChangeAddress] = useState(false)
@@ -25,7 +27,7 @@ const NewAddress = () => {
     country: 'India',
     pinCode: '',
     mobile: '',
-    is_deafult : false
+    is_deafult: false
   });
   const [addresses, setAddresses] = useState([]);
 
@@ -38,7 +40,7 @@ const NewAddress = () => {
   };
 
   const handleAddAddress = async () => {
-    if (!formData.addressLine1 || !formData.city || !formData.state || !formData.country || !formData.pinCode) {
+    if (!formData.addressLine1 || !formData.state || !formData.pinCode) {
       Swal.fire({
         title: 'Error!',
         text: 'Please fill all the fields',
@@ -78,12 +80,13 @@ const NewAddress = () => {
         showConfirmButton: false,
         timer: 1500
       })
+      fetchProfileData()
       setFormData({
         addressLine1: '',
         addressLine2: '',
         city: '',
         state: '',
-        zipCode: '',
+        pinCode: '',
       })
 
     } catch (error) {
@@ -93,7 +96,7 @@ const NewAddress = () => {
         addressLine2: '',
         city: '',
         state: '',
-        zipCode: '',
+        pinCode: '',
       })
       Swal.fire({
         title: 'Error!',
@@ -125,7 +128,6 @@ const NewAddress = () => {
       addressLine2: '',
       city: '',
       state: "",
-      country: '',
       pinCode: '',
       mobile: '',
     });
@@ -311,7 +313,7 @@ const NewAddress = () => {
           text: 'Something went wrong!',
         })
       }
-    } catch(error){
+    } catch (error) {
       console.log(error)
       setFormData({
         addressLine1: '',
@@ -325,6 +327,18 @@ const NewAddress = () => {
   }
 
   const [isEdit, setIsEdit] = useState(false)
+
+
+  const stateData = State.getStatesOfCountry('IN').map(state => ({
+    name: state.name,
+    code: state.isoCode,
+  }))
+  const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
+    name: city,
+  }))
+
+  console.log(cityData);
+
   return (
     <div>
 
@@ -378,7 +392,7 @@ const NewAddress = () => {
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="px-4 bg-white w-11/12 rounded-md md:w-1/2">
-            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-2 sm:px-6">
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Address Line 1
               </dt>
@@ -409,44 +423,66 @@ const NewAddress = () => {
               </dd>
             </div>
 
-            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                City
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="text"
-                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                  placeholder="Enter City"
-                  required
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange} />
-              </dd>
-            </div>
 
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 State
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="text"
+                <select
                   className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                  placeholder="Enter State"
-                  required
-                  name="state"
                   value={formData.state}
-                  onChange={handleInputChange} />
+                  onChange={(e) => {
+                    const selectedState = e.target.value;
+                    const selectedStateCode = stateData.find((item) => item.name === selectedState)?.code;
+                    setFormData({ ...formData, state: selectedState, stateCode: selectedStateCode });
+                  }}
+                >
+                  <option value='' disabled>Select State</option>
+                  {stateData.map((item) => (
+                    <option key={item.name} value={item.name}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
               </dd>
             </div>
 
+
+
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
-                Zip Code
+                City
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {/* <input type="text"
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                            placeholder="Enter City"
+                                            required
+                                            name="city"
+                                            value={formData.city}
+                                            onChange={handleInputChange} /> */}
+                <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
+                  <option value='' disabled>Select City</option>
+                  {City.getCitiesOfState('IN', formData.stateCode).map(city => {
+                    return (
+
+                      <option key={city.name} value={city.name} >{city.name} </option>
+
+                    )
+                  })}
+
+                </select>
+              </dd>
+            </div>
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Pin Code
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input type="text"
                   className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                  placeholder="Enter Zip code"
+                  placeholder="Enter pin code"
                   required
                   name="pinCode"
                   value={formData.pinCode}
@@ -454,6 +490,21 @@ const NewAddress = () => {
               </dd>
             </div>
 
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Country
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input type="text"
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                  placeholder="Enter country"
+                  required
+                  name="country"
+                  disabled
+                  value={'India'}
+                  onChange={handleInputChange} />
+              </dd>
+            </div>
 
             {/* Include other fields similarly */}
 
@@ -463,14 +514,16 @@ const NewAddress = () => {
               <button type="button" onClick={(e) => { handleSubmit(e); setIsEdit(false); }} className="rounded-lg bg-blue-500 text-white px-4 py-2">
                 Save
               </button>
-              <button type="button" onClick={() => { setIsOpen(false); setFormData({
-                addressid: "",
-                addressLine1: '',
-                addressLine2: '',
-                city: '',
-                state: "",
-                pinCode : ""
-              }) }} className="rounded-lg bg-red-500 text-white px-4 py-2">
+              <button type="button" onClick={() => {
+                setIsOpen(false); setFormData({
+                  addressid: "",
+                  addressLine1: '',
+                  addressLine2: '',
+                  city: '',
+                  state: "",
+                  pinCode: ""
+                })
+              }} className="rounded-lg bg-red-500 text-white px-4 py-2">
                 Close
               </button>
             </div>
@@ -509,17 +562,19 @@ const NewAddress = () => {
             </div>
             <div className="flex justify-end w-full gap-4">
               <div className=''>
-                <input type="checkbox" name="is_default" onClick={(e) => {handleToggleDefault(address.id);setFormData({
-                  addressid: address.id,
-                  addressLine1: address.address_line_1,
-                  addressLine2: address.address_line_2,
-                  city: address.city,
-                  pinCode: address.postal_code,
-                  mobile: address.mobile,
-                  country: address.country,
-                  state: address.state,
-                  is_deafult : address.is_default
-                }); }} checked={address.is_default} />
+                <input type="checkbox" name="is_default" onClick={(e) => {
+                  handleToggleDefault(address.id); setFormData({
+                    addressid: address.id,
+                    addressLine1: address.address_line_1,
+                    addressLine2: address.address_line_2,
+                    city: address.city,
+                    pinCode: address.postal_code,
+                    mobile: address.mobile,
+                    country: address.country,
+                    state: address.state,
+                    is_deafult: address.is_default
+                  });
+                }} checked={address.is_default} />
                 <label className="ml-2">Default</label>
               </div>
               <button onClick={() => {

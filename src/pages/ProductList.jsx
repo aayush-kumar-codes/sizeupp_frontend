@@ -148,6 +148,13 @@ const ProductList = ({
             setIsModalCart(false)
         } catch (error) {
             console.error('Fetch error:', error);
+            setModalForm({
+                name: '',
+                color: '',
+                product_id: '',
+                size: '',
+                qty: 1
+            })
             Swal.fire({
                 title: 'Error!',
                 text: error,
