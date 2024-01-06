@@ -56,6 +56,11 @@ const TrackOrderPage = () => {
         <div className="container mx-auto mt-8 p-4">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">Track Your Order</h1>
+                <p className='text-md'>Air Bill No.: {order.airwaybilno }</p>
+                <a href={order.dispatch_label_url} rel="norefferer noreferrer" target="_blank">
+                                         <button className="text-sm bg-blue-500 p-2">Track here</button>
+                                        
+                                        </a>
             </div>
 
             <div className="bg-white shadow-md rounded-md p-6 mb-8 border border-gray-100">
@@ -110,7 +115,7 @@ const TrackOrderPage = () => {
 
                                     <h2 className="text-lg font-medium ">{item}</h2>
                                     <span className="text-sm"> {order.delivery_status == item ? Date(order.created_at).slice(0, 16) : 'pending'}</span>
-
+                                    
                                 </section>
                             </div>
                         )
