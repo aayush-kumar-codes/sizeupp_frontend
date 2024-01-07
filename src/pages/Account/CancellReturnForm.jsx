@@ -21,30 +21,6 @@ const CancellReturnForm = () => {
     })
 
 
-    const toggleCheckbox = (productId) => {
-        setformdata((prevFormData) => {
-            const isSelected = prevFormData.products.some((product) => product.id === productId);
-
-            if (isSelected) {
-                // If the product is already selected, remove it
-                const updatedProducts = prevFormData.products.filter((product) => product.id !== productId);
-
-                return {
-                    ...prevFormData,
-                    products: updatedProducts
-                };
-            } else {
-                // If the product is not selected, add the entire product object
-                const selectedProduct = order.order_items.find((item) => item.product.id === productId);
-
-                return {
-                    ...prevFormData,
-                    products: [...prevFormData.products, selectedProduct.product]
-                };
-            }
-        });
-    };
-
     console.log(formdata)
 
     const handleSubmit = async (e) => { 
@@ -111,6 +87,33 @@ const CancellReturnForm = () => {
 
         }
     }
+
+
+    
+    const toggleCheckbox = (productId) => {
+        setformdata((prevFormData) => {
+            const isSelected = prevFormData.products.some((product) => product.id === productId);
+
+            if (isSelected) {
+                // If the product is already selected, remove it
+                const updatedProducts = prevFormData.products.filter((product) => product.id !== productId);
+
+                return {
+                    ...prevFormData,
+                    products: updatedProducts
+                };
+            } else {
+                // If the product is not selected, add the entire product object
+                const selectedProduct = order.order_items.find((item) => item.product.id === productId);
+
+                return {
+                    ...prevFormData,
+                    products: [...prevFormData.products, selectedProduct.product]
+                };
+            }
+        });
+    };
+
 
     React.useEffect(() => {
         if (id) {
