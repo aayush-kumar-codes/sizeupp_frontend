@@ -25,7 +25,7 @@ const CancellReturnForm = () => {
 
     const handleSubmit = async (e) => { 
         e.preventDefault()
-        if(formdata.issue === '' || formdata.feedback === '') {
+        if(formdata.issue === '' && formdata.feedback === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Cancel/Return Failed',
@@ -145,14 +145,14 @@ const CancellReturnForm = () => {
                     </div>
                     {/*  select option*/}
                     {/* Feedback dropdown */}
-                    <div className="sm:col-span-3">
+                    {order.delivery_status == "Delivered" && <div className="sm:col-span-3">
                         <label htmlFor="items" className="block text-lg font-medium leading-6 text-gray-900">Products</label>
                         <div className="mt-2">
 
 
                         </div>
                         <div className="grid grid-cols-1 justify-center items-center mb-4">
-                            {order.delivery_status == "Delivered" && order.order_items?.length > 0 && order.order_items?.map((item) => (
+                            { order.order_items?.length > 0 && order.order_items?.map((item) => (
                                 <div key={item.id} className="col-span-1">
                                     <input id={`checkbox-${item.product.id}`} type="checkbox" value={item.product.id} onChange={() => toggleCheckbox(item.product.id)}
                                         checked={formdata.products.some((selectedItem) => selectedItem.id === item.product.id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
@@ -161,11 +161,11 @@ const CancellReturnForm = () => {
                             ))}
                         </div>
                         <p className="mt-3 text-md leading-6 text-gray-600">Select Order item to return</p>
-                    </div>
+                    </div>}
                     <div className="col-span-full">
                         <label htmlFor="issue" className="block text-lg font-medium leading-6 text-gray-900">Issue</label>
                         <div className="mt-2">
-                            <textarea id="about" onChange={(e) => { setformdata({ ...formdata, issue: e.target.value }) }} name="about" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
+                            <textarea id="about" onChange={(e) => { setformdata({ ...formdata, issue: e.target.value }) }} name="about" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Any issues.</p>
                     </div>

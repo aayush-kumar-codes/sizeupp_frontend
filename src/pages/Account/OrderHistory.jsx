@@ -158,6 +158,17 @@ const DeliveryHistoryTable = () => {
                                             View order
                                         </Link>
                                     </div>
+                                    <td className="px-6 py-4">
+                                        {
+                                            (order.order_return || order.order_cancel) ?
+                                                <div className='text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md'>{order.order_cancel ? 'Cancelled Order' : 'Returning Order'}</div>
+
+                                                :
+                                                <Link to={`/profile/cancel-return/${order.id}`}>
+                                                    <button className="text-md bg-black text-white p-2 px-3 hover:scale-105 rounded-md">Cancel / Return</button>
+                                                </Link>
+                                        }
+                                    </td>
                                 </div>
                             </div>
                         </div>
