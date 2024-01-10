@@ -14,11 +14,12 @@ const AboutUs = () => {
                     <h1 className='text-3xl my-3 capitalize font-bold'>Our founders</h1>
                     <img src={Img2} className='w-48 rounded-lg mx-auto' />
                     <h2 className="capitalize text-3xl font-bold">mr. anil saraf</h2>
-                    <p className="p-4 mb-8">Mr. Anil Saraf is a seasoned businessman with an impressive three-decade-long career as a garment manufacturer. His illustrious journey includes collaborations with renowned brands such as Pantaloons, Jade Blue and Mufti, solidifying his reputation as a trusted partner. His journey began as a passionate entrepreneur, and today, he stands as a visionary leader in the field. His enduring success stands as a testament to his dedication and vision in the world of fashion.</p>
+                    <p className="p-4 mb-8">Mr. Anil Saraf is a seasoned businessman with an impressive three-decade-long career in the garment manufacturing industry. His illustrious journey encompasses collaborations with distinguished brands like Pantaloons, Jade Blue, and Mufti, solidifying his reputation as a trusted partner. Originating as a passionate entrepreneur, he has evolved to become a visionary leader in the field. His enduring success serves as a testament to his unwavering dedication and foresight in the dynamic world of fashion.</p>
                     <img src={Img1} className='w-48 rounded-lg mx-auto' />
-                    <h2 className="capitalize text-3xl font-bold">mr. vikas singh</h2>
-                    <p className="p-4">The ingenious mind of our little unconventional founder brings to you Sizeupp. A sourcing and product specialist with a never-ending hunger for creating beautiful and affordable clothes geared up to make everyone find their right fit!
-                        Vikash is a Nift alumni with 16+ years in the trade set out to revolutionise the plus size apparels space. He aspires to create a brand that can provide plus size individuals &apos; clothes for every occasion.</p>
+                    <h2 className="capitalize text-3xl font-bold">mr. Vikash singh</h2>
+                    <p className="p-4">The ingenious mind of our promising unconventional founder brings to you Sizeupp. A sourcing and product specialist with an appetite for creating beautiful and affordable clothes, geared up to make everyone find their right fit. Vikas, a NIFT alumnus with 16+ years in the trade, set out to revolutionise the plus-size apparel space. He aspires to forge a brand that provides an unrivalled range of quality plus-size clothes for every occasion.
+
+                    </p>
 
                 </div>
 
@@ -31,7 +32,8 @@ const AboutUs = () => {
                             Introduction
                         </h3>
                         <p className="sm:text-lg mt-6">
-                            The fashion industry is slowly but surely starting to recognize the beauty in all body types. We hear talk about size-inclusive fashion and see plus-size models across ad campaigns. However, this appreciation falls short when it comes to actual shoppable fashion choices in-store. Sizeupp is here to fix just this.
+                        Welcome to Sizeupp, where style meets inclusivity in every stitch. At Sizeupp , we redefine fashion by embracing the beauty of all body shapes and sizes. Our curated collection of plus-size apparel is a celebration of diversity, designed to empower individuals to express their authentic selves with confidence. Immerse yourself in a world where trendsetting designs, premium fabrics, and meticulous craftsmanship converge to create a wardrobe that transcends limitations. From casual chic to statement pieces, Sizeupp is your destination for fashion that fits and flatters, because we believe that everybody deserves to feel fabulous. Join us as we redefine the fashion landscape with a commitment to inclusivity and style beyond measure.
+
                         </p>
                     </div>
                 </div>
@@ -45,9 +47,10 @@ const AboutUs = () => {
                             Vision and Values
                         </h3>
                         <p className="sm:text-lg mt-6">
-                            Sizeupp was founded on the fundamental belief that fashion should not be limited to a specific size range. It should be a welcoming space for all body shapes and sizes. We envision a world where every plus-size individual can easily find trendy, comfortable, and high-quality clothing that not only fits their bodies but also gives them the ability to express themselves through fashion.
+                            Sizeupp was founded on the fundamental belief that fashion should not be limited to a specific size range but should be an inclusive celebration of all body shapes. The company envisions a world where every individual can find trendy, comfortable, and high-quality clothing that not only fits their bodies but also resonates with their personal style and empowers them to feel confident in their skin.
 
-                            Our core values are authenticity, inclusivity, and self-expression. Sizeupp is dedicated to celebrating these values through its designs, models, and marketing campaigns, thus ensuring that our customers feel seen and represented.
+                            At the core of Sizeupp values lies authenticity, diversity, and self-expression. The brand embraces authenticity by fostering a genuine connection with its customers, listening to their needs, and incorporating their feedback into every product they create. Furthermore, Sizeupp is dedicated to celebrating diversity in its designs, models, and marketing campaigns, ensuring that all individuals feel seen and represented.
+
                         </p>
                     </div>
                 </div>
@@ -62,9 +65,7 @@ const AboutUs = () => {
 
                         </h3>
                         <p className="sm:text-lg mt-6">
-                            Whether you are looking for everyday essentials, office wear, or an outfit for a fun night out, Sizeupp`s diverse collection has something for everyone.
-
-                            Our dedicated design team spends an extensive amount of time researching and developing garments that fit perfectly and accentuate the beauty of bigger bodies.
+                            Sizeupp offers a diverse range of clothing options for plus-size individuals, spanning from casual wear to formal attire. From stylish everyday essentials to statement pieces, each garment is thoughtfully designed with an emphasis on flattering cuts, comfortable fabrics, and contemporary trends. The brand has invested in extensive research and development to create garments that fit perfectly, accentuating curves and highlighting unique features. Sizeupp clothing line is designed to accommodate various body shapes, acknowledging that no two bodies are the same. The brand takes pride in offering plus-size individuals a wide selection of choices, allowing them to express their personalities through fashion without limitations.
 
 
                         </p>
