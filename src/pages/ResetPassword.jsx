@@ -29,7 +29,9 @@ const ResetPassword = () => {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: data.error
+                    text: data.error,
+                    showConfirmButton: false,
+                    timer: 2000
                 })
             }
             console.log("data", data)

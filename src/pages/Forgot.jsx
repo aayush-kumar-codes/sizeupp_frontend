@@ -28,6 +28,8 @@ const Forgot = () => {
                     icon: 'error',
                     title: 'Oops...',
                     text: data.error,
+                    showConfirmButton: false,
+                    timer: 2000
                 })
             }
 
@@ -37,6 +39,8 @@ const Forgot = () => {
                 icon: 'success',
                 title: 'Email Exist',
                 text: "Your Email address is valid email",
+                showConfirmButton: false,
+                timer: 2000
             })
             navigate("/reset")
             setemail("")

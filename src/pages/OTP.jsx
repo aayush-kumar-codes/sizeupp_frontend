@@ -61,7 +61,8 @@ const Otp = () => {
                 icon: 'success',
                 title: 'Success',
                 text: data.message,
-                confirmButtonText: 'Cool',
+                showConfirmButton: false,
+                timer: 2000
 
             }).then((result) => {
                 if (result.isConfirmed) {
