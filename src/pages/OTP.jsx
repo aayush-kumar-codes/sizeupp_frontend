@@ -22,6 +22,19 @@ const Otp = () => {
 
     }
 
+    useEffect(() => {
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/auth/otp", {
+            method: 'GET',
+            headers: {
+                'Authorization': `token ${localStorage.token}`,
+                'Content-type': 'application/json'
+            }
+        }).then(res => res.json().then((data) => {
+            console.log(data)
+            localStorage.setItem("user_verified", data.user_verified)
+        }))
+    }, [])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(otp)
