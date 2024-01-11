@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
       In the event sizeupp goes through a business transition, such as a merger, acquisition by another company, or sale of all or a portion of its assets, your personally identifiable information will likely be among the assets transferred. You will be notified via email or prominent notice on our web site for 30 days of any such change in ownership or control of your personal information
       </p>
 
-      <h2 className="text-2xl font-bold mt-6">Business transitions</h2>
+      <h2 className="text-2xl font-bold mt-6">Access to personally identifiable information</h2>
       <p>
       If your personally identifiable information changes, or if you no longer desire our service, you may correct, update, delete or deactivate it by making the change on our member information page or by emailing our customer support at customercare@sizeupp.com. We will respond to your request to access within 12 to 24 hours. We will retain your information for as long as your account is active or as needed to provide you services. We will retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
       </p>
