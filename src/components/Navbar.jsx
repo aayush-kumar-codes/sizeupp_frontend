@@ -426,22 +426,27 @@ export function Navbar() {
 
                                     {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                         <ul className="py-1" role="none">
-                                            {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+                                        {localStorage.token && <><li className='hover:bg-gray-200/30 pl-2 '>
+                                            <Link to="/profile" className="text-gray-700 block px-4 py-1 text-sm">
+                                                Profile
+                                            </Link>
+                                        </li>
                                             <li className='hover:bg-gray-200/30 pl-2 '>
-                                                <Link to="/profile" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    Profile
+                                                <Link to="/products/favourite" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                    Wishlist
+                                                </Link>
+                                            </li>
+                                            <li className='hover:bg-gray-200/30 pl-2 '>
+                                                <Link to="/products/cart" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                    Cart
                                                 </Link>
                                             </li>
                                             <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-2 text-sm">
+                                                <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
                                                     My Orders
                                                 </Link>
                                             </li>
-                                            {/* <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/track-order" className="text-gray-700 block px-4 py-2 text-sm">
-                                                    Track order
-                                                </Link>
-                                            </li> */}
+                                        </>}
                                             
                                             {!localStorage.token && noAuthMenuItems.map((item) => (
                                                 <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
