@@ -37,8 +37,7 @@ const Forgot = () => {
 
             Swal.fire({
                 icon: 'success',
-                title: 'Email Exist',
-                text: "Your Email address is valid email",
+                title: 'OTP sent to your email',
                 showConfirmButton: false,
                 timer: 2000
             })
