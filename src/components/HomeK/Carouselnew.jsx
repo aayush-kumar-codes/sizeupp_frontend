@@ -8,7 +8,7 @@ const BannerData = [
     img: banner1,
     smimg: mobile1,
     title: 'Shop Latest',
-    subtitle: 'Men`s',
+    subtitle: "Men's",
     description: 'Collection',
     href:"/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27"
   },
@@ -17,7 +17,7 @@ const BannerData = [
     img: banner2,
     smimg: mobile2,
     title: 'Shop Latest',
-    subtitle: 'Women`s',
+    subtitle: "Women's",
     description: 'Collection',
     href:"/products?gender=8303b897-48a5-491e-a763-eb19d275873f"
   }

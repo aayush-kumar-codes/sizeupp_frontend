@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
     <div className="max-w-2xl mx-auto mt-8 p-4">
       <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
       <p>
-        This privacy statement describes how Sizeupp collects and uses the personal information you provide on our web site:
+        This privacy statement describes how Sizeupp collects and uses the personal information you provide on our web site:{' '}
         <a href="https://www.sizeupp.com" className="text-blue-500">www.sizeupp.com</a>.
         It also describes the choices available to you regarding our use of your personal information and how you can access and update this information.
         We are committed to protecting your privacy.
