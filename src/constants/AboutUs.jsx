@@ -32,11 +32,9 @@ const AboutUs = () => {
 
                 </div>
 
-                <div className="flex flex-wrap items-center my-20 text-center">
-                    <div className="w-full md:w-3/5 lg:w-1/2 px-4">
-                        <img src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="gem" className="inline-block rounded shadow-lg border border-merino-400" />
-                    </div>
-                    <div className="w-full md:w-2/5 lg:w-1/2 px-4 text-center md:text-left lg:pl-12">
+                <div className="flex flex-wrap justify-center items-center my-20 text-center w-full">
+                   
+                    <div className=" w-4/5  px-4 text-center  ">
                         <h3 className="font-bold mt-8 text-xl md:mt-0 sm:text-2xl">
                             Introduction
                         </h3>
@@ -47,11 +45,9 @@ const AboutUs = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center mt-20 text-center">
-                    <div className="w-full md:w-3/5 lg:w-1/2 px-4">
-                        <img src="https://images.pexels.com/photos/3769747/pexels-photo-3769747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="project members" className="inline-block rounded shadow-lg border border-merino-400" />
-                    </div>
-                    <div className="w-full md:w-2/5 lg:w-1/2 px-4 md:order-first text-center md:text-left lg:pr-12">
+                <div className="flex flex-wrap items-center mt-20 text-center justify-center w-full">
+                    
+                    <div className="w-4/5  px-4 text-center">
                         <h3 className="font-bold mt-8 text-xl md:mt-0 sm:text-2xl">
                             Vision and Values
                         </h3>
@@ -64,11 +60,9 @@ const AboutUs = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center mt-20  text-center">
-                    <div className="w-full md:w-3/5 lg:w-1/2 px-4">
-                        <img src="https://images.pexels.com/photos/4050388/pexels-photo-4050388.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="editor" className="inline-block rounded shadow-lg border border-merino-400" />
-                    </div>
-                    <div className="w-full md:w-2/5 lg:w-1/2 px-4 text-center md:text-left lg:pl-12">
+                <div className="flex flex-wrap items-center mt-20 justify-center w-full text-center">
+                    
+                    <div className="w-4/5  px-4 text-center">
                         <h3 className="font-bold mt-8 text-xl md:mt-0 sm:text-2xl">
                             Product Range
 
@@ -81,11 +75,9 @@ const AboutUs = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center mt-20 text-center">
-                    <div className="w-full md:w-3/5 lg:w-1/2 px-4">
-                        <img src="https://images.pexels.com/photos/5864245/pexels-photo-5864245.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="bulk editing" className="inline-block rounded shadow-lg border border-merino-400" />
-                    </div>
-                    <div className="w-full md:w-2/5 lg:w-1/2 px-4 md:order-first text-center md:text-left lg:pr-12">
+                <div className="flex flex-wrap items-center mt-20 text-center w-full justify-center">
+                   
+                    <div className="w-4/5  px-4 text-center">
                         <h3 className="font-bold mt-8 text-xl md:mt-0 sm:text-2xl">
                             Empowering Fashion for All
 
