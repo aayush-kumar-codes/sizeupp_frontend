@@ -7,7 +7,7 @@ export default function ShopNow() {
       <>
         
         <Layout 
-          Text="Men's Ethnic Wears"
+          Text="Men's Ethnic Wear"
                 Image={banner6}
                 smImg={mobile4}
                 Orientation={false}
