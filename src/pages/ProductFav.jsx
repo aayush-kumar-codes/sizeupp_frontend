@@ -203,6 +203,7 @@ export const ProductFav = () => {
             }
             console.log(data);
             fetchCart()
+            handleRemoveWishlist(modalForm.product_id) 
             Swal.fire({
                 title: 'Success!',
                 text: 'Product Added in Cart',
