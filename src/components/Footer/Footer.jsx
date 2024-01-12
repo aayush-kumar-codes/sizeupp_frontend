@@ -70,7 +70,7 @@ const Footer = () => {
                   <a href="/terms-condition" className="text-gray-400 hover:text-white">Terms & Condition</a>
                 </li>
                 <li className="p-1">
-                  <a href="/return-policy" className="text-gray-400 hover:text-white">Return Policies</a>
+                  <a href="/return-policy" className="text-gray-400 hover:text-white">Return Policy</a>
                 </li>
                 <li className="p-1">
                   <a href="/privacy-policy" className="text-gray-400 hover:text-white">Privacy Policy</a>
