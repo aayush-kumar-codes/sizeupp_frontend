@@ -118,35 +118,35 @@ const Contact = () => {
                                                     onChange={(e) => { setform({ ...form, firstname: e.target.value }) }}
                                                     type="text"
                                                     id="firstname" autoComplete="given-name" placeholder="Your first name"
-                                                    className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb- focus:outline-none"
+                                                    className="mb-2 w-full rounded-md border border-gray-200 py-2 pl-2 pr-4  sm:mb- focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                                     name="firstname" />
                                             </div>
                                             <div className="mx-0 mb-1 sm:mb-4">
                                                 <label htmlFor="lastname" className="pb-1 text-xs uppercase tracking-wider"></label><input type="text"
                                                     onChange={(e) => { setform({ ...form, lastname: e.target.value }) }}
                                                     id="lastname" autoComplete="given-name" placeholder="Your last name"
-                                                    className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb- focus:outline-none"
+                                                    className="mb-2 w-full rounded-md border border-gray-200 py-2 pl-2 pr-4  sm:mb- focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                                     name="lastname" />
                                             </div>
                                             <div className="mx-0 mb-1 sm:mb-4">
                                                 <label htmlFor="email" className="pb-1 text-xs uppercase tracking-wider"></label><input type="email"
                                                     onChange={(e) => { setform({ ...form, email: e.target.value }) }}
                                                     id="email" autoComplete="email" placeholder="Your email address"
-                                                    className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb-0 focus:outline-none"
+                                                    className="mb-2 w-full rounded-md border border-gray-200 py-2 pl-2 pr-4  sm:mb-0 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                                     name="email" />
                                             </div>
                                             <div className="mx-0 mb-1 sm:mb-4">
                                                 <label htmlFor="phone" className="pb-1 text-xs uppercase tracking-wider"></label><input type="text"
                                                     onChange={(e) => { setform({ ...form, phone: e.target.value }) }}
                                                     id="phone" autoComplete="given-phone" placeholder="Phone Number"
-                                                    className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb-0 focus:outline-none"
+                                                    className="mb-2 w-full rounded-md border border-gray-200 py-2 pl-2 pr-4  sm:mb-0 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                                     name="name" />
                                             </div>
                                             <div className="mx-0 mb-1 sm:mb-4">
                                                 <label htmlFor="issues" className="pb-1 text-xs uppercase tracking-wider"></label><input type="text"
                                                     onChange={(e) => { setform({ ...form, issue: e.target.value }) }}
                                                     id="issue" autoComplete="issue" placeholder="Enter Issue"
-                                                    className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb-0 focus:outline-none"
+                                                    className="mb-2 w-full rounded-md border border-gray-200 py-2 pl-2 pr-4  sm:mb-0 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                                     name="issue" />
                                             </div>
                                         </div>
@@ -154,12 +154,12 @@ const Contact = () => {
                                             <label htmlFor="textarea" className="pb-1 text-xs uppercase tracking-wider"></label><textarea
                                                 onChange={(e) => { setform({ ...form, textarea: e.target.value }) }}
                                                 id="textarea" name="textarea" cols="30" rows="5" placeholder="Write your message..."
-                                                className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow sm:mb-0 focus:outline-none"></textarea>
+                                                className="mb-2 w-full rounded-md border border-gray-200 py-2 pl-2 pr-4 sm:mb-0 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"></textarea>
                                         </div>
                                     </div>
                                     <div className="text-center">
                                         <button type="button" onClick={handleContact}
-                                            className="w-full bg-orange-500 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
+                                            className="w-full bg-[#FFAE00] text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
                                     </div>
                                 </form>
 
@@ -174,7 +174,7 @@ const Contact = () => {
                                 </p>
                                 <ul className="mb-6 md:mb-0">
                                     <li className="flex">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded bg-orange-500 text-gray-50">
+                                        <div className="flex h-10 w-12 items-center justify-center rounded bg-[#FFAE00] text-gray-50">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                                                 className="h-6 w-6">
@@ -190,7 +190,7 @@ const Contact = () => {
                                     </li>
 
                                     <li className="flex">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded bg-orange-500 text-gray-50">
+                                        <div className="flex h-10 w-12 items-center justify-center rounded bg-[#FFAE00] text-gray-50">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                                                 className="h-6 w-6">
@@ -208,7 +208,7 @@ const Contact = () => {
                                         </div>
                                     </li>
                                     <li className="flex">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded bg-orange-500 text-gray-50">
+                                        <div className="flex h-10 w-12 items-center justify-center rounded bg-[#FFAE00] text-gray-50">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                                                 className="h-6 w-6">
