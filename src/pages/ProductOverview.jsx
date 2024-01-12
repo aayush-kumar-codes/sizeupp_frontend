@@ -1128,6 +1128,8 @@ const ProductOverview = () => {
         title: 'Success!',
         text: 'Pincode Added',
         icon: 'success',
+        showConfirmButton: false,
+        timer: 1200
       })
     }
     catch (error) {
@@ -1136,7 +1138,8 @@ const ProductOverview = () => {
         title: 'Error!',
         text: 'Fetch error: ' + error,
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
+        timer: 1200
       });
     }
   }
