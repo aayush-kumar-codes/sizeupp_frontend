@@ -24,8 +24,8 @@ const ReviewProduct = ({ id }) => {
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            console.log(reviewData,id);
-            if(reviewData.rating === 0 || reviewData.comment === ''){
+            console.log(reviewData, id);
+            if (reviewData.rating === 0 || reviewData.comment === '') {
                 return Swal.fire({
                     title: 'Error!',
                     text: 'Please fill all the fields',
@@ -55,6 +55,8 @@ const ReviewProduct = ({ id }) => {
                 title: 'Success!',
                 text: 'Review added successfully',
                 icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
             })
         }
         catch (error) {

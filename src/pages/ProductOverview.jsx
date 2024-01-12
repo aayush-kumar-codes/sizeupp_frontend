@@ -1173,7 +1173,7 @@ const ProductOverview = () => {
       {/* <Helmet>
         <title>{demo.product?.name} | Sizeupp</title>
         <meta name="description" content="Get comprehensive details about Sizeupp products. Explore specifications, features, and find the perfect item with our detailed product overviews." /> */}
-        {/* <meta name="keywords" content={demo.product?.name} /> */}
+      {/* <meta name="keywords" content={demo.product?.name} /> */}
       {/* </Helmet> */}
       <div className="flex items-center">
         {/* Nav menu- Breadcrumb */}
@@ -1632,14 +1632,20 @@ const ProductOverview = () => {
                 </div>
               }
             />
-            <AccordionItem
+            <h2 className="font-semibold mt-4">
+              Color Disclaimer
+            </h2>
+            <div className="text-base font-semibold text-gray-800/80">
+              <div dangerouslySetInnerHTML={{ __html: "Product Colour May Slightly Vary Due to Photographic Lighting Sources or Your Device Screen Settings" }}></div>
+            </div>
+            {/* <AccordionItem
               title="Color Disclaimer"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
                   <div dangerouslySetInnerHTML={{ __html: "Product Colour May Slightly Vary Due to Photographic Lighting Sources or Your Device Screen Settings" }}></div>
                 </div>
               }
-            />
+            /> */}
             {/* <AccordionItem
               title="Customer Reviews"
               content={

@@ -47,7 +47,7 @@ const products = [
 
 export function ProductCart() {
     const [qtyCart, setQtyCart] = useState([])
-    const { couponcode, setcouponcode,profiledata, fetchCart, cart, setCart,fetchProfileData } = useContext(AuthContext)
+    const { couponcode, setcouponcode, profiledata, fetchCart, cart, setCart, fetchProfileData } = useContext(AuthContext)
 
 
     const updateCart = (id, sqpActive, count) => {
@@ -134,13 +134,23 @@ export function ProductCart() {
             console.log(data);
             setCart(data)
 
-            Swal.fire({
-                title: 'Info!',
-                text: data.coupon_message,
-                icon: 'info',
-                showConfirmButton: false,
-                timer: 1500
-            })
+            if (data.coupon_message == "Coupon Already Applied" || data.coupon_message == "Coupon is expired") {
+                Swal.fire({
+                    title: data.coupon_message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            else {
+                Swal.fire({
+                    title: 'Info!',
+                    text: data.coupon_message,
+                    icon: 'info',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -168,7 +178,7 @@ export function ProductCart() {
         state: '',
         zipCode: '',
         country: 'India',
-        stateCode:'',
+        stateCode: '',
         is_deafult: false
     });
 
@@ -483,32 +493,32 @@ export function ProductCart() {
                                     </dd>
                                 </div>
 
-                                
-                                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                        <dt className="text-sm font-medium text-gray-500">
-                                            State
-                                        </dt>
-                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                            <select
-                                                className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                                                value={formData.state}
-                                                onChange={(e) => {
-                                                    const selectedState = e.target.value;
-                                                    const selectedStateCode = stateData.find((item) => item.name === selectedState)?.code;
-                                                    setFormData({ ...formData, state: selectedState, stateCode: selectedStateCode });
-                                                }}
-                                            >
-                                                <option value='' disabled>Select State</option>
-                                                {stateData.map((item) => (
-                                                    <option key={item.name} value={item.name}>
-                                                        {item.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </dd>
-                                    </div>
 
-                                
+                                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt className="text-sm font-medium text-gray-500">
+                                        State
+                                    </dt>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        <select
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                            value={formData.state}
+                                            onChange={(e) => {
+                                                const selectedState = e.target.value;
+                                                const selectedStateCode = stateData.find((item) => item.name === selectedState)?.code;
+                                                setFormData({ ...formData, state: selectedState, stateCode: selectedStateCode });
+                                            }}
+                                        >
+                                            <option value='' disabled>Select State</option>
+                                            {stateData.map((item) => (
+                                                <option key={item.name} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </dd>
+                                </div>
+
+
 
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
@@ -525,12 +535,12 @@ export function ProductCart() {
                                         <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
                                             <option value='' disabled>Select City</option>
                                             {City.getCitiesOfState('IN', formData.stateCode).map(city => {
-                                                        return (
+                                                return (
 
-                                                            <option key={city.name} value={city.name} >{city.name} </option>
-                                                            
-                                                        )
-                                                    })}
+                                                    <option key={city.name} value={city.name} >{city.name} </option>
+
+                                                )
+                                            })}
 
                                         </select>
                                     </dd>

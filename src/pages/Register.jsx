@@ -346,10 +346,10 @@ const Register = () => {
 
                             <div className="col-span-6">
                                 <p className="text-sm text-c-gray-500">
-                                    By creating an account, you agree to our
-                                    <a href="#" className="text-c-gray-700 underline"> terms and conditions </a>
-                                    and
-                                    <a href="#" className="text-c-gray-700 underline">privacy policy</a>.
+                                    By creating an account, you agree to our{' '}
+                                    <Link to="/terms-condition" className="text-c-gray-700 underline"> Terms and Conditions </Link>
+                                    {' '}and{' '}
+                                    <Link to="/privacy-policy" className="text-c-gray-700 underline">Privacy Policy</Link>.
                                 </p>
                             </div>
 
