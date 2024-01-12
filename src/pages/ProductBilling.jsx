@@ -175,7 +175,17 @@ export function ProductBilling() {
 
     const handlePlaceOrder = async () => {
         setPayload(true)
-
+        if(localStorage.address_id === "") {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please Add Address',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setPayload(false)
+            return navigate('/products/cart')
+        }
         try {
             if (!localStorage.token) {
                 return navigate('/login')
