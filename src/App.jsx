@@ -68,6 +68,7 @@ const App = () => {
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="faq" element={<Faq />} />
             <Route path="cancellation-policy" element={<CancellationPolicy />} />
+            <Route path="contact" element={<Contact />} />
 
             <Route path="profile" element={<ProtectedRoute><ProfileProtect><Profileview /></ProfileProtect></ProtectedRoute>} >
               <Route index element={<Account />} />
