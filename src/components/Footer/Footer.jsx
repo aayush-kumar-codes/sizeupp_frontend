@@ -22,7 +22,7 @@ const Footer = () => {
               <a href="/faq" className="text-gray-400 hover:text-white">FAQ</a>
             </div> */}
             <div className="p-1">
-              <a href="/profile/contact" className="text-gray-400 hover:text-white">Contact Us</a>
+              <a href="/contact" className="text-gray-400 hover:text-white">Contact Us</a>
             </div>
           </div>
           <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
