@@ -23,9 +23,12 @@ const CancellReturnForm = () => {
 
     console.log(formdata)
 
-    const handleSubmit = async (e) => { 
+    const [loading, setloading] = useState(true)
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if(formdata.issue === '' && formdata.feedback === '') {
+        setloading(true)
+        if (formdata.issue === '' && formdata.feedback === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Cancel/Return Failed',
@@ -33,10 +36,21 @@ const CancellReturnForm = () => {
                 showConfirmButton: false,
                 timer: 1500
             })
+            setloading(false)
             return
         }
-        try{
-            
+        if (formdata.products.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Please select atleast one product',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setloading(false)
+            return
+        }
+        try {
+
             const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/return-product`, {
                 method: 'POST',
                 headers: {
@@ -54,8 +68,9 @@ const CancellReturnForm = () => {
                 showConfirmButton: false,
                 timer: 1500
             })
+            setloading(false)
             navigate('/profile/my-orders')
-        }catch(error){
+        } catch (error) {
             console.log(error)
             Swal.fire({
                 icon: 'error',
@@ -64,6 +79,7 @@ const CancellReturnForm = () => {
                 showConfirmButton: false,
                 timer: 1500
             })
+            setloading(false)
         }
     }
 
@@ -89,7 +105,7 @@ const CancellReturnForm = () => {
     }
 
 
-    
+
     const toggleCheckbox = (productId) => {
         setformdata((prevFormData) => {
             const isSelected = prevFormData.products.some((product) => product.id === productId);
@@ -123,7 +139,7 @@ const CancellReturnForm = () => {
 
     return (
         <>
-        {/* <Helmet>
+            {/* <Helmet>
                 <title>Cancel/Return | Sizeupp</title>
                 <meta name="description" content="Fill out the Sizeupp Cancel/Return Form to initiate the cancellation or return process. Our team will guide you through the steps for a hassle-free experience." />
                 <meta name="keywords" content="Order cancellation, return form, Sizeupp cancelation, return process, cancellation request" />
@@ -152,7 +168,7 @@ const CancellReturnForm = () => {
 
                         </div>
                         <div className="grid grid-cols-1 justify-center items-center mb-4">
-                            { order.order_items?.length > 0 && order.order_items?.map((item) => (
+                            {order.order_items?.length > 0 && order.order_items?.map((item) => (
                                 <div key={item.id} className="col-span-1">
                                     <input id={`checkbox-${item.product.id}`} type="checkbox" value={item.product.id} onChange={() => toggleCheckbox(item.product.id)}
                                         checked={formdata.products.some((selectedItem) => selectedItem.id === item.product.id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
@@ -178,8 +194,8 @@ const CancellReturnForm = () => {
                     </div>
 
                     <div className="col-span-full">
-                        {order.delivery_status != "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Cancel Order</button>}
-                        {order.delivery_status === "Delivered" && <button type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>Return Order</button>}
+                        {order.delivery_status != "Delivered" && <button disabled={loading} type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>{loading ? "Cancelling Order" : "Cancel Order"}</button>}
+                        {order.delivery_status === "Delivered" && <button disabled={loading} type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>{loading ? "Returning Order" : "Return Order"}</button>}
 
                     </div>
 
