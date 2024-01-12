@@ -10,16 +10,25 @@ const AboutUs = () => {
                 <h2 className="text-center font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
                     About US
                 </h2>
-                <div className="text-center w-full p-2 py-3 mx-auto">
+                <div className="text-center w-full p-2 py-3 mx-auto ">
                     <h1 className='text-3xl my-3 capitalize font-bold'>Our founders</h1>
-                    <img src={Img2} className='w-48 rounded-lg mx-auto' />
-                    <h2 className="capitalize text-3xl font-bold">mr. anil saraf</h2>
-                    <p className="p-4 mb-8">Mr. Anil Saraf is a seasoned businessman with an impressive three-decade-long career in the garment manufacturing industry. His illustrious journey encompasses collaborations with distinguished brands like Pantaloons, Jade Blue, and Mufti, solidifying his reputation as a trusted partner. Originating as a passionate entrepreneur, he has evolved to become a visionary leader in the field. His enduring success serves as a testament to his unwavering dedication and foresight in the dynamic world of fashion.</p>
-                    <img src={Img1} className='w-48 rounded-lg mx-auto' />
-                    <h2 className="capitalize text-3xl font-bold">mr. Vikash singh</h2>
-                    <p className="p-4">The ingenious mind of our promising unconventional founder brings to you Sizeupp. A sourcing and product specialist with an appetite for creating beautiful and affordable clothes, geared up to make everyone find their right fit. Vikas, a NIFT alumnus with 16+ years in the trade, set out to revolutionise the plus-size apparel space. He aspires to forge a brand that provides an unrivalled range of quality plus-size clothes for every occasion.
+                    <div className='lg:flex block items-center p-2'>
+                        <div>
+                            <img src={Img2} className='w-48 rounded-lg mx-auto' />
+                            <h2 className="capitalize text-3xl font-bold">mr. anil saraf</h2>
+                            <p className="p-4 mb-8">Mr. Anil Saraf is a seasoned businessman with an impressive three-decade-long career in the garment manufacturing industry. His illustrious journey encompasses collaborations with distinguished brands like Pantaloons, Jade Blue, and Mufti, solidifying his reputation as a trusted partner. Originating as a passionate entrepreneur, he has evolved to become a visionary leader in the field. His enduring success serves as a testament to his unwavering dedication and foresight in the dynamic world of fashion.</p>
 
-                    </p>
+                        </div>
+                        <div>
+
+                            <img src={Img1} className='w-48 rounded-lg mx-auto' />
+                            <h2 className="capitalize text-3xl font-bold">mr. Vikash singh</h2>
+                            <p className="p-4">The ingenious mind of our promising unconventional founder brings to you Sizeupp. A sourcing and product specialist with an appetite for creating beautiful and affordable clothes, geared up to make everyone find their right fit. Vikas, a NIFT alumnus with 16+ years in the trade, set out to revolutionise the plus-size apparel space. He aspires to forge a brand that provides an unrivalled range of quality plus-size clothes for every occasion.
+                                </p>
+                        </div>
+
+                    </div>
+
 
                 </div>
 
