@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
 // import { Helmet } from 'react-helmet'
 
@@ -161,20 +161,71 @@ const CancellReturnForm = () => {
                     </div>
                     {/*  select option*/}
                     {/* Feedback dropdown */}
-                    {order.delivery_status == "Delivered" && <div className="sm:col-span-3">
+                    {order.delivery_status == "Delivered" && <div className="col-span-full">
                         <label htmlFor="items" className="block text-lg font-medium leading-6 text-gray-900">Products</label>
                         <div className="mt-2">
-
-
                         </div>
                         <div className="grid grid-cols-1 justify-center items-center mb-4">
-                            {order.order_items?.length > 0 && order.order_items?.map((item) => (
-                                <div key={item.id} className="col-span-1">
-                                    <input id={`checkbox-${item.product.id}`} type="checkbox" value={item.product.id} onChange={() => toggleCheckbox(item.product.id)}
-                                        checked={formdata.products.some((selectedItem) => selectedItem.id === item.product.id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
-                                    <label htmlFor={`checkbox-${item.product.id}`} className="ms-2 text-sm font-medium text-gray-900 ">{item.product.name || ''}</label>
-                                </div>
-                            ))}
+                            {order.order_items?.length > 0 && order.order_items?.map((item, i) => {
+                                {
+                                    let info = item.product
+
+                                    return (
+                                        <div key={i} className={`grid gap-2 py-4 lg:grid-cols-6 md:grid-cols-4 grid-cols-3 `}>
+
+                                            <div className='flex col-span-1 justify-center items-center'>
+                                                <img
+                                                    onClick={() => { navigate(`/products/${info?.id}`) }}
+                                                    src={import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "").slice(6)}
+                                                    alt={info?.name}
+                                                    className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
+                                                />
+                                            </div>
+                                            <div className='col-span-2 md:col-span-3'>
+                                                <div className='grid grid-cols-3 md:grid-cols-4 gap-2 justify-center items-center'>
+                                                    <h3 className="text-base sm:text-sm col-span-3 md:col-span-4 mx-4 font-semibold">
+                                                        <Link to={`/products/${info?.id}`} className="text-black">
+                                                            {info.name}
+                                                        </Link>
+                                                    </h3>
+
+                                                    {/* Sizes */}
+                                                    {
+                                                        info?.sqp.map((size, index) => {
+                                                            if (item.sqp_code != size.id) {
+                                                                return null
+                                                            }
+                                                            return (
+                                                                <div key={index} className="mt-2 col-span-1 flex justify-center items-center">
+                                                                    <p className="text-c-gray-500 mb-2"> Size: {size.size}</p>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+
+                                                    {/* Quantity */}
+                                                    <div className='col-span-1 flex justify-center items-center'>
+                                                        <div className=''>Qty: {(item?.quantity)}</div>
+                                                    </div>
+
+                                                    {/* Total Price */}
+                                                    <div className='col-span-1 flex justify-center items-center'>
+                                                        <div className=''>₹ {(item?.sub_total)}</div>
+                                                    </div>
+
+
+
+                                                    <div className='flex justify-center items-center col-span-1'>
+                                                        <button onClick={() => toggleCheckbox(info.id)} type="button" className="text-md p-2 bg-red-600 text-white rounded-md">{formdata.products.some((product) => product.id === info.id) ? "Remove" : "Select"}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    )
+                                }
+                            })}
                         </div>
                         <p className="mt-3 text-md leading-6 text-gray-600">Select Order item to return</p>
                     </div>}
