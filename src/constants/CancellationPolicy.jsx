@@ -3,7 +3,7 @@ import React from 'react';
 const CancellationPolicy = () => {
   return (
     <div className="max-w-2xl mx-auto mt-8 p-4 mb-24">
-      <h1 className="text-3xl font-bold ">CANCELLATION</h1>
+      <h1 className="text-3xl font-bold ">Cancellation Policy</h1>
 
       <h2 className='text-2xl font-bold mt-6'>How do I cancel an order ?</h2>
       <p>
