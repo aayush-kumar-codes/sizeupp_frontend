@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { AuthContext } from '../../context/AuthProvider';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeSlashIcon } from "@heroicons/react/24/outline";
 // import { Helmet } from 'react-helmet'
 
 const CancellReturnForm = () => {
@@ -16,10 +18,15 @@ const CancellReturnForm = () => {
         id: id,
         products: [],
         issue: '',
-        feedback: ''
-
+        ifsc: '',
+        confirm_account_no: '',
+        bank_name: '',
+        account_no: '',
+        customer_name: '',
     })
 
+    const [isaccountVisible, setisaccountVisible] = useState(false)
+    const [isconfirmaccountVisible, setisconfirmaccountVisible] = useState(false)
 
     console.log(formdata)
 
@@ -28,7 +35,7 @@ const CancellReturnForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setloading(true)
-        if (formdata.issue === '' && formdata.feedback === '') {
+        if (formdata.issue === '' && formdata.feedback === '' && formdata.account_no === '' && formdata.confirm_account_no === '' && formdata.bank_name === '' && formdata.customer_name === '' && formdata.ifsc === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Cancel/Return Failed',
@@ -39,6 +46,19 @@ const CancellReturnForm = () => {
             setloading(false)
             return
         }
+
+        if (formdata.account_no !== formdata.confirm_account_no) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Cancel/Return Failed',
+                text: 'Account numbers do not match!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setloading(false)
+            return
+        }
+
         if (formdata.products.length === 0) {
             Swal.fire({
                 icon: 'error',
@@ -105,37 +125,45 @@ const CancellReturnForm = () => {
     }
 
 
-
     const toggleCheckbox = (productId) => {
         setformdata((prevFormData) => {
-            const isSelected = prevFormData.products.some((product) => product.id === productId);
-
-            if (isSelected) {
-                // If the product is already selected, remove it
-                const updatedProducts = prevFormData.products.filter((product) => product.id !== productId);
-
-                return {
-                    ...prevFormData,
-                    products: updatedProducts
-                };
-            } else {
-                // If the product is not selected, add the entire product object
-                const selectedProduct = order.order_items.find((item) => item.product.id === productId);
-
-                return {
-                    ...prevFormData,
-                    products: [...prevFormData.products, selectedProduct.product]
-                };
-            }
+          const isSelected = prevFormData.products.some((orderItem) => orderItem.product.id === productId);
+      
+          if (isSelected) {
+            // If the product is already selected, remove it
+            const updatedOrderItems = prevFormData.products.filter((orderItem) => orderItem.product.id !== productId);
+      
+            return {
+              ...prevFormData,
+              products: updatedOrderItems,
+            };
+          } else {
+            // If the product is not selected, add the entire order item object
+            const selectedOrderItem = order.order_items.find((item) => item.product.id === productId);
+      
+            return {
+              ...prevFormData,
+              products: [...prevFormData.products, selectedOrderItem],
+            };
+          }
         });
-    };
-
+      };
 
     React.useEffect(() => {
         if (id) {
             fetchProfileData(id)
         }
     }, [id])
+
+
+    const toggleAccountVisibility = () => {
+        setisaccountVisible((prevState) => !prevState);
+    }
+
+    const toggleConfirmAccountVisibility = () => {
+        setisconfirmaccountVisible((prevState) => !prevState);
+    }
+
 
     return (
         <>
@@ -216,7 +244,9 @@ const CancellReturnForm = () => {
 
 
                                                     <div className='flex justify-center items-center col-span-1'>
-                                                        <button onClick={() => toggleCheckbox(info.id)} type="button" className="text-md p-2 bg-red-600 text-white rounded-md">{formdata.products.some((product) => product.id === info.id) ? "Remove" : "Select"}</button>
+                                                        <button onClick={() => toggleCheckbox(info.id)} type="button" className="text-md p-2 bg-red-600 text-white rounded-md"> {formdata.products.some((orderItem) => orderItem.product.id === info.id)
+                                                            ? "Remove"
+                                                            : "Select"}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -236,13 +266,82 @@ const CancellReturnForm = () => {
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Any issues.</p>
                     </div>
-                    <div className="col-span-full">
-                        <label htmlFor="issue" className="block text-lg font-medium leading-6 text-gray-900">Feedback</label>
-                        <div className="mt-2">
-                            <textarea id="about" name="about" onChange={(e) => { setformdata({ ...formdata, feedback: e.target.value }) }} rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+
+
+                    <div className='col-span-full grid gap-4 grid-cols-2 '>
+                        <div className="col-span-full md:col-span-1">
+                            <label htmlFor="customer_name" className="block text-lg font-medium leading-6 text-gray-900">Account Holder Name</label>
+                            <div className="mt-2">
+                                <input id="customer_name" onChange={(e) => { setformdata({ ...formdata, customer_name: e.target.value }) }} name="customer_name" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            </div>
+                            <p className="mt-3 text-sm leading-6 text-gray-600">Your name as per Bank Account.</p>
                         </div>
-                        <p className="mt-3 text-sm leading-6 text-gray-600">Write a feedback.</p>
+
+                        <div className="col-span-full md:col-span-1">
+                            <label htmlFor="bank_name" className="block text-lg font-medium leading-6 text-gray-900">Bank Name</label>
+                            <div className="mt-2">
+                                <input id="bank_name" onChange={(e) => { setformdata({ ...formdata, bank_name: e.target.value }) }} name="bank_name" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            </div>
+                            <p className="mt-3 text-sm leading-6 text-gray-600">Your Bank Name.</p>
+                        </div>
+
+                        <div className="col-span-full md:col-span-1">
+                            <label htmlFor="customer_name" className="block text-lg font-medium leading-6 text-gray-900">Account Number</label>
+                            <div className="relative">
+                                <input
+                                    type={isaccountVisible ? 'text' : 'password'}
+                                    value={formdata.account_no}
+                                    onChange={(e) => { setformdata({ ...formdata, account_no: e.target.value }) }}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <span
+                                    onClick={toggleAccountVisibility}
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                >
+                                    {isaccountVisible ? (
+                                        <EyeSlashIcon className="h-6 w-6 text-gray-500" />
+                                    ) : (
+                                        <EyeIcon className="h-6 w-6 text-gray-500" />
+                                    )}
+                                </span>
+
+                            </div>
+                        </div>
+
+                        <div className="col-span-full md:col-span-1">
+                            <label htmlFor="customer_name" className="block text-lg font-medium leading-6 text-gray-900">Confirm Account Number</label>
+                            <div className="relative">
+                                <input
+                                    type={isconfirmaccountVisible ? 'text' : 'password'}
+                                    value={formdata.confirm_account_no}
+                                    onChange={(e) => { setformdata({ ...formdata, confirm_account_no: e.target.value }) }}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <span
+                                    onClick={toggleConfirmAccountVisibility}
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                >
+                                    {isconfirmaccountVisible ? (
+                                        <EyeSlashIcon className="h-6 w-6 text-gray-500" />
+                                    ) : (
+                                        <EyeIcon className="h-6 w-6 text-gray-500" />
+                                    )}
+                                </span>
+
+                            </div>
+                        </div>
+
+                        <div className="col-span-full md:col-span-1">
+                            <label htmlFor="ifsc" className="block text-lg font-medium leading-6 text-gray-900">IFSC Code</label>
+                            <div className="mt-2">
+                                <input id="about" onChange={(e) => { setformdata({ ...formdata, ifsc: e.target.value }) }} name="about" rows="3" className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            </div>
+                            <p className="mt-3 text-sm leading-6 text-gray-600">Bank&apos;s IFSC code</p>
+                        </div>
                     </div>
+
+
+
 
                     <div className="col-span-full">
                         {order.delivery_status != "Delivered" && <button disabled={loading} type="submit" className='text-md p-2 bg-blue-600 text-white rounded-md'>{loading ? "Cancelling Order" : "Cancel Order"}</button>}
