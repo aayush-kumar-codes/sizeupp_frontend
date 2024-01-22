@@ -32,7 +32,7 @@ export function ProductBilling() {
         cupon_discount: 0,
         coupon: "",
         total_price: 0,
-        payment_type: "COD"
+        payment_type: "PPD"
     })
 
     const navigate = useNavigate()
@@ -209,7 +209,7 @@ export function ProductBilling() {
                 cupon_discount: form.cupon_discount,
                 coupon: couponcode,
                 total_price: form.total_price,
-                payment_type: "COD"
+                payment_type: form.payment_type
             })
             const res = await fetch(import.meta.env.VITE_SERVER_URL + "/api/order", {
                 method: 'POST',
@@ -224,7 +224,7 @@ export function ProductBilling() {
                     cupon_discount: form.cupon_discount,
                     coupon: couponcode,
                     total_price: form.total_price,
-                    payment_type: "COD"
+                    payment_type: form.payment_type
                 })
             })
 
@@ -233,17 +233,28 @@ export function ProductBilling() {
                 throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
             }
             console.log(data);
-            fetchCart()
-            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-            Swal.fire({
-                title: 'Success!',
-                text: 'Order Placed Successfully',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            setPayload(false)
-            navigate('/profile/my-orders')
+            
+            if(form.payment_type == 'COD'){
+                fetchCart()
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Order Placed Successfully',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setPayload(false)
+                navigate('/profile/my-orders')
+            }
+
+            if(form.payment_type =="PPD"){
+                console.log("redirect_url",data.redirect_url)
+                setPayload(false)
+                setTimeout(() => {
+                    window.open(data.redirect_url);
+                }, 1000);
+            }
         }
         catch (error) {
             console.error('Fetch error:', error);
@@ -259,9 +270,10 @@ export function ProductBilling() {
     }
 
     useEffect(() => {
-        setPayload(false)
         fetchCoupon()
         fetchUserProfile()
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, [])
 
 
@@ -336,10 +348,6 @@ export function ProductBilling() {
         }
     }
 
-    useEffect(() => {
-        // 👇️ scroll to top on page load
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, []);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -621,7 +629,7 @@ export function ProductBilling() {
 
                                                         <div className="flex items-center justify-between border-b border-dashed py-4 ">
                                                             <dt className="text-sm font-medium text-c-gray-900">Sub Total</dt>
-                                                            <dd className="text-sm font-medium text-c-gray-900">₹ {cart.sub_total || 0}</dd>
+                                                            <dd className="text-sm font-medium text-c-gray-900">₹ {cart.total_price || 0}</dd>
                                                         </div>
                                                         {cart.delivery_charges && <div className="flex items-center justify-between py-4">
                                                             <dt className="flex text-sm text-c-gray-800">
@@ -632,7 +640,7 @@ export function ProductBilling() {
 
                                                         <div className="flex items-center justify-between border-b border-dashed py-4 ">
                                                             <dt className="text-sm font-medium text-c-gray-900">Total Price</dt>
-                                                            <dd className="text-sm font-medium text-c-gray-900">₹ {cart.total_price}</dd>
+                                                            <dd className="text-sm font-medium text-c-gray-900">₹ {cart.total_price || 0}</dd>
                                                         </div>
                                                     </dl>
                                                     {couponcode ? <div className="px-2 pb-4 font-medium text-green-700">
@@ -819,7 +827,9 @@ export function ProductBilling() {
                                                         id="payment-type"
                                                         name="payment-type"
                                                         type="radio"
-                                                        checked
+                                                        value="COD"
+                                                        checked= {form.payment_type == "COD"}
+                                                        onChange={(e)=>{setForm({...form,payment_type : e.target.value})}}
                                                         className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                                                     />
                                                     <div className="mr-4">
@@ -830,11 +840,13 @@ export function ProductBilling() {
                                                             Cash on delivery
                                                         </label>
                                                     </div>
-                                                    {/* <input
+                                                    <input
                                                         id="payment-type"
                                                         name="payment-type"
                                                         type="radio"
-                                                        defaultChecked
+                                                        value="PPD"
+                                                        checked= {form.payment_type == "PPD"}
+                                                        onChange={(e)=>{setForm({...form,payment_type : e.target.value})}}
                                                         className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                                                     />
                                                     <div className="mr-2">
@@ -842,119 +854,12 @@ export function ProductBilling() {
                                                             htmlFor="payment-type"
                                                             className="text-sm font-semibold text-gray-900"
                                                         >
-                                                            Credit Card
+                                                            Online Payment
                                                         </label>
-                                                    </div> */}
-                                                </div>
-                                            </div>
-                                            {/* 
-                                            <div className="mt-10">
-                                                <h3 className="text-lg font-semibold text-gray-900">Shipping address</h3>
-
-                                                <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-                                                    <div className="sm:col-span-3">
-                                                        <label
-                                                            htmlFor="address"
-                                                            className="block text-sm font-medium text-gray-700"
-                                                        >
-                                                            Address
-                                                        </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                type="text"
-                                                                id="address"
-                                                                placeholder='Enter Address'
-                                                                onChange={handleChange}
-                                                                name="address"
-                                                                autoComplete="street-address"
-                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <label
-                                                            htmlFor="city"
-                                                            className="block text-sm font-medium text-gray-700"
-                                                        >
-                                                            City
-                                                        </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                type="text"
-                                                                id="city"
-                                                                placeholder='Enter city'
-                                                                onChange={handleChange}
-                                                                name="city"
-                                                                autoComplete="address-level2"
-                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <label
-                                                            htmlFor="state"
-                                                            className="block text-sm font-medium text-gray-700"
-                                                        >
-                                                            State / Province
-                                                        </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                type="text"
-                                                                id="state"
-                                                                placeholder='Enter state'
-                                                                onChange={handleChange}
-                                                                name="state"
-                                                                autoComplete="address-level1"
-                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <label
-                                                            htmlFor="pincode"
-                                                            className="block text-sm font-medium text-gray-700"
-                                                        >
-                                                            Postal code
-                                                        </label>
-                                                        <div className="mt-1">
-                                                            <input
-                                                                type="text"
-                                                                id="pincode"
-                                                                placeholder='Enter pincode'
-                                                                onChange={handleChange}
-                                                                name="pincode"
-                                                                autoComplete="pincode"
-                                                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            />
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr className="my-8" />
-                                            <div className="mt-10">
-                                                <h3 className="text-lg font-semibold text-gray-900">Billing information</h3>
-
-                                                <div className="mt-6 flex items-center">
-                                                    <input
-                                                        id="same-as-shipping"
-                                                        name="same-as-shipping"
-                                                        type="checkbox"
-                                                        defaultChecked
-                                                        className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                                                    />
-                                                    <div className="ml-2">
-                                                        <label
-                                                            htmlFor="same-as-shipping"
-                                                            className="text-sm font-medium text-gray-900"
-                                                        >
-                                                            Same as shipping information
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div> */}
+                                            
 
 
 

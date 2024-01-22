@@ -1,0 +1,74 @@
+
+*** These modified files were found in JOE when it aborted on Mon Jan 15 02:39:55 2024
+*** JOE was aborted by UNIX signal 1
+
+*** File '/etc/nginx/sites-available/dashboard.sizeupp.com.conf'
+server {
+    listen 80;
+    server_name dashboard.sizeupp.com;
+
+    # Redirect HTTP to HTTPS
+    #return 301 https://$host$request_uri;
+
+    location /static/ {
+    alias /home/sizeup/SizeUpp/static/;
+    }
+
+    location /media/ {
+    alias /home/sizeup/SizeUpp/media/;
+    }
+
+    location /frontend-react/ {
+    alias /home/sizeup/frontend-react/;
+    }
+
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/sizeup/SizeUpp/gunicorn.sock;
+        #root /home/sizeup/SizeUpp;
+        try_files $uri /index.html;
+    }
+}
+
+
+*** File '(Unnamed)'
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc
+
+*** These modified files were found in JOE when it aborted on Mon Jan 15 02:39:56 2024
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+/etc/nginx/sites-available/dashboard.sizeupp.com.conf
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc

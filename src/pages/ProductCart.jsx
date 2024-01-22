@@ -71,22 +71,20 @@ export function ProductCart() {
     };
     const navigate = useNavigate()
 
-    useEffect(() => {
-        // 👇️ scroll to top on page load
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, []);
+
 
     //   Fetching data from server
 
 
 
 
-    const handleRemoveCart = async (id) => {
+    const handleRemoveCart = async (remid) => {
+        console.log(remid)
         try {
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/delete_cart/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/delete_cart/${remid}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
@@ -142,10 +140,17 @@ export function ProductCart() {
                     timer: 1500
                 })
             }
+            else if (data.coupon_message == "Successfully Applied") {
+                Swal.fire({
+                    title: data.coupon_message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
             else {
                 Swal.fire({
-                    title: 'Info!',
-                    text: data.coupon_message,
+                    title: data.coupon_message,
                     icon: 'info',
                     showConfirmButton: false,
                     timer: 1500
@@ -168,6 +173,9 @@ export function ProductCart() {
         fetchCart()
         fetchProfileData()
         fetchCoupons()
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
     }, [])
 
 
@@ -672,7 +680,7 @@ export function ProductCart() {
                                         <div className='col-span-1 justify-center items-center'>
                                             <img
                                                 onClick={() => { navigate(`/products/${info.product?.id}`) }}
-                                                src={import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6)}
+                                                src={info.product?.images[0]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6) :import.meta.env.VITE_SERVER_URL +  (info.product?.images[0]?.img + "")}
                                                 alt={info.product?.name}
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                             />
@@ -745,7 +753,7 @@ export function ProductCart() {
 
                                                 {/* Trash Icon to delete product */}
                                                 <div className='col-span-1 flex justify-center items-center'>
-                                                    <button onClick={() => handleRemoveCart(info.product?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
+                                                    <button onClick={() => handleRemoveCart(info?.id)} type="button" className='text-sm rounded-full p-2 bg-red-300 border-2'>
                                                         <TrashIcon className='w-4' />
                                                     </button>
                                                 </div>
@@ -827,7 +835,7 @@ export function ProductCart() {
 
                                     <div className="flex items-center justify-between border-b border-dashed py-4 ">
                                         <dt className="text-sm font-medium text-c-gray-900">Sub Total</dt>
-                                        <dd className="text-sm font-medium text-c-gray-900">₹ {cart.sub_total || 0}</dd>
+                                        <dd className="text-sm font-medium text-c-gray-900">₹ {cart.total_price || 0}</dd>
                                     </div>
                                     {<div className="flex items-center justify-between py-4">
                                         <dt className="flex text-sm text-c-gray-800">

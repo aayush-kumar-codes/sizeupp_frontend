@@ -18,8 +18,7 @@ const ProductList = ({
     setFilterActive,
 }) => {
 
-    const { wishlist, handleFetchFilterProducts, filterdata, fetchCart, fetchWishlist, isFilterActive, setIsFilterActive, productsbc, productcount, productloading } = useContext(AuthContext)
-
+    const { wishlist, handleFetchFilterProducts, filterdata, fetchCart, fetchWishlist, isFilterActive, setIsFilterActive, productsbc, productcount, productloading, paginationdata, handlePagination } = useContext(AuthContext)
 
 
     const [itemsInfinite, setItemsInfinite] = useState([])
@@ -77,7 +76,6 @@ const ProductList = ({
             if (!localStorage.token) {
                 return navigate('/login')
             }
-            console.log(localStorage.token);
             const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/add-to-cart/${modalForm.product_id}`, {
                 method: 'POST',
                 headers: {
@@ -109,7 +107,7 @@ const ProductList = ({
                     })
                 })
                 const datas = await res.json()
-                console.log(datas);
+
                 if (!res.ok) {
                     throw new Error(`${datas.message ? "Default Size is " + datas.message : 'HTTP error! status: ' + res.status}`);
                 }
@@ -129,7 +127,7 @@ const ProductList = ({
                     timer: 1200
                 })
             }
-            console.log(data);
+
             fetchCart()
             Swal.fire({
                 title: 'Success!',
@@ -190,7 +188,7 @@ const ProductList = ({
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json()
-            console.log(data);
+
             fetchWishlist()
             handleFetchFilterProducts(filterdata)
 
@@ -231,7 +229,7 @@ const ProductList = ({
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json()
-            console.log(data);
+
             fetchWishlist()
             handleFetchFilterProducts(filterdata)
             Swal.fire({
@@ -273,6 +271,7 @@ const ProductList = ({
             setModalForm((prev) => ({ ...prev, qty: prev.qty - 1 }))
         }
     };
+
     return (
         <div className={``}>
             {/* Nav menu- Breadcrumb */}
@@ -363,11 +362,102 @@ const ProductList = ({
                 </div> */}
             <div className='hidden xl:block'>
                 {grid ? (
-                    <CustomGrid gridSize={grid}>
-                        {!productloading ? (
-                            productsbc.length > 0 ? productsbc.map((items, i) => {
+                    <div>
+                        <div className="flex justify-center space-x-2 ">
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                                handlePagination(filterdata, paginationdata.previous)
+                            }}>&lt; Prev</button>
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                                handlePagination(filterdata, paginationdata.next)
+                            }}>Next &gt;</button>
+                        </div>
+                        <CustomGrid gridSize={grid}>
+                            {!productloading ? (
+                                productsbc.length > 0 ? productsbc.map((items, i) => {
+                                    let imgs = []
+                                    imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
+                                    items.images.map((img) => {
+                                        imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
+                                    })
+
+                                    if (items.images.length == 0) {
+                                        // setproductcount(prev => prev - 1)
+                                        return null
+
+                                    }
+
+
+                                    return (
+
+
+                                        <div key={i} className="mt-1 rounded-xl">
+                                            <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
+                                            <div className={`${grid == 5 && "hidden"} p-2 `}>
+                                                <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
+                                                <div className=' flex flex-wrap justify-between items-center'>
+                                                    <div className='text-base text-accent flex items-center gap-2'>
+                                                        <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
+                                                        {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
+                                                            <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
+                                                            <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                                        </div>
+                                                        }
+                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => { setModalSizes(items.sqp); setModalForm({ ...modalForm, size: items.sqp[0]?.id, product_id: items.id, name: items.name, color: items.color_family.name }); setIsModalCart(true); }}
+                                                        className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                    >
+                                                        Add to Cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }) : (
+                                    <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">
+                                        No products in this category
+                                    </div>
+                                )
+                            ) : (
+                                <>
+                                    {Array(10).fill().map((_, i) => (
+                                        <ProductSkullCard key={i} />
+                                    ))}
+                                </>
+                            )}
+
+                        </CustomGrid>
+
+                        <div className="flex justify-center space-x-2 ">
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                                handlePagination(filterdata, paginationdata.previous)
+                            }}>&lt; Prev</button>
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                                handlePagination(filterdata, paginationdata.next)
+                            }}>Next &gt;</button>
+                        </div>
+                    </div>
+                ) : <div>Loading ....</div>
+                }
+            </div>
+
+            {/* Medium Desktop */}
+            <div className='hidden xl:hidden md:block'>
+                {mgrid ? (
+                    <div>
+                        <div className="flex justify-center space-x-2 ">
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                                handlePagination(filterdata, paginationdata.previous)
+                            }}>&lt; Prev</button>
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                                handlePagination(filterdata, paginationdata.next)
+                            }}>Next &gt;</button>
+                        </div>
+                        <CustomGrid gridSize={mgrid}>
+                            {!productloading ? (productsbc.length > 0 ? productsbc.map((items, i) => {
                                 let imgs = []
-                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
+                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
                                 items.images.map((img) => {
                                     imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
                                 })
@@ -378,16 +468,86 @@ const ProductList = ({
 
                                 }
 
+                                return (
+                                    <div key={i} className="">
+                                        <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
+                                        <div className={` p-2 mt-1 rounded-lg`}>
+                                            <div className='truncate text-base text-accent'>{items.name}</div>
+
+                                            <div className=' flex flex-wrap justify-between items-center'>
+                                                <div className='text-sm text-accent flex items-center gap-2'>
+                                                    <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
+                                                    {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
+                                                        <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
+                                                        <p className="text-sm font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
+                                                    </div>
+                                                    }
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { setModalSizes(items.sqp); setModalForm({ ...modalForm, size: items.sqp[0]?.id, product_id: items.id, name: items.name, color: items.color_family.name }); setIsModalCart(true); }}
+                                                    className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                                                >
+                                                    Add to Cart
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
+                                {
+                                    Array(10).fill().map((_, i) => (
+                                        <ProductSkullCard key={i} />
+                                    ))
+                                }
+                            </>}
+                        </CustomGrid>
+                        <div className="flex justify-center space-x-2 ">
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                                handlePagination(filterdata, paginationdata.previous)
+                            }}>&lt; Prev</button>
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                                handlePagination(filterdata, paginationdata.next)
+                            }}>Next &gt;</button>
+                        </div>
+                    </div>)
+                    : <div>Loading ....</div>
+                }
+            </div>
+
+            {/* Small Desktop */}
+            <div className='block md:hidden'>
+                {sgrid ? (<div>
+                    <div className="flex justify-center space-x-2 ">
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                            handlePagination(filterdata, paginationdata.previous)
+                        }}>&lt; Prev</button>
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                            handlePagination(filterdata, paginationdata.next)
+                        }}>Next &gt;</button>
+                    </div>
+                    <CustomGrid gridSize={sgrid}>
+                        {!productloading ? (
+                            productsbc.length > 0 ? productsbc.map((items, i) => {
+                                let imgs = []
+                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
+                                items.images.map((img) => {
+                                    imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
+                                })
+
+                                if (items.images.length == 0) {
+                                    // setproductcount(prev => prev - 1)
+                                    return null
+
+                                }
 
                                 return (
-
-
-                                    <div key={i} className="mt-1 rounded-xl">
-                                        <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
-                                        <div className={`${grid == 5 && "hidden"} p-2 `}>
-                                            <p className='truncate text-lg font-normal text-accent'>{items.name}</p>
-                                            <div className=' flex flex-wrap justify-between items-center'>
-                                                <div className='text-base text-accent flex items-center gap-2'>
+                                    <div key={i} className="">
+                                        <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
+                                        <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
+                                            <p className=' text-base text-accent'>{items.name}</p>
+                                            <div className='flex flex-wrap justify-between items-center'>
+                                                <div className='text-lg text-accent flex items-center gap-2'>
                                                     <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
                                                     {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
                                                         <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
@@ -406,128 +566,23 @@ const ProductList = ({
                                         </div>
                                     </div>
                                 )
-                            }) : (
-                                <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">
-                                    No products in this category
-                                </div>
-                            )
-                        ) : (
-                            <>
-                                {Array(10).fill().map((_, i) => (
+                            }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
+                            {
+                                Array(10).fill().map((_, i) => (
                                     <ProductSkullCard key={i} />
-                                ))}
-                            </>
-                        )}
-
-                    </CustomGrid>
-                ) : <div>Loading ....</div>
-                }
-            </div>
-
-            {/* Medium Desktop */}
-            <div className='hidden xl:hidden md:block'>
-                {mgrid ? <CustomGrid gridSize={mgrid}>
-                    {!productloading ? (productsbc.length > 0 ? productsbc.map((items, i) => {
-                        let imgs = []
-                        imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
-                        items.images.map((img) => {
-                            imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
-                        })
-
-                        if (items.images.length == 0) {
-                            // setproductcount(prev => prev - 1)
-                            return null
-
-                        }
-
-                        return (
-                            <div key={i} className="">
-                                <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
-                                <div className={` p-2 mt-1 rounded-lg`}>
-                                    <div className='truncate text-base text-accent'>{items.name}</div>
-
-                                    <div className=' flex flex-wrap justify-between items-center'>
-                                        <div className='text-sm text-accent flex items-center gap-2'>
-                                            <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
-                                            {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
-                                                <p className='text-sm font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
-                                                <p className="text-sm font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
-                                            </div>
-                                            }
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => { setModalSizes(items.sqp); setModalForm({ ...modalForm, size: items.sqp[0]?.id, product_id: items.id, name: items.name, color: items.color_family.name }); setIsModalCart(true); }}
-                                            className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                        >
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
-                        {
-                            Array(10).fill().map((_, i) => (
-                                <ProductSkullCard key={i} />
-                            ))
-                        }
-                    </>}
-                </CustomGrid>
-                    : <div>Loading ....</div>
-                }
-            </div>
-
-            {/* Small Desktop */}
-            <div className='block md:hidden'>
-                {sgrid ? <CustomGrid gridSize={sgrid}>
-                    {!productloading ? (
-                        productsbc.length > 0 ? productsbc.map((items, i) => {
-                            let imgs = []
-                            imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
-                            items.images.map((img) => {
-                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
-                            })
-
-                            if (items.images.length == 0) {
-                                // setproductcount(prev => prev - 1)
-                                return null
-
+                                ))
                             }
-
-                            return (
-                                <div key={i} className="">
-                                    <Carousel id={items.id} isFav={false} func={() => { }} slides={items.images} />
-                                    <div className={`${sgrid == 3 && 'hidden'} p-2 mt-1 rounded-lg`}>
-                                        <p className=' text-base text-accent'>{items.name}</p>
-                                        <div className='flex flex-wrap justify-between items-center'>
-                                            <div className='text-lg text-accent flex items-center gap-2'>
-                                                <p>&#8377; {items.discounted_price ? items.discounted_price : items.mrp}</p>
-                                                {items.discounted_price && <div className='flex flex-wrap justify-center items-center'>
-                                                    <p className='text-base font-semibold text-gray-800/80 line-through'>&#8377; {items.mrp}</p>
-                                                    <p className="text-base font-medium text-[#af0000]">{items.discount_percentage || 0}%</p>
-                                                </div>
-                                                }
-                                            </div>
-                                            <button
-                                                type="button"
-                                                onClick={() => { setModalSizes(items.sqp); setModalForm({ ...modalForm, size: items.sqp[0]?.id, product_id: items.id, name: items.name, color: items.color_family.name }); setIsModalCart(true); }}
-                                                className="rounded-md my-2 bg-black px-2 py-2 text-xs font-normal text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                            >
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        }) : <div className="ml-4 md:ml-10 text-base bg-red-300 px-8 py-4 w-fit rounded-lg">No products in this category</div>) : <>
-                        {
-                            Array(10).fill().map((_, i) => (
-                                <ProductSkullCard key={i} />
-                            ))
-                        }
-                    </>}
-                </CustomGrid>
+                        </>}
+                    </CustomGrid>
+                    <div className="flex justify-center space-x-2 ">
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                            handlePagination(filterdata, paginationdata.previous)
+                        }}>&lt; Prev</button>
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                            handlePagination(filterdata, paginationdata.next)
+                        }}>Next &gt;</button>
+                    </div>
+                </div>)
                     : <div>Loading ....</div>
                 }
             </div>

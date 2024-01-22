@@ -11,14 +11,14 @@ export default function ShopNow() {
                 Image={banner6}
                 smImg={mobile4}
                 Orientation={false}
-                href={`/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27&category=db93ce20-7baf-4ebd-be17-89d1215a04c9&subcategory=7f342ad1-b316-40f0-841f-01ec0b31ffbb`}
+                href={`/products?gender=2a812e75-af73-4638-b6a4-ca6d0529a368&category=96bbee9f-18f2-4751-96ee-58f913276144`}
         />
         <Layout 
-          Text="Women's Formal Wear"
+          Text="Women's Wear"
                 Image={banner8}
                 smImg={mobile6}
                 Orientation={false}
-                href={`/products?gender=8303b897-48a5-491e-a763-eb19d275873f&category=89d81469-02e4-4a2c-a2ac-4080b7f141e3&subcategory=09665092-aad8-4169-afcd-b3ec0e389860`}
+                href={`/products?gender=92aa7db0-e157-469d-ac90-e97d11e96940&category=34ac7219-e916-4ab2-8de4-9181a9fcd772&subcategory=39c5441b-5faf-4415-bbc1-3dd9a109bfa1`}
         />
       </>
     )

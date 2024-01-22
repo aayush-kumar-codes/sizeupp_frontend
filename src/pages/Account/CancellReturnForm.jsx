@@ -59,7 +59,7 @@ const CancellReturnForm = () => {
             return
         }
 
-        if (formdata.products.length === 0) {
+        if (order.delivery_status == "Delivered" &&  formdata.products.length === 0) {
             Swal.fire({
                 icon: 'error',
                 title: 'Please select atleast one product',
@@ -204,7 +204,7 @@ const CancellReturnForm = () => {
                                             <div className='flex col-span-1 justify-center items-center'>
                                                 <img
                                                     onClick={() => { navigate(`/products/${info?.id}`) }}
-                                                    src={import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "").slice(6)}
+                                                    src={info.images[0]?.img.includes("/media/media") ?import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "")}
                                                     alt={info?.name}
                                                     className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                                 />
@@ -238,7 +238,7 @@ const CancellReturnForm = () => {
 
                                                     {/* Total Price */}
                                                     <div className='col-span-1 flex justify-center items-center'>
-                                                        <div className=''>₹ {(item?.sub_total)}</div>
+                                                        <div className=''>₹ {(order?.payment_amount)}</div>
                                                     </div>
 
 
@@ -268,7 +268,7 @@ const CancellReturnForm = () => {
                     </div>
 
 
-                    <div className='col-span-full grid gap-4 grid-cols-2 '>
+                    {order.delivery_status == "Delivered" && <div className='col-span-full grid gap-4 grid-cols-2 '>
                         <div className="col-span-full md:col-span-1">
                             <label htmlFor="customer_name" className="block text-lg font-medium leading-6 text-gray-900">Account Holder Name</label>
                             <div className="mt-2">
@@ -338,7 +338,7 @@ const CancellReturnForm = () => {
                             </div>
                             <p className="mt-3 text-sm leading-6 text-gray-600">Bank&apos;s IFSC code</p>
                         </div>
-                    </div>
+                    </div>}
 
 
 

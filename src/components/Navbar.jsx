@@ -15,6 +15,9 @@ export function Navbar() {
         { name: "Sign up", href: "/register" },
     ]
 
+    const [data, setData] = useState([])
+
+
     const menuItems = [
         {
             name: "Logout",
@@ -55,68 +58,17 @@ export function Navbar() {
                 {
                     name: 'Casual Topwear',
                     href: '/products?gender=Men&category=Casual Topwear'
-                    // category: [
-                    //     {
-                    //         name: 'Casual Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Core Tee',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Formal Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Kurta',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Polo Tshirts',
-                    //         href: '/products'
-                    //     }
-                    // ]
+                    
                 },
                 {
                     name: 'Casual Bottomwear',
                     href: '/products?gender=Men&category=Casual Bottomwear'
-                    // category: [
-                    //     {
-                    //         name: 'Chino',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Denim',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Joggers',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Pyjama',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Track Pants',
-                    //         href: '/products'
-                    //     }
-                    // ]
+                    
                 },
                 {
                     name: 'Ethnic Wear',
                     href: "/products?gender=Men&category=Ethnic Wear"
-                    // category: [
-                    //     {
-                    //         name: 'Kurta',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Waist Coat',
-                    //         href: '/products'
-                    //     }
-                    // ]
+                    
                 },
                 {
                     name: 'Evening Wear',
@@ -139,70 +91,12 @@ export function Navbar() {
                 {
                     href: '/products?gender=Women&category=Women Topwear',
                     name: 'Women Topwear',
-                    // category: [
-                    //     {
-                    //         name: 'Co Ord Set',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Core Tee',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Dress',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Kurta',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Kurta and Pants',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Sweat Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Top',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'T Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Tunic',
-                    //         href: '/products'
-                    //     }
-                    // ]
+                   
                 },
                 {
                     name: 'Women Bottomwear',
                     href: "/products?gender=Women&category=Women Bottomwear",
-                    // category: [
-                    //     {
-                    //         name: 'Jeggings',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Leggings',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Pants',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Trousers',
-                    //         href: '/products'
-                    //     }
-                    // ]
+                    
                 },
                 {
                     name: 'Festive Wear',
@@ -230,6 +124,23 @@ export function Navbar() {
         if (searchParams.has('gender')) {
             console.log(searchParams.get('gender'))
         }
+        // Attach the event listener when the component mounts
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // Detach the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+
+        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        }).then(res => res.json().then(data => {
+            setData(data)
+        }
+        ))
     }, [])
 
 
@@ -254,15 +165,6 @@ export function Navbar() {
 
     const { profiledata } = useContext(AuthContext)
 
-    useEffect(() => {
-        // Attach the event listener when the component mounts
-        document.addEventListener('mousedown', handleClickOutside);
-
-        // Detach the event listener when the component unmounts
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
 
     // fetch from server
@@ -314,19 +216,7 @@ export function Navbar() {
     }
 
 
-    const [data, setData] = useState([])
-    useEffect(() => {
-        fetch(import.meta.env.VITE_SERVER_URL + "/api/product/category-details", {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json'
-            },
-        }).then(res => res.json().then(data => {
-            setData(data)
-            localStorage.setItem("cat_list", JSON.stringify(data))
-        }
-        ))
-    }, [])
+
 
     return (
         // container
@@ -343,40 +233,7 @@ export function Navbar() {
                     {/* Search bar */}
                     <div className='hidden lg:block lg:w-2/3 mx-3'>
 
-                        {/* <div className='flex w-full items-center'>
-                            <div className='relative w-full'>
-                                <input
-                                    className="w-full ring-1 ring-link rounded-3xl bg-c-gray-100 px-6 py-3 pl-10 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                    type="text"
-                                    defaultValue={search}
-                                    onChange={(e) => {setSearch(e.target.value);console.log(search) }}
-                                    placeholder="Search on Website"
-                                    onFocus={() => setIsInputFocused(true)}
-                                    onBlur={() => setIsInputFocused(false)}
-
-                                />
-                                <div
-                                    className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ${isInputFocused ? 'hidden' : 'flex'
-                                        }`}
-                                >
-                                    <MagnifyingGlassIcon className="h-4 w-4 text-gray-500" />
-                                </div>
-                            </div>
-
-                            <div onClick={()=>{handlefetchFilterProducts();}}  className={`relative right-14 top-0 ${isInputFocused ? 'visible' : 'hidden'}`}>
-                                <button className="text-xs m-2 bg-orange-500 p-2 rounded-xl">
-                                    <MagnifyingGlassIcon className="h-6 w-6 text-white" />
-
-                                </button>
-                            </div>
-                            <button onClick={handlefetchFilterProducts}> Submit</button>
-                        </div> */}
-                        {/* <form onSubmit={handleSubmit} className="mx-auto w-full py-1 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
-                            <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search" />
-                            <button type="submit" className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
-                                <MagnifyingGlassIcon className="h-4 w-4 text-white " />
-                            </button>
-                        </form> */}
+                       
                     </div>
 
                     {/* Menu */}
@@ -499,73 +356,7 @@ export function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        {/* {mobileMenuItems.map((item) => {
-                                            return (
-                                                <>
-
-                                                    {item.dropdown ?
-                                                        <AccordionItem
-                                                            key={item.name}
-                                                            title={item.name}
-                                                            content={
-                                                                item.category.map((subitem) => {
-                                                                    return (
-                                                                        subitem.dropdown ?
-                                                                            <div className='px-4'>
-                                                                                <AccordionItem
-                                                                                    key={subitem.name}
-                                                                                    title={subitem.name}
-                                                                                    content={
-                                                                                        subitem.category.map((subsubitem) => {
-                                                                                            return (
-                                                                                                <Link
-                                                                                                    key={subsubitem.name}
-                                                                                                    to={subsubitem.href}
-                                                                                                    onClick={toggleMenu}
-                                                                                                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
-                                                                                                >
-                                                                                                    {subsubitem.name}
-                                                                                                </Link>
-                                                                                            )
-                                                                                        })
-                                                                                    }
-                                                                                />
-
-                                                                            </div>
-                                                                            :
-                                                                            <Link
-                                                                                key={subitem.name}
-                                                                                to={subitem.href}
-                                                                                onClick={toggleMenu}
-                                                                                className="py-3 px-4 font-bold flex items-center rounded-md hover:bg-gray-50"
-                                                                            >
-                                                                                {subitem.name}
-                                                                            </Link>
-                                                                    )
-                                                                })
-                                                            }
-                                                        />
-                                                        :
-                                                        <Link
-                                                            key={item.name}
-                                                            to={item.href}
-                                                            onClick={toggleMenu}
-                                                            className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
-                                                        >
-                                                            {item.name}
-                                                        </Link>
-                                                    }
-                                                </>
-                                            )
-                                        })} */}
-                                        {/* <div className="flex justify-end items-end border-t border-c-gray-300 py-5 w-full md:w-2/5">
-                                            <form onSubmit={handleSubmit} className="mx-auto  py-1 px-6 rounded-full border flex focus-within:border-gray-300">
-                                                <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search" />
-                                                <button type="submit" className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
-                                                    <MagnifyingGlassIcon className="h-4 w-4 text-white " />
-                                                </button>
-                                            </form>
-                                        </div> */}
+                                       
                                         <Link to="/products" onClick={() => { setIsMenuOpen(false) }} className='text-sm border-t border-c-gray-300 py-5 font-semibold'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {

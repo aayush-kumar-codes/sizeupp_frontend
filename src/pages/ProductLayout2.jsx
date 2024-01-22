@@ -28,10 +28,10 @@ const ProductLayout2 = () => {
     let size = searchParams.getAll('size')
     let search = searchParams.get('navsearch')
     let subsubcategory = searchParams.getAll('subcategory')
+    console.log("ProductLayout SearchParams UseEffect")
 
 
-
-    if (category || search || subcategory || subsubcategory || fit || sleeve || necktype || color || size) {
+    if (searchParams.has('gender') || searchParams.has('category') || searchParams.has("fit") || searchParams.has("sleeve") || searchParams.has("necktype") || searchParams.has("color") || searchParams.has(subcategory) || searchParams.has("size") || searchParams.has("navsearch")) {
       const updatedFilterData = {
         ...filterdata,
         search: search !== null ? search : "",
@@ -69,6 +69,7 @@ const ProductLayout2 = () => {
       fetchData();
     }
 
+    console.warn("ProductLayout UseEffect")
     return () => {
       abort.abort()
     }

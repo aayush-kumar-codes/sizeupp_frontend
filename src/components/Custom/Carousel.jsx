@@ -67,7 +67,7 @@ const Carousel = ({
             loading='lazy'
             onClick={() => { navigate(`${id}`) }}
             className="object-cover w-full h-full cursor-pointer rounded-lg"
-            src={import.meta.env.VITE_SERVER_URL +str.slice(6)}
+            src={slide.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (slide.img + "").slice(6) : import.meta.env.VITE_SERVER_URL  + (slide.img + "")}
             alt="dress"
           />)
         })

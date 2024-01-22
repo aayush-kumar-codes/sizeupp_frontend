@@ -284,7 +284,6 @@ const NewAddress = () => {
         }),
       });
       const data = await res.json();
-      console.log(data);
       setFormData({
         addressid: "",
         addressLine1: '',
@@ -336,8 +335,6 @@ const NewAddress = () => {
   const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
     name: city,
   }))
-
-  console.log(cityData);
 
   return (
     <div>

@@ -7,19 +7,19 @@ const BannerData = [
     id: 1,
     img: banner1,
     smimg: mobile1,
-    title: 'Shop Latest',
-    subtitle: "Men's",
-    description: 'Collection',
-    href:"/products?gender=56331b14-95bb-4d6f-8fbd-eaf228d25a27"
+    title: "Men's collection",
+    subtitle: "10% OFF on First purchase- Use",
+    description: 'FREE10',
+    href:"/products?gender=2a812e75-af73-4638-b6a4-ca6d0529a368"
   },
   {
     id: 2,
     img: banner2,
     smimg: mobile2,
-    title: 'Shop Latest',
-    subtitle: "Women's",
-    description: 'Collection',
-    href:"/products?gender=8303b897-48a5-491e-a763-eb19d275873f"
+    title: "Women's collection",
+    subtitle: "10% OFF on First purchase- Use",
+    description: 'FREE10',
+    href:"/products?gender=92aa7db0-e157-469d-ac90-e97d11e96940"
   }
 ];
 

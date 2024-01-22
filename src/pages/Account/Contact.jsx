@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-// import {Helmet} from "react-helmet";
+
 const Contact = () => {
     const [profiledata, setprofiledata] = useState()
     const fetchProfileData = async () => {
@@ -85,13 +85,7 @@ const Contact = () => {
     }
     return (
         <>
-            {/* <Helmet>
-                <title>
-                    Contact Us | Size Up
-                </title>
-                <meta name="description" content="Have questions or feedback? Contact Sizeupp's dedicated support team. We're here to assist you. Reach out for help, and let's make your Sizeupp experience better" />
-                <meta name="keywords" content="Sizeupp support, customer service, contact information, reach out, assistance, feedback" />
-            </Helmet> */}
+           
             <section className="bg-gray-50" id="contact">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
                     <div className="mb-4">

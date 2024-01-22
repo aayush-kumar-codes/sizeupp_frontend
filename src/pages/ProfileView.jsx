@@ -95,11 +95,9 @@ const Profileview = () => {
     }
   };
 
-  useEffect(()=>{
-    fetchProfileData()
-  },[])
-
   useEffect(() => {
+    fetchProfileData()
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);

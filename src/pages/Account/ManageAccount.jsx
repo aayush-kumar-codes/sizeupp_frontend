@@ -275,7 +275,7 @@ const AccountSetting = () => {
                   <div className="relative">
                     <input
                       className="w-full p-3 text-sm font-medium bg-gray-100 border rounded-md focus:border-blue "
-                      name="password" type="password"
+                      name="password" 
                       type={isNewPasswordVisible ? 'text' : 'password'}
                       placeholder="Current password" />
                     <span
@@ -334,7 +334,6 @@ const AccountSetting = () => {
 
 
 const ManageAccount = () => {
-
 
   return (
     <>

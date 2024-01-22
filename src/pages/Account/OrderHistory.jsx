@@ -151,7 +151,7 @@ const DeliveryHistoryTable = () => {
                                     </div>
                                 </div>
                                 <p className="text-sm text-gray-400">{(order.payment_status + ' (' + order.payment_type + ')') || "Ship deight"}</p>
-                                <p className="py-3 text-xl font-bold text-violet-900">Rs. {order.mrp_price || 0}</p>
+                                <p className="py-3 text-xl font-bold text-violet-900">Rs. { order.payment_amount || 0}</p>
                                 <div className="mt-2 flex w-full items-center justify-between">
                                     <div className="flex items-center justify-center">
                                         <Link to={`/profile/order-details/${order.id}`} className="flex items-center justify-center bg-amber-500 px-2 py-2 active:ring-gray-500 rounded cursor-pointer">

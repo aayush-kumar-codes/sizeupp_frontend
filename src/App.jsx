@@ -44,7 +44,9 @@ const App = () => {
   useEffect(() => {
     fetchCategory()
     handleValidateToken()
-    
+    if(localStorage.getItem("cat_list")){
+      localStorage.removeItem("cat_list")
+    }
   }
     , []);
   return (
@@ -60,7 +62,7 @@ const App = () => {
             <Route path="forgot" element={<Forgot />} />
             <Route path="reset" element={<ResetPassword />} />
             <Route path="payment-success" element={<PaymentSuccessfull />} />
-            <Route path="payment-unsuccess" element={<PaymentUnsuccess />} />
+            <Route path="payment-failed" element={<PaymentUnsuccess />} />
             <Route path="terms-condition" element={<TermsCondition />} />
             <Route path="return-policy" element={<ReturnPolicy />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />

@@ -20,6 +20,8 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import Footer from '../components/Footer/Footer'
 import Slider from '../components/Slider/Slider'
 import BannerCarousel from '../components/HomeK/Carouselnew';
+import { toast } from 'react-toastify';
+import { ToastNotification } from '../components/Toast/ToastNotification';
 
 
 const Megamenu = () => {
@@ -44,9 +46,7 @@ const Megamenu = () => {
                 'Content-type': 'application/json'
             },
         }).then(res => res.json().then(data => {
-            console.log(JSON.stringify(data))
             setData(data)
-            localStorage.setItem("cat_list", JSON.stringify(data))
         }
         ))
     }, [])
@@ -75,30 +75,6 @@ const Megamenu = () => {
 
 
 
-                {/* 
-                {data.length > 0 && data.map((item, index) => (
-                    <div key={index} className="group">
-                        <div >
-                            <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                                {item.subcategory.category.name}
-                                <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                            </p>
-                            <div className="hidden group-hover:grid grid-cols-4 gap-10 justify-between absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                                <div className="col-span-1">
-                                    <p className="text-base font-semibold">{item.name}</p>
-                                    <p className="text-sm text-gray-500">New products</p>
-                                    <img src={Maroon1} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                                    <button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                                    <p className="text-sm text-gray-500 mt-4">@Terms and conditions apply.</p>
-                                </div>
-                             
-                            </div>
-                        </div>
-                    </div>
-                ))} */}
-
-
-
                 {data.categories && data.categories.map((gender, index) => {
                     return (
                         <div key={index} className="group">
@@ -108,7 +84,7 @@ const Megamenu = () => {
                                 <ChevronDownIcon className=" ml-2 w-4 font-bold" />
                             </p>
                             <div className={`${megamenuhide ? 'hidden' : 'block'}`}>
-                                <div className={`hidden group-hover:grid grid-cols-${gender.subcategories.length == 3 ? '2' : gender.subcategories.length/2 } gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
+                                <div className={`hidden group-hover:grid grid-cols-${gender.subcategories.length == 3 ? '2' : gender.subcategories.length / 2} gap-4 justify-between absolute right-4 p-6 bg-secondary rounded-md  drop-shadow-md`}>
 
                                     {gender.subcategories && gender.subcategories.map((cat) => {
                                         return (
@@ -133,49 +109,6 @@ const Megamenu = () => {
                         </div>)
                 })}
 
-
-                {/* Festive Offers */}
-                {/* <div className="group">
-
-                    <p className='text-md font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                        Accessories
-                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                    </p>
-                    <div className="hidden group-hover:flex flex-col absolute px-6 py-6 w-1/6 bg-secondary rounded-md  drop-shadow-md">
-                        <h2 className="text-base font-semibold mb-2">Casual Bottomwear</h2>
-
-                        <div className="text-base text-gray-800/80 font-normal hover:underline cursor-pointer">Boxer</div>
-                    </div>
-                </div> */}
-
-                {/* Sales */}
-                {/* <div className="group">
-
-                    <p className='text-md  font-normal tracking-wide cursor-pointer flex items-center justify-center'>
-                        Sales
-                        <ChevronDownIcon className=" ml-2 w-4 font-bold" />
-                    </p>
-                    <div className="hidden group-hover:grid grid-cols-4 absolute left-0 p-10 w-full bg-secondary rounded-md  drop-shadow-md">
-                        <div className="col-span-1">
-                            <p className="text-base text-black font-semibold">Online Only</p>
-                            <p className="text-sm text-gray-500">Shop online only products</p>
-                            < img src={GEGreen5} alt="online only" className="w-full h-48 object-contain rounded-md mt-4" />
-                            <Link to="/products">
-                                < button className="bg-black text-white rounded-md px-4 py-2 mt-4">Shop Now</button>
-                            </Link>
-                            <Link to="/terms-condition">
-                                < p className="text-sm text-gray-500 mt-4">@Terms and conditions apply. </p>
-                            </Link>
-                        </div>
-                        <div>
-                            <ul>
-                                <li>
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </div >
     )
@@ -227,68 +160,17 @@ function Navbar() {
                 {
                     name: 'Casual Topwear',
                     href: '/products?gender=Men&category=Casual Topwear'
-                    // category: [
-                    //     {
-                    //         name: 'Casual Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Core Tee',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Formal Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Kurta',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Polo Tshirts',
-                    //         href: '/products'
-                    //     }
-                    // ]
+
                 },
                 {
                     name: 'Casual Bottomwear',
                     href: '/products?gender=Men&category=Casual Bottomwear'
-                    // category: [
-                    //     {
-                    //         name: 'Chino',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Denim',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Joggers',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Pyjama',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Track Pants',
-                    //         href: '/products'
-                    //     }
-                    // ]
+
                 },
                 {
                     name: 'Ethnic Wear',
                     href: "/products?gender=Men&category=Ethnic Wear"
-                    // category: [
-                    //     {
-                    //         name: 'Kurta',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Waist Coat',
-                    //         href: '/products'
-                    //     }
-                    // ]
+
                 },
                 {
                     name: 'Evening Wear',
@@ -311,70 +193,12 @@ function Navbar() {
                 {
                     href: '/products?gender=Women&category=Women Topwear',
                     name: 'Women Topwear',
-                    // category: [
-                    //     {
-                    //         name: 'Co Ord Set',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Core Tee',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Dress',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Kurta',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Kurta and Pants',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Sweat Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Top',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'T Shirts',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Tunic',
-                    //         href: '/products'
-                    //     }
-                    // ]
+
                 },
                 {
                     name: 'Women Bottomwear',
                     href: "/products?gender=Women&category=Women Bottomwear",
-                    // category: [
-                    //     {
-                    //         name: 'Jeggings',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Leggings',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Pants',
-                    //         href: '/products'
-                    //     },
-                    //     {
-                    //         name: 'Trousers',
-                    //         href: '/products'
-                    //     }
-                    // ]
+
                 },
                 {
                     name: 'Festive Wear',
@@ -482,11 +306,7 @@ function Navbar() {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    useEffect(() => {
-        if (searchParams.has('gender')) {
-            console.log(searchParams.get('gender'))
-        }
-    }, [])
+
 
 
     const handleSubmit = (e) => {
@@ -504,9 +324,12 @@ function Navbar() {
             },
         }).then(res => res.json().then(data => {
             setData(data)
-            localStorage.setItem("cat_list", JSON.stringify(data))
         }
         ))
+
+        if (searchParams.has('gender')) {
+            console.log(searchParams.get('gender'))
+        }
     }, [])
     return (
         // container
@@ -521,14 +344,6 @@ function Navbar() {
                     </Link>
                 </div>
 
-                {/* <div className="flex justify-end items-end w-2/3 md:w-2/5">
-                    <form onSubmit={handleSubmit} className="mx-auto  py-1 px-6 rounded-full border flex focus-within:border-gray-300">
-                        <input type="text" value={search} onChange={(e) => { handleSearch(e) }} placeholder="Search " className="bg-transparent w-full focus:outline-none pr-4 font-medium border-0 focus:ring-0 px-0 py-0" name="search" />
-                        <button type="submit" className="flex flex-row items-center justify-center px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white border-transparent  h-[38px] -mr-3" >
-                            <MagnifyingGlassIcon className="h-4 w-4 text-white " />
-                        </button>
-                    </form>
-                </div> */}
 
 
                 <div className="flex items-center ">
@@ -692,8 +507,8 @@ function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                        <Link to="/profile" onClick={()=>{setIsMenuOpen(false)}} className='text-sm font-semibold border-t border-c-gray-300 py-5' > Profile</Link>
-                                        <Link to="/products" onClick={()=>{setIsMenuOpen(false)}} className='text-sm font-semibold border-t border-c-gray-300 py-5'>All Products</Link>
+                                        <Link to="/profile" onClick={() => { setIsMenuOpen(false) }} className='text-sm font-semibold border-t border-c-gray-300 py-5' > Profile</Link>
+                                        <Link to="/products" onClick={() => { setIsMenuOpen(false) }} className='text-sm font-semibold border-t border-c-gray-300 py-5'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {
                                                 return <AccordionItem
@@ -711,7 +526,7 @@ function Navbar() {
                                                                                 {
                                                                                     subcat.subsubcategories.map((subsubcat) => {
                                                                                         return (
-                                                                                            <Link onClick={()=>{setIsMenuOpen(false)}} className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?gender=${cat.id}&category=${subcat.id}&subcategory=${subsubcat.id}`}>
+                                                                                            <Link onClick={() => { setIsMenuOpen(false) }} className='col-span-1 text-sm font-normal' key={subsubcat.id} to={`/products?gender=${cat.id}&category=${subcat.id}&subcategory=${subsubcat.id}`}>
                                                                                                 {subsubcat.name}
                                                                                             </Link>
                                                                                         )
@@ -769,6 +584,11 @@ function Navbar() {
 
 
 const HomeK = () => {
+
+    useEffect(() => {
+        toast.error('Our Site will be live soon on IOS.')
+    }, [])
+
     return (
         <>
             <Navbar />
@@ -781,6 +601,7 @@ const HomeK = () => {
 
             <Footer />
             {/* <Newsletter /> */}
+            <ToastNotification />
         </>
     )
 }

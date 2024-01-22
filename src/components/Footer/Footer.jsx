@@ -14,7 +14,7 @@ const Footer = () => {
               <img src={logo} className="w-36" />
 
             </a>
-            <p className="mt-2 text-sm text-gray-500">Sizeupp defies fashion norms, celebrating you in all shapes and sizes. We offer trendy, quality clothing that fit you perfectly. </p>
+            <p className="mt-2 text-sm text-gray-400">Sizeupp defies fashion norms, celebrating you in all shapes and sizes. We offer trendy, quality clothing that fit you perfectly. </p>
             <div className="p-1">
               <a href="/about-us" className="text-gray-400 hover:text-white ">About Us</a>
             </div>

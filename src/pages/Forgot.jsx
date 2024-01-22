@@ -23,11 +23,11 @@ const Forgot = () => {
 
             const data = await res.json()
 
-            if (!data.ok) {
+            if (!res.ok) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: data.error,
+                    text: data.message,
                     showConfirmButton: false,
                     timer: 2000
                 })

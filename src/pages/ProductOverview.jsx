@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { chevronDownIcon } from "../assets/icons";
 import { HeartIcon, ShareIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, TruckIcon, CheckIcon } from "@heroicons/react/24/outline";
 import Swal from 'sweetalert2';
-import ReactDOM from 'react-dom';
-import Slider from "react-slick";
+// import ReactDOM from 'react-dom';
+// import Slider from "react-slick";
 import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import { LinkIcon } from "@heroicons/react/20/solid";
 import RelatedProducts from "../components/ProductOverview/RelatedProducts";
@@ -15,40 +15,11 @@ import ProductOverviewCar from "../components/Skeleton/ProductOverview/ProductOv
 import { Images } from "../components/Sizechart/Data";
 import { AuthContext } from "../context/AuthProvider";
 // import { Helmet } from "react-helmet";
-
-export const Modal = ({ children, onClose }) => {
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
-  useEffect(() => {
-    const handleEscapeKey = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscapeKey);
-
-    return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [onClose]);
-  return ReactDOM.createPortal(
-    <div className="fixed overflow-hidden p-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-80 bg-gray-900" onClick={handleOverlayClick}>
-      <div className=" p-8 rounded-md max-w-screen-sm w-full h-auto overflow-auto">
-        {children}
-        <button className="absolute top-[6rem] right-[4rem] md:top-[6rem] md:right-[2rem] lg:top-[6rem] lg:right-[22rem] bg-black rounded-full p-1 text-gray-100" onClick={onClose}>
-          <XMarkIcon className="h-8 w-8 text-gray-100" />
-        </button>
-      </div>
-    </div>,
-    document.getElementById('modal-root')
-  );
-};
-
+import Modal from "../components/ProductOverview/Modal";
+import Carousel from "../components/ProductOverview/Carousel";
+import AccordionItem from "../components/Custom/AccordionItem";
+import PincodeForm from "../components/ProductOverview/PincodeForm";
+import ImageMagnifier from "../components/ProductOverview/ImageMagnifier";
 
 // ------------------------ Image View Component ------------------------
 const ProductImageView = ({
@@ -73,104 +44,7 @@ const ProductImageView = ({
 
 
 
-  const ImageMagnifier = ({ imgSrc, imgAlt, zoomStrength }) => {
-    const [isGlassVisible, setIsGlassVisible] = useState(false);
-    useEffect(() => {
-      const magnify = (imgID, zoom) => {
-        const img = document.getElementById(imgID);
-        let glass, w, h, bw;
-
-        /* Create magnifier glass: */
-        glass = document.createElement("div");
-        glass.setAttribute("class", "img-magnifier-glass");
-
-        /* Insert magnifier glass: */
-        img.parentElement.insertBefore(glass, img);
-
-        /* Set background properties for the magnifier glass: */
-        glass.style.backgroundImage = `url('${img.src}')`;
-        glass.style.backgroundRepeat = "no-repeat";
-        glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
-
-        bw = 3;
-        w = glass.offsetWidth / 2;
-        h = glass.offsetHeight / 2;
-
-        /* Execute a function when someone moves the magnifier glass over the image: */
-        const moveMagnifier = (e) => {
-          e.preventDefault();
-          setIsGlassVisible(true);
-          /* Get the cursor's x and y positions: */
-          const pos = getCursorPos(e);
-          let x = pos.x;
-          let y = pos.y;
-
-          /* Prevent the magnifier glass from being positioned outside the image: */
-          if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
-          if (x < w / zoom) { x = w / zoom; }
-          if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
-          if (y < h / zoom) { y = h / zoom; }
-
-          /* Set the position of the magnifier glass: */
-          glass.style.left = `${x - w}px`;
-          glass.style.top = `${y - h}px`;
-
-          /* Display what the magnifier glass "sees": */
-          glass.style.backgroundPosition = `-${x * zoom - w + bw}px -${y * zoom - h + bw}px`;
-        };
-
-        /* Add event listeners for mousemove and touchmove: */
-        glass.addEventListener("mousemove", moveMagnifier);
-        img.addEventListener("mousemove", moveMagnifier);
-        // glass.addEventListener("touchmove", moveMagnifier);
-        // img.addEventListener("touchmove", moveMagnifier);
-
-        const getCursorPos = (e) => {
-          let x = 0, y = 0;
-          e = e || window.event;
-
-          /* Get the x and y positions of the image: */
-          const a = img.getBoundingClientRect();
-
-          /* Calculate the cursor's x and y coordinates, relative to the image: */
-          x = e.pageX - a.left;
-          y = e.pageY - a.top;
-
-          /* Consider any page scrolling: */
-          x = x - window.scrollX;
-          y = y - window.scrollY;
-
-          return { x, y };
-        };
-      };
-
-      /* Initiate Magnify Function with the id of the image and the strength of the magnifier glass: */
-      magnify("myimage", zoomStrength);
-    }, [zoomStrength]);
-
-    return (
-      <div>
-
-        <div className="img-magnifier-container relative cursor-pointer">
-          <img id="myimage" src={imgSrc} alt={imgAlt} width="600" height="400" onClick={handleOpenModal} />
-        </div>
-        <style>
-          {`
-          .img-magnifier-glass {
-            position: absolute;
-            border: 0px solid #000;
-            border-radius: 50%;
-            cursor: none;
-            /* Set the size of the magnifier glass: */
-            width: 270px;
-            height: 270px;
-            display: ${isGlassVisible ? 'block' : 'none'}; 
-          }
-        `}
-        </style>
-      </div>
-    );
-  };
+ 
 
   // const handleMouseMove = (e) => {
   //   const img = document.getElementById("magnify-img");
@@ -275,21 +149,21 @@ const ProductImageView = ({
             <div className="relative mb-2.5 w-full shrink-0 overflow-hidden rounded-md border md:mb-3 xl:w-[480px] 2xl:w-[600px]">
               <div className="flex justify-center mx-auto items-center ">
                 {/* Image Current */}
-                {/* <img
+                <img
                   alt={`Product gallery ${currentImageIndex + 1}`}
-                  src={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)}
+                  src={arrayImages[currentImageIndex]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6): import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "")}
                   id="magnify-img"
                   width="650"
                   height="590"
                   onClick={handleOpenModal}
                   className="rounded-lg object-cover md:h-[550px] md:w-full lg:h-full cursor-pointer md:cursor-pointer"
-                  onMouseMove={handleMouseMove}
-                  onMouseOut={handleMouseOut}
-                /> */}
-                <ImageMagnifier imgSrc={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)} zoom={2}
+                  // onMouseMove={handleMouseMove}
+                  // onMouseOut={handleMouseOut}
+                />
+                {/* <ImageMagnifier imgSrc={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)} zoom={2}
                   imgAlt={`Product gallery ${currentImageIndex + 1}`}
                   zoomStrength={2}
-                />
+                /> */}
               </div>
 
               {/* Controls */}
@@ -343,7 +217,7 @@ const ProductImageView = ({
                     >
                       <img
                         alt={`Product ${i + 1}`}
-                        src={import.meta.env.VITE_SERVER_URL + (items.img + "").slice(6)}
+                        src={items.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (items.img + "").slice(6): import.meta.env.VITE_SERVER_URL + (items.img + "")}
                         decoding="async"
                         loading="lazy"
                         className="h-20 w-20 object-cover  md:h-24 md:w-24 lg:h-28 lg:w-28 xl:w-32"
@@ -366,17 +240,9 @@ const ProductImageView = ({
               <Modal onClose={handleCloseModal}>
                 {/* Content of the modal goes here */}
                 <div className="w-full h-full flex items-center justify-center">
-                  <Slider {...settings} className="w-full h-full">
-                    {arrayImages.map((image, index) => (
-                      <div key={index} className="w-full h-full">
-                        <img
-                          src={import.meta.env.VITE_SERVER_URL + (image.img + "").slice(6)}
-                          alt={`Image ${index + 1}`}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    ))}
-                  </Slider>
+                  
+                      <Carousel images={arrayImages} />
+                      
                 </div>
               </Modal>
             )}
@@ -392,316 +258,6 @@ const ProductImageView = ({
     </>
   )
 }
-
-// ------------------------ Accordion Component (Helper) ------------------------
-const AccordionItem = ({ title, content }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <div className="shadow-sm">
-      <header
-        className={`flex cursor-pointer items-center justify-between border-t border-c-gray-300 py-5 transition-colors md:py-6 ${isOpen ? 'open' : ''}`}
-        onClick={toggleAccordion}
-      >
-        <h2 className="text-heading pr-2 text-xl font-semibold leading-relaxed md:text-base ">
-          {title}
-        </h2>
-        <div className="relative flex h-4 w-4 flex-shrink-0 items-center justify-center">
-          <img src={chevronDownIcon} alt="chevronDownIcon" className={`w-4 h-4 ${isOpen ? 'scale-100 rotate-180' : ''
-            }`} />
-
-          <div
-            className={`bg-heading  absolute bottom-0 h-full w-0.5 origin-bottom scale-0 transform rounded-sm transition-transform duration-500 ease-in-out `}
-          />
-        </div>
-      </header>
-      <div className={`accordion-text ${isOpen ? 'visible' : 'hidden'} transition-all duration-300 ease-in-out`}>
-        <div className="pb-6 text-sm leading-7 text-c-gray-600 md:pb-7">{content}</div>
-      </div>
-    </div>
-  );
-};
-const PincodeForm = () => {
-  const [pincode, setPincode] = useState('');
-  const [isDeliveryValid, setIsDeliveryValid] = useState(false);
-
-  const pincodeData = {
-    // Sample pincode data in JSON format
-    '12345': true,
-    '67890': false,
-    '400612': true,
-    '421201': true,
-    '400084': true,
-    '400002': true,
-    '401107': true,
-  };
-
-  const handlePincodeChange = (event) => {
-    setPincode(event.target.value);
-  };
-
-  const handleCheckClick = () => {
-
-    handlePincode()
-
-  };
-
-  const navigate = useNavigate()
-
-  const handleChangeClick = (e) => {
-    e.preventDefault()
-    // Reset the pincode and delivery status when changing
-    setPincode('');
-    setIsDeliveryValid(false);
-  };
-
-  const [token, setToken] = useState('')
-
-
-  const handleToken = async () => {
-    try {
-      const res = await fetch(`https://api.instashipin.com/api/v1/tenancy/authToken`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          "api_key": "6092655223372029e7404dc4"
-        })
-      })
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      const data = await res.json()
-      console.log(data);
-      if (data.data.response?.error) {
-        Swal.fire({
-          title: 'Error!',
-          text: data.data.response?.error,
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return
-      }
-      setToken(data.data?.response.token_id)
-      // Swal.fire({
-      //   title: 'Success!',
-      //   text: 'Pincode Added',
-      //   icon: 'success',
-      // })
-    }
-    catch (error) {
-      console.error('Fetch error:', error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'Fetch error: ' + error,
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-    }
-
-  }
-
-  const handlePincode = async () => {
-    try {
-      await handleToken();
-      if (pincode.length !== 6) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Please enter valid pincode',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return
-      }
-      if (!token) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Please enter pincode again',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return
-      }
-      const res = await fetch(`https://api.instashipin.com/api/v1/courier-vendor/check-pincode`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          "token_id": token,
-          "pincode": pincode
-        })
-      })
-      // if (!res.ok) {
-      //   throw new Error(`HTTP error! status: ${res.status}`);
-      // }
-      const data = await res.json()
-      console.log(data);
-      if (data.data?.response?.message == 'PINCODE NOT SERVICEABLE') {
-        setIsDeliveryValid(false)
-        return Swal.fire({
-          title: 'Error!',
-          text: data.data?.response?.message,
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1200
-        });
-      }
-
-      setIsDeliveryValid(true)
-
-      Swal.fire({
-        title: 'Success!',
-        text: data.data?.response?.message,
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1200
-      })
-    }
-    catch (error) {
-      console.error('Fetch error:', error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'Fetch error: ' + error,
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  }
-
-  const [payload, setpayload] = useState(false)
-
-  const handleApplyPincode = async (e) => {
-    e.preventDefault()
-    if (payload) {
-      return
-    }
-    try {
-      setpayload(true)
-      if (pincode.length !== 6) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Please enter valid pincode',
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        return
-      }
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/validate-pincode/` + pincode, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json'
-        }
-      })
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      const data = await res.json()
-      console.log(data);
-      if (data.message == 'PINCODE NOT SERVICEABLE') {
-        setIsDeliveryValid(false)
-        setpayload(false)
-        return Swal.fire({
-          title: 'Error!',
-          text: data.message,
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-      setIsDeliveryValid(true)
-      setpayload(false)
-      Swal.fire({
-        title: 'Success!',
-        text: data.message,
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }
-    catch (error) {
-      console.error('Fetch error:', error);
-      setpayload(false)
-      Swal.fire({
-        title: 'Error!',
-        text: 'Fetch error: ' + error,
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  }
-
-
-  return (
-    <>
-      <form onSubmit={(e) => {
-        if (isDeliveryValid) {
-          handleChangeClick(e)
-        } else {
-          handleApplyPincode(e)
-        }
-      }} autoComplete="off" className="flex">
-        <input
-          type="text"
-          placeholder="Enter pincode"
-          onChange={handlePincodeChange}
-          value={pincode}
-          className="pincode-code flex w-2/3 ring-1 ring-link rounded-md mt-2 bg-c-gray-100 px-6 py-3 text-sm placeholder:text-c-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1"
-          name="pincode"
-          disabled={isDeliveryValid}
-        />
-
-        <button
-          type="submit"
-          className="cursor-pointer relative right-14 pt-2 -mx-2 text-orange-500 hover:font-bold"
-          value={isDeliveryValid ? 'Change' : 'Check'}
-          onClick={() => {
-            if (isDeliveryValid) {
-              handleChangeClick()
-            } else {
-              handleApplyPincode()
-            }
-          }}
-
-        >
-          {isDeliveryValid ? 'Change' : 'Check'}
-        </button>
-        {isDeliveryValid && (
-          <div className="ok relative right-7 top-10 transform -translate-y-1/2">
-            <CheckIcon className="h-6 w-6 relative text-white rounded-full bg-green-600 p-1" />
-          </div>
-        )}
-      </form>
-      {isDeliveryValid ? (
-        <div className="w-full m-3">
-          <ul className="flex flex-col gap-3 font-bold">
-            {/* <li>
-              <h4>Get it by Thu, Dec 21</h4>
-            </li> */}
-            <li>
-              <h4>Pay on delivery available</h4>
-            </li>
-            {/* <li>
-              <h4>Easy 14 days return &amp; exchange available</h4>
-              <span></span>
-            </li> */}
-          </ul>
-        </div>
-      ) : (
-        <p className="text-xs text-gray-700 pt-2">Please enter PIN code to check delivery time &amp; Pay on Delivery Availability</p>
-      )}
-
-    </>
-  );
-};
 
 
 // ------------------------ Main Component ------------------------
@@ -730,18 +286,6 @@ const ProductOverview = () => {
     }
   };
 
-  useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleButtonClick = () => {
     setIsShareMenuOpen((prev) => !prev);
@@ -783,10 +327,12 @@ const ProductOverview = () => {
     const whatsappMessage = encodeURIComponent(`Hey, check out this awesome product from Sizeupp: ${currentUrl}`);
 
     // Check if the device is mobile
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     // Construct the WhatsApp share link based on the device
-    const whatsappLink = isMobile ? `https://wa.me/?text=${whatsappMessage}` : `https://web.whatsapp.com/send?text=${whatsappMessage}`;
+    const whatsappLink =
+      // isMobile ? `https://wa.me/?text=${whatsappMessage}` : 
+      `https://web.whatsapp.com/send?text=${whatsappMessage}`;
 
     // window.open(`https://web.whatsapp.com/send?text=${whatsappMessage}`, '_blank');
     window.open(whatsappLink, '_blank');
@@ -934,11 +480,18 @@ const ProductOverview = () => {
   }
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
+    document.addEventListener('mousedown', handleClickOutside);
     if (localStorage.token) {
       fetchDataAuth(id)
     } else {
       fetchData(id)
     }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+    
 
   }, []);
 

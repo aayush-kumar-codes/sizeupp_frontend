@@ -18,7 +18,6 @@ const Megamenu = () => {
             },
         }).then(res => res.json().then(data => {
             setData(data)
-            localStorage.setItem("cat_list", JSON.stringify(data))
         }
         ))
     }, [])

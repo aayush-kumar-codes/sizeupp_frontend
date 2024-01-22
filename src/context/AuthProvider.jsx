@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
     const [search, setSearch] = useState("");
     const [category, setcategory] = useState("")
     const [isFuncCall, setIsFuncCall] = useState(false);
+    const [paginationdata, setpaginationdata] = useState({})
 
     // sort 
     const [sort, setSort] = useState({
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
         try {
             console.warn(localStorage.token)
             if (localStorage.token) {
-                try{
+                try {
 
                     const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/userprofile`, {
                         method: 'GET',
@@ -40,13 +41,12 @@ const AuthProvider = ({ children }) => {
                         }
                     })
                     const data = await response.json()
-                    if(!response.ok){
+                    if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     setProfileData(data)
-                    console.log(data)
-                    localStorage.setItem('user_verified',  JSON.stringify(data.user_info.is_verified))
-                }catch(error){
+                    localStorage.setItem('user_verified', JSON.stringify(data.user_info.is_verified))
+                } catch (error) {
                     console.log(error)
                 }
             }
@@ -127,14 +127,15 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-
-                setproductsbc(data);
-                for (const product of data.products) {
-                    // Check if the 'images' key is present and not empty
-                    if ('images' in product && product.images.length > 0) {
-                        setproductcount((prev) => prev + 1)
-                    }
-                }
+                console.log(data, "@@@@@@@@@@@");
+                setproductsbc(data.results);
+                // for (const product of data.results) {
+                //     // Check if the 'images' key is present and not empty
+                //     if ('images' in product && product.images.length > 0) {
+                //         setproductcount((prev) => prev + 1)
+                //     }
+                // }
+                setproductcount(data.count)
                 setproductloading(false)
             }
         } catch (error) {
@@ -144,7 +145,6 @@ const AuthProvider = ({ children }) => {
 
     const fetchProductsAuth = async () => {
         try {
-            console.log("fetching products - auth")
             setproductloading(true)
             setproductsbc([])
             setproductcount(0)
@@ -161,13 +161,14 @@ const AuthProvider = ({ children }) => {
             } else {
                 const data = await response.json();
 
-                setproductsbc(data);
-                for (const product of data.products) {
-                    // Check if the 'images' key is present and not empty
-                    if ('images' in product && product.images.length > 0) {
-                        setproductcount((prev) => prev + 1)
-                    }
-                }
+                setproductsbc(data.results);
+                // for (const product of data.results) {
+                //     // Check if the 'images' key is present and not empty
+                //     if ('images' in product && product.images.length > 0) {
+                //         setproductcount((prev) => prev + 1)
+                //     }
+                // }
+                setproductcount(data.count)
                 setproductloading(false)
             }
         } catch (error) {
@@ -193,13 +194,12 @@ const AuthProvider = ({ children }) => {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
                 const data = await res.json()
-                console.log(data)
-            } catch(error) {
+            } catch (error) {
                 console.log(error)
             }
         }
 
-        if(localStorage.user_verified == 'undefined'){
+        if (localStorage.user_verified == 'undefined') {
             localStorage.clear()
         }
     }
@@ -208,7 +208,6 @@ const AuthProvider = ({ children }) => {
     const handlefetchProducts = async () => {
         setproductloading(true)
         if (localStorage.token) {
-
             fetchProductsAuth()
         } else {
             fetchProducts()
@@ -217,17 +216,17 @@ const AuthProvider = ({ children }) => {
     }
 
 
-
+// ...........................>
     // filter sub handlers
     const handleFetchFilterProducts = async (filterData, signal) => {
         try {
             setproductloading(true)
             setproductsbc([])
             setproductcount(0)
-            let heaeders = {  
+            let heaeders = {
                 'Content-type': 'application/json'
             }
-            if(localStorage.getItem('token')){
+            if (localStorage.getItem('token')) {
                 heaeders['Authorization'] = `token ${localStorage.getItem('token')}`
             }
             console.warn("fetching filter products", filterData)
@@ -253,7 +252,7 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             if (filterdata.price_htl === true) {
-                const sortedProducts = data.products.sort((a, b) => {
+                const sortedProducts = data.results.sort((a, b) => {
                     return b.mrp - a.mrp;
                 }
                 );
@@ -261,27 +260,67 @@ const AuthProvider = ({ children }) => {
 
             }
             else if (filterdata.price_lth === true) {
-                const sortedProducts = data.products.sort((a, b) => {
+                const sortedProducts = data.result.sort((a, b) => {
                     return a.mrp - b.mrp;
                 }
                 );
                 setproductsbc(sortedProducts);
             } else {
-                setproductsbc(data.products)
+                setproductloading(false)
+                setproductsbc(data.results)
+                const { results, ...paginationData } = data
+                setpaginationdata(paginationData)
+                setproductcount(data.count)
             }
 
-            for (const product of data.products) {
-                // Check if the 'images' key is present and not empty
-                if ('images' in product && product.images.length > 0) {
-                    setproductcount((prev) => prev + 1)
-                }
-            }
-
+            // for (const product of data.results) {
+            //     // Check if the 'images' key is present and not empty
+            //     if ('images' in product && product.images.length > 0) {
+            //         setproductcount((prev) => prev + 1)
+            //     }
+            // }
+            setproductcount(data.count)
             setproductloading(false)
 
 
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const handlePagination = async (filterData, url) => {
+        setproductloading(true)
+        try {
+            let heaeders = {
+                'Content-type': 'application/json'
+            }
+            if (localStorage.getItem('token')) {
+                heaeders['Authorization'] = `token ${localStorage.getItem('token')}`
+            }
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: heaeders,
+                body: JSON.stringify({
+                    search: filterData.search,
+                    category: filterData.gender,
+                    size: filterData.size,
+                    color: filterData.color,
+                    sub_category: filterData.category,
+                    fit: filterData.fit,
+                    sub_sub_category: filterData.subcategory,
+                    sleeve: filterData.sleeve,
+                    necktype: filterData.necktype
+                })
+            })
+            const data = await res.json()
+            const { results, ...paginationData } = data
+            setpaginationdata(paginationData)
+            setproductloading(false)
+            setproductsbc(results)
+            setproductcount(data.count)
+        }
+        catch (e) {
+            console.log('error', e)
         }
     }
 
@@ -449,6 +488,7 @@ const AuthProvider = ({ children }) => {
                 fetchProductsAuth,
                 fetchProducts,
                 handlefetchProducts,
+                handlePagination,
 
                 productsbc,
                 productloading,
@@ -456,7 +496,7 @@ const AuthProvider = ({ children }) => {
                 setproductsbc,
                 setproductcount,
                 setproductloading,
-
+                paginationdata,
                 couponcode,
                 setcouponcode,
 
