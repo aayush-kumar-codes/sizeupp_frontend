@@ -44,7 +44,7 @@ const ProductImageView = ({
 
 
 
- 
+
 
   // const handleMouseMove = (e) => {
   //   const img = document.getElementById("magnify-img");
@@ -151,14 +151,14 @@ const ProductImageView = ({
                 {/* Image Current */}
                 <img
                   alt={`Product gallery ${currentImageIndex + 1}`}
-                  src={arrayImages[currentImageIndex]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6): import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "")}
+                  src={arrayImages[currentImageIndex]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "")}
                   id="magnify-img"
                   width="650"
                   height="590"
                   onClick={handleOpenModal}
                   className="rounded-lg object-cover md:h-[550px] md:w-full lg:h-full cursor-pointer md:cursor-pointer"
-                  // onMouseMove={handleMouseMove}
-                  // onMouseOut={handleMouseOut}
+                // onMouseMove={handleMouseMove}
+                // onMouseOut={handleMouseOut}
                 />
                 {/* <ImageMagnifier imgSrc={import.meta.env.VITE_SERVER_URL + (arrayImages[currentImageIndex]?.img + "").slice(6)} zoom={2}
                   imgAlt={`Product gallery ${currentImageIndex + 1}`}
@@ -217,7 +217,7 @@ const ProductImageView = ({
                     >
                       <img
                         alt={`Product ${i + 1}`}
-                        src={items.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (items.img + "").slice(6): import.meta.env.VITE_SERVER_URL + (items.img + "")}
+                        src={items.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (items.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (items.img + "")}
                         decoding="async"
                         loading="lazy"
                         className="h-20 w-20 object-cover  md:h-24 md:w-24 lg:h-28 lg:w-28 xl:w-32"
@@ -240,9 +240,9 @@ const ProductImageView = ({
               <Modal onClose={handleCloseModal}>
                 {/* Content of the modal goes here */}
                 <div className="w-full h-full flex items-center justify-center">
-                  
-                      <Carousel images={arrayImages} />
-                      
+
+                  <Carousel images={arrayImages} />
+
                 </div>
               </Modal>
             )}
@@ -491,7 +491,7 @@ const ProductOverview = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-    
+
 
   }, []);
 
@@ -892,7 +892,6 @@ const ProductOverview = () => {
                               <span className="px-2 text-xs">
                                 Whatsapp
                               </span>
-
                             </button>
                           </li>
                           <li className="hover:bg-gray-200/30 pl-2">
@@ -918,7 +917,6 @@ const ProductOverview = () => {
                               <span className="px-2 text-xs">
                                 Copy Link
                               </span>
-
                             </button>
                           </li>
                         </ul>
@@ -958,7 +956,6 @@ const ProductOverview = () => {
                 <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
                   size
                 </h3>
-
                 <ul className="colors -mr-3 flex flex-wrap">
                   {demo.product?.sqp.map((sizes) => (
                     <li
@@ -1035,45 +1032,29 @@ const ProductOverview = () => {
                                 </div>
                                 {activeButton === 'cms' && (
                                   <img className=" w-fit mx-auto md:p-6" src={image.url[0]} alt={image.name} />
-
                                 )}
                                 {activeButton === 'inches' && (
-
                                   image.url[1] && <>
-
                                     <img className="w-fit mx-auto md:p-6" src={image.url[1]} alt={image.name} />
                                   </>
 
                                 )}
                                 {activeButton === 'guide' && (
-
                                   image.url[2] && <>
-
                                     <img className="w-1/3 h-auto mx-auto md:p-6 object-fit" src={image.url[2]} alt={image.name} />
                                   </>
-
                                 )}
                               </div>
                             ))
-
                           }
-
-
                         </div>
                       </div>
                     </div>
 
                   )}
-
-
                   {/* <aside
                     className={`fixed z-50 right-0 top-0 h-full bg-gray-100 ${isAsideOpen ? 'w-[50vw]' : 'hidden'} shadow-2xl transition-all duration-300 ease-in-out`}
                   >
-
-
-                    
-                   
-                  
                   </aside> */}
                 </div>
               </div>
@@ -1081,10 +1062,8 @@ const ProductOverview = () => {
 
           </div>
           <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-c-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
-
             <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-c-gray-300 md:h-12">
               <button
-
                 className="text-xl hover:bg-gray-200/30 flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-c-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
                 onClick={decrement}
               >
@@ -1179,9 +1158,7 @@ const ProductOverview = () => {
               title="Care Guide"
               content={
                 <div className="text-base font-semibold text-gray-800/80">
-
                   <div dangerouslySetInnerHTML={{ __html: demo.product?.Washcare }} />
-
                 </div>
               }
             />

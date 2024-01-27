@@ -278,7 +278,6 @@ const ProductList = ({
             {isModalCart && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <section className="px-4 bg-white w-11/12  rounded-md md:w-1/3">
-
                         <h2 className='text-lg px-2 py-4 tracking-wide underline md:text-lg font-semibold'>Add To Cart</h2>
                         <p className='my-4 text-base px-2'><span className='underline font-semibold'>Product</span> : {modalForm.name}</p>
                         <p className='my-4 text-base px-2'><span className='underline font-semibold'>Color</span> : {modalForm.color}</p>
@@ -364,32 +363,28 @@ const ProductList = ({
                 {grid ? (
                     <div>
                         <div className="flex justify-center space-x-2 ">
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden' : 'block'}`} disabled={!paginationdata.previous} onClick={() => {
                                 handlePagination(filterdata, paginationdata.previous)
                             }}>&lt; Prev</button>
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden' : 'block'}`} disabled={!paginationdata.next} onClick={() => {
                                 handlePagination(filterdata, paginationdata.next)
                             }}>Next &gt;</button>
                         </div>
                         <CustomGrid gridSize={grid}>
                             {!productloading ? (
                                 productsbc.length > 0 ? productsbc.map((items, i) => {
-                                    let imgs = []
-                                    imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
-                                    items.images.map((img) => {
-                                        imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
-                                    })
+                                    // let imgs = []
+                                    // imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.images)
+                                    // items.images.map((img) => {
+                                    //     imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
+                                    // })
 
-                                    if (items.images.length == 0) {
-                                        // setproductcount(prev => prev - 1)
-                                        return null
-
-                                    }
-
-
+                                    // if (items.images.length == 0) {
+                                    //     // setproductcount(prev => prev - 1)
+                                    //     return null
+                                    // }
+                                    // console.log(imgs, "!!!!!!!!!!!1");
                                     return (
-
-
                                         <div key={i} className="mt-1 rounded-xl">
                                             <Carousel id={items.id} isFav={items.wishlist} slides={items.images} handleAddWishlist={handleAddWishlist} handleRemoveWishlist={handleRemoveWishlist} />
                                             <div className={`${grid == 5 && "hidden"} p-2 `}>
@@ -430,10 +425,10 @@ const ProductList = ({
                         </CustomGrid>
 
                         <div className="flex justify-center space-x-2 ">
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden' : 'block'}`} disabled={!paginationdata.previous} onClick={() => {
                                 handlePagination(filterdata, paginationdata.previous)
                             }}>&lt; Prev</button>
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden' : 'block'}`} disabled={!paginationdata.next} onClick={() => {
                                 handlePagination(filterdata, paginationdata.next)
                             }}>Next &gt;</button>
                         </div>
@@ -447,26 +442,26 @@ const ProductList = ({
                 {mgrid ? (
                     <div>
                         <div className="flex justify-center space-x-2 ">
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden' : 'block'}`} disabled={!paginationdata.previous} onClick={() => {
                                 handlePagination(filterdata, paginationdata.previous)
                             }}>&lt; Prev</button>
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden' : 'block'}`} disabled={!paginationdata.next} onClick={() => {
                                 handlePagination(filterdata, paginationdata.next)
                             }}>Next &gt;</button>
                         </div>
                         <CustomGrid gridSize={mgrid}>
                             {!productloading ? (productsbc.length > 0 ? productsbc.map((items, i) => {
-                                let imgs = []
-                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
-                                items.images.map((img) => {
-                                    imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
-                                })
+                                // let imgs = []
+                                // imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
+                                // items.images.map((img) => {
+                                //     imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
+                                // })
 
-                                if (items.images.length == 0) {
-                                    // setproductcount(prev => prev - 1)
-                                    return null
+                                // if (items.images.length == 0) {
+                                //     // setproductcount(prev => prev - 1)
+                                //     return null
 
-                                }
+                                // }
 
                                 return (
                                     <div key={i} className="">
@@ -503,10 +498,10 @@ const ProductList = ({
                             </>}
                         </CustomGrid>
                         <div className="flex justify-center space-x-2 ">
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden' : 'block'}`} disabled={!paginationdata.previous} onClick={() => {
                                 handlePagination(filterdata, paginationdata.previous)
                             }}>&lt; Prev</button>
-                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                            <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden' : 'block'}`} disabled={!paginationdata.next} onClick={() => {
                                 handlePagination(filterdata, paginationdata.next)
                             }}>Next &gt;</button>
                         </div>
@@ -519,27 +514,27 @@ const ProductList = ({
             <div className='block md:hidden'>
                 {sgrid ? (<div>
                     <div className="flex justify-center space-x-2 ">
-                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden' : 'block'}`} disabled={!paginationdata.previous} onClick={() => {
                             handlePagination(filterdata, paginationdata.previous)
                         }}>&lt; Prev</button>
-                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden' : 'block'}`} disabled={!paginationdata.next} onClick={() => {
                             handlePagination(filterdata, paginationdata.next)
                         }}>Next &gt;</button>
                     </div>
                     <CustomGrid gridSize={sgrid}>
                         {!productloading ? (
                             productsbc.length > 0 ? productsbc.map((items, i) => {
-                                let imgs = []
-                                imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
-                                items.images.map((img) => {
-                                    imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
-                                })
+                                // let imgs = []
+                                // imgs.push(`${import.meta.env.VITE_SERVER_URL}` + items.img)
+                                // items.images.map((img) => {
+                                //     imgs.push(`${import.meta.env.VITE_SERVER_URL}` + img.img)
+                                // })
 
-                                if (items.images.length == 0) {
-                                    // setproductcount(prev => prev - 1)
-                                    return null
+                                // if (items.images.length == 0) {
+                                //     // setproductcount(prev => prev - 1)
+                                //     return null
 
-                                }
+                                // }
 
                                 return (
                                     <div key={i} className="">
@@ -575,10 +570,10 @@ const ProductList = ({
                         </>}
                     </CustomGrid>
                     <div className="flex justify-center space-x-2 ">
-                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden': 'block'}`} disabled={!paginationdata.previous} onClick={() => {
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.previous ? 'hidden' : 'block'}`} disabled={!paginationdata.previous} onClick={() => {
                             handlePagination(filterdata, paginationdata.previous)
                         }}>&lt; Prev</button>
-                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden': 'block'}`} disabled={!paginationdata.next} onClick={() => {
+                        <button className={`bg-gray-400 rounded-xl textr-white px-5 py-2 ${!paginationdata.next ? 'hidden' : 'block'}`} disabled={!paginationdata.next} onClick={() => {
                             handlePagination(filterdata, paginationdata.next)
                         }}>Next &gt;</button>
                     </div>

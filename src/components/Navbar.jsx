@@ -58,17 +58,17 @@ export function Navbar() {
                 {
                     name: 'Casual Topwear',
                     href: '/products?gender=Men&category=Casual Topwear'
-                    
+
                 },
                 {
                     name: 'Casual Bottomwear',
                     href: '/products?gender=Men&category=Casual Bottomwear'
-                    
+
                 },
                 {
                     name: 'Ethnic Wear',
                     href: "/products?gender=Men&category=Ethnic Wear"
-                    
+
                 },
                 {
                     name: 'Evening Wear',
@@ -91,12 +91,12 @@ export function Navbar() {
                 {
                     href: '/products?gender=Women&category=Women Topwear',
                     name: 'Women Topwear',
-                   
+
                 },
                 {
                     name: 'Women Bottomwear',
                     href: "/products?gender=Women&category=Women Bottomwear",
-                    
+
                 },
                 {
                     name: 'Festive Wear',
@@ -233,7 +233,7 @@ export function Navbar() {
                     {/* Search bar */}
                     <div className='hidden lg:block lg:w-2/3 mx-3'>
 
-                       
+
                     </div>
 
                     {/* Menu */}
@@ -283,28 +283,28 @@ export function Navbar() {
 
                                     {isProfileOpen && <div className="absolute right-6 top-16 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                         <ul className="py-1" role="none">
-                                        {localStorage.token && <><li className='hover:bg-gray-200/30 pl-2 '>
-                                            <Link to="/profile" className="text-gray-700 block px-4 py-1 text-sm">
-                                                Profile
-                                            </Link>
-                                        </li>
-                                            <li className='hover:bg-gray-200/30 pl-2 '>
-                                                <Link to="/products/favourite" className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                    Wishlist
+                                            {localStorage.token && <><li className='hover:bg-gray-200/30 pl-2 '>
+                                                <Link to="/profile" className="text-gray-700 block px-4 py-1 text-sm">
+                                                    Profile
                                                 </Link>
                                             </li>
-                                            <li className='hover:bg-gray-200/30 pl-2 '>
-                                                <Link to="/products/cart" className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                    Cart
-                                                </Link>
-                                            </li>
-                                            <li className='hover:bg-gray-200/30 pl-2'>
-                                                <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
-                                                    My Orders
-                                                </Link>
-                                            </li>
-                                        </>}
-                                            
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
+                                                    <Link to="/products/favourite" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        Wishlist
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2 '>
+                                                    <Link to="/products/cart" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        Cart
+                                                    </Link>
+                                                </li>
+                                                <li className='hover:bg-gray-200/30 pl-2'>
+                                                    <Link to="/profile/my-orders" className="text-gray-700 block px-4 py-1.5 text-sm">
+                                                        My Orders
+                                                    </Link>
+                                                </li>
+                                            </>}
+
                                             {!localStorage.token && noAuthMenuItems.map((item) => (
                                                 <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
                                                     <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
@@ -356,7 +356,7 @@ export function Navbar() {
                                 </div>
                                 <div className="mt-6">
                                     <nav className="grid gap-y-4">
-                                       
+
                                         <Link to="/products" onClick={() => { setIsMenuOpen(false) }} className='text-sm border-t border-c-gray-300 py-5 font-semibold'>All Products</Link>
                                         {
                                             data.categories && data.categories?.map((cat) => {

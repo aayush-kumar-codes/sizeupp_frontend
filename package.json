@@ -5,10 +5,10 @@
   "author": "Kushal Bauskar",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "set VITE_CJS_TRACE=true && vite --host",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",

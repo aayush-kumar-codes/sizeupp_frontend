@@ -23,53 +23,54 @@ const Carousel = ({
     if (intervalId) {
       onMouseLeave()
     }
-    console.log("Hovered")
+    // console.log("Hovered")
     setAutoSlide(true)
     setIntervalId(setInterval(() => { setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1)) }, slideInterval))
   }
 
   const onMouseLeave = () => {
-    console.log("Left")
+    // console.log("Left")
     setCurrentSlide(0)
     setAutoSlide(false)
     clearInterval(intervalId)
     setIntervalId(null)
   }
 
-  const prev = () => {
-    if (autoSlide) {
-      onMouseLeave()
-    }
-    setCurrentSlide((s) => (s === 0 ? slides.length - 1 : s - 1))
-  }
+  // const prev = () => {
+  //   if (autoSlide) {
+  //     onMouseLeave()
+  //   }
+  //   setCurrentSlide((s) => (s === 0 ? slides.length - 1 : s - 1))
+  // }
 
-  const next = () => {
-    if (autoSlide) {
-      onMouseLeave()
-    }
-    setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1))
-  }
+  // const next = () => {
+  //   if (autoSlide) {
+  //     onMouseLeave()
+  //   }
+  //   setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1))
+  // }
 
   const navigate = useNavigate()
+
   return (
     <div className="overflow-hidden relative" onMouseEnter={onMouseHover} onMouseLeave={onMouseLeave}>
       <div
         className="flex transition-transform cursor-pointer ease-out duration-500 z-50 aspect-[3/4]"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-
       >
-
         {slides.map((slide, i) => {
-          let str = slide.img + ""
+          // let str = slide.img + ""
           // console.log(str)
-          return(<img
-            key={i}
-            loading='lazy'
-            onClick={() => { navigate(`${id}`) }}
-            className="object-cover w-full h-full cursor-pointer rounded-lg"
-            src={slide.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (slide.img + "").slice(6) : import.meta.env.VITE_SERVER_URL  + (slide.img + "")}
-            alt="dress"
-          />)
+          return (
+            <img
+              key={i}
+              loading='lazy'
+              onClick={() => { navigate(`${id}`) }}
+              className="object-cover w-full h-full cursor-pointer rounded-lg"
+              src={slide.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (slide.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (slide.img + "")}
+              alt="dress"
+            />
+          )
         })
         }
       </div>

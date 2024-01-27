@@ -52,7 +52,6 @@ const App = () => {
   return (
     <div className={` `}>
       <BrowserRouter>
-
         <Routes>
           <Route index element={<HomeK />} />
           <Route path="/" element={<LayoutAuth />} >
