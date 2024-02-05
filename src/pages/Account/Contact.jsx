@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { FaSquareWhatsapp } from "react-icons/fa6";
 
 const Contact = () => {
     const [profiledata, setprofiledata] = useState()
@@ -45,12 +46,12 @@ const Contact = () => {
                     'Authorization': `token ${localStorage.token}`
                 },
                 body: JSON.stringify({
-                    first_name : form.firstname,
-                    last_name : form.lastname,
-                    email : form.email,
-                    phone_number : form.phone,
-                    issue : form.issue,
-                    message : form.textarea
+                    first_name: form.firstname,
+                    last_name: form.lastname,
+                    email: form.email,
+                    phone_number: form.phone,
+                    issue: form.issue,
+                    message: form.textarea
                 })
             })
             if (!response.ok) {
@@ -85,7 +86,7 @@ const Contact = () => {
     }
     return (
         <>
-           
+
             <section className="bg-gray-50" id="contact">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
                     <div className="mb-4">
@@ -197,7 +198,8 @@ const Contact = () => {
                                         </div>
                                         <div className="ml-4 mb-4">
                                             <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">Contact</h3>
-                                            <p className="text-gray-600">Mobile: 8655255488</p>
+                                            <p className="text-gray-600">Mobile: +91-8655255488</p>
+                                            <p className="text-gray-600 flex gap-5"><span style={{color:"#24cc63"}}><FaSquareWhatsapp size={24}/></span>: +91-8655255488</p>
                                             <p className="text-gray-600">Mail: customercare@sizeupp.com</p>
                                         </div>
                                     </li>

@@ -44,7 +44,7 @@ const App = () => {
   useEffect(() => {
     fetchCategory()
     handleValidateToken()
-    if(localStorage.getItem("cat_list")){
+    if (localStorage.getItem("cat_list")) {
       localStorage.removeItem("cat_list")
     }
   }
@@ -94,10 +94,8 @@ const App = () => {
                 <ProductBilling />
               </ProtectedRoute>
             } />
-
           </Route>
           <Route path="*" element={<Notfound />} />
-
         </Routes>
       </BrowserRouter>
     </div>

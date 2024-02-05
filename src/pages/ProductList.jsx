@@ -345,8 +345,6 @@ const ProductList = ({
                     </section>
                 </div>
             )}
-
-
             {/* Filter navbar */}
             {/* <Filter setGrid={setGrid} grid={grid} mgrid={mgrid} setMGrid={setMGrid} sgrid={sgrid} setSGrid={setSGrid} filterActive={filterActive} setFilterActive={setFilterActive} /> */}
             <SideNav display={isFilterActive} setDisplay={setIsFilterActive} />

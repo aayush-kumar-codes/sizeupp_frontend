@@ -5,8 +5,10 @@ import PropTypes from 'prop-types'
 import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
-import { State, City } from 'country-state-city';
+// import { State, City } from 'country-state-city';
 // import {Helmet} from "react-helmet";
+
+
 const products = [
     {
         id: 1,
@@ -197,6 +199,11 @@ export function ProductCart() {
             [name]: value,
         });
     };
+
+
+
+
+
 
     const [changeAdr, setChangeAdr] = useState(false)
 
@@ -402,15 +409,43 @@ export function ProductCart() {
         }
     }
 
-    const stateData = State.getStatesOfCountry('IN').map(state => ({
-        name: state.name,
-        code: state.isoCode,
-    }))
-    const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
-        name: city,
-    }))
 
-    console.log(cityData);
+
+    // const stateData = State.getStatesOfCountry('IN').map(state => ({
+    //     name: state.name,
+    //     code: state.isoCode,
+    // }))
+    // const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
+    //     name: city,
+    // }))
+
+    // console.log(cityData);
+    // ==================================>
+    const [stateData, setStateData] = useState([])
+    const [cityName, setCityName] = useState([])
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/getstate`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setStateData(data)
+            });
+    }, []);
+
+
+    useEffect(() => {
+        setCityName("")
+        fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/getcities/${formData.stateCode}`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setCityName(data)
+            });
+    }, [formData.stateCode]);
+    // ===================================>
 
     return (
         <div className="mx-auto max-w-7xl px-2 lg:px-0">
@@ -507,7 +542,7 @@ export function ProductCart() {
                                         State
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        <select
+                                        {/* <select
                                             className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                                             value={formData.state}
                                             onChange={(e) => {
@@ -522,7 +557,35 @@ export function ProductCart() {
                                                     {item.name}
                                                 </option>
                                             ))}
+                                        </select> */}
+
+                                        {/* ====================================================> */}
+                                        <select
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                            value={formData.state}
+                                            onChange={(e) => {
+                                                const selectedState = e.target.value;
+                                                const selectedStateName = stateData.find(obj => Object.values(obj)[0] === selectedState);
+                                                const selectedStateCode = selectedStateName ? Object.keys(selectedStateName)[0] : null;
+
+                                                setFormData({
+                                                    ...formData,
+                                                    state: selectedState,
+                                                    stateCode: selectedStateCode,
+                                                });
+                                            }}
+                                        >
+                                            <option value="" disabled className="text-gray-500">
+                                                Select State
+                                            </option>
+                                            {stateData.map((state, i) => (
+                                                <option key={i} value={state[Object.keys(state)[0]]}>
+                                                    {state[Object.keys(state)[0]]}
+                                                </option>
+                                            ))}
                                         </select>
+
+                                        {/* =======================================================> */}
                                     </dd>
                                 </div>
 
@@ -539,7 +602,7 @@ export function ProductCart() {
                                             required
                                             name="city"
                                             value={formData.city}
-                                            onChange={handleInputChange} /> */}
+                                            onChange={handleInputChange} />
                                         <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
                                             <option value='' disabled>Select City</option>
                                             {City.getCitiesOfState('IN', formData.stateCode).map(city => {
@@ -550,7 +613,24 @@ export function ProductCart() {
                                                 )
                                             })}
 
+                                        </select> */}
+                                        {/* ==================================> */}
+                                        <select
+                                            value={formData.city}
+                                            disabled={formData.state == ""}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, city: e.target.value })
+                                            }
+                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                        >
+                                            <option value="" disabled>
+                                                Select City
+                                            </option>
+                                            {cityName.length > 0 && cityName.map(
+                                                (city) => <option key={city} value={city}>{city}</option>
+                                            )}
                                         </select>
+                                        {/* ========================================> */}
                                     </dd>
                                 </div>
                                 <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -680,7 +760,7 @@ export function ProductCart() {
                                         <div className='col-span-1 justify-center items-center'>
                                             <img
                                                 onClick={() => { navigate(`/products/${info.product?.id}`) }}
-                                                src={info.product?.images[0]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6) :import.meta.env.VITE_SERVER_URL +  (info.product?.images[0]?.img + "")}
+                                                src={info.product?.images[0]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (info.product?.images[0]?.img + "")}
                                                 alt={info.product?.name}
                                                 className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                             />

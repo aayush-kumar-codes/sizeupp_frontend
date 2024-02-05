@@ -59,7 +59,7 @@ const CancellReturnForm = () => {
             return
         }
 
-        if (order.delivery_status == "Delivered" &&  formdata.products.length === 0) {
+        if (order.delivery_status == "Delivered" && formdata.products.length === 0) {
             Swal.fire({
                 icon: 'error',
                 title: 'Please select atleast one product',
@@ -127,27 +127,27 @@ const CancellReturnForm = () => {
 
     const toggleCheckbox = (productId) => {
         setformdata((prevFormData) => {
-          const isSelected = prevFormData.products.some((orderItem) => orderItem.product.id === productId);
-      
-          if (isSelected) {
-            // If the product is already selected, remove it
-            const updatedOrderItems = prevFormData.products.filter((orderItem) => orderItem.product.id !== productId);
-      
-            return {
-              ...prevFormData,
-              products: updatedOrderItems,
-            };
-          } else {
-            // If the product is not selected, add the entire order item object
-            const selectedOrderItem = order.order_items.find((item) => item.product.id === productId);
-      
-            return {
-              ...prevFormData,
-              products: [...prevFormData.products, selectedOrderItem],
-            };
-          }
+            const isSelected = prevFormData.products.some((orderItem) => orderItem.product.id === productId);
+
+            if (isSelected) {
+                // If the product is already selected, remove it
+                const updatedOrderItems = prevFormData.products.filter((orderItem) => orderItem.product.id !== productId);
+
+                return {
+                    ...prevFormData,
+                    products: updatedOrderItems,
+                };
+            } else {
+                // If the product is not selected, add the entire order item object
+                const selectedOrderItem = order.order_items.find((item) => item.product.id === productId);
+
+                return {
+                    ...prevFormData,
+                    products: [...prevFormData.products, selectedOrderItem],
+                };
+            }
         });
-      };
+    };
 
     React.useEffect(() => {
         if (id) {
@@ -204,7 +204,7 @@ const CancellReturnForm = () => {
                                             <div className='flex col-span-1 justify-center items-center'>
                                                 <img
                                                     onClick={() => { navigate(`/products/${info?.id}`) }}
-                                                    src={info.images[0]?.img.includes("/media/media") ?import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "")}
+                                                    src={info.images[0]?.img.includes("/media/media") ? import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "").slice(6) : import.meta.env.VITE_SERVER_URL + (info.images[0]?.img + "")}
                                                     alt={info?.name}
                                                     className="sm:h-38 sm:w-38 h-32 w-32 rounded-md object-contain object-center"
                                                 />
@@ -268,7 +268,7 @@ const CancellReturnForm = () => {
                     </div>
 
 
-                    {order.delivery_status == "Delivered" && <div className='col-span-full grid gap-4 grid-cols-2 '>
+                    {order.delivery_status == "Delivered" && order.payment_type === "COD" && <div className='col-span-full grid gap-4 grid-cols-2 '>
                         <div className="col-span-full md:col-span-1">
                             <label htmlFor="customer_name" className="block text-lg font-medium leading-6 text-gray-900">Account Holder Name</label>
                             <div className="mt-2">

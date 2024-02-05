@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { AuthContext } from '../context/AuthProvider'
 // import {Helmet} from "react-helmet";
-import { State, City } from 'country-state-city';
+// import { State, City } from 'country-state-city';
 
 export function ProductBilling() {
     const [profile, setProfile] = useState({})
@@ -21,7 +21,7 @@ export function ProductBilling() {
         state: '',
         zipCode: '',
         country: 'India',
-        stateCode:'',
+        stateCode: '',
         is_deafult: false
     });
 
@@ -34,6 +34,19 @@ export function ProductBilling() {
         total_price: 0,
         payment_type: "PPD"
     })
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+
+
+
 
     const navigate = useNavigate()
 
@@ -175,7 +188,7 @@ export function ProductBilling() {
 
     const handlePlaceOrder = async () => {
         setPayload(true)
-        if(localStorage.address_id === "") {
+        if (localStorage.address_id === "") {
             Swal.fire({
                 title: 'Error!',
                 text: 'Please Add Address',
@@ -233,8 +246,8 @@ export function ProductBilling() {
                 throw new Error(`${data.message ? data.message : 'HTTP error! status: ' + res.status}`);
             }
             console.log(data);
-            
-            if(form.payment_type == 'COD'){
+
+            if (form.payment_type == 'COD') {
                 fetchCart()
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 Swal.fire({
@@ -248,8 +261,8 @@ export function ProductBilling() {
                 navigate('/profile/my-orders')
             }
 
-            if(form.payment_type =="PPD"){
-                console.log("redirect_url",data.redirect_url)
+            if (form.payment_type == "PPD") {
+                console.log("redirect_url", data.redirect_url)
                 setPayload(false)
                 setTimeout(() => {
                     window.open(data.redirect_url);
@@ -280,13 +293,7 @@ export function ProductBilling() {
 
     console.log(form)
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+
 
     const [payload, setPayload] = useState(false)
 
@@ -402,15 +409,45 @@ export function ProductBilling() {
             console.log(error)
         }
     }
-    const stateData = State.getStatesOfCountry('IN').map(state => ({
-        name: state.name,
-        code: state.isoCode,
-    }))
-    const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
-        name: city,
-    }))
+
+
+    // const stateData = State.getStatesOfCountry('IN').map(state => ({
+    //     name: state.name,
+    //     code: state.isoCode,
+    // }))
+    // const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
+    //     name: city,
+    // }))
 
     // console.log(cityData);
+
+
+    // ==================================>
+    const [stateData, setStateData] = useState([])
+    const [cityName, setCityName] = useState([])
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/getstate`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setStateData(data)
+            });
+    }, []);
+
+
+    useEffect(() => {
+        setCityName("")
+        fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/getcities/${formData.stateCode}`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setCityName(data)
+            });
+    }, [formData.stateCode]);
+    // ===================================>
 
     return (
         <div className={`my-10 lg:mx-6 mx-2`}>
@@ -721,55 +758,101 @@ export function ProductBilling() {
                                                         </div>
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                        <dt className="text-sm font-medium text-gray-500">
-                                            State
-                                        </dt>
-                                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                            <select
-                                                className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                                                value={formData.state}
-                                                onChange={(e) => {
-                                                    const selectedState = e.target.value;
-                                                    const selectedStateCode = stateData.find((item) => item.name === selectedState)?.code;
-                                                    setFormData({ ...formData, state: selectedState, stateCode: selectedStateCode });
-                                                }}
-                                            >
-                                                <option value='' disabled>Select State</option>
-                                                {stateData.map((item) => (
-                                                    <option key={item.name} value={item.name}>
-                                                        {item.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </dd>
-                                    </div>
-                                    <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-medium text-gray-500">
-                                        City
-                                    </dt>
-                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        {/* <input type="text"
-                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                                            placeholder="Enter City"
-                                            required
-                                            name="city"
-                                            value={formData.city}
-                                            onChange={handleInputChange} /> */}
-                                        <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
-                                            <option value='' disabled>Select City</option>
-                                            {City.getCitiesOfState('IN', formData.stateCode).map(city => {
-                                                        return (
+                                                            <dt className="text-sm font-medium text-gray-500">
+                                                                State
+                                                            </dt>
+                                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                                {/* <select
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                                                    value={formData.state}
+                                                                    onChange={(e) => {
+                                                                        const selectedState = e.target.value;
+                                                                        const selectedStateCode = stateData.find((item) => item.name === selectedState)?.code;
+                                                                        setFormData({ ...formData, state: selectedState, stateCode: selectedStateCode });
+                                                                    }}
+                                                                >
+                                                                    <option value='' disabled>Select State</option>
+                                                                    {stateData.map((item) => (
+                                                                        <option key={item.name} value={item.name}>
+                                                                            {item.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select> */}
 
-                                                            <option key={city.name} value={city.name} >{city.name} </option>
-                                                            
-                                                        )
-                                                    })}
+                                                                {/* ====================================================> */}
+                                                                <select
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                                                    value={formData.state}
+                                                                    onChange={(e) => {
+                                                                        const selectedState = e.target.value;
+                                                                        const selectedStateName = stateData.find(obj => Object.values(obj)[0] === selectedState);
+                                                                        const selectedStateCode = selectedStateName ? Object.keys(selectedStateName)[0] : null;
 
-                                        </select>
-                                    </dd>
-                                </div>
+                                                                        setFormData({
+                                                                            ...formData,
+                                                                            state: selectedState,
+                                                                            stateCode: selectedStateCode,
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    <option value="" disabled className="text-gray-500">
+                                                                        Select State
+                                                                    </option>
+                                                                    {stateData.map((state, i) => (
+                                                                        <option key={i} value={state[Object.keys(state)[0]]}>
+                                                                            {state[Object.keys(state)[0]]}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
 
-                                                        
+                                                                {/* =======================================================> */}
+                                                            </dd>
+                                                        </div>
+
+                                                        <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                            <dt className="text-sm font-medium text-gray-500">
+                                                                City
+                                                            </dt>
+                                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                                {/* <input type="text"
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                                                    placeholder="Enter City"
+                                                                    required
+                                                                    name="city"
+                                                                    value={formData.city}
+                                                                    onChange={handleInputChange} /> */}
+                                                                {/* <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
+                                                                    <option value='' disabled>Select City</option>
+                                                                    {City.getCitiesOfState('IN', formData.stateCode).map(city => {
+                                                                        return (
+
+                                                                            <option key={city.name} value={city.name} >{city.name} </option>
+
+                                                                        )
+                                                                    })}
+                                                                </select> */}
+
+                                                                {/* ==================================> */}
+                                                                <select
+                                                                    value={formData.city}
+                                                                    disabled={formData.state == ""}
+                                                                    onChange={(e) =>
+                                                                        setFormData({ ...formData, city: e.target.value })
+                                                                    }
+                                                                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                                                                >
+                                                                    <option value="" disabled>
+                                                                        Select City
+                                                                    </option>
+                                                                    {cityName.length > 0 && cityName.map(
+                                                                        (city) => <option key={city} value={city}>{city}</option>
+                                                                    )}
+                                                                </select>
+                                                                {/* ========================================> */}
+                                                            </dd>
+                                                        </div>
+
+
 
                                                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                             <dt className="text-sm font-medium text-gray-500">
@@ -828,8 +911,8 @@ export function ProductBilling() {
                                                         name="payment-type"
                                                         type="radio"
                                                         value="COD"
-                                                        checked= {form.payment_type == "COD"}
-                                                        onChange={(e)=>{setForm({...form,payment_type : e.target.value})}}
+                                                        checked={form.payment_type == "COD"}
+                                                        onChange={(e) => { setForm({ ...form, payment_type: e.target.value }) }}
                                                         className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                                                     />
                                                     <div className="mr-4">
@@ -845,8 +928,8 @@ export function ProductBilling() {
                                                         name="payment-type"
                                                         type="radio"
                                                         value="PPD"
-                                                        checked= {form.payment_type == "PPD"}
-                                                        onChange={(e)=>{setForm({...form,payment_type : e.target.value})}}
+                                                        checked={form.payment_type == "PPD"}
+                                                        onChange={(e) => { setForm({ ...form, payment_type: e.target.value }) }}
                                                         className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                                                     />
                                                     <div className="mr-2">
@@ -859,7 +942,7 @@ export function ProductBilling() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+
 
 
 

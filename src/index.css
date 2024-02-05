@@ -6,19 +6,19 @@
 @tailwind utilities;
 
 /* Theme Config */
-*{
+* {
   margin: 0;
   padding: 0;
   font-family: 'Assistant', sans-serif;
 }
 
 :root {
-  --bg-primary : #f5f5f5;
-  --bg-accent : #030303;
-  --bg-secondary : #ffffff;
-  --bg-secondary-accent : #fcfcfc;
-  --color-gray : #9D959C;
-  --color-link : #c2c2c2;
+  --bg-primary: #f5f5f5;
+  --bg-accent: #030303;
+  --bg-secondary: #ffffff;
+  --bg-secondary-accent: #fcfcfc;
+  --color-gray: #9D959C;
+  --color-link: #c2c2c2;
 }
 
 ::-webkit-scrollbar {
@@ -41,6 +41,50 @@
 
 
 
+
 body {
   overflow-x: hidden;
 }
+
+
+.text-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 30px;
+}
+
+.side-animation {
+  position: relative;
+  animation: moveRight 20s linear infinite;
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+/* @media screen and (max-width: 600px) {
+  .text-container {
+    height: 30px;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  .text-container {
+    height: 30px;
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .text-container {
+    height: 30px;
+  }
+} */

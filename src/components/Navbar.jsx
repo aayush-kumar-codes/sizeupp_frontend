@@ -10,6 +10,9 @@ import { AuthContext } from '../context/AuthProvider'
 
 
 export function Navbar() {
+ 
+
+
     const noAuthMenuItems = [
         { name: "Log in", href: "/login" },
         { name: "Sign up", href: "/register" },
@@ -305,6 +308,8 @@ export function Navbar() {
                                                 </li>
                                             </>}
 
+
+
                                             {!localStorage.token && noAuthMenuItems.map((item) => (
                                                 <li key={item.name} className='hover:bg-gray-200/30 pl-2'>
                                                     <Link to={item.href} className="text-gray-700 block px-4 py-2 text-sm">
@@ -325,12 +330,14 @@ export function Navbar() {
                                         </ul>
                                     </div>}
 
+
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
 
+              
                 {/* Mobile/small-Tab Menu */}
                 <div className="lg:hidden">
                     <Bars3BottomLeftIcon onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />

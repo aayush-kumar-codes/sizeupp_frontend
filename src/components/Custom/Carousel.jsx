@@ -23,13 +23,13 @@ const Carousel = ({
     if (intervalId) {
       onMouseLeave()
     }
-    // console.log("Hovered")
+    console.log("Hovered")
     setAutoSlide(true)
     setIntervalId(setInterval(() => { setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1)) }, slideInterval))
   }
 
   const onMouseLeave = () => {
-    // console.log("Left")
+    console.log("Left")
     setCurrentSlide(0)
     setAutoSlide(false)
     clearInterval(intervalId)

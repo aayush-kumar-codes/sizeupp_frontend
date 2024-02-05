@@ -1,9 +1,28 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { logo } from "../../assets/banners";
+import { FaWhatsapp } from "react-icons/fa6";
+import { AuthContext } from "../../context/AuthProvider";
 
 
 const Footer = () => {
+  const [filterids, setFilterIds] = useState({ men: "", women: "" })
+  const handleWhatsapp = () => {
+    const phoneNumber = '+918655255488';
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+
+  const data = useContext(AuthContext);
+  useEffect(() => {
+    if (data?.catlist?.categories && data.catlist.categories.length >= 2) {
+      setFilterIds({
+        men: data.catlist.categories[0]?.id,
+        women: data.catlist.categories[1]?.id,
+      });
+    }
+  }, [data]);
+
 
   return (
     <>
@@ -30,10 +49,10 @@ const Footer = () => {
               <h2 className="text-lg font-bold text-white tracking-widest mb-3">Shop</h2>
               <nav className="list-none mb-10">
                 <li className="p-1">
-                  <a href="/products" className="text-gray-400 hover:text-white">Men</a>
+                  <a href={`/products?gender=${filterids["men"]}`} className="text-gray-400 hover:text-white">Men</a>
                 </li>
                 <li className="p-1">
-                  <a href="/products" className="text-gray-400 hover:text-white">Women</a>
+                  <a href={`/products?gender=${filterids["women"]}`} className="text-gray-400 hover:text-white">Women</a>
                 </li>
                 {/* <li className="p-1">
                   <a href="/products" className="text-gray-400 hover:text-white">Accessories</a>
@@ -87,7 +106,7 @@ const Footer = () => {
               <h2 className="text-lg font-bold text-white tracking-widest mb-3">Socials</h2>
               <nav className="list-none mb-10">
                 <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
-                  <a href="https://www.facebook.com/profile.php?id=61553452766824&mibextid=ZbWKwL"  className="text-gray-500" target="_blank">
+                  <a href="https://www.facebook.com/profile.php?id=61553452766824&mibextid=ZbWKwL" className="text-gray-500" target="_blank">
                     <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
                     </svg>
@@ -109,6 +128,9 @@ const Footer = () => {
                       <circle cx="4" cy="4" r="2" stroke="none"></circle>
                     </svg>
                   </a> */}
+                  <div className="ml-3 text-gray-500 cursor-pointer" onClick={handleWhatsapp}>
+                    <FaWhatsapp size={22} />
+                  </div>
                 </span>
               </nav>
             </div>

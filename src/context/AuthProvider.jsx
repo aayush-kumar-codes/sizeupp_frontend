@@ -230,6 +230,7 @@ const AuthProvider = ({ children }) => {
                 heaeders['Authorization'] = `token ${localStorage.getItem('token')}`
             }
             console.warn("fetching filter products", filterData)
+            
             const res = await fetch(import.meta.env.VITE_SERVER_URL + '/api/product/filter', {
                 signal: signal,
                 method: 'POST',
@@ -510,7 +511,7 @@ const AuthProvider = ({ children }) => {
                 setProfileData,
                 fetchProfileData,
 
-                cart,
+                cart, 
                 setCart,
                 fetchCart,
 

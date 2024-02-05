@@ -3,7 +3,7 @@ import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2'
 // import { Helmet } from 'react-helmet'
 
-import { State, City } from 'country-state-city';
+// import { State, City } from 'country-state-city';
 const NewAddress = () => {
   const [UserAddress, setUserAddress] = useState({})
   const [changeAddress, setChangeAddress] = useState(false)
@@ -29,6 +29,21 @@ const NewAddress = () => {
     mobile: '',
     is_deafult: false
   });
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+
+
+
+
+
   const [addresses, setAddresses] = useState([]);
 
   const OpenForm = () => {
@@ -251,13 +266,6 @@ const NewAddress = () => {
   }
 
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const { profiledata, fetchProfileData } = useContext(AuthContext)
 
@@ -328,14 +336,40 @@ const NewAddress = () => {
   const [isEdit, setIsEdit] = useState(false)
 
 
-  const stateData = State.getStatesOfCountry('IN').map(state => ({
-    name: state.name,
-    code: state.isoCode,
-  }))
-  const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
-    name: city,
-  }))
+  // const stateData = State.getStatesOfCountry('IN').map(state => ({
+  //   name: state.name,
+  //   code: state.isoCode,
+  // }))
+  // const cityData = City.getCitiesOfState('IN', 'MH').map(city => ({
+  //   name: city,
+  // }))
 
+  // ==================================>
+  const [stateData, setStateData] = useState([])
+  const [cityName, setCityName] = useState([])
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/getstate`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setStateData(data)
+      });
+  }, []);
+
+
+  useEffect(() => {
+    setCityName("")
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/product/getcities/${formData.stateCode}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setCityName(data)
+      });
+  }, [formData.stateCode]);
+  // ===================================>
   return (
     <div>
 
@@ -426,7 +460,7 @@ const NewAddress = () => {
                 State
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
+                {/* <select
                   className="form-input py-2 px-2 rounded-md bg-gray-800/10"
                   value={formData.state}
                   onChange={(e) => {
@@ -441,11 +475,38 @@ const NewAddress = () => {
                       {item.name}
                     </option>
                   ))}
+                </select> */}
+
+                {/* ====================================================> */}
+                <select
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                  value={formData.state}
+                  onChange={(e) => {
+                    const selectedState = e.target.value;
+                    const selectedStateName = stateData.find(obj => Object.values(obj)[0] === selectedState);
+                    const selectedStateCode = selectedStateName ? Object.keys(selectedStateName)[0] : null;
+
+                    setFormData({
+                      ...formData,
+                      state: selectedState,
+                      stateCode: selectedStateCode,
+                    });
+                  }}
+                >
+                  <option value="" disabled className="text-gray-500">
+                    Select State
+                  </option>
+                  {stateData.map((state, i) => (
+                    <option key={i} value={state[Object.keys(state)[0]]}>
+                      {state[Object.keys(state)[0]]}
+                    </option>
+                  ))}
                 </select>
+
+                {/* =======================================================> */}
+
               </dd>
             </div>
-
-
 
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
@@ -453,23 +514,39 @@ const NewAddress = () => {
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {/* <input type="text"
-                                            className="form-input py-2 px-2 rounded-md bg-gray-800/10"
-                                            placeholder="Enter City"
-                                            required
-                                            name="city"
-                                            value={formData.city}
-                                            onChange={handleInputChange} /> */}
+                    className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                    placeholder="Enter City"
+                    required
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange} />
                 <select value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="form-input py-2 px-2 rounded-md bg-gray-800/10">
                   <option value='' disabled>Select City</option>
                   {City.getCitiesOfState('IN', formData.stateCode).map(city => {
                     return (
-
                       <option key={city.name} value={city.name} >{city.name} </option>
-
                     )
                   })}
 
+                </select> */}
+
+                {/* ==================================> */}
+                <select
+                  value={formData.city}
+                  disabled={formData.state == ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, city: e.target.value })
+                  }
+                  className="form-input py-2 px-2 rounded-md bg-gray-800/10"
+                >
+                  <option value="" disabled>
+                    Select City
+                  </option>
+                  {cityName.length > 0 && cityName.map(
+                    (city) => <option key={city} value={city}>{city}</option>
+                  )}
                 </select>
+                {/* ========================================> */}
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -598,16 +675,9 @@ const NewAddress = () => {
 
 
 const ManageAddress = () => {
-
-
-
-
-
-
   return (
     <>
       <div className="w-full">
-
         <NewAddress />
       </div>
     </>
